@@ -1,0 +1,56 @@
+  <div id="fileHeader">
+    <h1>conversions.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/bigdecimal/conversions.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'yaml'
+
+module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module BigDecimal #:nodoc:
+      module Conversions
+        DEFAULT_STRING_FORMAT = 'F'.freeze
+        YAML_TAG = 'tag:yaml.org,2002:float'.freeze
+        YAML_MAPPING = { 'Infinity' =&gt; '.Inf', '-Infinity' =&gt; '-.Inf', 'NaN' =&gt; '.NaN' }
+
+        def self.included(base) #:nodoc:
+          base.class_eval do
+            alias_method :_original_to_s, :to_s
+            alias_method :to_s, :to_formatted_s
+
+            yaml_as YAML_TAG
+          end
+        end
+
+        def to_formatted_s(format = DEFAULT_STRING_FORMAT)
+          _original_to_s(format)
+        end
+
+        # This emits the number without any scientific notation.
+        # This is better than self.to_f.to_s since it doesn't lose precision.
+        #
+        # Note that reconstituting YAML floats to native floats may lose precision.
+        def to_yaml(opts = {})
+          YAML.quick_emit(nil, opts) do |out|
+            string = to_s
+            out.scalar(YAML_TAG, YAML_MAPPING[string] || string, :plain)
+          end
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

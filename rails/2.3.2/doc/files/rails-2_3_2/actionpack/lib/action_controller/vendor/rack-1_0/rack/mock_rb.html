@@ -1,0 +1,179 @@
+  <div id="fileHeader">
+    <h1>mock.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'uri'
+require 'stringio'
+require 'rack/lint'
+require 'rack/utils'
+require 'rack/response'
+
+module Rack
+  # Rack::MockRequest helps testing your Rack application without
+  # actually using HTTP.
+  #
+  # After performing a request on a URL with get/post/put/delete, it
+  # returns a MockResponse with useful helper methods for effective
+  # testing.
+  #
+  # You can pass a hash with additional configuration to the
+  # get/post/put/delete.
+  # &lt;tt&gt;:input&lt;/tt&gt;:: A String or IO-like to be used as rack.input.
+  # &lt;tt&gt;:fatal&lt;/tt&gt;:: Raise a FatalWarning if the app writes to rack.errors.
+  # &lt;tt&gt;:lint&lt;/tt&gt;:: If true, wrap the application in a Rack::Lint.
+
+  class MockRequest
+    class FatalWarning &lt; RuntimeError
+    end
+
+    class FatalWarner
+      def puts(warning)
+        raise FatalWarning, warning
+      end
+
+      def write(warning)
+        raise FatalWarning, warning
+      end
+
+      def flush
+      end
+
+      def string
+        &quot;&quot;
+      end
+    end
+
+    DEFAULT_ENV = {
+      &quot;rack.version&quot; =&gt; [0,1],
+      &quot;rack.input&quot; =&gt; StringIO.new,
+      &quot;rack.errors&quot; =&gt; StringIO.new,
+      &quot;rack.multithread&quot; =&gt; true,
+      &quot;rack.multiprocess&quot; =&gt; true,
+      &quot;rack.run_once&quot; =&gt; false,
+    }
+
+    def initialize(app)
+      @app = app
+    end
+
+    def get(uri, opts={})    request(&quot;GET&quot;, uri, opts)    end
+    def post(uri, opts={})   request(&quot;POST&quot;, uri, opts)   end
+    def put(uri, opts={})    request(&quot;PUT&quot;, uri, opts)    end
+    def delete(uri, opts={}) request(&quot;DELETE&quot;, uri, opts) end
+
+    def request(method=&quot;GET&quot;, uri=&quot;&quot;, opts={})
+      env = self.class.env_for(uri, opts.merge(:method =&gt; method))
+
+      if opts[:lint]
+        app = Rack::Lint.new(@app)
+      else
+        app = @app
+      end
+
+      errors = env[&quot;rack.errors&quot;]
+      MockResponse.new(*(app.call(env) + [errors]))
+    end
+
+    # Return the Rack environment used for a request to +uri+.
+    def self.env_for(uri=&quot;&quot;, opts={})
+      uri = URI(uri)
+      env = DEFAULT_ENV.dup
+
+      env[&quot;REQUEST_METHOD&quot;] = opts[:method] || &quot;GET&quot;
+      env[&quot;SERVER_NAME&quot;] = uri.host || &quot;example.org&quot;
+      env[&quot;SERVER_PORT&quot;] = uri.port ? uri.port.to_s : &quot;80&quot;
+      env[&quot;QUERY_STRING&quot;] = uri.query.to_s
+      env[&quot;PATH_INFO&quot;] = (!uri.path || uri.path.empty?) ? &quot;/&quot; : uri.path
+      env[&quot;rack.url_scheme&quot;] = uri.scheme || &quot;http&quot;
+
+      env[&quot;SCRIPT_NAME&quot;] = opts[:script_name] || &quot;&quot;
+
+      if opts[:fatal]
+        env[&quot;rack.errors&quot;] = FatalWarner.new
+      else
+        env[&quot;rack.errors&quot;] = StringIO.new
+      end
+
+      opts[:input] ||= &quot;&quot;
+      if String === opts[:input]
+        env[&quot;rack.input&quot;] = StringIO.new(opts[:input])
+      else
+        env[&quot;rack.input&quot;] = opts[:input]
+      end
+
+      env[&quot;CONTENT_LENGTH&quot;] ||= env[&quot;rack.input&quot;].length.to_s
+
+      opts.each { |field, value|
+        env[field] = value  if String === field
+      }
+
+      env
+    end
+  end
+
+  # Rack::MockResponse provides useful helpers for testing your apps.
+  # Usually, you don't create the MockResponse on your own, but use
+  # MockRequest.
+
+  class MockResponse
+    def initialize(status, headers, body, errors=StringIO.new(&quot;&quot;))
+      @status = status.to_i
+
+      @original_headers = headers
+      @headers = Rack::Utils::HeaderHash.new
+      headers.each { |field, values|
+        @headers[field] = values
+        @headers[field] = &quot;&quot;  if values.empty?
+      }
+
+      @body = &quot;&quot;
+      body.each { |part| @body &lt;&lt; part }
+
+      @errors = errors.string
+    end
+
+    # Status
+    attr_reader :status
+
+    # Headers
+    attr_reader :headers, :original_headers
+
+    def [](field)
+      headers[field]
+    end
+
+
+    # Body
+    attr_reader :body
+
+    def =~(other)
+      @body =~ other
+    end
+
+    def match(other)
+      @body.match other
+    end
+
+
+    # Errors
+    attr_accessor :errors
+
+
+    include Response::Helpers
+  end
+end
+</pre>
+    </div>

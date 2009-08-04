@@ -1,0 +1,114 @@
+  <div id="fileHeader">
+    <h1>renderable.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/renderable.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre># encoding: utf-8
+
+module ActionView
+  # NOTE: The template that this mixin is being included into is frozen
+  # so you cannot set or modify any instance variables
+  module Renderable #:nodoc:
+    extend ActiveSupport::Memoizable
+
+    def filename
+      'compiled-template'
+    end
+
+    def handler
+      Template.handler_class_for_extension(extension)
+    end
+    memoize :handler
+
+    def compiled_source
+      handler.call(self)
+    end
+
+    def method_name_without_locals
+      ['_run', extension, method_segment].compact.join('_')
+    end
+    memoize :method_name_without_locals
+
+    def render(view, local_assigns = {})
+      compile(local_assigns)
+
+      view.with_template self do
+        view.send(:_evaluate_assigns_and_ivars)
+        view.send(:_set_controller_content_type, mime_type) if respond_to?(:mime_type)
+
+        view.send(method_name(local_assigns), local_assigns) do |*names|
+          ivar = :@_proc_for_layout
+          if !view.instance_variable_defined?(:&quot;@content_for_#{names.first}&quot;) &amp;&amp; view.instance_variable_defined?(ivar) &amp;&amp; (proc = view.instance_variable_get(ivar))
+            view.capture(*names, &amp;proc)
+          elsif view.instance_variable_defined?(ivar = :&quot;@content_for_#{names.first || :layout}&quot;)
+            view.instance_variable_get(ivar)
+          end
+        end
+      end
+    end
+
+    def method_name(local_assigns)
+      if local_assigns &amp;&amp; local_assigns.any?
+        method_name = method_name_without_locals.dup
+        method_name &lt;&lt; &quot;_locals_#{local_assigns.keys.map { |k| k.to_s }.sort.join('_')}&quot;
+      else
+        method_name = method_name_without_locals
+      end
+      method_name.to_sym
+    end
+
+    private
+      # Compile and evaluate the template's code (if necessary)
+      def compile(local_assigns)
+        render_symbol = method_name(local_assigns)
+
+        if !Base::CompiledTemplates.method_defined?(render_symbol) || recompile?
+          compile!(render_symbol, local_assigns)
+        end
+      end
+
+      def compile!(render_symbol, local_assigns)
+        locals_code = local_assigns.keys.map { |key| &quot;#{key} = local_assigns[:#{key}];&quot; }.join
+
+        source = &lt;&lt;-end_src
+          def #{render_symbol}(local_assigns)
+            old_output_buffer = output_buffer;#{locals_code};#{compiled_source}
+          ensure
+            self.output_buffer = old_output_buffer
+          end
+        end_src
+
+        begin
+          ActionView::Base::CompiledTemplates.module_eval(source, filename, 0)
+        rescue Errno::ENOENT =&gt; e
+          raise e # Missing template file, re-raise for Base to rescue
+        rescue Exception =&gt; e # errors from template code
+          if logger = defined?(ActionController) &amp;&amp; Base.logger
+            logger.debug &quot;ERROR: compiling #{render_symbol} RAISED #{e}&quot;
+            logger.debug &quot;Function body: #{source}&quot;
+            logger.debug &quot;Backtrace: #{e.backtrace.join(&quot;\n&quot;)}&quot;
+          end
+
+          raise ActionView::TemplateError.new(self, {}, e)
+        end
+      end
+
+      def recompile?
+        false
+      end
+  end
+end
+</pre>
+    </div>

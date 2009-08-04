@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<TITLE>Math</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Marshal.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="ObSpace.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Math</H1>
+<dd> 
+<P>
+The modules for the floating point arithmetic.  The
+<var>Math</var> module has methods and modules methods of
+the same definitions in same names.
+</P>
+<P>
+Example:
+</P>
+<blockquote>
+<pre>
+pi = Math.atan2(1, 1)*4;
+include Math
+pi2 = atan2(1, 1)*4
+</pre>
+</blockquote>
+<p>
+<dt> <h2>Module Functions:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="atan2">
+<CODE>atan2(<VAR>y</VAR>, <VAR>x</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the arc tangent of the two variable <var>x</var> and 
+<var>y</var> in radian, which is between -PI and PI.
+</p>
+
+<DT>
+<A NAME="cos"><CODE>cos(<VAR>x</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="sin"><CODE>sin(<VAR>x</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="tan"><CODE>tan(<VAR>x</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the cosine, sine, tangent, respectively, of x, where
+x is given in radians, which is between -1 and 1.
+</p>
+
+<DT>
+<A NAME="exp"><CODE>exp(<VAR>x</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the value of <i>e</i> raised to the power of
+<var>x</var>. 
+</p>
+
+<DT>
+<A NAME="frexp"><CODE>frexp(<VAR>x</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the nomalized fraction and an the exponent.
+</p>
+
+<DT>
+<A NAME="ldexp"><CODE>ldexp(<VAR>x</VAR>,<var>exp</var>)</CODE></A>
+<DD>
+<p>
+Returns the result of multiplying the floating-point number x by 2
+raised to the power of <var>exp</var>.
+</p>
+
+<DT>
+<A NAME="log">
+<CODE>log(<VAR>x</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the natural logarithm of <var>x</var>.
+</p>
+
+<DT>
+<A NAME="log10">
+<CODE>log10(<VAR>x</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the base-10 logarithm of <var>x</var>.
+</p>
+
+<DT>
+<A NAME="sqrt">
+<CODE>sqrt(<VAR>x</VAR>)</CODE></A>
+<DD>
+<p>
+Returns non-negative square root of <var>x</var>.  It raises 
+an exception, if <var>x</var> is negative.
+</p>
+
+</DL>
+<dt> <h2>Constants:</h2>
+<dd> 
+<dl compact>
+<dt> <code>PI</code>
+<dd> 
+<p>
+The pi.
+</p>
+<dt> <code>E</code>
+<dd> 
+<p>
+The e.
+</p>
+</dl>
+</dl>
+
+<HR>
+<A HREF="Marshal.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="ObSpace.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

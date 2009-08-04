@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html> <head>
+<title>Kconv</title>
+</head>
+
+<body>
+<h1>Kconv module</h1>
+
+<p>
+Kconv - Kanji code conversion utility module
+</p>
+
+<h2>SYNOPSIS</h2>
+<blockquote>
+<pre>
+newstring = Kconv::kconv(string, Kconv::JIS, Kconv::AUTO);
+newstring = Kconv::tojis(string);
+newstring = Kconv::toeuc(string);
+newstring = Kconv::tosjis(string);
+guessed_code = Kconv::guess(string);
+</pre>
+</blockquote>
+<h2>CONSTANTS</h2>
+<dl>
+<dt> AUTO
+<dd> Auto detection(only for <var>input</var> mode)
+<dt> JIS
+<dd> ISO-2022-JP
+<dt> EUC
+<dd> EUC-Japan
+<dt> SJIS
+<dd> Shifted JIS code (so called MS Kanji code)
+<dt> BINARY
+<dd> Binary code (not in JIS/SJIS/EUC).
+<dt> UNKNOWN
+<dd> Couldn't determin character code.  Same as AUTO.
+</dl>
+</body> </html>

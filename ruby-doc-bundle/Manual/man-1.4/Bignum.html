@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Bignum</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Integer.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Fixnum.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Bignum</H1>
+<dd> 
+<P>
+The class for long integers, limited only by memory size.
+Bignums converted into fixnums automatically if the value
+fits in, or vise versa.  For the purpose of shift and mask
+operations, a binary representation is assumed, and negative
+numbers are represented in a 2's complement, which gives the 
+illusion of an infinite string of sign bits extending to the 
+left.  Mixed calculation of Floats and Bignums, sometimes
+makes an error.
+</P>
+<dt> <h2>SuperClass</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Integer.html">Integer</A>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<DT>
+<A NAME="plus">
+<CODE>self + <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="minus">
+<CODE>self - <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="mul">
+<CODE>self * <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="div">
+<CODE>self / <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="mod">
+<CODE>self % <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="pow">
+<CODE>self ** <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Arithmetic operators. Addition, subtraction, multiplication,
+division, remainder, power, respectively.
+</p>
+
+<DT><A NAME="inv">
+<CODE>~ self</CODE></A>
+<DD>
+<DT><A NAME="or">
+<CODE>self | <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="and">
+<CODE>self &#38; <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="xor">
+<CODE>self ^ <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Bit manipulations.  Bit reverse, bit or, bit and, bit xor,
+respectively.
+</p>
+
+<DT><A NAME="lshift">
+<CODE>self &#60;&#60; <VAR>bits</VAR></CODE></A>
+<DD>
+<DT><A NAME="rshift">
+<CODE>self &#62;&#62; <VAR>bits</VAR></CODE></A>
+<DD>
+<p>
+Shift operators,  shift <code>bits</code>-bit to left and
+right, respectively.
+</p>
+
+<DT><A NAME="divmod">
+<CODE>divmod(<VAR>other</VAR>)</CODE></A>
+<DD>
+
+<p>
+Returns an array contains the division and the modulo.
+</p>
+</DL>
+
+</dl>
+
+<HR>
+<A HREF="Integer.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Fixnum.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

@@ -1,0 +1,74 @@
+  <div id="C00000185">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Failsafe<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/failsafe_rb.html');">rails-2.3.2/actionpack/lib/action_controller/failsafe.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000374&name=call" >call</a></li>
+  <li><a href="index.html?a=M000373&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000373" class="method">
+  <div id="M000373_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000373_source')" id="l_M000373_source">show source</a> ]</p>
+  <div id="M000373_source" class="dyn-source">
+<pre>
+   <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/failsafe.rb, line 6</span>
+6:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+7:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+8:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000374" class="method">
+  <div id="M000374_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000374_source')" id="l_M000374_source">show source</a> ]</p>
+  <div id="M000374_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/failsafe.rb, line 10</span>
+10:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+11:       <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+12:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>
+13:       <span class="ruby-comment cmt"># Reraise exception in test environment</span>
+14:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.test&quot;</span>]
+15:         <span class="ruby-identifier">raise</span> <span class="ruby-identifier">exception</span>
+16:       <span class="ruby-keyword kw">else</span>
+17:         <span class="ruby-identifier">failsafe_response</span>(<span class="ruby-identifier">exception</span>)
+18:       <span class="ruby-keyword kw">end</span>
+19:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

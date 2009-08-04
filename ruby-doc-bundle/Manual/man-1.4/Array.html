@@ -1,0 +1,623 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Array</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Object.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Data.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+
+<dl>
+<dt> <H1>Array</H1>
+<dd> 
+<P>
+The elements of an array are arbitrary Ruby objects.  Arrays are
+formed by placing comma separated list of expressions in square
+brackets like:
+</P>
+<blockquote>
+<pre>
+[1, 2, 3]
+</pre>
+</blockquote>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Enum.html">Enumerable</A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT><A NAME="Array.aref">
+<CODE>Array[<VAR>item</VAR>...]</CODE></A>
+<DD>
+<p>
+Creates a newly created array with arguments as elements.
+</p>
+
+<DT><A NAME="Array.new">
+<CODE>new([<VAR>size</VAR>[,<VAR>val</VAR>]])</CODE></A>
+<DD>
+<p>
+Creates a newly created array with specified size.  If <var>size</var>
+is not specified, returns an empty array.  <var>val</var> is the
+initial value of the elements.  The default initial value is <var>nil</var>.
+</p>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT><A NAME="aref">
+<CODE>self[<VAR>nth</VAR>]</CODE></A>
+<DD>
+<p>
+Retrieves the <var>nth</var> item from an array.  Index starts from
+zero. If index is the negative, counts backward from the end of the
+array.  The index of the last element is -1.  Returns <code>nil</code>,
+if the <var>nth</var> element is not exist in the array.
+</p>
+<p>
+See also <A HREF="#aset">
+<CODE>self[<VAR>nth</VAR>] = <VAR>val</VAR></CODE></A>.
+</p>
+<DT><A NAME="arange">
+<CODE>self[<VAR>start</VAR>..<VAR>end</VAR>]</CODE></A>
+<DD>
+<p>
+Returns an array containing the objects from <var>start</var> to
+<var>end</var>, including both ends.  If <CODE>...</CODE> is used (instead
+of <CODE>..</CODE>), then <var>end</var> is not included.  if <var>end</var>
+is larger than the length of the array, it will be rounded to the
+length.  If <var>start</var> is out of an array range , returns
+<code>nil</code>.  And if <var>start</var> is larger than <var>end</var>
+with in array range, returns empty array (<code>[]</code>).
+</p>
+<p>
+See also <A HREF="#arangeset">
+<CODE>self[<VAR>start</VAR>..<VAR>end</VAR>] = <VAR>val</VAR></CODE></A>.
+</P>
+<DT><A NAME="alength">
+<CODE>self[<VAR>start</VAR>, <VAR>length</VAR>]</CODE></A>
+<DD>
+<p>
+Returns an array containing <var>length</var> items from
+<var>start</var>.  Returns <CODE>nil</CODE> if
+<var>length</var> is negative.
+</p>
+See also <A HREF="#alengthset">
+<CODE>self[<VAR>start</VAR>, <VAR>length</VAR>] = <VAR>val</VAR></CODE></A>.
+<p>
+</p>
+<DT><A NAME="aset">
+<CODE>self[<VAR>nth</VAR>] = <VAR>val</VAR></CODE></A>
+<DD>
+<p>
+Changes the <var>nth</var> element of the array into <var>val</var>.
+If <var>nth</var> is larger than array length, the array shall be
+extended automatically.  Extended region shall be initialized by
+<code>nil</code>.
+</p>
+<p>
+See also <A HREF="#aref">
+<CODE>self[<VAR>nth</VAR>]</CODE></A>.
+</p>
+<DT><A NAME="arangeset">
+<CODE>self[<VAR>start</VAR>..<VAR>end</VAR>] = <VAR>val</VAR></CODE></A>
+<DD>
+<p>
+Replace the items from <var>start</var> to <var>end</var> with
+<var>val</var>.  If <CODE>...</CODE> is used (instead of <CODE>..</CODE>)
+then <var>end</var> is not included.  If <var>val</var> is not an array,
+the type of <var>val</var> will be converted into the Array using
+<code>to_a</code> method.
+</p>
+<p>
+See also <A HREF="#arange">
+<CODE>self[<VAR>start</VAR>..<VAR>end</VAR>]</CODE></A>.
+</P>
+<DT><A NAME="alengthset">
+<CODE>self[<VAR>start</VAR>, <VAR>length</VAR>] = <VAR>val</VAR></CODE></A>
+<DD>
+<p>
+Replace the <var>length</var> items from <var>start</var> with
+<var>val</var>.  If <var>val</var> is not an array, the type of
+<var>val</var> will be converted into the Array using
+<code>to_a</code>.
+</p>
+<p>
+See also <A HREF="#alength">
+<CODE>self[<VAR>start</VAR>, <VAR>length</VAR>]</CODE></A>.
+</p>
+<p>
+Example:
+</p>
+
+<blockquote>
+<PRE>
+ary = [1, 2, 3, 4, 5]
+ary[0..2] = [0, 0] # Changed to [0, 0, 4, 5]
+ary[1, 0] = [7]    # Changed to [0, 7, 0, 4, 5]
+</PRE>
+</blockquote>
+<p>
+<DT><a name="plus">
+<CODE>self + <VAR>other</VAR></CODE></a>
+<DD>
+<p>
+The array concatenation.
+</p>
+
+<DT><a name="mul">
+<CODE>self * <VAR>times</VAR></CODE></a>
+<DD>
+<p>
+The array repetition.
+</p>
+
+<DT><A NAME="minus">
+<CODE>self - <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+The array subtraction.  Returns a new array contains elements of the
+original, except which belongs <var>other</var> also.  Duplicate items 
+will be removed.
+</p>
+
+<DT><A NAME="and">
+<CODE>self &amp; <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Returns a new array which contains elements belong to both arrays.
+Duplicate items will be removed.
+</p>
+
+<DT><A NAME="or">
+<CODE>self | <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+The array join.  Returns a new array which contains elements belong to
+either <var>self</var> or <var>other</var>.  Duplicate items will be
+removed.
+</p>
+
+<DT><A NAME="lshift">
+<CODE>self &#60;&#60; <VAR>obj</VAR></CODE></A>
+<DD>
+<p>
+Append a new item with value <var>obj</var> to the end of the
+array.  This method returns the array itself, so that can be 
+chained like:
+</p>
+
+<blockquote>
+<pre>
+array &#60;&#60; obj1 &#60;&#60; obj2
+</pre>
+</blockquote>
+<p>
+</p>
+
+<DT>
+<A NAME="cmp"><CODE>self &lt;=&gt; other</CODE></A>
+<DD>
+<p>
+Returns -1, 0, or 1 depending on whether the left argument is less
+than, equal to, or greater than the right argument, comparing each
+elements by using <code>&lt;=&gt;</code>.
+</p>
+
+<DT><A NAME="assoc">
+<CODE>assoc(<VAR>key</VAR>)</CODE></A>
+<DD>
+<p>
+Searches in the array of arrays, looking for the array whose first
+element equals (compared by <code>==</code>) to <var>key</var>.
+</p>
+<blockquote>
+<pre>
+a = [[1,2],[2,4],[3,6]]
+a.assoc(2)		# =&gt; [2, 4]
+</pre>
+</blockquote>
+
+<DT><A NAME="clear">
+<CODE>clear</CODE></A>
+<DD>
+<p>
+Makes the length of the array to zero.
+</p>
+
+<DT><A NAME="concat">
+<CODE>concat(<var>other</var>)</CODE></A>
+<DD>
+<p>
+Append a items in the <var>other</var> array to the end of
+the array.
+</p>
+
+<DT><A NAME="compact">
+<CODE>compact</CODE></A>
+<DD>
+<dt> 
+<A NAME="compact_bang">
+<code>compact!</code></A>
+<dd> 
+<p>
+Removes all <code>nil</code>s from the array.
+</p>
+
+<p>
+<code>compact!</code> returns nil, if it does not modify the array.
+</p>
+
+<DT><A NAME="delete">
+<CODE>delete(<VAR>val</VAR>)</CODE></A>
+<DD>
+<p>
+Delete the item which matches to <var>val</var>.  If the
+block supplied, it will be evaluated when no item matches to 
+<var>val</var>.
+</p>
+
+<DT><A NAME="delete_at">
+<CODE>delete_at(<var>pos</var>)</CODE></A>
+<DD>
+<p>
+Removes an element at the position specified by the argument
+<var>pos</var>. Returns the removed element.
+</p>
+
+<DT><A NAME="delete_if">
+<CODE>delete_if {...}</CODE></A>
+<DD>
+<DT>
+<A NAME="reject_bang"><CODE>reject!{|<var>x</var>|...}</CODE></A>
+<DD>
+<p>
+Removes elements, which evaluated result of the block is true.
+</p>
+
+<DT>
+<A NAME="clone"><CODE>clone</CODE></A>
+<DT>
+<A NAME="dup">
+<CODE>dup</CODE></A>
+<DD>
+<p>
+Returns a newly created array which has the same elements to the
+receiver.  <code>clone</code> returns the complete copy of the
+original array including freeze status and instance variables.  On the
+other hand, <code>dup</code> copies the array contents only.
+</p>
+
+<DT><A NAME="each">
+<CODE>each {...}</CODE></A>
+<DD>
+<p>
+Iterates over each item of the array.
+</p>
+
+<DT>
+<A NAME="each_index"><CODE>each_index {...}</CODE></A>
+<DD>
+<p>
+Iterates over each index of the array elements, that is:
+<blockquote>
+<pre>
+<code>(0...ary.size).each {}</code>
+</pre>
+</blockquote>
+</p>
+
+<DT><A NAME="empty">
+<CODE>empty?</CODE></A>
+<DD>
+<p>
+Returns true if the array is empty.
+</p>
+
+<DT><A NAME="fill">
+<CODE>fill(<VAR>val</VAR>)</CODE></A>
+<DD>
+<DT><CODE>fill(<VAR>val</VAR>, <VAR>start</VAR>[, <VAR>length</VAR>])</CODE>
+<DD>
+<DT><CODE>fill(<VAR>val</VAR>, <VAR>start</VAR>..<VAR>end</VAR>)</CODE>
+<DD>
+<p>
+Fill range of the array with <var>val</var>.  If no range specified,
+whole array will be filled with <var>val</var>.
+</p>
+
+<DT>
+<A NAME="filter"><CODE>filter{|<var>item</var>| ..}</CODE></A>
+<DD>
+<p>
+Replaces each item with the value returned from the block.
+</p>
+
+<DT>
+<A NAME="flatten"><CODE>flatten</CODE></A>
+<DD>
+<DT>
+<A NAME="flatten_bang"><CODE>flatten!</CODE></A>
+<DD>
+<p>
+Flattens the nested array.  <code>flatten!</code> modifies the
+receiver, and returns <code>nil</code> if the array is not nested.
+</p>
+
+<DT><A NAME="freeze">
+<CODE>freeze</CODE></A>
+<DD>
+<p>
+Prohibits modification of the array.  Modification to the freezed
+array raises an exception.
+</p>
+
+<DT><A NAME="frozen_p"><CODE>frozen</CODE></A>
+<DD>
+<p>
+Returns true if the array is frozen.
+</p>
+
+<DT><A NAME="include_p">
+<CODE>include?(<VAR>val</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the array contains <var>val</var>.  
+</p>
+
+<DT><A NAME="index">
+<CODE>index(<VAR>val</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the index of the item which equals to <var>val</var>.  If no
+item found, returns <var>nil</var>.
+</p>
+
+<DT><A NAME="indexes">
+<CODE>indexes(<VAR>index_1</VAR>,..., <VAR>index_n</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="indices">
+<CODE>indices(<VAR>index_1</VAR>,..., <VAR>index_n</VAR>)</CODE></A>
+<DD>
+<p>
+Returns an array contains items at each index specified by
+each argument.
+</p>
+
+<DT><A NAME="join">
+<CODE>join([<VAR>sep</VAR>])</CODE></A>
+<DD>
+<p>
+Joins the elements in the array into a single string with
+fields separated by the value of <var>sep</var>, and returns the
+string.  If <var>sep</var> is not supplied,  the value of
+<a href="variable.html#comma"><code>$,</code></a> is used as the
+default. 
+</p>
+
+<DT><A NAME="length">
+<CODE>length</CODE></A>
+<DD>
+<a name="size">
+<DT><CODE>size</CODE></a>
+<DD>
+<p>
+Returns length of the array.
+</p>
+
+<dt> <a name="nitems">
+<code>nitems</code></a>
+<dd> 
+<p>
+Returns the number of non-nil items.
+</p>
+
+<DT><A NAME="pack">
+<CODE>pack(<VAR>template</VAR>)</CODE></A>
+<DD>
+<p>
+Packs the array into a binary structure, returning the
+string containing the structure.  The <code>template</code> is a
+sequence of characters that give the order and type of values, as
+follows:
+</p>
+<blockquote>
+<dl compact>
+  <dt> <code>a</code>
+  <dd> ASCII string(null padded)
+  <dt> <code>A</code>
+  <dd> ASCII string(space padded)
+  <dt> <code>b</code>
+  <dd> bit string(ascending bit order)
+  <dt> <code>B</code>
+  <dd> bit string(descending bit order)
+  <dt> <code>h</code>
+  <dd> hex string(low nibble first)
+  <dt> <code>H</code>
+  <dd> hex string(high nibble first)
+  <dt> <code>c</code>
+  <dd> char
+  <dt> <code>C</code>
+  <dd> unsigned char
+  <dt> <code>s</code>
+  <dd> short
+  <dt> <code>S</code>
+  <dd> unsigned short
+  <dt> <code>i</code>
+  <dd> int
+  <dt> <code>I</code>
+  <dd> unsigned int
+  <dt> <code>l</code>
+  <dd> long
+  <dt> <code>L</code>
+  <dd> unsigned long
+  <dt> <code>m</code>
+  <dd> string encoded in base64
+  <dt> <code>n</code>
+  <dd> short in "network" byte-order
+  <dt> <code>N</code>
+  <dd> long in "network" byte-order
+  <dt> <code>v</code>
+  <dd> short in "VAX" (little-endian) byte-order
+  <dt> <code>V</code>
+  <dd> long in "VAX" (little-endian) byte-order
+  <dt> <code>f</code>
+  <dd> single-precision float in the native format
+  <dt> <code>d</code>
+  <dd> A double-precision float in the native format
+  <dt> <code>p</code>
+  <dd> A pointer to a null-terminated string.
+  <dt> <code>P</code>
+  <dd> A pointer to a structure (fixed-length string).
+  <dt> <code>u</code>
+  <dd> uuencoded string
+  <dt> <code>x</code>
+  <dd> null byte
+  <dt> <code>X</code>
+  <dd> back up a byte
+  <dt> <code>@</code>
+  <dd> moves to absolute position
+</dl>
+</blockquote>
+<p>
+</p>
+
+<DT><A NAME="pop">
+<CODE>pop</CODE></A>
+<DD>
+<p>
+Pops and returns the last value of the array, shortening the array by
+one.  If there is no element in the array, returns <code>nil</code>.
+</p>
+
+<DT><A NAME="push">
+<CODE>push(<VAR>obj</VAR>...)</CODE></A>
+<DD>
+<p>
+Appends <var>obj</var> to the last of the array.
+</p>
+<DT><A NAME="rassoc">
+<CODE>rassoc(<VAR>value</VAR>)</CODE></A>
+<DD>
+<p>
+Searches in the array of arrays, looking for the array whose second
+element equals (compared by <code>==</code>) to <var>value</var>.
+</p>
+
+<blockquote>
+<pre>
+a = [[1,2],[2,4],[3,6]]
+a.rassoc(2)		# =&gt; [1, 2]
+</pre>
+</blockquote>
+<DT>
+<A NAME="replace"><CODE>replace(<var>other</var>)</CODE></A>
+<DD>
+<p>
+Copis the content of <var>other</var> into the array.
+</p>
+
+<DT>
+<A NAME="reverse">
+<CODE>reverse</CODE></A>
+<DD>
+<p>
+Returns the array of the items in reverse order.
+</p>
+
+<dt> <a name="reverse_bang"></a>
+<code>reverse!</code>
+<dd> 
+<p>
+Replaces the items in reverse order.
+</p>
+
+<dt>
+<a name="reverse_each"><code>reverse_each {...}</code></a>
+<dd> 
+<p>
+Iterates over each item of the array in reverse order.
+</p>
+
+<DT><A NAME="rindex">
+<CODE>rindex(<VAR>val</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the index of the last item which equals to <var>val</var>.  If no
+item matched, returns <var>nil</var>.
+</p>
+
+<DT><A NAME="shift">
+<CODE>shift</CODE></A>
+<DD>
+<p>
+Removes and returns the first element of the array, and moves other
+elements down.  Returns <code>nil</code> for empty array.
+</p>
+
+<DT><A NAME="sort">
+<CODE>sort</CODE></A>
+<DD>
+<DT><CODE>sort {|<VAR>a</VAR>, <VAR>b</VAR>|...}</CODE>
+<DD>
+<dt> 
+<CODE>sort!</CODE>
+<dd> 
+<DT><CODE>sort! {|<VAR>a</VAR>, <VAR>b</VAR>|...}</CODE>
+<DD>
+<p>
+Sorts the array.  If <code>sort</code> is called with the block, it
+evaluate the block with two parameters, and use the result to compare.
+Without the block, it compares elements with the operator
+<code>&#60;=&#62;</code>.  <code>sort</code> returns a newly created
+sorted array, and <code>sort!</code> executes sort in place.
+</p>
+
+<DT>
+<A NAME="uniq"><CODE>uniq</CODE></A>
+<DD>
+<dt> 
+<A NAME="uniq_bang"><code>uniq!</code></A>
+<dd> 
+<p>
+Removes duplicate items from the array.
+</p>
+<p>
+<code>uniq!</code> returns nil, if it does not modify the array.
+</p>
+
+
+<DT><A NAME="unshift">
+<CODE>unshift(<VAR>obj</VAR>)</CODE></A>
+<DD>
+<p>
+Inserts <var>obj</var> to the front of the array.
+</p>
+</DL>
+</dl>
+<HR>
+<A HREF="Object.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Data.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

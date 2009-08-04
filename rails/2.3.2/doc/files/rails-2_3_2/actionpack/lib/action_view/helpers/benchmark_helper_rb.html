@@ -1,0 +1,73 @@
+  <div id="fileHeader">
+    <h1>benchmark_helper.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/helpers/benchmark_helper.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'benchmark'
+
+module ActionView
+  module Helpers
+    # This helper offers a method to measure the execution time of a block 
+    # in a template.
+    module BenchmarkHelper
+      # Allows you to measure the execution time of a block 
+      # in a template and records the result to the log. Wrap this block around
+      # expensive operations or possible bottlenecks to get a time reading
+      # for the operation.  For example, let's say you thought your file 
+      # processing method was taking too long; you could wrap it in a benchmark block.
+      #
+      #  &lt;% benchmark &quot;Process data files&quot; do %&gt;
+      #    &lt;%= expensive_files_operation %&gt;
+      #  &lt;% end %&gt;
+      #
+      # That would add something like &quot;Process data files (345.2ms)&quot; to the log,
+      # which you can then use to compare timings when optimizing your code.
+      #
+      # You may give an optional logger level as the :level option.
+      # (:debug, :info, :warn, :error); the default value is :info.
+      #
+      #  &lt;% benchmark &quot;Low-level files&quot;, :level =&gt; :debug do %&gt;
+      #    &lt;%= lowlevel_files_operation %&gt;
+      #  &lt;% end %&gt;
+      #
+      # Finally, you can pass true as the third argument to silence all log activity 
+      # inside the block. This is great for boiling down a noisy block to just a single statement:
+      #
+      #  &lt;% benchmark &quot;Process data files&quot;, :level =&gt; :info, :silence =&gt; true do %&gt;
+      #    &lt;%= expensive_and_chatty_files_operation %&gt;
+      #  &lt;% end %&gt;
+      def benchmark(message = &quot;Benchmarking&quot;, options = {})
+        if controller.logger
+          if options.is_a?(Symbol)
+            ActiveSupport::Deprecation.warn(&quot;use benchmark('#{message}', :level =&gt; :#{options}) instead&quot;, caller)
+            options = { :level =&gt; options, :silence =&gt; false }
+          else
+            options.assert_valid_keys(:level, :silence)
+            options[:level] ||= :info
+          end
+          
+          result = nil
+          ms = Benchmark.ms { result = options[:silence] ? controller.logger.silence { yield } : yield }
+          controller.logger.send(options[:level], '%s (%.1fms)' % [ message, ms ])
+          result
+        else
+          yield
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

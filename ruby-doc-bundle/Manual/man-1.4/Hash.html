@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>Hash</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Dir.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="IO.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Hash</H1>
+<dd> 
+<P>
+The class for associative arrays or hash tables.  The hash table can
+contain the association from any kind of object to any kind of object.
+The hash table allocation can be done by the hash expression:
+</P>
+<blockquote>
+<PRE>
+{a=&#62;b,...}
+</PRE>
+</blockquote>
+
+<P>
+The hash value for the key value is calculated using method <code><a
+href="Object.html#hash"></a>Kernel#hash</code>.  Since the hash value
+of the key should not be changed, instances of the classes like
+<code><a href="Array.html"></a>Array</code>, <code><a
+href="Hash.html">Hash</a></code>, etc. are not suited for the key.
+When the <code><a href="String.html">string</a></code> used as the
+key, hash table copies and freeze it and use copied string as the key
+string.  Attempt to Modify the freezed key strings raises an exception.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl> 
+<dt> <a href="Object.html"><code>Object</code></a>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl> 
+<dt> <a href="Enum.html"><code>Enumerable</code></a>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="Hash.aref">
+<CODE>Hash[<VAR>key</VAR>, <VAR>value</VAR>...]</CODE></A>
+<DD>
+<p>
+Creates a new hash table, interpreting arguments as key - value pair.
+The number of arguments must be times of two.
+</p>
+
+<DT>
+<A NAME="Hash.new">
+<CODE>new([<var>ifnone</var>])</CODE></A>
+<DD>
+<p>
+Creates a new, empty hash table.  <var>ifnone</var> is the default
+value for the non-registered key.
+</p>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="aref">
+<CODE>self [<VAR>key</VAR>]</CODE></A>
+<DD>
+<p>
+Returns the value associated to the <var>key</var>.  Returns the
+default value (or <code>nil</code>), if <code>key</code> is not
+registered in the hash table.
+</p>
+
+<DT>
+<A NAME="aset">
+<CODE>self [<VAR>key</VAR>]= <VAR>value</VAR></CODE></A>
+<DD>
+<p>
+Adds binding of <var>key</var> to <var>value</var>.  If the
+<var>value</var> is <code>nil</code>, the binding from <var>key</var>
+will be removed.  That means the hash table cannot holds the
+association to <code>nil</code>.
+</p>
+
+<DT>
+<A NAME="clear">
+<CODE>clear</CODE></A>
+<DD>
+<p>
+Makes the hash table empty.
+</p>
+
+<DT>
+<A NAME="default"><CODE>default</CODE></A>
+<DD>
+<p>
+Returns the default value for the hash table.
+</p>
+
+<DT>
+<A NAME="default"><CODE>default=(<VAR>value</VAR>)</CODE></A>
+<DD>
+<p>
+Sets the default value for the hash table.
+</p>
+
+<DT>
+<A NAME="delete">
+<CODE>delete(<VAR>key</VAR>)</CODE></A>
+<DD>
+<p>
+Deletes the association from <code>key</code>. Returns
+<code>nil</code> if <var>key</var> is not found in the hash table.
+</p>
+<p>
+If the block supplied to the method, it will be evaluated when no
+association matches to <var>key</var>.
+</p>
+
+<DT>
+<A NAME="delete_if">
+<CODE>delete_if {|<VAR>key</VAR>, <var>value</var>|...}</CODE></A>
+<DD>
+<DT>
+<A NAME="reject_bang"><CODE>reject!{|<VAR>key</VAR>, <var>value</var>|...}</CODE></A>
+<DD>
+<p>
+Deletes association from hash table, if the evaluated value of the
+block with the array of <CODE>[key,value]</CODE> as an argument is
+true.
+</p>
+
+<DT>
+<A NAME="dup">
+<CODE>dup</CODE></A>
+<DD>
+<p>
+Returns a newly created hash table which has the save keys and values
+to the receiver.  <code>clone</code> returns the complete copy of the
+original hash table, including freeze status and instance variables.
+On the other hand, <code>dup</code> copies the hash table containts.
+</p>
+
+<DT>
+<A NAME="each">
+<CODE>each {|<VAR>key</VAR>, <VAR>value</VAR>|...}</CODE></A>
+<DD>
+<DT><A NAME="each_pair">
+<CODE>each_pair {|<VAR>key</VAR>, <VAR>value</VAR>|...}</CODE></A>
+<DD>
+<p>
+Iterates over each pair of keys and values (<CODE>[key,value]</CODE>)
+of the hash.
+</p>
+
+<DT>
+<A NAME="each_key">
+<CODE>each_key {|<VAR>key</VAR>|...}</CODE></A>
+<DD>
+<p>
+Iterates over each key in the hash table.
+</p>
+
+<DT>
+<A NAME="each_value">
+<CODE>each_value {|<VAR>value</VAR>|...}</CODE></A>
+<DD>
+<p>
+Iterates over each value in the hash table.
+</p>
+
+<DT>
+<A NAME="empty_p">
+<CODE>empty?</CODE></A>
+<DD>
+<p>
+Returns true, if hash table is empty.
+</p>
+
+<DT> 
+<A NAME="fetch"><CODE>fetch(<var>key</var>[,<var>default</var>])</CODE></A>
+<DD> 
+<p>
+Returns the value associated to the <var>key</var>.  Returns
+<var>default</var>, if <var>key</var> is not registered in
+the hash table.  If a block is given, evaluates and returns
+its value on value absence.
+</p>
+
+<DT><A NAME="freeze">
+<CODE>freeze</CODE></A>
+<DD>
+<p>
+Prohibits modification of the hash table.  Modification to the freezed
+string raises an exception.
+</p>
+
+<DT><A NAME="frozen_p"><CODE>frozen</CODE></A>
+<DD>
+<p>
+Returns true if the hash table is frozen.
+</p>
+
+<DT>
+<A NAME="has_key_p">
+<CODE>has_key?(<VAR>key</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="key_p">
+<CODE>key?(<VAR>key</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="include_p">
+<CODE>include?(<VAR>key</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if hash table has <var>key</var> in the associations.
+</p>
+
+<DT>
+<A NAME="has_value_p">
+<CODE>has_value?(<VAR>value</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="value_p">
+<CODE>value?(<VAR>value</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if hash table has <var>value</var> in the associations.
+</p>
+
+<DT>
+<A NAME="index">
+<CODE>index(<VAR>val</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the key corresponding to <var>val</var>.
+Returns <code>nil</code> if there is no matching value.
+</p>
+
+<DT>
+<A NAME="indexes">
+<CODE>indexes(<VAR>key_1</VAR>,..., <VAR>key_n</VAR>)</CODE>
+</A>
+<DD>
+<DT>
+<A NAME="indices">
+<CODE>indices(<VAR>key_1</VAR>,..., <VAR>key_n</VAR>)</CODE>
+</A>
+<DD>
+<p>
+Returns an array of values which keys are specified by arguments.
+</p>
+
+<DT>
+<A NAME="keys">
+<CODE>keys</CODE></A>
+<DD>
+<p>
+Returns an array of keys in the hash table.
+</p>
+
+<DT>
+<A NAME="length">
+<CODE>length</CODE></A>
+<DD>
+<A NAME="size">
+<DT><CODE>size</CODE></A>
+<DD>
+<p>
+Returns the number of associations in the hash table.
+</p>
+
+<DT>
+<A NAME="invert">
+<CODE>invert</CODE></A>
+<DD>
+<p>
+Returns the value-to-key mapping of the hash.
+</p>
+
+<DT>
+<A NAME="replace"><CODE>replace(<var>other</var>)</CODE></A>
+<DD>
+<p>
+Copis the content of <var>other</var> into the hash.
+</p>
+
+<DT>
+<A NAME="shift">
+<CODE>shift</CODE></A>
+<DD>
+<p>
+Removes and returns an association from the hash table.  The
+association is in the form <CODE>[key,value]</CODE>.
+</p>
+
+<DT>
+<A NAME="store"><CODE>store(<VAR>key</VAR>,<VAR>value</VAR>)</CODE></A>
+<DD>
+<p>
+Adds binding of <var>key</var> to <var>value</var>.  
+</p>
+
+<DT>
+<A NAME="to_a">
+<CODE>to_a</CODE></A>
+<DD>
+<p>
+Returns an array of two element arrays of associations which is
+<CODE>[key,value]</CODE>. 
+</p>
+
+<DT>
+<A NAME="update">
+<CODE>update(<var>other</var>)</CODE></A>
+<DD>
+<p>
+Merges the contents of another hash, overriding existing
+keys.
+</p>
+
+<DT>
+<A NAME="values">
+<CODE>values</CODE></A>
+<DD>
+<p>
+Returns an array of the values in the hash table.
+</p>
+
+</DL>
+</dl>
+
+<HR>
+<A HREF="Hash.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="IO.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

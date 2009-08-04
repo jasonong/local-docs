@@ -1,0 +1,179 @@
+  <div id="C00000495">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />MemoryStore<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/cache/memory_store_rb.html');">rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActiveSupport/Cache/Store.html');">
+Store
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+A cache store implementation which stores everything into memory in the
+same process. If you&#8217;re running multiple Ruby on Rails server
+processes (which is the case if you&#8217;re using mongrel_cluster or
+Phusion Passenger), then this means that your Rails server process
+instances won&#8217;t be able to share cache data with each other. If your
+application never performs manual cache item expiry (e.g. when you&#8217;re
+using generational cache keys), then using <a
+href="index.html?a=C00000495&name=MemoryStore">MemoryStore</a> is ok.
+Otherwise, consider carefully whether you should be using this cache store.
+</p>
+<p>
+<a href="index.html?a=C00000495&name=MemoryStore">MemoryStore</a> is not
+only able to store strings, but also arbitrary Ruby objects.
+</p>
+<p>
+<a href="index.html?a=C00000495&name=MemoryStore">MemoryStore</a> is not
+thread-safe. Use <a
+href="index.html?a=C00000496&name=SynchronizedMemoryStore">SynchronizedMemoryStore</a>
+instead if you need thread-safety.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001252&name=clear" >clear</a></li>
+  <li><a href="index.html?a=M001249&name=delete" >delete</a></li>
+  <li><a href="index.html?a=M001250&name=delete_matched" >delete_matched</a></li>
+  <li><a href="index.html?a=M001251&name=exist?" >exist?</a></li>
+  <li><a href="index.html?a=M001246&name=new" >new</a></li>
+  <li><a href="index.html?a=M001247&name=read" >read</a></li>
+  <li><a href="index.html?a=M001248&name=write" >write</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001246" class="method">
+  <div id="M001246_title" class="title">
+    <b>new</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001246_source')" id="l_M001246_source">show source</a> ]</p>
+  <div id="M001246_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb, line 18</span>
+18:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+19:         <span class="ruby-ivar">@data</span> = {}
+20:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001252" class="method">
+  <div id="M001252_title" class="title">
+    <b>clear</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001252_source')" id="l_M001252_source">show source</a> ]</p>
+  <div id="M001252_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb, line 47</span>
+47:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear</span>
+48:         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">clear</span>
+49:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001249" class="method">
+  <div id="M001249_title" class="title">
+    <b>delete</b>(name, options = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001249_source')" id="l_M001249_source">show source</a> ]</p>
+  <div id="M001249_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb, line 32</span>
+32:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>)
+33:         <span class="ruby-keyword kw">super</span>
+34:         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">name</span>)
+35:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001250" class="method">
+  <div id="M001250_title" class="title">
+    <b>delete_matched</b>(matcher, options = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001250_source')" id="l_M001250_source">show source</a> ]</p>
+  <div id="M001250_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb, line 37</span>
+37:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_matched</span>(<span class="ruby-identifier">matcher</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>)
+38:         <span class="ruby-keyword kw">super</span>
+39:         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">matcher</span> }
+40:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001251" class="method">
+  <div id="M001251_title" class="title">
+    <b>exist?</b>(name,options = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001251_source')" id="l_M001251_source">show source</a> ]</p>
+  <div id="M001251_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb, line 42</span>
+42:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>)
+43:         <span class="ruby-keyword kw">super</span>
+44:         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">name</span>)
+45:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001247" class="method">
+  <div id="M001247_title" class="title">
+    <b>read</b>(name, options = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001247_source')" id="l_M001247_source">show source</a> ]</p>
+  <div id="M001247_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb, line 22</span>
+22:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>)
+23:         <span class="ruby-keyword kw">super</span>
+24:         <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">name</span>]
+25:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001248" class="method">
+  <div id="M001248_title" class="title">
+    <b>write</b>(name, value, options = nil)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001248_source')" id="l_M001248_source">show source</a> ]</p>
+  <div id="M001248_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/memory_store.rb, line 27</span>
+27:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>)
+28:         <span class="ruby-keyword kw">super</span>
+29:         <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">freeze</span>
+30:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

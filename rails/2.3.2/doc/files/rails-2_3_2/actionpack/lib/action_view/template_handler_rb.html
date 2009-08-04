@@ -1,0 +1,53 @@
+  <div id="fileHeader">
+    <h1>template_handler.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/template_handler.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre># Legacy TemplateHandler stub
+module ActionView
+  module TemplateHandlers #:nodoc:
+    module Compilable
+      def self.included(base)
+        base.extend(ClassMethods)
+      end
+
+      module ClassMethods
+        def call(template)
+          new.compile(template)
+        end
+      end
+
+      def compile(template)
+         raise &quot;Need to implement #{self.class.name}#compile(template)&quot;
+       end
+    end
+  end
+
+  class TemplateHandler
+    def self.call(template)
+      &quot;#{name}.new(self).render(template, local_assigns)&quot;
+    end
+
+    def initialize(view = nil)
+      @view = view
+    end
+
+    def render(template, local_assigns)
+      raise &quot;Need to implement #{self.class.name}#render(template, local_assigns)&quot;
+    end
+  end
+end
+</pre>
+    </div>

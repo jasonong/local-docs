@@ -1,0 +1,339 @@
+<HTML><HEAD><TITLE>comp.lang.ruby FAQ</TITLE></HEAD><BODY>
+                <pre>
+RUBY NEWSGROUP FAQ -- Welcome to comp.lang.ruby!  (Revised 2002-9-20)
+
+This FAQ contains information for those who want to:
+
+  1) learn more about Ruby, and want to
+  2) post to comp.lang.ruby or to the ruby-lang mail list, or want to
+  3) provide anonymous feedback to help us improve Ruby.
+
+This FAQ will be posted monthly.
+
+Note that this is *not* the Ruby language FAQ! This can be found at the
+main Ruby site (www.ruby-lang.org).
+
+TABLE OF CONTENTS
+
+    1 About Ruby
+    1.1 What is Ruby?
+    1.2 Where can I find out more about Ruby?
+    2 About comp.lang.ruby.
+    2.1 Tell me about comp.lang.ruby.
+    2.2 Tell me the posting guidelines for comp.lang.ruby.
+    2.3 Tell me about the prolific Matz poster.
+    2.4 How do the mailing list and newsgroup interrelate?
+    2.5 What are these 5-digit message numbers?
+    3 Anything else?
+
+1 About Ruby
+
+1.1 What is Ruby?
+
+    Ruby is a very high level, fully OO programming language. Indeed,
+    Ruby is one of the relatively few pure OO languages. Yet despite
+    its conceptual simplicity, Ruby is still a powerful and practical
+    &quot;industrial strength&quot; development language.
+
+    Ruby selectively integrates many good ideas taken from Perl,
+    Python, Smalltalk, Eiffel, ADA, Clu, and Lisp. Ruby combines
+    these ideas in a natural, well-coordinated system that embodies
+    the principles of least effort and least surprise to a
+    substantially greater extent than most comparable languages --
+    i.e. you get more bang for your buck, and what you write is more
+    likely to give you what you expected to get.  Ruby is thus a
+    relatively easy to learn, easy to read, and easy to maintain
+    language; yet it is very powerful and sophisticated.
+
+    In addition to common OO features, Ruby also has threads,
+    singleton methods, mixins, fully integrated closures and
+    iterators, plus proper meta-classes.   Ruby has a true
+    mark-and-sweep garbage collector, which makes code more reliable
+    and simplifies writing extensions.  In summary, Ruby provides a
+    very powerful and very easy to deploy &quot;standing on the shoulders
+    of giants&quot; OO scaffolding/framework so that you can more quickly
+    and easily build what you want to build, to do what you want to
+    do.
+
+    You will find many former (and current) Perl, Python, Java, and
+    C++ users on comp.lang.ruby that can help you get up to speed in
+    Ruby.
+
+    Finally, Ruby is an &quot;open source&quot; development programming
+    language.
+
+1.2 Where can I find out more about Ruby?
+
+    Ruby's home web site:
+
+        <A HREF="http://www.ruby-lang.org/en" target="_top">http://www.ruby-lang.org/en</A> (Ruby English language home page.)
+
+            Follow the links to documentation, downloads, the Ruby
+            Application Archive, the Ruby mail list archives, and lots
+            of other interesting information.
+
+    Ruby's other major on-line documentation and links site:
+
+        <A HREF="http://www.rubycentral.com" target="_top">http://www.rubycentral.com</A>
+
+    Ruby FAQ:
+
+        <A HREF="http://www.rubycentral.com/faq/" target="_top">http://www.rubycentral.com/faq/</A>
+
+    Ruby User's Guide (introductory tutorial):
+
+        <A HREF="http://www.ruby-lang.org/~slagell/ruby/" target="_top">http://www.ruby-lang.org/~slagell/ruby/</A>
+
+    Ruby Reference Manual:
+
+        <A HREF="http://www.ruby-lang.org/en/doc.html" target="_top">http://www.ruby-lang.org/en/doc.html</A>
+
+    Ruby classes, modules, and methods reference:
+
+        <A HREF="http://www.rubycentral.com/ref/" target="_top">http://www.rubycentral.com/ref/</A>
+
+    English language Ruby books (recent publication order):
+
+        Making Use of Ruby
+ by Suresh Mahadevan
+ Wiley; ISBN 0-471-21972-X (2002)
+
+        Teach Yourself Ruby in 21 Days
+        by Mark Slagell
+        Sams; ISBN: 0672322528 (March, 2002)
+
+        Ruby Developer's Guide
+        by Michael Neumann, Robert Feldt, Lyle Johnson
+        Publishers Group West; ISBN: 1928994644 (February, 2002)
+
+        The Ruby Way
+        by Hal Fulton
+        Sams; ISBN: 0672320835 (December, 2001)
+
+        Ruby In A Nutshell
+        by Yukihiro Matsumoto
+        O'Reilly &amp; Associates; ISBN: 0596002149 (November, 2001)
+
+        Programming Ruby: A Pragmatic Programmers Guide
+        by Dave Thomas and Andrew Hunt
+        Addison Wesley; ISBN: 0201710897 (2000)
+        Internet version: <A HREF="http://www.rubycentral.com/ref/" target="_top">http://www.rubycentral.com/ref/</A>
+        Errata: <A HREF="http://www.pragmaticprogrammer.com/ruby/errata.html" target="_top">http://www.pragmaticprogrammer.com/ruby/errata.html</A>
+
+    Forthcoming English language Ruby books (author alpha order):
+
+        The Ruby Developer's Handbook
+        Robert Calco, Rich Kilmer, Dana Moore
+        Sams Publishing, ISBN: ??? (2002)
+
+        CANCELED, MARCH 2002 (for reasons unknown):
+        The Ruby Programming Language
+        by Yukihiro &quot;Matz&quot; Matsumoto and Keiju Ishitsuka
+        Addison Wesley Professional; ISBN: 020171096X (June, 2002)
+
+    German language Ruby books (author alpha order):
+
+        Programmieren mit Ruby
+        by Armin Roehrl, Stefan Schmiedl, Clemens Wyss, et al.
+        dpunkt.de; ISBN 3898641511 (February, 2002)
+
+        Programmieren mit Ruby. Handbuch f den pragmatischen
+        Programmierer.
+        Translation of the Thomas/Hunt book (Programming Ruby,
+        aka the Pickaxe Book)
+        Addison-Wesley, ISBN: 382731965X (2002)
+
+    Forthcoming German language Ruby books (author alpha order):
+
+        Das Einsteigerseminar Ruby. Der methodische und
+        ausfrliche Einstieg.
+        by Dirk Engel and Klaus Spreckelsen
+        ISBN: 3826672429
+
+    Search past postings to comp.lang.ruby or the ruby-lang mail list
+    (which have been mirrored to each other since mid-2000):
+
+        <A HREF="http://www.deja.com/home_ps.shtml" target="_top">http://www.deja.com/home_ps.shtml</A>
+        (Enter comp.lang.ruby in the &quot;forum&quot; entry field.)
+
+        <A HREF="http://blade.nagaokaut.ac.jp/ruby/ruby-talk/index.shtml" target="_top">http://blade.nagaokaut.ac.jp/ruby/ruby-talk/index.shtml</A>
+
+    Local Ruby users and groups in your area:
+
+        <A HREF="http://www.pragprog.com/ruby?RubyUserGroups" target="_top">http://www.pragprog.com/ruby?RubyUserGroups</A>
+
+2 About comp.lang.ruby.
+
+2.1 Tell me about comp.lang.ruby
+
+    comp.lang.ruby was officially approved in early May, 2000.
+    (Conrad Schneiker, the former maintainer of this FAQ, was
+    responsible for the &quot;net paperwork&quot; of creating this group.)
+    Here is the official charter:
+
+        CHARTER: comp.lang.ruby
+
+        The comp.lang.ruby newsgroup is devoted to discussions of the
+        Ruby programming language and related issues.
+
+        Examples of relevant postings include, but are not limited
+        to, the following subjects:
+
+        - Bug reports
+        - Announcements of software written with Ruby
+        - Examples of Ruby code
+        - Suggestions for Ruby developers
+        - Requests for help from new Ruby programmers
+
+        The newsgroup is not moderated.  Binaries are prohibited
+        (except the small PGP type). Advertising is prohibited (except
+        for announcements of new Ruby-related products).
+
+        END CHARTER.
+
+2.2 Tell me the posting guidelines for comp.lang.ruby.
+
+    (You should also follow these guidelines for the ruby-list mail
+    list, since it is mirrored to comp.lang.ruby.)
+
+    (1) ALWAYS be friendly, considerate, tactful, and tasteful.  We
+        want to keep this forum hospitable to the growing ranks of
+        newbies, very young people, and their teachers, as well as
+        cater to fire breathing wizards.  :-)
+
+    (2) Keep your content relevant and easy to follow. Try to keep
+        your content brief and to the point, but also try to include
+        all relevant information.
+
+        (a) The general format guidelines (aka USENET Netiquette) are
+            matters of common sense and common courtesy that make life
+            easier for 3rd parties to follow along (in real time or
+            when perusing archives):
+
+            - PLEASE NOTE! Include quoted text from previous posts
+              *BEFORE* your responses. And *selectively* quote as much
+              as is relevant.
+            - Use *plain* text; don't use HTML, RTF, or Word. Most
+              mail or newsreader programs have an option for this; if
+              yours doesn't, get a (freeware) program or use a
+              web-based service that does.
+            - Include examples from files as *in-line* text; don't
+              use attachments.
+
+        (b) If reporting a problem, give *all* the relevant
+            information the first time; this isn't the psychic friends
+            newsgroup.  :-)  When appropriate, include:
+
+            - The version of Ruby. (&quot;ruby -v&quot;)
+            - The compiler name and version used to build Ruby.
+            - The OS type and level. (&quot;uname -a&quot;)
+            - The actual error messages.
+            - An example (preferably simple) that produces the
+              problem.
+
+        (c) If reporting a bug, please copy (cc:) your post to:
+
+                <A HREF="mailto:ruby-bugs@ruby-lang.org" target="_top">mailto:ruby-bugs@ruby-lang.org</A>
+
+            This will enter your report into the Ruby bug database.
+            You can browse the database at:
+
+                <A HREF="http://www.ruby-lang.org/cgi-bin/ruby-bugs" target="_top">http://www.ruby-lang.org/cgi-bin/ruby-bugs</A>
+
+    (3) Make the subject line maximally informative, so that people
+        who should be interested will read your post and so that people
+        who wouldn't be interested can easily avoid it.
+
+        *Usefully* describe the contents of your post:
+
+            This is OK:
+
+                &quot;How can I do x with y on z?&quot;
+                &quot;Problem: did x, expected y, got z.&quot;
+                &quot;Bug: doing x with module y crashed z.&quot;
+
+            This is *NOT* OK:
+
+                &quot;Please help!!!&quot;
+                &quot;Newbie question&quot;
+                &quot;Need Ruby guru to tell me what's wrong&quot;
+
+    (4) Finally, be considerate: don't be too lazy. If you are
+        seeking information, first make a reasonable effort to look it
+        up. As appropriate, check the Ruby home page, check the Ruby
+        FAQ and other documentation, use deja.com to search past
+        comp.lang.ruby postings, and so on.
+
+2.3 Tell me about the prolific Matz poster.
+
+    Matz (aka Yukihiro Matsumoto) is the wizard who created Ruby for
+    us, so be nice to him. He is very busy, so be patient when asking
+    questions. See the Ruby home page to find out more about him and
+    his work. I (Conrad Schneiker) founded comp.lang.ruby at his
+    suggestion. Contrary to lots of skepticism, it was approved on
+    the first attempt, with 200 yes votes.
+
+2.4 How do the mailing list and newsgroup interrelate?
+
+    The mailing list is older. When the newsgroup was created, they
+    diverged. In mid-2001, Dave Thomas created a two-way gateway
+    that would &quot;mirror&quot; the newsgroup to the list and vice versa.
+    (This was accomplished in 200 lines of Ruby code.) It is not
+    perfect; because of variability in the news feed, sometimes
+    messages are dropped or duplicated.
+
+    The online archive of the mailing list therefore includes most
+    of the traffic on the newsgroup, excluding the posts that were
+    made before the creation of the gateway.
+
+    Note: Spam or other inappropriate messages are NOT the
+    responsibility of Dave Thomas, who maintains the gateway. He
+    does everything in his power to deal with this issue. Do NOT
+    report spam to his ISP merely because the messages come from
+    his server.
+
+2.5 What are these 5-digit message numbers?
+
+    Historically, every item on the mailing list had a subject
+    starting with a string like: <A HREF="/cgi-bin/scat.rb/ruby/ruby-talk/99999">[ruby-talk:99999]</A>
+
+    The message numbers were convenient since they were strictly
+    serial and formed a good way to refer to a past message. But
+    they interfered with threading; Matz removed them after the
+    matter was put to a vote in early 2002.
+
+    The news header still refers to this number, should anyone
+    wish to retrieve it. On the mailing list this number can
+    now be found in the X-Mail-Count: header.
+
+    You can point to a specific message by appending it onto the
+    ruby-talk.org URL; i.e. <A HREF="http://ruby-talk.org/12345" target="_top">http://ruby-talk.org/12345</A> will refer
+    to message 12345.
+
+
+3. Anything else?
+
+    If you are new to Ruby (or haven't previously taken the Ruby User
+    Survey), please take a moment to anonymously tell us about your
+    programming background and about your Ruby-related interests. The
+    results will be reported back to the Ruby community from time to
+    time. This helps us do a better job of helping each other, and to
+    more effectively expand the Ruby community for our mutual benefit.
+    The survey is at:
+
+        <A HREF="http://dev.rubycentral.com/survey.html" target="_top">http://dev.rubycentral.com/survey.html</A>
+
+    This FAQ was produced by Conrad Schneiker (schneiker@jump.net).
+    It is now maintained by Hal Fulton (hal9000@hypermetrics.com).
+    I'm interested in corrections and suggestions, but remember that
+    the purpose of this FAQ is to be a brief and simple introduction
+    for new comp.lang.ruby readers.
+
+    In closing, one of the reasons that Ruby was designed to be
+    relatively simple, uniform, yet very powerful was to make serious
+    programming (among other kinds) fun.  We hope you will help us
+    keep comp.lang.ruby fun as well. Enjoy.  :-)
+
+
+</pre>
+</BODY></HTML>

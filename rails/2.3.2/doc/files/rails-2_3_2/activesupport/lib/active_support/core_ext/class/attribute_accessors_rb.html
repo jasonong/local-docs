@@ -1,0 +1,73 @@
+  <div id="fileHeader">
+    <h1>attribute_accessors.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/class/attribute_accessors.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre># Extends the class object with class and instance accessors for class attributes,
+# just like the native attr* accessors for instance attributes.
+#
+#  class Person
+#    cattr_accessor :hair_colors
+#  end
+#
+#  Person.hair_colors = [:brown, :black, :blonde, :red]
+class Class
+  def cattr_reader(*syms)
+    syms.flatten.each do |sym|
+      next if sym.is_a?(Hash)
+      class_eval(&lt;&lt;-EOS, __FILE__, __LINE__)
+        unless defined? @@#{sym}  # unless defined? @@hair_colors
+          @@#{sym} = nil          #   @@hair_colors = nil
+        end                       # end
+                                  #
+        def self.#{sym}           # def self.hair_colors
+          @@#{sym}                #   @@hair_colors
+        end                       # end
+                                  #
+        def #{sym}                # def hair_colors
+          @@#{sym}                #   @@hair_colors
+        end                       # end
+      EOS
+    end
+  end
+
+  def cattr_writer(*syms)
+    options = syms.extract_options!
+    syms.flatten.each do |sym|
+      class_eval(&lt;&lt;-EOS, __FILE__, __LINE__)
+        unless defined? @@#{sym}                       # unless defined? @@hair_colors
+          @@#{sym} = nil                               #   @@hair_colors = nil
+        end                                            # end
+                                                       #
+        def self.#{sym}=(obj)                          # def self.hair_colors=(obj)
+          @@#{sym} = obj                               #   @@hair_colors = obj
+        end                                            # end
+                                                       #
+        #{&quot;                                            #
+        def #{sym}=(obj)                               # def hair_colors=(obj)
+          @@#{sym} = obj                               #   @@hair_colors = obj
+        end                                            # end
+        &quot; unless options[:instance_writer] == false }  # # instance writer above is generated unless options[:instance_writer] == false
+      EOS
+    end
+  end
+
+  def cattr_accessor(*syms)
+    cattr_reader(*syms)
+    cattr_writer(*syms)
+  end
+end
+</pre>
+    </div>

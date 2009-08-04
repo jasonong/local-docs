@@ -1,0 +1,57 @@
+  <div id="C00000849">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ERB<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_view/template_handlers/erb_rb.html');">rails-2.3.2/actionpack/lib/action_view/template_handlers/erb.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActionView/TemplateHandler.html');">
+TemplateHandler
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002591&name=compile" >compile</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="#" onclick="jsHref('classes/ActionView/TemplateHandlers/Compilable.html');">Compilable</a></li>
+</ul>
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002591" class="method">
+  <div id="M002591_title" class="title">
+    <b>compile</b>(template)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002591_source')" id="l_M002591_source">show source</a> ]</p>
+  <div id="M002591_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/template_handlers/erb.rb, line 13</span>
+13:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">compile</span>(<span class="ruby-identifier">template</span>)
+14:         <span class="ruby-identifier">src</span> = <span class="ruby-operator">::</span><span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;&lt;% __in_erb_template=true %&gt;#{template.source}&quot;</span>, <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">erb_trim_mode</span>, <span class="ruby-value str">'@output_buffer'</span>).<span class="ruby-identifier">src</span>
+15: 
+16:         <span class="ruby-comment cmt"># Ruby 1.9 prepends an encoding to the source. However this is</span>
+17:         <span class="ruby-comment cmt"># useless because you can only set an encoding on the first line</span>
+18:         <span class="ruby-constant">RUBY_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value str">'1.9'</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/\A#coding:.*\n/</span>, <span class="ruby-value str">''</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">src</span>
+19:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

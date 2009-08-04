@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Strings</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="examples.html">
+ <img border=0 src="a2l.gif" alt="Simple examples"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="regexp.html">
+ <img border=0 src="a2r.gif" alt="Regular expressions"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Strings</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Ruby deals with strings as well as numerical data.  A string
+may be double-quoted ("...") or single-quoted ('...').</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "abc"</b></font>
+<font color="#50ffff"><b>   "abc"</b></font>
+ruby&gt;<font color="#ffff00"><b> 'abc'</b></font>
+<font color="#50ffff"><b>   "abc"</b></font></font></pre></td></tr></table>
+<p>Double- and single-quoting have different effects in some
+cases.  A double-quoted string allows character escapes by a
+leading backslash, and the evaluation of embedded expressions using
+<code>#{}</code>.  A single-quoted string does not do this
+interpreting; what you see is what you get.  Examples:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> print "a\nb\nc","\n"</b></font>
+a
+b
+c
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> print 'a\nb\n',"\n"</b></font>
+a\nb\nc
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> "\n"</b></font>
+<font color="#50ffff"><b>   "\n"</b></font>
+ruby&gt;<font color="#ffff00"><b> '\n'</b></font>
+<font color="#50ffff"><b>   "\\n"</b></font>
+ruby&gt;<font color="#ffff00"><b> "\001"</b></font>
+<font color="#50ffff"><b>   "\001"</b></font>
+ruby&gt;<font color="#ffff00"><b> '\001'</b></font>
+<font color="#50ffff"><b>   "\\001"</b></font>
+ruby&gt;<font color="#ffff00"><b> "abcd #{5*3} efg"</b></font>
+<font color="#50ffff"><b>   "abcd 15 efg"</b></font>
+ruby&gt;<font color="#ffff00"><b> var = " abc "</b></font>
+<font color="#50ffff"><b>   " abc "</b></font>
+ruby&gt;<font color="#ffff00"><b> "1234#{var}5678"</b></font>
+<font color="#50ffff"><b>   "1234 abc 5678"</b></font></font></pre></td></tr></table>
+<p>Ruby's string handling is smarter and more intuitive than C's.  For
+instance, you can concatenate strings with <code>+</code>, and repeat a
+string many times with <code>*</code>:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "foo" + "bar"</b></font>
+<font color="#50ffff"><b>   "foobar"</b></font>
+ruby&gt;<font color="#ffff00"><b> "foo" * 2</b></font>
+<font color="#50ffff"><b>   "foofoo"</b></font></font></pre></td></tr></table>
+<p>Concatenating strings is much more awkward in C because of the need
+for explicit memory management:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#d8d8e0"><tr><td><pre><font color="black">char *s = malloc(strlen(s1)+strlen(s2)+1);
+strcpy(s, s1);
+strcat(s, s2);
+/* ... */
+free(s);</font></pre></td></tr></table>
+<p>But using ruby, we do not have to consider the space occupied by a
+string.  We are free from all memory management.</p>
+<p>Here are some things you can do with strings.</p>
+<p>Concatenation:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> word = "fo" + "o"</b></font>
+<font color="#50ffff"><b>   "foo"</b></font></font></pre></td></tr></table>
+<p>Repetition:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> word = word * 2</b></font>
+<font color="#50ffff"><b>   "foofoo"</b></font></font></pre></td></tr></table>
+<p>Extracting characters (note that characters are integers in ruby):</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> word[0]</b></font>
+<font color="#50ffff"><b>   102            # 102 is ASCII code of `f' </b></font>
+ruby&gt;<font color="#ffff00"><b> word[-1]</b></font>
+<font color="#50ffff"><b>   111            # 111 is ASCII code of `o'</b></font></font></pre></td></tr></table>
+<p>(Negative indices mean offsets from the end of a string, rather
+than the beginning.)</p>
+<p>Extracting substrings:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> herb = "parsley"</b></font>
+<font color="#50ffff"><b>   "parsley"</b></font>
+ruby&gt;<font color="#ffff00"><b> herb[0,1]</b></font>
+<font color="#50ffff"><b>   "p"</b></font>
+ruby&gt;<font color="#ffff00"><b> herb[-2,2]</b></font>
+<font color="#50ffff"><b>   "ey"</b></font>
+ruby&gt;<font color="#ffff00"><b> herb[0..3]</b></font>
+<font color="#50ffff"><b>   "pars"</b></font>
+ruby&gt;<font color="#ffff00"><b> herb[-5..-2]</b></font>
+<font color="#50ffff"><b>   "rsle"</b></font></font></pre></td></tr></table>
+<p>Testing for equality:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "foo" == "foo"</b></font>
+<font color="#50ffff"><b>   true</b></font>
+ruby&gt;<font color="#ffff00"><b> "foo" == "bar"</b></font>
+<font color="#50ffff"><b>   false</b></font></font></pre></td></tr></table>
+<p>Note: In ruby 1.0, results of the above are reported in uppercase,
+e.g. <code>TRUE</code>.</p>
+<p>Now, let's put some of these features to use.  This puzzle is
+"guess the word," but perhaps the word "puzzle" is too dignified
+for what is to follow <code>;-)</code></p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black"># save this as guess.rb
+words = ['foobar', 'baz', 'quux']
+secret = words[rand(3)]
+
+print "guess? "
+while guess = STDIN.gets
+  guess.chop!
+  if guess == secret
+    print "You win!\n"
+    break
+  else
+    print "Sorry, you lose.\n"
+  end
+  print "guess? "
+end
+print "The word was ", secret, ".\n"</font></pre></td></tr></table>
+<p>For now, don't worry too much about the details of this code.
+Here is what a run of the puzzle program looks like.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">% ruby guess.rb
+guess? foobar
+Sorry, you lose.
+guess? quux
+Sorry, you lose.
+guess? ^D
+The word was baz.</font></pre></td></tr></table>
+<p>(I should have done a bit better, considering the 1/3 probability
+of success.)</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="examples.html">
+ <img border=0 src="a2l.gif" alt="Simple examples"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="regexp.html">
+ <img border=0 src="a2r.gif" alt="Regular expressions"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

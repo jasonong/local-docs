@@ -1,0 +1,84 @@
+  <div id="C00000304">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ForwardRequest<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/recursive_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/recursive.rb</a>
+
+Parent:&nbsp;
+Exception
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000304&name=Rack::ForwardRequest">Rack::ForwardRequest</a>
+gets caught by <a
+href="index.html?a=C00000298&name=Rack::Recursive">Rack::Recursive</a> and
+redirects the current request to the app at <tt>url</tt>.
+</p>
+<pre>
+  raise ForwardRequest.new(&quot;/not-found&quot;)
+</pre>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001090&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>env</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>url</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001090" class="method">
+  <div id="M001090_title" class="title">
+    <b>new</b>(url, env={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001090_source')" id="l_M001090_source">show source</a> ]</p>
+  <div id="M001090_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/recursive.rb, line 13</span>
+13:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">env</span>={})
+14:       <span class="ruby-ivar">@url</span> = <span class="ruby-constant">URI</span>(<span class="ruby-identifier">url</span>)
+15:       <span class="ruby-ivar">@env</span> = <span class="ruby-identifier">env</span>
+16: 
+17:       <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;PATH_INFO&quot;</span>] =       <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">path</span>
+18:       <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;QUERY_STRING&quot;</span>] =    <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">query</span>  <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">query</span>
+19:       <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;HTTP_HOST&quot;</span>] =       <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">host</span>   <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">host</span>
+20:       <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;HTTP_PORT&quot;</span>] =       <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>   <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">port</span>
+21:       <span class="ruby-ivar">@env</span>[<span class="ruby-value str">&quot;rack.url_scheme&quot;</span>] = <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">scheme</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@url</span>.<span class="ruby-identifier">scheme</span>
+22: 
+23:       <span class="ruby-keyword kw">super</span> <span class="ruby-node">&quot;forwarding to #{url}&quot;</span>
+24:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,37 @@
+  <div id="fileHeader">
+    <h1>South_Georgia.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/vendor/tzinfo-0.3.12/tzinfo/definitions/Atlantic/South_Georgia.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'tzinfo/timezone_definition'
+
+module TZInfo
+  module Definitions
+    module Atlantic
+      module South_Georgia
+        include TimezoneDefinition
+        
+        timezone 'Atlantic/South_Georgia' do |tz|
+          tz.offset :o0, -8768, 0, :LMT
+          tz.offset :o1, -7200, 0, :GST
+          
+          tz.transition 1890, 1, :o1, 1627673806, 675
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

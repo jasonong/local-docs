@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+<TITLE>DBM</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<dl>
+<dt> <H1>DBM</H1>
+<dd> 
+<P>
+<code>DBM</code> is the class to provide access to the DBM files.  It
+acts string to string dictionary, storing data in the DBM file.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Enum.html"><code>Enumerable</code></A>
+</dl>
+<dt> <h2>Class Method:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="DBM.open">
+<code>open(<var>dbname</var>[, <var>mode</var>])</code></a>
+<dd> 
+<P>
+Opens the DBM database specified by <var>dbname</var>, with
+<var>mode</var>.  The default value for the <var>mode</var> is 0666.
+If <code>nil</code> is specified for the <var>mode</var>,
+<code>open</code> returns <code>nil</code>, if the DBM file does not
+exist.
+</P>
+</DL>
+<dt> <h2>Method:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="aref">
+<code>self[<var>key</var>]</code></a>
+<dd> 
+<p>
+Returns the value corresponding the <var>key</var>.
+</p>
+<dt> <a name="aset">
+<code>self[<var>key</var>] = <var>value</var></code></a>
+<dd> 
+<p>
+Stores the <var>value</var> associating with <var>key</var>.  If
+<code>nil</code> is given as the <var>value</var>,  the association
+from the <var>key</var> will be removed.
+</p>
+</DL>
+<dt> <a name="clear">
+<code>clear</code></a>
+<dd> 
+<p>
+Makes the DBM file empty.
+</p>
+<dt> <a name="close"><code>close</code></a>
+<dd> 
+<p>
+Closes the DBM file.  Later operation raises an exception.
+</p>
+<dt> <a name="delete">
+<code>delete(<var>key</var>)</code></a>
+<dd> 
+<p>
+Removes the association from the <var>key</var>.
+</p>
+<dt> <a name="delete_if">
+<code>delete_if { |<var>key</var>, <var>value</var>| ... }</code></a>
+<dd> 
+<p>
+Deletes associations if the evaluation of the block returns true.
+</p>
+<dt> <a name="each"><code>each {|<var>key</var>, <var>value</var>| ... }</code></a>
+<dd> 
+<dt> <a name="each_pair"><code>each {|<var>key</var>, <var>value</var>| ... }</code></a>
+<dd> 
+<p>
+Iterates over associations.
+</p>
+<dt> <a name="each_key"><code>each_key {|<var>key</var>| ... }</code></a>
+<dd> 
+<p>
+Iterates over keys.
+</p>
+<dt> <a name="each_value"><code>each_value {|<var>value</var>| ... }</code></a>
+<dd> 
+<p>
+Iterates over values.
+</p>
+<dt> 
+<a name="empty_p"><code>empty?()</code></a>
+<dd> 
+<p>
+Returns true if the database is empty.
+</p>
+<dt> <a name="has_key_p"><code>has_key?(<var>key</var>)</code></a>
+<dd> 
+<dt> 
+<a name="key_p"><code>key?(<var>key</var>)</code></a>
+<dd> 
+<dt> 
+<a name="include_p"><code>include?(<var>key</var>)</code></a>
+<dd> 
+<p>
+Returns true if the association from the <var>key</var> exists.
+</p>
+<dt> <a name="has_value_p"></a><a name="value_p"></a>
+<code>has_value?(<var>value</var>)</code>
+<dd> 
+<dt> 
+<code>value?(<var>value</var>)</code>
+<dd> 
+<p>
+Returns true if the association to the <var>value</var> exists.
+</p>
+<dt> 
+<a name="indexes"><code>indexes(<var>key_1</var>,...)</code></a>
+<dd> 
+<dt> 
+<a name="indices"><code>indices(<var>key_1</var>,...)</code></a>
+<dd> 
+<p>
+Returns an array contains items at each key specified by
+each argument.
+</p>
+<dt> <a name="keys"><code>keys</code></a>
+<dd> 
+<p>
+Returns the array of the keys in the DBM dictionary.
+</p>
+<dt> <a name="length"><code>length</code></a>
+<dd> 
+<dt> 
+<a name="size"><code>size</code></a>
+<dd> 
+<p>
+Returns the number of association in the DBM dictionary.  Current
+implementation uses iteration over all associations to count, so that
+it may take time to get the size of the huge DBM dictionary.
+</p>
+<dt> <a name="shift"><code>shift</code></a>
+<dd> 
+<p>
+Removes and returns an association from the database.
+</p>
+<dt> <a name="values"><code>values</code></a>
+<dd> 
+<p>
+Returns the array of the values in the DBM dictionary.
+</p>
+</DL>
+</BODY>
+</HTML>

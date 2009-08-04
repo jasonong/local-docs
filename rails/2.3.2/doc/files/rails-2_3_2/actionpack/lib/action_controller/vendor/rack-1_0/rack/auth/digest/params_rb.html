@@ -1,0 +1,74 @@
+  <div id="fileHeader">
+    <h1>params.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/params.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  module Auth
+    module Digest
+      class Params &lt; Hash
+
+        def self.parse(str)
+          split_header_value(str).inject(new) do |header, param|
+            k, v = param.split('=', 2)
+            header[k] = dequote(v)
+            header
+          end
+        end
+
+        def self.dequote(str) # From WEBrick::HTTPUtils
+          ret = (/\A&quot;(.*)&quot;\Z/ =~ str) ? $1 : str.dup
+          ret.gsub!(/\\(.)/, &quot;\\1&quot;)
+          ret
+        end
+
+        def self.split_header_value(str)
+          str.scan( /(\w+\=(?:&quot;[^\&quot;]+&quot;|[^,]+))/n ).collect{ |v| v[0] }
+        end
+
+        def initialize
+          super
+
+          yield self if block_given?
+        end
+
+        def [](k)
+          super k.to_s
+        end
+
+        def []=(k, v)
+          super k.to_s, v.to_s
+        end
+
+        UNQUOTED = ['qop', 'nc', 'stale']
+
+        def to_s
+          inject([]) do |parts, (k, v)|
+            parts &lt;&lt; &quot;#{k}=&quot; + (UNQUOTED.include?(k) ? v.to_s : quote(v))
+            parts
+          end.join(', ')
+        end
+
+        def quote(str) # From WEBrick::HTTPUtils
+          '&quot;' &lt;&lt; str.gsub(/[\\\&quot;]/o, &quot;\\\1&quot;) &lt;&lt; '&quot;'
+        end
+
+      end
+    end
+  end
+end
+
+</pre>
+    </div>

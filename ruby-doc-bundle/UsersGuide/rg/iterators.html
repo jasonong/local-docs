@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Iterators</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="control.html">
+ <img border=0 src="a2l.gif" alt="Control structures"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="oothinking.html">
+ <img border=0 src="a2r.gif" alt="Object-oriented thinking"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Iterators</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Iterators are not an original concept with ruby.  They are in
+common use in object-oriented languages.  They are also used in
+Lisp, though there they are not called iterators.  However the
+concepet of iterator is an unfamiliar one for many so it should be
+explained in more detail.</p>
+<p>The verb <em>iterate</em> means to do the same thing many times, you know, 
+so an <em>iterator</em> is something that does the same thing many times.</p>
+<p>When we write code, we need loops in various situations.  In
+C, we code them using <code>for</code> or <code>while</code>. For example,</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#d8d8e0"><tr><td><pre><font color="black">char *str;
+for (str = "abcdefg"; *str != '\0'; str++) {
+  /* process a character here */
+}</font></pre></td></tr></table>
+<p>C's<code> for(...) </code>syntax provides an abstraction to help with
+the creation of a loop, but the test of<code> *str </code>against a
+null character requires the programmer to know details about the
+internal structure of a string.  This makes C feel like a low-level
+language.  Higher level languages are marked by their more flexible
+support for iteration.  Consider the following<code> sh </code>shell
+script:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">#!/bin/sh
+
+for i in *.[ch]; do
+  # ... here would be something to do for each file
+done</font></pre></td></tr></table>
+<p>All the C source and header files in the current directory are
+processed, and the command shell handles the details of picking up and
+substituting file names one by one.  I think this is working at a
+higher level than C, don't you?</p>
+<p>But there are is more to consider: while it is fine for a language to
+provide iterators for built-in data types, it is a disappointment if
+we must go back to writing low level loops to iterate over our own
+data types.  In OOP, users often define one data type after
+another, so this could be a serious problem.</p>
+<p>So every OOP language includes some facilities for iteration.
+Some languages provide a special class for this purpose; ruby allows
+us to define iterators directly.</p>
+<p>Ruby's <code>String</code> type has some useful iterators:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "abc".each_byte{|c| printf "&lt;%c&gt;", c}; print "\n"</b></font>
+&lt;a&gt;&lt;b&gt;&lt;c&gt;
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p><code>each_byte</code> is an iterator for each character in the
+string.  Each character is substituted into the local variable
+<code>c</code>.  This can be translated into something that looks
+a lot like C code ...</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> s="abc";i=0</b></font>
+<font color="#50ffff"><b>   0</b></font>
+ruby&gt;<font color="#ffff00"><b> while i&lt;s.length</b></font>
+    |<font color="#ffff00"><b>    printf "&lt;%c&gt;", s[i]; i+=1</b></font>
+    |<font color="#ffff00"><b> end; print "\n"</b></font>
+&lt;a&gt;&lt;b&gt;&lt;c&gt;
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>... however, the <code>each_byte</code> iterator is both conceptually
+simpler and more likely to continue to work even if the
+<code>String</code> class happens to be radically modified in the
+future.  One benefit of iterators is that they tend to be robust
+in the face of such changes; indeed that is a characteristic of good
+code in general.  (Yes, have patience, we're about to talk about
+what <em>classes</em> are, too.)</p>
+<p>Another iterator of <code>String</code> is <code>each_line</code>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "a\nb\nc\n".each_line{|l| print l}</b></font>
+a
+b
+c
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>The tasks that would take most of the programming effort in C (finding
+line delimiters, generating substrings, etc.) are easily tackled using
+iterators.</p>
+<p>The <code>for</code> statement appearing in the previous chapter does
+iteration by way of an <code>each</code> iterator.
+<code>String</code>'s <code>each</code> works the same as
+<code>each_line</code>, so let's rewrite the above example with
+<code>for</code>:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> for l in "a\nb\nc\n"</b></font>
+    |<font color="#ffff00"><b>   print l </b></font>
+    |<font color="#ffff00"><b> end</b></font>
+a
+b
+c
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>We can use a control structure <code>retry</code> in conjunction with
+an iterated loop, and it will retry the current iteration of the loop
+from the top.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> c=0</b></font>
+<font color="#50ffff"><b>   0</b></font>
+ruby&gt;<font color="#ffff00"><b> for i in 0..4</b></font>
+    |<font color="#ffff00"><b>   print i</b></font>
+    |<font color="#ffff00"><b>   if i == 2 and c == 0</b></font>
+    |<font color="#ffff00"><b>     c = 1</b></font>
+    |<font color="#ffff00"><b>     print "\n"</b></font>
+    |<font color="#ffff00"><b>     retry</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end; print "\n"</b></font>
+012
+01234
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p><code>yield</code> occurs sometimes in a definition of an iterator.
+<code>yield</code> moves control to the block of code that is passed to the
+iterator (this will be explored in more detail in the chapter about
+<a href="procobjects.html">procedure objects</a>).  The following example defines
+an iterator <code>repeat</code>, which repeats a block of code the number of
+times specified in an argument.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> def repeat(num)</b></font>
+    |<font color="#ffff00"><b>   while num &gt; 0</b></font>
+    |<font color="#ffff00"><b>     yield</b></font>
+    |<font color="#ffff00"><b>     num -= 1</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> repeat(3) { print "foo\n" }</b></font>
+foo
+foo
+foo
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>With <code>retry</code>, one can define an iterator which works the
+same as <code>while</code>, though it's too slow to be practical.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> def WHILE(cond)</b></font>
+    |<font color="#ffff00"><b>   return if not cond</b></font>
+    |<font color="#ffff00"><b>   yield</b></font>
+    |<font color="#ffff00"><b>   retry</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> i=0; WHILE(i&lt;3) { print i; i+=1 }</b></font>
+012   nil</font></pre></td></tr></table>
+<p>Do you understand what an iterator is? There are a few
+restrictions, but you can write your original iterators; and in fact,
+whenever you define a new data type, it is often convenient to define
+suitable iterators to go with it.  In this sense, the above
+examples are not terribly useful.  We can talk about practical
+iterators after we have a better understanding of what classes
+are.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="control.html">
+ <img border=0 src="a2l.gif" alt="Control structures"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="oothinking.html">
+ <img border=0 src="a2r.gif" alt="Object-oriented thinking"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

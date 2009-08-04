@@ -1,0 +1,39 @@
+  <div id="fileHeader">
+    <h1>extract_options.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/array/extract_options.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module Array #:nodoc:
+      module ExtractOptions
+        # Extracts options from a set of arguments. Removes and returns the last
+        # element in the array if it's a hash, otherwise returns a blank hash.
+        #
+        #   def options(*args)
+        #     args.extract_options!
+        #   end
+        #
+        #   options(1, 2)           # =&gt; {}
+        #   options(1, 2, :a =&gt; :b) # =&gt; {:a=&gt;:b}
+        def extract_options!
+          last.is_a?(::Hash) ? pop : {}
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,110 @@
+  <div id="fileHeader">
+    <h1>cookie.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/cookie.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'openssl'
+require 'rack/request'
+require 'rack/response'
+
+module Rack
+
+  module Session
+
+    # Rack::Session::Cookie provides simple cookie based session management.
+    # The session is a Ruby Hash stored as base64 encoded marshalled data
+    # set to :key (default: rack.session).
+    # When the secret key is set, cookie data is checked for data integrity.
+    #
+    # Example:
+    #
+    #     use Rack::Session::Cookie, :key =&gt; 'rack.session',
+    #                                :domain =&gt; 'foo.com',
+    #                                :path =&gt; '/',
+    #                                :expire_after =&gt; 2592000,
+    #                                :secret =&gt; 'change_me'
+    #
+    #     All parameters are optional.
+
+    class Cookie
+
+      def initialize(app, options={})
+        @app = app
+        @key = options[:key] || &quot;rack.session&quot;
+        @secret = options[:secret]
+        @default_options = {:domain =&gt; nil,
+          :path =&gt; &quot;/&quot;,
+          :expire_after =&gt; nil}.merge(options)
+      end
+
+      def call(env)
+        load_session(env)
+        status, headers, body = @app.call(env)
+        commit_session(env, status, headers, body)
+      end
+
+      private
+
+      def load_session(env)
+        request = Rack::Request.new(env)
+        session_data = request.cookies[@key]
+
+        if @secret &amp;&amp; session_data
+          session_data, digest = session_data.split(&quot;--&quot;)
+          session_data = nil  unless digest == generate_hmac(session_data)
+        end
+
+        begin
+          session_data = session_data.unpack(&quot;m*&quot;).first
+          session_data = Marshal.load(session_data)
+          env[&quot;rack.session&quot;] = session_data
+        rescue
+          env[&quot;rack.session&quot;] = Hash.new
+        end
+
+        env[&quot;rack.session.options&quot;] = @default_options.dup
+      end
+
+      def commit_session(env, status, headers, body)
+        session_data = Marshal.dump(env[&quot;rack.session&quot;])
+        session_data = [session_data].pack(&quot;m*&quot;)
+
+        if @secret
+          session_data = &quot;#{session_data}--#{generate_hmac(session_data)}&quot;
+        end
+
+        if session_data.size &gt; (4096 - @key.size)
+          env[&quot;rack.errors&quot;].puts(&quot;Warning! Rack::Session::Cookie data size exceeds 4K. Content dropped.&quot;)
+          [status, headers, body]
+        else
+          options = env[&quot;rack.session.options&quot;]
+          cookie = Hash.new
+          cookie[:value] = session_data
+          cookie[:expires] = Time.now + options[:expire_after] unless options[:expire_after].nil?
+          response = Rack::Response.new(body, status, headers)
+          response.set_cookie(@key, cookie.merge(options))
+          response.to_a
+        end
+      end
+
+      def generate_hmac(data)
+        OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA1.new, @secret, data)
+      end
+
+    end
+  end
+end
+</pre>
+    </div>

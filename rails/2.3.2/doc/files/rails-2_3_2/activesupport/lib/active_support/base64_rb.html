@@ -1,0 +1,52 @@
+  <div id="fileHeader">
+    <h1>base64.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/base64.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>begin
+  require 'base64'
+rescue LoadError
+end
+
+module ActiveSupport
+  if defined? ::Base64
+    Base64 = ::Base64
+  else
+    # Base64 provides utility methods for encoding and de-coding binary data 
+    # using a base 64 representation. A base 64 representation of binary data
+    # consists entirely of printable US-ASCII characters. The Base64 module
+    # is included in Ruby 1.8, but has been removed in Ruby 1.9.
+    module Base64
+      # Encodes a string to its base 64 representation. Each 60 characters of
+      # output is separated by a newline character.
+      #
+      #  ActiveSupport::Base64.encode64(&quot;Original unencoded string&quot;) 
+      #  # =&gt; &quot;T3JpZ2luYWwgdW5lbmNvZGVkIHN0cmluZw==\n&quot;
+      def self.encode64(data)
+        [data].pack(&quot;m&quot;)
+      end
+
+      # Decodes a base 64 encoded string to its original representation.
+      #
+      #  ActiveSupport::Base64.decode64(&quot;T3JpZ2luYWwgdW5lbmNvZGVkIHN0cmluZw==&quot;) 
+      #  # =&gt; &quot;Original unencoded string&quot;
+      def self.decode64(data)
+        data.unpack(&quot;m&quot;).first
+      end
+    end
+  end
+end
+</pre>
+    </div>

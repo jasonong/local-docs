@@ -1,0 +1,130 @@
+  <div id="C00000207">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />MailFlags<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionmailer/lib/action_mailer/vendor/tmail-1_2_3/tmail/port_rb.html');">rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/port.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000518&name=flagged=" >flagged=</a></li>
+  <li><a href="index.html?a=M000519&name=flagged?" >flagged?</a></li>
+  <li><a href="index.html?a=M000516&name=replied=" >replied=</a></li>
+  <li><a href="index.html?a=M000517&name=replied?" >replied?</a></li>
+  <li><a href="index.html?a=M000514&name=seen=" >seen=</a></li>
+  <li><a href="index.html?a=M000515&name=seen?" >seen?</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000518" class="method">
+  <div id="M000518_title" class="title">
+    <b>flagged=</b>( b )
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000518_source')" id="l_M000518_source">show source</a> ]</p>
+  <div id="M000518_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/port.rb, line 171</span>
+171:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flagged=</span>( <span class="ruby-identifier">b</span> )
+172:       <span class="ruby-identifier">set_status</span> <span class="ruby-value str">'F'</span>, <span class="ruby-identifier">b</span>
+173:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000519" class="method">
+  <div id="M000519_title" class="title">
+    <b>flagged?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000519_source')" id="l_M000519_source">show source</a> ]</p>
+  <div id="M000519_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/port.rb, line 175</span>
+175:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flagged?</span>
+176:       <span class="ruby-identifier">get_status</span> <span class="ruby-value str">'F'</span>
+177:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000516" class="method">
+  <div id="M000516_title" class="title">
+    <b>replied=</b>( b )
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000516_source')" id="l_M000516_source">show source</a> ]</p>
+  <div id="M000516_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/port.rb, line 163</span>
+163:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replied=</span>( <span class="ruby-identifier">b</span> )
+164:       <span class="ruby-identifier">set_status</span> <span class="ruby-value str">'R'</span>, <span class="ruby-identifier">b</span>
+165:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000517" class="method">
+  <div id="M000517_title" class="title">
+    <b>replied?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000517_source')" id="l_M000517_source">show source</a> ]</p>
+  <div id="M000517_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/port.rb, line 167</span>
+167:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replied?</span>
+168:       <span class="ruby-identifier">get_status</span> <span class="ruby-value str">'R'</span>
+169:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000514" class="method">
+  <div id="M000514_title" class="title">
+    <b>seen=</b>( b )
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000514_source')" id="l_M000514_source">show source</a> ]</p>
+  <div id="M000514_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/port.rb, line 155</span>
+155:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">seen=</span>( <span class="ruby-identifier">b</span> )
+156:       <span class="ruby-identifier">set_status</span> <span class="ruby-value str">'S'</span>, <span class="ruby-identifier">b</span>
+157:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000515" class="method">
+  <div id="M000515_title" class="title">
+    <b>seen?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000515_source')" id="l_M000515_source">show source</a> ]</p>
+  <div id="M000515_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/port.rb, line 159</span>
+159:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">seen?</span>
+160:       <span class="ruby-identifier">get_status</span> <span class="ruby-value str">'S'</span>
+161:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

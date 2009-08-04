@@ -1,0 +1,198 @@
+  <div id="fileHeader">
+    <h1>streaming.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/streaming.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController #:nodoc:
+  # Methods for sending arbitrary data and for streaming files to the browser,
+  # instead of rendering.
+  module Streaming
+    DEFAULT_SEND_FILE_OPTIONS = {
+      :type         =&gt; 'application/octet-stream'.freeze,
+      :disposition  =&gt; 'attachment'.freeze,
+      :stream       =&gt; true,
+      :buffer_size  =&gt; 4096,
+      :x_sendfile   =&gt; false
+    }.freeze
+
+    X_SENDFILE_HEADER = 'X-Sendfile'.freeze
+
+    protected
+      # Sends the file, by default streaming it 4096 bytes at a time. This way the
+      # whole file doesn't need to be read into memory at once. This makes it
+      # feasible to send even large files. You can optionally turn off streaming
+      # and send the whole file at once.
+      #
+      # Be careful to sanitize the path parameter if it is coming from a web
+      # page. &lt;tt&gt;send_file(params[:path])&lt;/tt&gt; allows a malicious user to
+      # download any file on your server.
+      #
+      # Options:
+      # * &lt;tt&gt;:filename&lt;/tt&gt; - suggests a filename for the browser to use.
+      #   Defaults to &lt;tt&gt;File.basename(path)&lt;/tt&gt;.
+      # * &lt;tt&gt;:type&lt;/tt&gt; - specifies an HTTP content type. Defaults to 'application/octet-stream'. You can specify
+      #   either a string or a symbol for a registered type register with &lt;tt&gt;Mime::Type.register&lt;/tt&gt;, for example :json
+      # * &lt;tt&gt;:length&lt;/tt&gt; - used to manually override the length (in bytes) of the content that
+      #   is going to be sent to the client. Defaults to &lt;tt&gt;File.size(path)&lt;/tt&gt;.
+      # * &lt;tt&gt;:disposition&lt;/tt&gt; - specifies whether the file will be shown inline or downloaded.
+      #   Valid values are 'inline' and 'attachment' (default).
+      # * &lt;tt&gt;:stream&lt;/tt&gt; - whether to send the file to the user agent as it is read (+true+)
+      #   or to read the entire file before sending (+false+). Defaults to +true+.
+      # * &lt;tt&gt;:buffer_size&lt;/tt&gt; - specifies size (in bytes) of the buffer used to stream the file.
+      #   Defaults to 4096.
+      # * &lt;tt&gt;:status&lt;/tt&gt; - specifies the status code to send with the response. Defaults to '200 OK'.
+      # * &lt;tt&gt;:url_based_filename&lt;/tt&gt; - set to +true+ if you want the browser guess the filename from
+      #   the URL, which is necessary for i18n filenames on certain browsers
+      #   (setting &lt;tt&gt;:filename&lt;/tt&gt; overrides this option).
+      # * &lt;tt&gt;:x_sendfile&lt;/tt&gt; - uses X-Sendfile to send the file when set to +true+. This is currently
+      #   only available with Lighttpd/Apache2 and specific modules installed and activated. Since this
+      #   uses the web server to send the file, this may lower memory consumption on your server and
+      #   it will not block your application for further requests.
+      #   See http://blog.lighttpd.net/articles/2006/07/02/x-sendfile and
+      #   http://tn123.ath.cx/mod_xsendfile/ for details. Defaults to +false+.
+      #
+      # The default Content-Type and Content-Disposition headers are
+      # set to download arbitrary binary files in as many browsers as
+      # possible.  IE versions 4, 5, 5.5, and 6 are all known to have
+      # a variety of quirks (especially when downloading over SSL).
+      #
+      # Simple download:
+      #
+      #   send_file '/path/to.zip'
+      #
+      # Show a JPEG in the browser:
+      #
+      #   send_file '/path/to.jpeg', :type =&gt; 'image/jpeg', :disposition =&gt; 'inline'
+      #
+      # Show a 404 page in the browser:
+      #
+      #   send_file '/path/to/404.html', :type =&gt; 'text/html; charset=utf-8', :status =&gt; 404
+      #
+      # Read about the other Content-* HTTP headers if you'd like to
+      # provide the user with more information (such as Content-Description) in
+      # http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11.
+      #
+      # Also be aware that the document may be cached by proxies and browsers.
+      # The Pragma and Cache-Control headers declare how the file may be cached
+      # by intermediaries.  They default to require clients to validate with
+      # the server before releasing cached responses.  See
+      # http://www.mnot.net/cache_docs/ for an overview of web caching and
+      # http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
+      # for the Cache-Control header spec.
+      def send_file(path, options = {}) #:doc:
+        raise MissingFile, &quot;Cannot read file #{path}&quot; unless File.file?(path) and File.readable?(path)
+
+        options[:length]   ||= File.size(path)
+        options[:filename] ||= File.basename(path) unless options[:url_based_filename]
+        send_file_headers! options
+
+        @performed_render = false
+
+        if options[:x_sendfile]
+          logger.info &quot;Sending #{X_SENDFILE_HEADER} header #{path}&quot; if logger
+          head options[:status], X_SENDFILE_HEADER =&gt; path
+        else
+          if options[:stream]
+            render :status =&gt; options[:status], :text =&gt; Proc.new { |response, output|
+              logger.info &quot;Streaming file #{path}&quot; unless logger.nil?
+              len = options[:buffer_size] || 4096
+              File.open(path, 'rb') do |file|
+                while buf = file.read(len)
+                  output.write(buf)
+                end
+              end
+            }
+          else
+            logger.info &quot;Sending file #{path}&quot; unless logger.nil?
+            File.open(path, 'rb') { |file| render :status =&gt; options[:status], :text =&gt; file.read }
+          end
+        end
+      end
+
+      # Sends the given binary data to the browser. This method is similar to
+      # &lt;tt&gt;render :text =&gt; data&lt;/tt&gt;, but also allows you to specify whether
+      # the browser should display the response as a file attachment (i.e. in a
+      # download dialog) or as inline data. You may also set the content type,
+      # the apparent file name, and other things.
+      #
+      # Options:
+      # * &lt;tt&gt;:filename&lt;/tt&gt; - suggests a filename for the browser to use.
+      # * &lt;tt&gt;:type&lt;/tt&gt; - specifies an HTTP content type. Defaults to 'application/octet-stream'. You can specify
+      #   either a string or a symbol for a registered type register with &lt;tt&gt;Mime::Type.register&lt;/tt&gt;, for example :json
+      # * &lt;tt&gt;:disposition&lt;/tt&gt; - specifies whether the file will be shown inline or downloaded.
+      #   Valid values are 'inline' and 'attachment' (default).
+      # * &lt;tt&gt;:status&lt;/tt&gt; - specifies the status code to send with the response. Defaults to '200 OK'.
+      #
+      # Generic data download:
+      #
+      #   send_data buffer
+      #
+      # Download a dynamically-generated tarball:
+      #
+      #   send_data generate_tgz('dir'), :filename =&gt; 'dir.tgz'
+      #
+      # Display an image Active Record in the browser:
+      #
+      #   send_data image.data, :type =&gt; image.content_type, :disposition =&gt; 'inline'
+      #
+      # See +send_file+ for more information on HTTP Content-* headers and caching.
+      #
+      # &lt;b&gt;Tip:&lt;/b&gt; if you want to stream large amounts of on-the-fly generated
+      # data to the browser, then use &lt;tt&gt;render :text =&gt; proc { ... }&lt;/tt&gt;
+      # instead. See ActionController::Base#render for more information.
+      def send_data(data, options = {}) #:doc:
+        logger.info &quot;Sending data #{options[:filename]}&quot; if logger
+        send_file_headers! options.merge(:length =&gt; data.size)
+        @performed_render = false
+        render :status =&gt; options[:status], :text =&gt; data
+      end
+
+    private
+      def send_file_headers!(options)
+        options.update(DEFAULT_SEND_FILE_OPTIONS.merge(options))
+        [:length, :type, :disposition].each do |arg|
+          raise ArgumentError, &quot;:#{arg} option required&quot; if options[arg].nil?
+        end
+
+        disposition = options[:disposition].dup || 'attachment'
+
+        disposition &lt;&lt;= %(; filename=&quot;#{options[:filename]}&quot;) if options[:filename]
+
+        content_type = options[:type]
+        if content_type.is_a?(Symbol)
+          raise ArgumentError, &quot;Unknown MIME type #{options[:type]}&quot; unless Mime::EXTENSION_LOOKUP.has_key?(content_type.to_s)
+          content_type = Mime::Type.lookup_by_extension(content_type.to_s)
+        end
+        content_type = content_type.to_s.strip # fixes a problem with extra '\r' with some browsers
+
+        headers.merge!(
+          'Content-Length'            =&gt; options[:length],
+          'Content-Type'              =&gt; content_type,
+          'Content-Disposition'       =&gt; disposition,
+          'Content-Transfer-Encoding' =&gt; 'binary'
+        )
+
+        # Fix a problem with IE 6.0 on opening downloaded files:
+        # If Cache-Control: no-cache is set (which Rails does by default),
+        # IE removes the file it just downloaded from its cache immediately
+        # after it displays the &quot;open/save&quot; dialog, which means that if you
+        # hit &quot;open&quot; the file isn't there anymore when the application that
+        # is called for handling the download is run, so let's workaround that
+        headers['Cache-Control'] = 'private' if headers['Cache-Control'] == 'no-cache'
+      end
+  end
+end
+</pre>
+    </div>

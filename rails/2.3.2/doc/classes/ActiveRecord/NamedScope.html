@@ -1,0 +1,75 @@
+  <div id="C00000739">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />NamedScope<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activerecord/lib/active_record/named_scope_rb.html');">rails-2.3.2/activerecord/lib/active_record/named_scope.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002225&name=included" >included</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Module "<a href="#" onclick="jsHref('classes/ActiveRecord/NamedScope/ClassMethods.html');" class="link">ActiveRecord::NamedScope::ClassMethods</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/ActiveRecord/NamedScope/Scope.html');" class="link">ActiveRecord::NamedScope::Scope</a>"<br />
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002225" class="method">
+  <div id="M002225_title" class="title">
+    <b>included</b>(base)
+  </div>
+  <div class="description">
+  <p>
+All subclasses of <a
+href="index.html?a=C00000783&name=ActiveRecord::Base">ActiveRecord::Base</a>
+have one named scope:
+</p>
+<ul>
+<li><tt>scoped</tt> - which allows for the creation of anonymous \scopes, on
+the fly: <tt>Shirt.scoped(:conditions =&gt; {:color =&gt;
+&#8216;red&#8217;}).scoped(:include =&gt; :washing_instructions)</tt>
+
+</li>
+</ul>
+<p>
+These anonymous \scopes tend to be useful when procedurally generating
+complex queries, where passing intermediate values (scopes) around as
+first-class objects is convenient.
+</p>
+<p>
+You can define a scope that applies to all finders using <a
+href="index.html?a=M002363&name=ActiveRecord::Base.default_scope">ActiveRecord::Base.default_scope</a>.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002225_source')" id="l_M002225_source">show source</a> ]</p>
+  <div id="M002225_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/named_scope.rb, line 10</span>
+10:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
+11:       <span class="ruby-identifier">base</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+12:         <span class="ruby-identifier">extend</span> <span class="ruby-constant">ClassMethods</span>
+13:         <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:scoped</span>, <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">scope</span><span class="ruby-operator">|</span> <span class="ruby-identifier">scope</span> }
+14:       <span class="ruby-keyword kw">end</span>
+15:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

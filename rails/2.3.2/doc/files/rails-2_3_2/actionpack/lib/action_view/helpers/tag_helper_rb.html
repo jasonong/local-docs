@@ -1,0 +1,169 @@
+  <div id="fileHeader">
+    <h1>tag_helper.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/helpers/tag_helper.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'action_view/erb/util'
+require 'set'
+
+module ActionView
+  module Helpers #:nodoc:
+    # Provides methods to generate HTML tags programmatically when you can't use
+    # a Builder. By default, they output XHTML compliant tags.
+    module TagHelper
+      include ERB::Util
+
+      BOOLEAN_ATTRIBUTES = %w(disabled readonly multiple checked).to_set
+      BOOLEAN_ATTRIBUTES.merge(BOOLEAN_ATTRIBUTES.map(&amp;:to_sym))
+
+      # Returns an empty HTML tag of type +name+ which by default is XHTML
+      # compliant. Set +open+ to true to create an open tag compatible
+      # with HTML 4.0 and below. Add HTML attributes by passing an attributes
+      # hash to +options+. Set +escape+ to false to disable attribute value
+      # escaping.
+      #
+      # ==== Options
+      # The +options+ hash is used with attributes with no value like (&lt;tt&gt;disabled&lt;/tt&gt; and
+      # &lt;tt&gt;readonly&lt;/tt&gt;), which you can give a value of true in the +options+ hash. You can use
+      # symbols or strings for the attribute names.
+      #
+      # ==== Examples
+      #   tag(&quot;br&quot;)
+      #   # =&gt; &lt;br /&gt;
+      #
+      #   tag(&quot;br&quot;, nil, true)
+      #   # =&gt; &lt;br&gt;
+      #
+      #   tag(&quot;input&quot;, { :type =&gt; 'text', :disabled =&gt; true })
+      #   # =&gt; &lt;input type=&quot;text&quot; disabled=&quot;disabled&quot; /&gt;
+      #
+      #   tag(&quot;img&quot;, { :src =&gt; &quot;open &amp; shut.png&quot; })
+      #   # =&gt; &lt;img src=&quot;open &amp;amp; shut.png&quot; /&gt;
+      #
+      #   tag(&quot;img&quot;, { :src =&gt; &quot;open &amp;amp; shut.png&quot; }, false, false)
+      #   # =&gt; &lt;img src=&quot;open &amp;amp; shut.png&quot; /&gt;
+      def tag(name, options = nil, open = false, escape = true)
+        &quot;&lt;#{name}#{tag_options(options, escape) if options}#{open ? &quot;&gt;&quot; : &quot; /&gt;&quot;}&quot;
+      end
+
+      # Returns an HTML block tag of type +name+ surrounding the +content+. Add
+      # HTML attributes by passing an attributes hash to +options+.
+      # Instead of passing the content as an argument, you can also use a block
+      # in which case, you pass your +options+ as the second parameter.
+      # Set escape to false to disable attribute value escaping.
+      #
+      # ==== Options
+      # The +options+ hash is used with attributes with no value like (&lt;tt&gt;disabled&lt;/tt&gt; and
+      # &lt;tt&gt;readonly&lt;/tt&gt;), which you can give a value of true in the +options+ hash. You can use
+      # symbols or strings for the attribute names.
+      #
+      # ==== Examples
+      #   content_tag(:p, &quot;Hello world!&quot;)
+      #    # =&gt; &lt;p&gt;Hello world!&lt;/p&gt;
+      #   content_tag(:div, content_tag(:p, &quot;Hello world!&quot;), :class =&gt; &quot;strong&quot;)
+      #    # =&gt; &lt;div class=&quot;strong&quot;&gt;&lt;p&gt;Hello world!&lt;/p&gt;&lt;/div&gt;
+      #   content_tag(&quot;select&quot;, options, :multiple =&gt; true)
+      #    # =&gt; &lt;select multiple=&quot;multiple&quot;&gt;...options...&lt;/select&gt;
+      #
+      #   &lt;% content_tag :div, :class =&gt; &quot;strong&quot; do -%&gt;
+      #     Hello world!
+      #   &lt;% end -%&gt;
+      #    # =&gt; &lt;div class=&quot;strong&quot;&gt;Hello world!&lt;/div&gt;
+      def content_tag(name, content_or_options_with_block = nil, options = nil, escape = true, &amp;block)
+        if block_given?
+          options = content_or_options_with_block if content_or_options_with_block.is_a?(Hash)
+          content_tag = content_tag_string(name, capture(&amp;block), options, escape)
+
+          if block_called_from_erb?(block)
+            concat(content_tag)
+          else
+            content_tag
+          end
+        else
+          content_tag_string(name, content_or_options_with_block, options, escape)
+        end
+      end
+
+      # Returns a CDATA section with the given +content+.  CDATA sections
+      # are used to escape blocks of text containing characters which would
+      # otherwise be recognized as markup. CDATA sections begin with the string
+      # &lt;tt&gt;&lt;![CDATA[&lt;/tt&gt; and end with (and may not contain) the string &lt;tt&gt;]]&gt;&lt;/tt&gt;.
+      #
+      # ==== Examples
+      #   cdata_section(&quot;&lt;hello world&gt;&quot;)
+      #   # =&gt; &lt;![CDATA[&lt;hello world&gt;]]&gt;
+      #
+      #   cdata_section(File.read(&quot;hello_world.txt&quot;))
+      #   # =&gt; &lt;![CDATA[&lt;hello from a text file]]&gt;
+      def cdata_section(content)
+        &quot;&lt;![CDATA[#{content}]]&gt;&quot;
+      end
+
+      # Returns an escaped version of +html+ without affecting existing escaped entities.
+      #
+      # ==== Examples
+      #   escape_once(&quot;1 &lt; 2 &amp;amp; 3&quot;)
+      #   # =&gt; &quot;1 &amp;lt; 2 &amp;amp; 3&quot;
+      #
+      #   escape_once(&quot;&amp;lt;&amp;lt; Accept &amp; Checkout&quot;)
+      #   # =&gt; &quot;&amp;lt;&amp;lt; Accept &amp;amp; Checkout&quot;
+      def escape_once(html)
+        html.to_s.gsub(/[\&quot;&gt;&lt;]|&amp;(?!([a-zA-Z]+|(#\d+));)/) { |special| ERB::Util::HTML_ESCAPE[special] }
+      end
+
+      private
+        BLOCK_CALLED_FROM_ERB = 'defined? __in_erb_template'
+
+        if RUBY_VERSION &lt; '1.9.0'
+          # Check whether we're called from an erb template.
+          # We'd return a string in any other case, but erb &lt;%= ... %&gt;
+          # can't take an &lt;% end %&gt; later on, so we have to use &lt;% ... %&gt;
+          # and implicitly concat.
+          def block_called_from_erb?(block)
+            block &amp;&amp; eval(BLOCK_CALLED_FROM_ERB, block)
+          end
+        else
+          def block_called_from_erb?(block)
+            block &amp;&amp; eval(BLOCK_CALLED_FROM_ERB, block.binding)
+          end
+        end
+
+        def content_tag_string(name, content, options, escape = true)
+          tag_options = tag_options(options, escape) if options
+          &quot;&lt;#{name}#{tag_options}&gt;#{content}&lt;/#{name}&gt;&quot;
+        end
+
+        def tag_options(options, escape = true)
+          unless options.blank?
+            attrs = []
+            if escape
+              options.each_pair do |key, value|
+                if BOOLEAN_ATTRIBUTES.include?(key)
+                  attrs &lt;&lt; %(#{key}=&quot;#{key}&quot;) if value
+                else
+                  attrs &lt;&lt; %(#{key}=&quot;#{escape_once(value)}&quot;) if !value.nil?
+                end
+              end
+            else
+              attrs = options.map { |key, value| %(#{key}=&quot;#{value}&quot;) }
+            end
+            &quot; #{attrs.sort * ' '}&quot; unless attrs.empty?
+          end
+        end
+    end
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,105 @@
+  <div id="C00000298">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Recursive<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/recursive_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/recursive.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000298&name=Rack::Recursive">Rack::Recursive</a>
+allows applications called down the chain to include data from other
+applications (by using <tt><a href="http://'rack.recursive.include'"
+target="_blank">rack</a>[&#8230;]</tt> or raise a <a
+href="index.html?a=C00000304&name=ForwardRequest">ForwardRequest</a> to
+redirect internally.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001032&name=call" >call</a></li>
+  <li><a href="index.html?a=M001033&name=include" >include</a></li>
+  <li><a href="index.html?a=M001031&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001031" class="method">
+  <div id="M001031_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001031_source')" id="l_M001031_source">show source</a> ]</p>
+  <div id="M001031_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/recursive.rb, line 33</span>
+33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+34:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+35:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001032" class="method">
+  <div id="M001032_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001032_source')" id="l_M001032_source">show source</a> ]</p>
+  <div id="M001032_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/recursive.rb, line 37</span>
+37:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+38:       <span class="ruby-ivar">@script_name</span> = <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span>]
+39:       <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value str">'rack.recursive.include'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">method</span>(<span class="ruby-identifier">:include</span>)))
+40:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ForwardRequest</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">req</span>
+41:       <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">req</span>.<span class="ruby-identifier">env</span>))
+42:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001033" class="method">
+  <div id="M001033_title" class="title">
+    <b>include</b>(env, path)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001033_source')" id="l_M001033_source">show source</a> ]</p>
+  <div id="M001033_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/recursive.rb, line 44</span>
+44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">include</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">path</span>)
+45:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">index</span>(<span class="ruby-ivar">@script_name</span>) <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">path</span>[<span class="ruby-ivar">@script_name</span>.<span class="ruby-identifier">size</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?/</span> <span class="ruby-operator">||</span>
+46:                                                <span class="ruby-identifier">path</span>[<span class="ruby-ivar">@script_name</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">nil?</span>)
+47:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;can only include below #{@script_name}, not #{path}&quot;</span>
+48:       <span class="ruby-keyword kw">end</span>
+49: 
+50:       <span class="ruby-identifier">env</span> = <span class="ruby-identifier">env</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value str">&quot;PATH_INFO&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@script_name</span>,
+51:                       <span class="ruby-value str">&quot;REQUEST_METHOD&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;GET&quot;</span>,
+52:                       <span class="ruby-value str">&quot;CONTENT_LENGTH&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;0&quot;</span>, <span class="ruby-value str">&quot;CONTENT_TYPE&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;&quot;</span>,
+53:                       <span class="ruby-value str">&quot;rack.input&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;&quot;</span>))
+54:       <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+55:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

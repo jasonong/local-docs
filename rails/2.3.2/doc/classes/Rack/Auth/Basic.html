@@ -1,0 +1,79 @@
+  <div id="C00000255">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Basic<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/auth/basic_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/basic.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Rack/Auth/AbstractHandler.html');">
+AbstractHandler
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000255&name=Rack::Auth::Basic">Rack::Auth::Basic</a>
+implements HTTP <a href="index.html?a=C00000255&name=Basic">Basic</a>
+Authentication, as per RFC 2617.
+</p>
+<p>
+Initialize with the <a href="index.html?a=C00000238&name=Rack">Rack</a>
+application that you want protecting, and a block that checks if a username
+and password pair are valid.
+</p>
+<p>
+See also: <tt>example/protectedlobster.rb</tt>
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000873&name=call" >call</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/Rack/Auth/Basic/Request.html');" class="link">Rack::Auth::Basic::Request</a>"<br />
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000873" class="method">
+  <div id="M000873_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000873_source')" id="l_M000873_source">show source</a> ]</p>
+  <div id="M000873_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/basic.rb, line 15</span>
+15:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+16:         <span class="ruby-identifier">auth</span> = <span class="ruby-constant">Basic</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
+17: 
+18:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">unauthorized</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">auth</span>.<span class="ruby-identifier">provided?</span>
+19: 
+20:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">bad_request</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">auth</span>.<span class="ruby-identifier">basic?</span>
+21: 
+22:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">auth</span>)
+23:           <span class="ruby-identifier">env</span>[<span class="ruby-value str">'REMOTE_USER'</span>] = <span class="ruby-identifier">auth</span>.<span class="ruby-identifier">username</span>
+24: 
+25:           <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+26:         <span class="ruby-keyword kw">end</span>
+27: 
+28:         <span class="ruby-identifier">unauthorized</span>
+29:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

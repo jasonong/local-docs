@@ -1,0 +1,126 @@
+  <div id="C00000254">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />AbstractRequest<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/auth/abstract/request_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/request.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000868&name=new" >new</a></li>
+  <li><a href="index.html?a=M000872&name=params" >params</a></li>
+  <li><a href="index.html?a=M000870&name=parts" >parts</a></li>
+  <li><a href="index.html?a=M000869&name=provided?" >provided?</a></li>
+  <li><a href="index.html?a=M000871&name=scheme" >scheme</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">AUTHORIZATION_KEYS</td>
+    <td>=</td>
+    <td class="attr-value">['HTTP_AUTHORIZATION', 'X-HTTP_AUTHORIZATION', 'X_HTTP_AUTHORIZATION']</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000868" class="method">
+  <div id="M000868_title" class="title">
+    <b>new</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000868_source')" id="l_M000868_source">show source</a> ]</p>
+  <div id="M000868_source" class="dyn-source">
+<pre>
+   <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/request.rb, line 5</span>
+5:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">env</span>)
+6:         <span class="ruby-ivar">@env</span> = <span class="ruby-identifier">env</span>
+7:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000872" class="method">
+  <div id="M000872_title" class="title">
+    <b>params</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000872_source')" id="l_M000872_source">show source</a> ]</p>
+  <div id="M000872_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/request.rb, line 21</span>
+21:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">params</span>
+22:         <span class="ruby-ivar">@params</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">last</span>
+23:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000870" class="method">
+  <div id="M000870_title" class="title">
+    <b>parts</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000870_source')" id="l_M000870_source">show source</a> ]</p>
+  <div id="M000870_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/request.rb, line 13</span>
+13:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parts</span>
+14:         <span class="ruby-ivar">@parts</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@env</span>[<span class="ruby-identifier">authorization_key</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">' '</span>, <span class="ruby-value">2</span>)
+15:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000869" class="method">
+  <div id="M000869_title" class="title">
+    <b>provided?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000869_source')" id="l_M000869_source">show source</a> ]</p>
+  <div id="M000869_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/request.rb, line 9</span>
+ 9:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">provided?</span>
+10:         <span class="ruby-operator">!</span><span class="ruby-identifier">authorization_key</span>.<span class="ruby-identifier">nil?</span>
+11:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000871" class="method">
+  <div id="M000871_title" class="title">
+    <b>scheme</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000871_source')" id="l_M000871_source">show source</a> ]</p>
+  <div id="M000871_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/request.rb, line 17</span>
+17:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scheme</span>
+18:         <span class="ruby-ivar">@scheme</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">to_sym</span>
+19:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

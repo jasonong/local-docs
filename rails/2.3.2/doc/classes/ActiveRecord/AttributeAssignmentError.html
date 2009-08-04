@@ -1,0 +1,74 @@
+  <div id="C00000762">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />AttributeAssignmentError<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activerecord/lib/active_record/base_rb.html');">rails-2.3.2/activerecord/lib/active_record/base.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActiveRecord/ActiveRecordError.html');">
+ActiveRecordError
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+Raised when an error occurred while doing a mass assignment to an attribute
+through the <tt>attributes=</tt> method. The exception has an
+<tt>attribute</tt> property that is the name of the offending attribute.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002279&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>attribute</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>exception</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002279" class="method">
+  <div id="M002279_title" class="title">
+    <b>new</b>(message, exception, attribute)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002279_source')" id="l_M002279_source">show source</a> ]</p>
+  <div id="M002279_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/base.rb, line 134</span>
+134:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">exception</span>, <span class="ruby-identifier">attribute</span>)
+135:       <span class="ruby-ivar">@exception</span> = <span class="ruby-identifier">exception</span>
+136:       <span class="ruby-ivar">@attribute</span> = <span class="ruby-identifier">attribute</span>
+137:       <span class="ruby-ivar">@message</span> = <span class="ruby-identifier">message</span>
+138:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,133 @@
+  <div id="C00000555">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Time<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/float/time_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/float/time.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001463&name=month" >month</a></li>
+  <li><a href="index.html?a=M001461&name=months" >months</a></li>
+  <li><a href="index.html?a=M001462&name=months_without_deprecation" >months_without_deprecation</a></li>
+  <li><a href="index.html?a=M001465&name=year" >year</a></li>
+  <li><a href="index.html?a=M001460&name=years" >years</a></li>
+  <li><a href="index.html?a=M001464&name=years_without_deprecation" >years_without_deprecation</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001463" class="method">
+  <div id="M001463_title" class="title">
+    <b>month</b>()
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M001461&name=months">months</a>
+</p>
+  </div>
+</div>
+<div id="M001461" class="method">
+  <div id="M001461_title" class="title">
+    <b>months</b>()
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M001463&name=month">month</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001461_source')" id="l_M001461_source">show source</a> ]</p>
+  <div id="M001461_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/float/time.rb, line 10</span>
+10:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">months</span>
+11:           <span class="ruby-operator">::</span><span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Deprecation</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">deprecated_method_warning</span>(<span class="ruby-identifier">:months</span>, <span class="ruby-value str">&quot;Fractional months are not respected. Convert value to integer before calling #months.&quot;</span>), <span class="ruby-identifier">caller</span>)
+12:           <span class="ruby-identifier">months_without_deprecation</span>
+13:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001462" class="method">
+  <div id="M001462_title" class="title">
+    <b>months_without_deprecation</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001462_source')" id="l_M001462_source">show source</a> ]</p>
+  <div id="M001462_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/float/time.rb, line 15</span>
+15:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">months_without_deprecation</span>
+16:           <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Duration</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span> <span class="ruby-operator">*</span> <span class="ruby-value">30</span>.<span class="ruby-identifier">days</span>, [[<span class="ruby-identifier">:months</span>, <span class="ruby-keyword kw">self</span>]])
+17:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001465" class="method">
+  <div id="M001465_title" class="title">
+    <b>year</b>()
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M001460&name=years">years</a>
+</p>
+  </div>
+</div>
+<div id="M001460" class="method">
+  <div id="M001460_title" class="title">
+    <b>years</b>()
+  </div>
+  <div class="description">
+  <p>
+Deprication helper methods not available as core_ext is loaded first.
+</p>
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M001465&name=year">year</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001460_source')" id="l_M001460_source">show source</a> ]</p>
+  <div id="M001460_source" class="dyn-source">
+<pre>
+   <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/float/time.rb, line 6</span>
+6:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">years</span>
+7:           <span class="ruby-operator">::</span><span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Deprecation</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">deprecated_method_warning</span>(<span class="ruby-identifier">:years</span>, <span class="ruby-value str">&quot;Fractional years are not respected. Convert value to integer before calling #years.&quot;</span>), <span class="ruby-identifier">caller</span>)
+8:           <span class="ruby-identifier">years_without_deprecation</span>
+9:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001464" class="method">
+  <div id="M001464_title" class="title">
+    <b>years_without_deprecation</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001464_source')" id="l_M001464_source">show source</a> ]</p>
+  <div id="M001464_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/float/time.rb, line 20</span>
+20:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">years_without_deprecation</span>
+21:           <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Duration</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span> <span class="ruby-operator">*</span> <span class="ruby-value">365.25</span>.<span class="ruby-identifier">days</span>, [[<span class="ruby-identifier">:years</span>, <span class="ruby-keyword kw">self</span>]])
+22:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

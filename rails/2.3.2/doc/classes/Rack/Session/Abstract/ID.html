@@ -1,0 +1,156 @@
+  <div id="C00000241">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ID<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/session/abstract/id_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/abstract/id.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000241&name=ID">ID</a> sets up a basic framework
+for implementing an id based sessioning service. Cookies sent to the client
+for maintaining sessions will only contain an id reference. Only
+get_session and set_session are required to be overwritten.
+</p>
+<p>
+All parameters are optional.
+</p>
+<ul>
+<li>:key determines the name of the cookie, by default it is
+&#8216;rack.session&#8216;
+
+</li>
+<li>:path, :domain, :expire_after, :secure, and :httponly set the related
+cookie options as by Rack::Response#add_cookie
+
+</li>
+<li>:defer will not set a cookie in the response.
+
+</li>
+<li>:renew (implementation dependent) will prompt the generation of a new
+session id, and migration of data to be referenced at the new id. If :defer
+is set, it will be overridden and the cookie will be set.
+
+</li>
+<li>:sidbits sets the number of bits in length that a generated session id will
+be.
+
+</li>
+</ul>
+<p>
+These options can be set on a per request basis, at the location of <a
+href="http://'rack.session.options'" target="_blank">env</a>. Additionally
+the id of the session can be found within the options hash at the key :id.
+It is highly not recommended to change its value.
+</p>
+<p>
+Is <a
+href="index.html?a=C00000264&name=Rack::Utils::Context">Rack::Utils::Context</a>
+compatible.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000829&name=call" >call</a></li>
+  <li><a href="index.html?a=M000830&name=context" >context</a></li>
+  <li><a href="index.html?a=M000828&name=new" >new</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">DEFAULT_OPTIONS</td>
+    <td>=</td>
+    <td class="attr-value">{           :path =&gt;          '/',           :domain =&gt;        nil,           :expire_after =&gt;  nil,           :secure =&gt;        false,           :httponly =&gt;      true,           :defer =&gt;         false,           :renew =&gt;         false,           :sidbits =&gt;       128</td>
+  </tr>
+  </table>
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>default_options</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>key</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000828" class="method">
+  <div id="M000828_title" class="title">
+    <b>new</b>(app, options={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000828_source')" id="l_M000828_source">show source</a> ]</p>
+  <div id="M000828_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/abstract/id.rb, line 51</span>
+51:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>, <span class="ruby-identifier">options</span>={})
+52:           <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+53:           <span class="ruby-ivar">@key</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:key</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;rack.session&quot;</span>
+54:           <span class="ruby-ivar">@default_options</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span><span class="ruby-operator">::</span><span class="ruby-constant">DEFAULT_OPTIONS</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+55:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000829" class="method">
+  <div id="M000829_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000829_source')" id="l_M000829_source">show source</a> ]</p>
+  <div id="M000829_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/abstract/id.rb, line 57</span>
+57:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+58:           <span class="ruby-identifier">context</span>(<span class="ruby-identifier">env</span>)
+59:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000830" class="method">
+  <div id="M000830_title" class="title">
+    <b>context</b>(env, app=@app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000830_source')" id="l_M000830_source">show source</a> ]</p>
+  <div id="M000830_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/abstract/id.rb, line 61</span>
+61:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">context</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">app</span>=<span class="ruby-ivar">@app</span>)
+62:           <span class="ruby-identifier">load_session</span>(<span class="ruby-identifier">env</span>)
+63:           <span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span> = <span class="ruby-identifier">app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+64:           <span class="ruby-identifier">commit_session</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span>)
+65:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

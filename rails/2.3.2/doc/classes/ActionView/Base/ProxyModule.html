@@ -1,0 +1,68 @@
+  <div id="C00000863">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ProxyModule<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_view/base_rb.html');">rails-2.3.2/actionpack/lib/action_view/base.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActiveSupport/CoreExtensions/Module.html');">
+Module
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002612&name=include" >include</a></li>
+  <li><a href="index.html?a=M002611&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002611" class="method">
+  <div id="M002611_title" class="title">
+    <b>new</b>(receiver)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002611_source')" id="l_M002611_source">show source</a> ]</p>
+  <div id="M002611_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/base.rb, line 211</span>
+211:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">receiver</span>)
+212:         <span class="ruby-ivar">@receiver</span> = <span class="ruby-identifier">receiver</span>
+213:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002612" class="method">
+  <div id="M002612_title" class="title">
+    <b>include</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002612_source')" id="l_M002612_source">show source</a> ]</p>
+  <div id="M002612_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/base.rb, line 215</span>
+215:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">include</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+216:         <span class="ruby-keyword kw">super</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+217:         <span class="ruby-ivar">@receiver</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+218:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

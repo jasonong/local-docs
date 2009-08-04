@@ -1,0 +1,56 @@
+  <div id="C00000565">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Encoding<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/base64/encoding_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/base64/encoding.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001520&name=encode64s" >encode64s</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001520" class="method">
+  <div id="M001520_title" class="title">
+    <b>encode64s</b>(value)
+  </div>
+  <div class="description">
+  <p>
+Encodes the value as base64 without the newline breaks. This makes the
+base64 encoding readily usable as URL parameters or memcache keys without
+further processing.
+</p>
+<pre>
+ ActiveSupport::Base64.encode64s(&quot;Original unencoded string&quot;)
+ # =&gt; &quot;T3JpZ2luYWwgdW5lbmNvZGVkIHN0cmluZw==&quot;
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001520_source')" id="l_M001520_source">show source</a> ]</p>
+  <div id="M001520_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/base64/encoding.rb, line 10</span>
+10:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encode64s</span>(<span class="ruby-identifier">value</span>)
+11:           <span class="ruby-identifier">encode64</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\n/</span>, <span class="ruby-value str">''</span>)
+12:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

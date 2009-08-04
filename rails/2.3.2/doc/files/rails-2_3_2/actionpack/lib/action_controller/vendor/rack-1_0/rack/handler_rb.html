@@ -1,0 +1,67 @@
+  <div id="fileHeader">
+    <h1>handler.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  # *Handlers* connect web servers with Rack.
+  #
+  # Rack includes Handlers for Mongrel, WEBrick, FastCGI, CGI, SCGI
+  # and LiteSpeed.
+  #
+  # Handlers usually are activated by calling &lt;tt&gt;MyHandler.run(myapp)&lt;/tt&gt;.
+  # A second optional hash can be passed to include server-specific
+  # configuration.
+  module Handler
+    def self.get(server)
+      return unless server
+
+      if klass = @handlers[server]
+        obj = Object
+        klass.split(&quot;::&quot;).each { |x| obj = obj.const_get(x) }
+        obj
+      else
+        Rack::Handler.const_get(server.capitalize)
+      end
+    end
+
+    def self.register(server, klass)
+      @handlers ||= {}
+      @handlers[server] = klass
+    end
+
+    autoload :CGI, &quot;rack/handler/cgi&quot;
+    autoload :FastCGI, &quot;rack/handler/fastcgi&quot;
+    autoload :Mongrel, &quot;rack/handler/mongrel&quot;
+    autoload :EventedMongrel, &quot;rack/handler/evented_mongrel&quot;
+    autoload :SwiftipliedMongrel, &quot;rack/handler/swiftiplied_mongrel&quot;
+    autoload :WEBrick, &quot;rack/handler/webrick&quot;
+    autoload :LSWS, &quot;rack/handler/lsws&quot;
+    autoload :SCGI, &quot;rack/handler/scgi&quot;
+    autoload :Thin, &quot;rack/handler/thin&quot;
+
+    register 'cgi', 'Rack::Handler::CGI'
+    register 'fastcgi', 'Rack::Handler::FastCGI'
+    register 'mongrel', 'Rack::Handler::Mongrel'
+    register 'emongrel', 'Rack::Handler::EventedMongrel'
+    register 'smongrel', 'Rack::Handler::SwiftipliedMongrel'
+    register 'webrick', 'Rack::Handler::WEBrick'
+    register 'lsws', 'Rack::Handler::LSWS'
+    register 'scgi', 'Rack::Handler::SCGI'
+    register 'thin', 'Rack::Handler::Thin'
+  end
+end
+</pre>
+    </div>

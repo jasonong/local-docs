@@ -1,0 +1,79 @@
+  <div id="C00000056">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Continuum<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/vendor/memcache-client-1_6_5/memcache_rb.html');">rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000132&name=binary_search" >binary_search</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/Continuum/Entry.html');" class="link">Continuum::Entry</a>"<br />
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">POINTS_PER_SERVER</td>
+    <td>=</td>
+    <td class="attr-value">160</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000132" class="method">
+  <div id="M000132_title" class="title">
+    <b>binary_search</b>(ary, value, &amp;block)
+  </div>
+  <div class="description">
+  <p>
+Find the closest index in <a
+href="index.html?a=C00000056&name=Continuum">Continuum</a> with value &lt;=
+the given value
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000132_source')" id="l_M000132_source">show source</a> ]</p>
+  <div id="M000132_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 903</span>
+903:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">binary_search</span>(<span class="ruby-identifier">ary</span>, <span class="ruby-identifier">value</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+904:     <span class="ruby-identifier">upper</span> = <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+905:     <span class="ruby-identifier">lower</span> = <span class="ruby-value">0</span>
+906:     <span class="ruby-identifier">idx</span> = <span class="ruby-value">0</span>
+907: 
+908:     <span class="ruby-keyword kw">while</span>(<span class="ruby-identifier">lower</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">upper</span>) <span class="ruby-keyword kw">do</span>
+909:       <span class="ruby-identifier">idx</span> = (<span class="ruby-identifier">lower</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">upper</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>
+910:       <span class="ruby-identifier">comp</span> = <span class="ruby-identifier">ary</span>[<span class="ruby-identifier">idx</span>].<span class="ruby-identifier">value</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">value</span>
+911: 
+912:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">comp</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+913:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">idx</span>
+914:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">comp</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+915:         <span class="ruby-identifier">upper</span> = <span class="ruby-identifier">idx</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+916:       <span class="ruby-keyword kw">else</span>
+917:         <span class="ruby-identifier">lower</span> = <span class="ruby-identifier">idx</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+918:       <span class="ruby-keyword kw">end</span>
+919:     <span class="ruby-keyword kw">end</span>
+920:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">upper</span>
+921:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

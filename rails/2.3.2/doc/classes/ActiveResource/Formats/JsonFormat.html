@@ -1,0 +1,96 @@
+  <div id="C00000613">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />JsonFormat<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activeresource/lib/active_resource/formats/json_format_rb.html');">rails-2.3.2/activeresource/lib/active_resource/formats/json_format.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001714&name=decode" >decode</a></li>
+  <li><a href="index.html?a=M001713&name=encode" >encode</a></li>
+  <li><a href="index.html?a=M001711&name=extension" >extension</a></li>
+  <li><a href="index.html?a=M001712&name=mime_type" >mime_type</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001714" class="method">
+  <div id="M001714_title" class="title">
+    <b>decode</b>(json)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001714_source')" id="l_M001714_source">show source</a> ]</p>
+  <div id="M001714_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/json_format.rb, line 18</span>
+18:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decode</span>(<span class="ruby-identifier">json</span>)
+19:         <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">json</span>)
+20:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001713" class="method">
+  <div id="M001713_title" class="title">
+    <b>encode</b>(hash, options={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001713_source')" id="l_M001713_source">show source</a> ]</p>
+  <div id="M001713_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/json_format.rb, line 14</span>
+14:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encode</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">options</span>={})
+15:         <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">to_json</span>(<span class="ruby-identifier">options</span>)
+16:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001711" class="method">
+  <div id="M001711_title" class="title">
+    <b>extension</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001711_source')" id="l_M001711_source">show source</a> ]</p>
+  <div id="M001711_source" class="dyn-source">
+<pre>
+   <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/json_format.rb, line 6</span>
+6:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extension</span>
+7:         <span class="ruby-value str">&quot;json&quot;</span>
+8:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001712" class="method">
+  <div id="M001712_title" class="title">
+    <b>mime_type</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001712_source')" id="l_M001712_source">show source</a> ]</p>
+  <div id="M001712_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/json_format.rb, line 10</span>
+10:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mime_type</span>
+11:         <span class="ruby-value str">&quot;application/json&quot;</span>
+12:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

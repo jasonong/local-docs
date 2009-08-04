@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Variables</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="procobjects.html">
+ <img border=0 src="a2l.gif" alt="Procedure objects"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="globalvars.html">
+ <img border=0 src="a2r.gif" alt="Global variables"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Variables</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Ruby has three kinds of variables, one kind of constant and
+exactly two pseudo-variables.  The variables and the constants
+have no type.  While untyped variables have some drawbacks, they
+have many more advantages and fit well with ruby's <em>quick and
+easy</em> philosophy.</p>
+<p>Variables must be declared in most languages in order to specify
+their type, modifiability (i.e., whether they are constants), and
+scope; since type is not an issue, and the rest is evident from the
+variable name as you are about to see, we do not need variable
+declarations in ruby.</p>
+<p>The first character of an identifier categorizes it at a glance:</p>
+<p><table border="1"><tr><td><code>$</code> </td><td> global variable </td></tr>
+<tr><td>
+<code>@</code> </td><td> instance variable </td></tr>
+<tr><td>
+<code>[a-z]</code> or <code>_</code> </td><td> local variable </td></tr>
+<tr><td>
+<code>[A-Z]</code> </td><td> constant</td></tr></table>
+<p>The only exceptions to the above are ruby's pseudo-variables:
+<code>self</code>, which always refers to the currently executing
+object, and <code>nil</code>, which is the meaningless value assigned
+to uninitialized variables.  Both are named as if they are local
+variables, but <code>self</code> is a global variable maintained by
+the interpreter, and <code>nil</code> is really a constant.  As
+these are the only two exceptions, they don't confuse things too
+much.</p>
+<p>You man not assign values to <code>self</code> or <code>nil</code>. <code>main</code>, as a
+value of <code>self</code>, refers to the top-level object:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> self</b></font>
+<font color="#50ffff"><b>   main</b></font>
+ruby&gt;<font color="#ffff00"><b> nil</b></font>
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="procobjects.html">
+ <img border=0 src="a2l.gif" alt="Procedure objects"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="globalvars.html">
+ <img border=0 src="a2r.gif" alt="Global variables"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

@@ -1,0 +1,70 @@
+  <div id="fileHeader">
+    <h1>mem_cache_store.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/session/mem_cache_store.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>begin
+  require_library_or_gem 'memcache'
+
+  module ActionController
+    module Session
+      class MemCacheStore &lt; AbstractStore
+        def initialize(app, options = {})
+          # Support old :expires option
+          options[:expire_after] ||= options[:expires]
+
+          super
+
+          @default_options = {
+            :namespace =&gt; 'rack:session',
+            :memcache_server =&gt; 'localhost:11211'
+          }.merge(@default_options)
+
+          @pool = options[:cache] || MemCache.new(@default_options[:memcache_server], @default_options)
+          unless @pool.servers.any? { |s| s.alive? }
+            raise &quot;#{self} unable to find server during initialization.&quot;
+          end
+          @mutex = Mutex.new
+
+          super
+        end
+
+        private
+          def get_session(env, sid)
+            sid ||= generate_sid
+            begin
+              session = @pool.get(sid) || {}
+            rescue MemCache::MemCacheError, Errno::ECONNREFUSED
+              session = {}
+            end
+            [sid, session]
+          end
+
+          def set_session(env, sid, session_data)
+            options = env['rack.session.options']
+            expiry  = options[:expire_after] || 0
+            @pool.set(sid, session_data, expiry)
+            return true
+          rescue MemCache::MemCacheError, Errno::ECONNREFUSED
+            return false
+          end
+      end
+    end
+  end
+rescue LoadError
+  # MemCache wasn't available so neither can the store be
+end
+</pre>
+    </div>

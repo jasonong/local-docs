@@ -1,0 +1,29 @@
+  <div id="fileHeader">
+    <h1>agnostics.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/kernel/agnostics.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Object
+  # Makes backticks behave (somewhat more) similarly on all platforms.
+  # On win32 `nonexistent_command` raises Errno::ENOENT; on Unix, the
+  # spawned shell prints a message to stderr and sets $?.  We emulate
+  # Unix on the former but not the latter.
+  def `(command) #:nodoc:
+    super
+  rescue Errno::ENOENT =&gt; e
+    STDERR.puts &quot;#$0: #{e}&quot;
+  end
+end</pre>
+    </div>

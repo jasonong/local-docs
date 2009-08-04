@@ -1,0 +1,25 @@
+  <div id="fileHeader">
+    <h1>object.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/json/encoders/object.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Object
+  # Dumps object in JSON (JavaScript Object Notation). See www.json.org for more info.
+  def to_json(options = {})
+    ActiveSupport::JSON.encode(instance_values, options)
+  end
+end
+</pre>
+    </div>

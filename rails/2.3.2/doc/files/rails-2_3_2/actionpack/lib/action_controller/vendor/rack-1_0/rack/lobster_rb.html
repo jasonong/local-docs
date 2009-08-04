@@ -1,0 +1,84 @@
+  <div id="fileHeader">
+    <h1>lobster.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/lobster.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'zlib'
+
+require 'rack/request'
+require 'rack/response'
+
+module Rack
+  # Paste has a Pony, Rack has a Lobster!
+  class Lobster
+    LobsterString = Zlib::Inflate.inflate(&quot;eJx9kEEOwyAMBO99xd7MAcytUhPlJyj2
+    P6jy9i4k9EQyGAnBarEXeCBqSkntNXsi/ZCvC48zGQoZKikGrFMZvgS5ZHd+aGWVuWwhVF0
+    t1drVmiR42HcWNz5w3QanT+2gIvTVCiE1lm1Y0eU4JGmIIbaKwextKn8rvW+p5PIwFl8ZWJ
+    I8jyiTlhTcYXkekJAzTyYN6E08A+dk8voBkAVTJQ==&quot;.delete(&quot;\n &quot;).unpack(&quot;m*&quot;)[0])
+
+    LambdaLobster = lambda { |env|
+      if env[&quot;QUERY_STRING&quot;].include?(&quot;flip&quot;)
+        lobster = LobsterString.split(&quot;\n&quot;).
+          map { |line| line.ljust(42).reverse }.
+          join(&quot;\n&quot;)
+        href = &quot;?&quot;
+      else
+        lobster = LobsterString
+        href = &quot;?flip&quot;
+      end
+
+      content = [&quot;&lt;title&gt;Lobstericious!&lt;/title&gt;&quot;,
+                 &quot;&lt;pre&gt;&quot;, lobster, &quot;&lt;/pre&gt;&quot;,
+                 &quot;&lt;a href='#{href}'&gt;flip!&lt;/a&gt;&quot;]
+      length = content.inject(0) { |a,e| a+e.size }.to_s
+      [200, {&quot;Content-Type&quot; =&gt; &quot;text/html&quot;, &quot;Content-Length&quot; =&gt; length}, content]
+    }
+
+    def call(env)
+      req = Request.new(env)
+      if req.GET[&quot;flip&quot;] == &quot;left&quot;
+        lobster = LobsterString.split(&quot;\n&quot;).
+          map { |line| line.ljust(42).reverse }.
+          join(&quot;\n&quot;)
+        href = &quot;?flip=right&quot;
+      elsif req.GET[&quot;flip&quot;] == &quot;crash&quot;
+        raise &quot;Lobster crashed&quot;
+      else
+        lobster = LobsterString
+        href = &quot;?flip=left&quot;
+      end
+
+      res = Response.new
+      res.write &quot;&lt;title&gt;Lobstericious!&lt;/title&gt;&quot;
+      res.write &quot;&lt;pre&gt;&quot;
+      res.write lobster
+      res.write &quot;&lt;/pre&gt;&quot;
+      res.write &quot;&lt;p&gt;&lt;a href='#{href}'&gt;flip!&lt;/a&gt;&lt;/p&gt;&quot;
+      res.write &quot;&lt;p&gt;&lt;a href='?flip=crash'&gt;crash!&lt;/a&gt;&lt;/p&gt;&quot;
+      res.finish
+    end
+
+  end
+end
+
+if $0 == __FILE__
+  require 'rack'
+  require 'rack/showexceptions'
+  Rack::Handler::WEBrick.run \
+    Rack::ShowExceptions.new(Rack::Lint.new(Rack::Lobster.new)),
+    :Port =&gt; 9292
+end
+</pre>
+    </div>

@@ -1,0 +1,356 @@
+  <div id="C00000289">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Response<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/response_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000289&name=Rack::Response">Rack::Response</a>
+provides a convenient interface to create a <a
+href="index.html?a=C00000238&name=Rack">Rack</a> response.
+</p>
+<p>
+It allows setting of headers and cookies, and provides useful defaults (a
+OK response containing HTML).
+</p>
+<p>
+You can use <a
+href="index.html?a=M000980&name=Response#write">Response#write</a> to
+iteratively generate your response, but note that this is buffered by <a
+href="index.html?a=C00000289&name=Rack::Response">Rack::Response</a> until
+you call <tt>finish</tt>. <tt>finish</tt> however can take a block inside
+which calls to <tt>write</tt> are syncronous with the <a
+href="index.html?a=C00000238&name=Rack">Rack</a> response.
+</p>
+<p>
+Your application&#8217;s <tt>call</tt> should end returning <a
+href="index.html?a=M000977&name=Response#finish">Response#finish</a>.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000973&name=[]" >[]</a></li>
+  <li><a href="index.html?a=M000974&name=[]=" >[]=</a></li>
+  <li><a href="index.html?a=M000981&name=close" >close</a></li>
+  <li><a href="index.html?a=M000976&name=delete_cookie" >delete_cookie</a></li>
+  <li><a href="index.html?a=M000979&name=each" >each</a></li>
+  <li><a href="index.html?a=M000982&name=empty?" >empty?</a></li>
+  <li><a href="index.html?a=M000977&name=finish" >finish</a></li>
+  <li><a href="index.html?a=M000972&name=new" >new</a></li>
+  <li><a href="index.html?a=M000975&name=set_cookie" >set_cookie</a></li>
+  <li><a href="index.html?a=M000978&name=to_a" >to_a</a></li>
+  <li><a href="index.html?a=M000980&name=write" >write</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="#" onclick="jsHref('classes/Rack/Response/Helpers.html');">Helpers</a></li>
+</ul>
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Module "<a href="#" onclick="jsHref('classes/Rack/Response/Helpers.html');" class="link">Rack::Response::Helpers</a>"<br />
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>body</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>header</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>length</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>status</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000972" class="method">
+  <div id="M000972_title" class="title">
+    <b>new</b>(body=[], status=200, header={}) {|self if block_given?| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000972_source')" id="l_M000972_source">show source</a> ]</p>
+  <div id="M000972_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 21</span>
+21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">body</span>=[], <span class="ruby-identifier">status</span>=<span class="ruby-value">200</span>, <span class="ruby-identifier">header</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+22:       <span class="ruby-ivar">@status</span> = <span class="ruby-identifier">status</span>
+23:       <span class="ruby-ivar">@header</span> = <span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">HeaderHash</span>.<span class="ruby-identifier">new</span>({<span class="ruby-value str">&quot;Content-Type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;text/html&quot;</span>}.
+24:                                       <span class="ruby-identifier">merge</span>(<span class="ruby-identifier">header</span>))
+25: 
+26:       <span class="ruby-ivar">@writer</span> = <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">x</span> }
+27:       <span class="ruby-ivar">@block</span> = <span class="ruby-keyword kw">nil</span>
+28:       <span class="ruby-ivar">@length</span> = <span class="ruby-value">0</span>
+29: 
+30:       <span class="ruby-ivar">@body</span> = []
+31: 
+32:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:to_str</span>
+33:         <span class="ruby-identifier">write</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_str</span>
+34:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:each</span>)
+35:         <span class="ruby-identifier">body</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">part</span><span class="ruby-operator">|</span>
+36:           <span class="ruby-identifier">write</span> <span class="ruby-identifier">part</span>.<span class="ruby-identifier">to_s</span>
+37:         }
+38:       <span class="ruby-keyword kw">else</span>
+39:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-value str">&quot;stringable or iterable required&quot;</span>
+40:       <span class="ruby-keyword kw">end</span>
+41: 
+42:       <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>  <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+43:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000973" class="method">
+  <div id="M000973_title" class="title">
+    <b>[]</b>(key)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000973_source')" id="l_M000973_source">show source</a> ]</p>
+  <div id="M000973_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 48</span>
+48:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">key</span>)
+49:       <span class="ruby-identifier">header</span>[<span class="ruby-identifier">key</span>]
+50:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000974" class="method">
+  <div id="M000974_title" class="title">
+    <b>[]=</b>(key, value)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000974_source')" id="l_M000974_source">show source</a> ]</p>
+  <div id="M000974_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 52</span>
+52:     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+53:       <span class="ruby-identifier">header</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>
+54:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000981" class="method">
+  <div id="M000981_title" class="title">
+    <b>close</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000981_source')" id="l_M000981_source">show source</a> ]</p>
+  <div id="M000981_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 130</span>
+130:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+131:       <span class="ruby-identifier">body</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:close</span>)
+132:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000976" class="method">
+  <div id="M000976_title" class="title">
+    <b>delete_cookie</b>(key, value={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000976_source')" id="l_M000976_source">show source</a> ]</p>
+  <div id="M000976_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 84</span>
+84:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_cookie</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>={})
+85:       <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>]
+86:         <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>] = [<span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>]].<span class="ruby-identifier">compact</span>
+87:       <span class="ruby-keyword kw">end</span>
+88: 
+89:       <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>].<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">cookie</span><span class="ruby-operator">|</span>
+90:         <span class="ruby-identifier">cookie</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/\A#{Utils.escape(key)}=/</span>
+91:       }
+92: 
+93:       <span class="ruby-identifier">set_cookie</span>(<span class="ruby-identifier">key</span>,
+94:                  {<span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">''</span>, <span class="ruby-identifier">:path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">:domain</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+95:                    <span class="ruby-identifier">:expires</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-value">0</span>) }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">value</span>))
+96:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000979" class="method">
+  <div id="M000979_title" class="title">
+    <b>each</b>(&amp;callback)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000979_source')" id="l_M000979_source">show source</a> ]</p>
+  <div id="M000979_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 111</span>
+111:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+112:       <span class="ruby-ivar">@body</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+113:       <span class="ruby-ivar">@writer</span> = <span class="ruby-identifier">callback</span>
+114:       <span class="ruby-ivar">@block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)  <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@block</span>
+115:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000982" class="method">
+  <div id="M000982_title" class="title">
+    <b>empty?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000982_source')" id="l_M000982_source">show source</a> ]</p>
+  <div id="M000982_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 134</span>
+134:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty?</span>
+135:       <span class="ruby-ivar">@block</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@body</span>.<span class="ruby-identifier">empty?</span>
+136:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000977" class="method">
+  <div id="M000977_title" class="title">
+    <b>finish</b>(&amp;block)
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M000978&name=to_a">to_a</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000977_source')" id="l_M000977_source">show source</a> ]</p>
+  <div id="M000977_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 99</span>
+ 99:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+100:       <span class="ruby-ivar">@block</span> = <span class="ruby-identifier">block</span>
+101: 
+102:       <span class="ruby-keyword kw">if</span> [<span class="ruby-value">204</span>, <span class="ruby-value">304</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_i</span>)
+103:         <span class="ruby-identifier">header</span>.<span class="ruby-identifier">delete</span> <span class="ruby-value str">&quot;Content-Type&quot;</span>
+104:         [<span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">header</span>.<span class="ruby-identifier">to_hash</span>, []]
+105:       <span class="ruby-keyword kw">else</span>
+106:         [<span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">header</span>.<span class="ruby-identifier">to_hash</span>, <span class="ruby-keyword kw">self</span>]
+107:       <span class="ruby-keyword kw">end</span>
+108:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000975" class="method">
+  <div id="M000975_title" class="title">
+    <b>set_cookie</b>(key, value)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000975_source')" id="l_M000975_source">show source</a> ]</p>
+  <div id="M000975_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 56</span>
+56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_cookie</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+57:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">value</span>
+58:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Hash</span>
+59:         <span class="ruby-identifier">domain</span>  = <span class="ruby-value str">&quot;; domain=&quot;</span>  <span class="ruby-operator">+</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:domain</span>]    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:domain</span>]
+60:         <span class="ruby-identifier">path</span>    = <span class="ruby-value str">&quot;; path=&quot;</span>    <span class="ruby-operator">+</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:path</span>]      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:path</span>]
+61:         <span class="ruby-comment cmt"># According to RFC 2109, we need dashes here.</span>
+62:         <span class="ruby-comment cmt"># N.B.: cgi.rb uses spaces...</span>
+63:         <span class="ruby-identifier">expires</span> = <span class="ruby-value str">&quot;; expires=&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:expires</span>].<span class="ruby-identifier">clone</span>.<span class="ruby-identifier">gmtime</span>.
+64:           <span class="ruby-identifier">strftime</span>(<span class="ruby-value str">&quot;%a, %d-%b-%Y %H:%M:%S GMT&quot;</span>)    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:expires</span>]
+65:         <span class="ruby-identifier">secure</span> = <span class="ruby-value str">&quot;; secure&quot;</span>  <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:secure</span>]
+66:         <span class="ruby-identifier">httponly</span> = <span class="ruby-value str">&quot;; HttpOnly&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:httponly</span>]
+67:         <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>[<span class="ruby-identifier">:value</span>]
+68:       <span class="ruby-keyword kw">end</span>
+69:       <span class="ruby-identifier">value</span> = [<span class="ruby-identifier">value</span>]  <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">value</span>
+70:       <span class="ruby-identifier">cookie</span> = <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">key</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;=&quot;</span> <span class="ruby-operator">+</span>
+71:         <span class="ruby-identifier">value</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-constant">Utils</span>.<span class="ruby-identifier">escape</span> <span class="ruby-identifier">v</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;&amp;&quot;</span>) <span class="ruby-operator">+</span>
+72:         <span class="ruby-node">&quot;#{domain}#{path}#{expires}#{secure}#{httponly}&quot;</span>
+73: 
+74:       <span class="ruby-keyword kw">case</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>]
+75:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+76:         <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cookie</span>
+77:       <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>
+78:         <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>] = [<span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>], <span class="ruby-identifier">cookie</span>]
+79:       <span class="ruby-keyword kw">when</span> <span class="ruby-keyword kw">nil</span>
+80:         <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">&quot;Set-Cookie&quot;</span>] = <span class="ruby-identifier">cookie</span>
+81:       <span class="ruby-keyword kw">end</span>
+82:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000978" class="method">
+  <div id="M000978_title" class="title">
+    <b>to_a</b>(&amp;block)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M000977&name=finish">finish</a>
+</p>
+  </div>
+</div>
+<div id="M000980" class="method">
+  <div id="M000980_title" class="title">
+    <b>write</b>(str)
+  </div>
+  <div class="description">
+  <p>
+Append to body and update Content-Length.
+</p>
+<p>
+NOTE: Do not mix <a href="index.html?a=M000980&name=write">write</a> and
+direct body access!
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000980_source')" id="l_M000980_source">show source</a> ]</p>
+  <div id="M000980_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 121</span>
+121:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">str</span>)
+122:       <span class="ruby-identifier">s</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>
+123:       <span class="ruby-ivar">@length</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">size</span>
+124:       <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">s</span>
+125: 
+126:       <span class="ruby-identifier">header</span>[<span class="ruby-value str">&quot;Content-Length&quot;</span>] = <span class="ruby-ivar">@length</span>.<span class="ruby-identifier">to_s</span>
+127:       <span class="ruby-identifier">str</span>
+128:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,124 @@
+<HTML>
+<HEAD>
+<TITLE>Fixnum</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="File.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Float.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Fixnum</H1>
+<dd> 
+<P>
+The class for the fixed range integers fit in the machine's
+pointer, which is 31 bits length on most machines.  Fixnums
+are immediate values.  If the result of the operations on
+fixnums exceed the range, it will automatically expanded to
+<a href="Bignum.html">bignums</a>. 
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Integer.html"><code>Integer</code></A>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="plus">
+<CODE>self + <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="minus">
+<CODE>self - <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="mul">
+<CODE>self * <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="div">
+<CODE>self / <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="mod">
+<CODE>self % <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="pow">
+<CODE>self ** <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Arithmetic operations.
+</p>
+
+<DT>
+<A NAME="inv">
+<CODE>~ self</CODE></A>
+<DD>
+<DT><A NAME="or">
+<CODE>self | <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="and">
+<CODE>self &#38; <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="xor">
+<CODE>self ^ <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="lshift">
+<CODE>self &#60;&#60; <VAR>bits</VAR></CODE></A>
+<DD>
+<DT><A NAME="rshift">
+<CODE>self &#62;&#62; <VAR>bits</VAR></CODE></A>
+<DD>
+<p>
+Bit operations
+</p>
+
+<DT>
+<A NAME="id2name">
+<CODE>id2name</CODE></A>
+<DD>
+<p>
+Returns a corresponding strings to the number.  If there is
+no corresponding symbol to the integer, it returns
+<code>nil</code>.
+</p>
+
+<DT>
+<A NAME="remainder"><CODE>remainder(other)</CODE></A>
+<DD>
+<p>
+Returns remainder of the numbers.  In case either number is
+negative, the evaluated value differs from that of the
+operator <code>%</code>.
+</p>
+<blockquote>
+<pre>
+  13 %  4  =&gt;  1
+  13 % -4  =&gt; -3
+ -13 %  4  =&gt;  3
+ -13 % -4  =&gt; -1
+
+  13.remainder(4)    =&gt;  1
+  13.remainder(-4)   =&gt;  1
+(-13).remainder(4)   =&gt; -1
+(-13).remainder(-4)  =&gt; -1
+</pre>
+</blockquote>
+
+</DL>
+</dl>
+
+<HR>
+<A HREF="File.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Float.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

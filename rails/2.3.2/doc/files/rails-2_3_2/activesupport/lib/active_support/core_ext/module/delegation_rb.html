@@ -1,0 +1,140 @@
+  <div id="fileHeader">
+    <h1>delegation.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/module/delegation.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Module
+  # Provides a delegate class method to easily expose contained objects' methods
+  # as your own. Pass one or more methods (specified as symbols or strings)
+  # and the name of the target object as the final &lt;tt&gt;:to&lt;/tt&gt; option (also a symbol
+  # or string).  At least one method and the &lt;tt&gt;:to&lt;/tt&gt; option are required.
+  #
+  # Delegation is particularly useful with Active Record associations:
+  #
+  #   class Greeter &lt; ActiveRecord::Base
+  #     def hello()   &quot;hello&quot;   end
+  #     def goodbye() &quot;goodbye&quot; end
+  #   end
+  #
+  #   class Foo &lt; ActiveRecord::Base
+  #     belongs_to :greeter
+  #     delegate :hello, :to =&gt; :greeter
+  #   end
+  #
+  #   Foo.new.hello   # =&gt; &quot;hello&quot;
+  #   Foo.new.goodbye # =&gt; NoMethodError: undefined method `goodbye' for #&lt;Foo:0x1af30c&gt;
+  #
+  # Multiple delegates to the same target are allowed:
+  #
+  #   class Foo &lt; ActiveRecord::Base
+  #     belongs_to :greeter
+  #     delegate :hello, :goodbye, :to =&gt; :greeter
+  #   end
+  #
+  #   Foo.new.goodbye # =&gt; &quot;goodbye&quot;
+  #
+  # Methods can be delegated to instance variables, class variables, or constants
+  # by providing them as a symbols:
+  #
+  #   class Foo
+  #     CONSTANT_ARRAY = [0,1,2,3]
+  #     @@class_array  = [4,5,6,7]
+  #     
+  #     def initialize
+  #       @instance_array = [8,9,10,11]
+  #     end
+  #     delegate :sum, :to =&gt; :CONSTANT_ARRAY
+  #     delegate :min, :to =&gt; :@@class_array
+  #     delegate :max, :to =&gt; :@instance_array
+  #   end
+  #
+  #   Foo.new.sum # =&gt; 6
+  #   Foo.new.min # =&gt; 4
+  #   Foo.new.max # =&gt; 11
+  #
+  # Delegates can optionally be prefixed using the &lt;tt&gt;:prefix&lt;/tt&gt; option. If the value
+  # is &lt;tt&gt;true&lt;/tt&gt;, the delegate methods are prefixed with the name of the object being
+  # delegated to.
+  #
+  #   Person = Struct.new(:name, :address)
+  #
+  #   class Invoice &lt; Struct.new(:client)
+  #     delegate :name, :address, :to =&gt; :client, :prefix =&gt; true
+  #   end
+  #
+  #   john_doe = Person.new(&quot;John Doe&quot;, &quot;Vimmersvej 13&quot;)
+  #   invoice = Invoice.new(john_doe)
+  #   invoice.client_name    # =&gt; &quot;John Doe&quot;
+  #   invoice.client_address # =&gt; &quot;Vimmersvej 13&quot;
+  #
+  # It is also possible to supply a custom prefix.
+  #
+  #   class Invoice &lt; Struct.new(:client)
+  #     delegate :name, :address, :to =&gt; :client, :prefix =&gt; :customer
+  #   end
+  #
+  #   invoice = Invoice.new(john_doe)
+  #   invoice.customer_name    # =&gt; &quot;John Doe&quot;
+  #   invoice.customer_address # =&gt; &quot;Vimmersvej 13&quot;
+  #
+  # If the object to which you delegate can be nil, you may want to use the
+  # :allow_nil option. In that case, it returns nil instead of raising a
+  # NoMethodError exception:
+  #
+  #  class Foo
+  #    attr_accessor :bar
+  #    def initialize(bar = nil)
+  #      @bar = bar
+  #    end
+  #    delegate :zoo, :to =&gt; :bar
+  #  end
+  #
+  #  Foo.new.zoo   # raises NoMethodError exception (you called nil.zoo)
+  #
+  #  class Foo
+  #    attr_accessor :bar
+  #    def initialize(bar = nil)
+  #      @bar = bar
+  #    end
+  #    delegate :zoo, :to =&gt; :bar, :allow_nil =&gt; true
+  #  end
+  #
+  #  Foo.new.zoo   # returns nil
+  #
+  def delegate(*methods)
+    options = methods.pop
+    unless options.is_a?(Hash) &amp;&amp; to = options[:to]
+      raise ArgumentError, &quot;Delegation needs a target. Supply an options hash with a :to key as the last argument (e.g. delegate :hello, :to =&gt; :greeter).&quot;
+    end
+
+    if options[:prefix] == true &amp;&amp; options[:to].to_s =~ /^[^a-z_]/
+      raise ArgumentError, &quot;Can only automatically set the delegation prefix when delegating to a method.&quot;
+    end
+
+    prefix = options[:prefix] &amp;&amp; &quot;#{options[:prefix] == true ? to : options[:prefix]}_&quot;
+
+    allow_nil = options[:allow_nil] &amp;&amp; &quot;#{to} &amp;&amp; &quot;
+
+    methods.each do |method|
+      module_eval(&lt;&lt;-EOS, &quot;(__DELEGATION__)&quot;, 1)
+        def #{prefix}#{method}(*args, &amp;block)                           # def customer_name(*args, &amp;block)
+          #{allow_nil}#{to}.__send__(#{method.inspect}, *args, &amp;block)  #   client &amp;&amp; client.__send__(:name, *args, &amp;block)
+        end                                                             # end
+      EOS
+    end
+  end
+end
+</pre>
+    </div>

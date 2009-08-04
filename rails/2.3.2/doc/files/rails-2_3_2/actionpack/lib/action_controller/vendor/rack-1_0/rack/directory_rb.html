@@ -1,0 +1,172 @@
+  <div id="fileHeader">
+    <h1>directory.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/directory.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'time'
+require 'rack/utils'
+require 'rack/mime'
+
+module Rack
+  # Rack::Directory serves entries below the +root+ given, according to the
+  # path info of the Rack request. If a directory is found, the file's contents
+  # will be presented in an html based index. If a file is found, the env will
+  # be passed to the specified +app+.
+  #
+  # If +app+ is not specified, a Rack::File of the same +root+ will be used.
+
+  class Directory
+    DIR_FILE = &quot;&lt;tr&gt;&lt;td class='name'&gt;&lt;a href='%s'&gt;%s&lt;/a&gt;&lt;/td&gt;&lt;td class='size'&gt;%s&lt;/td&gt;&lt;td class='type'&gt;%s&lt;/td&gt;&lt;td class='mtime'&gt;%s&lt;/td&gt;&lt;/tr&gt;&quot;
+    DIR_PAGE = &lt;&lt;-PAGE
+&lt;html&gt;&lt;head&gt;
+  &lt;title&gt;%s&lt;/title&gt;
+  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+  &lt;style type='text/css'&gt;
+table { width:100%%; }
+.name { text-align:left; }
+.size, .mtime { text-align:right; }
+.type { width:11em; }
+.mtime { width:15em; }
+  &lt;/style&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;h1&gt;%s&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th class='name'&gt;Name&lt;/th&gt;
+    &lt;th class='size'&gt;Size&lt;/th&gt;
+    &lt;th class='type'&gt;Type&lt;/th&gt;
+    &lt;th class='mtime'&gt;Last Modified&lt;/th&gt;
+  &lt;/tr&gt;
+%s
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;/body&gt;&lt;/html&gt;
+    PAGE
+
+    attr_reader :files
+    attr_accessor :root, :path
+
+    def initialize(root, app=nil)
+      @root = F.expand_path(root)
+      @app = app || Rack::File.new(@root)
+    end
+
+    def call(env)
+      dup._call(env)
+    end
+
+    F = ::File
+
+    def _call(env)
+      @env = env
+      @script_name = env['SCRIPT_NAME']
+      @path_info = Utils.unescape(env['PATH_INFO'])
+
+      if forbidden = check_forbidden
+        forbidden
+      else
+        @path = F.join(@root, @path_info)
+        list_path
+      end
+    end
+
+    def check_forbidden
+      return unless @path_info.include? &quot;..&quot;
+
+      body = &quot;Forbidden\n&quot;
+      size = Rack::Utils.bytesize(body)
+      return [403, {&quot;Content-Type&quot; =&gt; &quot;text/plain&quot;,&quot;Content-Length&quot; =&gt; size.to_s}, [body]]
+    end
+
+    def list_directory
+      @files = [['../','Parent Directory','','','']]
+      glob = F.join(@path, '*')
+
+      Dir[glob].sort.each do |node|
+        stat = stat(node)
+        next  unless stat
+        basename = F.basename(node)
+        ext = F.extname(node)
+
+        url = F.join(@script_name, @path_info, basename)
+        size = stat.size
+        type = stat.directory? ? 'directory' : Mime.mime_type(ext)
+        size = stat.directory? ? '-' : filesize_format(size)
+        mtime = stat.mtime.httpdate
+        url &lt;&lt; '/'  if stat.directory?
+        basename &lt;&lt; '/'  if stat.directory?
+
+        @files &lt;&lt; [ url, basename, size, type, mtime ]
+      end
+
+      return [ 200, {'Content-Type'=&gt;'text/html; charset=utf-8'}, self ]
+    end
+
+    def stat(node, max = 10)
+      F.stat(node)
+    rescue Errno::ENOENT, Errno::ELOOP
+      return nil
+    end
+
+    # TODO: add correct response if not readable, not sure if 404 is the best
+    #       option
+    def list_path
+      @stat = F.stat(@path)
+
+      if @stat.readable?
+        return @app.call(@env) if @stat.file?
+        return list_directory if @stat.directory?
+      else
+        raise Errno::ENOENT, 'No such file or directory'
+      end
+
+    rescue Errno::ENOENT, Errno::ELOOP
+      return entity_not_found
+    end
+
+    def entity_not_found
+      body = &quot;Entity not found: #{@path_info}\n&quot;
+      size = Rack::Utils.bytesize(body)
+      return [404, {&quot;Content-Type&quot; =&gt; &quot;text/plain&quot;, &quot;Content-Length&quot; =&gt; size.to_s}, [body]]
+    end
+
+    def each
+      show_path = @path.sub(/^#{@root}/,'')
+      files = @files.map{|f| DIR_FILE % f }*&quot;\n&quot;
+      page  = DIR_PAGE % [ show_path, show_path , files ]
+      page.each_line{|l| yield l }
+    end
+
+    # Stolen from Ramaze
+
+    FILESIZE_FORMAT = [
+      ['%.1fT', 1 &lt;&lt; 40],
+      ['%.1fG', 1 &lt;&lt; 30],
+      ['%.1fM', 1 &lt;&lt; 20],
+      ['%.1fK', 1 &lt;&lt; 10],
+    ]
+
+    def filesize_format(int)
+      FILESIZE_FORMAT.each do |format, size|
+        return format % (int.to_f / size) if int &gt;= size
+      end
+
+      int.to_s + 'B'
+    end
+  end
+end
+</pre>
+    </div>

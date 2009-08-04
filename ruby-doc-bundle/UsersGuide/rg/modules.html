@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Modules</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="singletonmethods.html">
+ <img border=0 src="a2l.gif" alt="Singleton methods"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="procobjects.html">
+ <img border=0 src="a2r.gif" alt="Procedure objects"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Modules</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Modules in ruby are similar to classes, except:</p>
+<ul>
+<li>A module can have no instances.</li>
+<li>A module can have no subclasses.</li>
+<li>A module is defined by <code>module ... end</code>.</li>
+</ul>
+<p>Actually... the Module class of module is the superclass of the
+Class class of class.  Got that? No? Let's move
+on. </p>
+<p>There are two typical uses of modules.  One is to collect
+related methods and constants in a central location.  The
+<code>Math</code> module in ruby's standard library plays such a
+role:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> Math.sqrt(2)</b></font>
+<font color="#50ffff"><b>   1.41421</b></font>
+ruby&gt;<font color="#ffff00"><b> Math::PI</b></font>
+<font color="#50ffff"><b>   3.14159</b></font></font></pre></td></tr></table>
+<p>The <code>::</code> operator tells the ruby interpreter which module it
+should consult for the value of a constant (conceivably, some module
+besides <code>Math</code> might mean something else by <code>PI</code>).
+If we want to refer to the methods or constants of a module directly
+without using <code>::</code>, we can <code>include</code> that module:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> include Math</b></font>
+<font color="#50ffff"><b>   Object</b></font>
+ruby&gt;<font color="#ffff00"><b> sqrt(2)</b></font>
+<font color="#50ffff"><b>   1.41421</b></font>
+ruby&gt;<font color="#ffff00"><b> PI</b></font>
+<font color="#50ffff"><b>   3.14159</b></font></font></pre></td></tr></table>
+<p>Another use of modules is called <em>mixin</em>.  Some OO
+programming langages, including C++, allow <em>multiple
+inheritance</em>, that is, inheritance from more than one
+superclass.  A real-world example of multiple inheritance is an
+alarm clock; you can think of alarm clocks as belonging to the class
+of <em>clocks</em> and also the class of <em>things with
+buzzers</em>.</p>
+<p>Ruby purposely does not implement true multiple inheritance, but
+the <em>mixin</em> technique is a good alternative.  Remember that
+modules cannot be instantiated or subclassed; but if we
+<code>include</code> a module in a class definition, its methods are
+effectively appended, or "mixed in", to the class.</p>
+<p>Mixin can be thought of as a way of asking for whatever particular
+properties we want to have.  For example, if a class has a
+working <code>each</code> method, mixing in the standard library's
+<code>Enumerable</code> module gives us <code>sort</code> and
+<code>find</code> methods for free.</p>
+<p>This use of modules gives us the basic functionality of multiple
+inheritance but allows us to represent class relationships with a
+simple tree structure, and so simplifies the language implementation
+considerably (a similar choice was made by the designers of Java).</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="singletonmethods.html">
+ <img border=0 src="a2l.gif" alt="Singleton methods"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="procobjects.html">
+ <img border=0 src="a2r.gif" alt="Procedure objects"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

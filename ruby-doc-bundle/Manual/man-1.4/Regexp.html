@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<TITLE>Regexp</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Range.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="String.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Regexp</H1>
+<dd> 
+<P>
+The <code>Regexp</code> is the class for regular expression matching.
+Regular expression literals are enclosed by slashes like:
+<blockquote>
+<pre>
+/^this is regexp/
+</pre>
+</blockquote>
+<p>
+In other way, you can create the regular expression object using:
+<blockquote>
+<PRE>
+Regexp.new(string)
+</PRE>
+</blockquote>
+
+<P>
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="Regexp.compile"><CODE>compile(<VAR>string</VAR>[, <VAR>casefold</VAR>])</CODE></A>
+<DD>
+<DT><A NAME="Regexp.new"><CODE>new(<VAR>string</VAR>[, <VAR>options</VAR>])</CODE></A>
+<DD>
+<p>
+Compiles the <var>string</var> into a regular expression object.  If
+second argument given, and its value is true, then the created regexp
+object becomes case-insensitive.  the value of the second argument is Fixnum, 
+it must be bitwise-or of <code>Regexp::IGNORECASE</code> and
+<code>Regexp::EXTENDED</code>.
+</p>
+
+<DT>
+<A NAME="Regexp.quote">
+<CODE>quote(<VAR>string</VAR>)</CODE></A>
+<DD>
+<p>
+Insert escape characters before regular expression special characters
+in the <code>string</code>.  Returns the newly created  strings.
+</p>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="match"><CODE>self =~ <VAR>string</VAR></CODE></A>
+<DD>
+<DT><A NAME="eqq"><CODE>self === <VAR>string</VAR></CODE></A>
+<DD>
+<p>
+Returns an index of the matching place in the string, if matched.
+Returns <code>nil</code> if not matched.  The index of the first
+character is 0.
+</p>
+
+<DT>
+<A NAME="inv">
+<CODE>~ self</CODE></A>
+<DD>
+<p>
+Matches with the value of the default variable (<code>$_</code>).
+Behaves like:
+</p>
+<blockquote>
+<pre>
+self =~ $_
+</pre>
+</blockquote>
+<DT> 
+<A NAME="casefold_p"><CODE>casefold?</CODE></A>
+<DD>
+<p>
+Returns true if the Regexp is compiled as case-insensitive.
+</p>
+<DT> 
+<A NAME="source"><CODE>source</CODE></A>
+<DD>
+<p>
+Returns the orginal string form of the regular expression.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Range.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="String.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

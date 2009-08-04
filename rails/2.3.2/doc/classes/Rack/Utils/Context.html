@@ -1,0 +1,129 @@
+  <div id="C00000264">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Context<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/utils_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000264&name=Context">Context</a> allows the use of
+a compatible middleware at different points in a request handling stack. A
+compatible middleware must define <a
+href="index.html?a=M000908&name=context">context</a> which should take the
+arguments env and app. The first of which would be the request environment.
+The second of which would be the rack application that the request would be
+forwarded to.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000906&name=call" >call</a></li>
+  <li><a href="index.html?a=M000908&name=context" >context</a></li>
+  <li><a href="index.html?a=M000905&name=new" >new</a></li>
+  <li><a href="index.html?a=M000907&name=recontext" >recontext</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>app</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>for</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000905" class="method">
+  <div id="M000905_title" class="title">
+    <b>new</b>(app_f, app_r)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000905_source')" id="l_M000905_source">show source</a> ]</p>
+  <div id="M000905_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 168</span>
+168:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app_f</span>, <span class="ruby-identifier">app_r</span>)
+169:         <span class="ruby-identifier">raise</span> <span class="ruby-value str">'running context does not respond to #context'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">app_f</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:context</span>
+170:         <span class="ruby-ivar">@for</span>, <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app_f</span>, <span class="ruby-identifier">app_r</span>
+171:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000906" class="method">
+  <div id="M000906_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000906_source')" id="l_M000906_source">show source</a> ]</p>
+  <div id="M000906_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 173</span>
+173:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+174:         <span class="ruby-ivar">@for</span>.<span class="ruby-identifier">context</span>(<span class="ruby-identifier">env</span>, <span class="ruby-ivar">@app</span>)
+175:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000908" class="method">
+  <div id="M000908_title" class="title">
+    <b>context</b>(env, app=@app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000908_source')" id="l_M000908_source">show source</a> ]</p>
+  <div id="M000908_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 181</span>
+181:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">context</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">app</span>=<span class="ruby-ivar">@app</span>)
+182:         <span class="ruby-identifier">recontext</span>(<span class="ruby-identifier">app</span>).<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+183:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000907" class="method">
+  <div id="M000907_title" class="title">
+    <b>recontext</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000907_source')" id="l_M000907_source">show source</a> ]</p>
+  <div id="M000907_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 177</span>
+177:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recontext</span>(<span class="ruby-identifier">app</span>)
+178:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@for</span>, <span class="ruby-identifier">app</span>)
+179:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

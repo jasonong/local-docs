@@ -1,0 +1,89 @@
+  <div id="C00000499">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />XmlMini<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/xml_mini_rb.html');">rails-2.3.2/activesupport/lib/active_support/xml_mini.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><h1><a href="index.html?a=C00000499&name=XmlMini">XmlMini</a></h1>
+<p>
+To use the much faster libxml parser:
+</p>
+<pre>
+  gem 'libxml-ruby', '=0.9.7'
+  XmlMini.backend = 'LibXML'
+</pre>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001269&name=backend=" >backend=</a></li>
+  <li><a href="index.html?a=M001270&name=with_backend" >with_backend</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>backend</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001269" class="method">
+  <div id="M001269_title" class="title">
+    <b>backend=</b>(name)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001269_source')" id="l_M001269_source">show source</a> ]</p>
+  <div id="M001269_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini.rb, line 13</span>
+13:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backend=</span>(<span class="ruby-identifier">name</span>)
+14:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Module</span>)
+15:         <span class="ruby-ivar">@backend</span> = <span class="ruby-identifier">name</span>
+16:       <span class="ruby-keyword kw">else</span>
+17:         <span class="ruby-identifier">require</span> <span class="ruby-node">&quot;active_support/xml_mini/#{name.to_s.downcase}.rb&quot;</span>
+18:         <span class="ruby-ivar">@backend</span> = <span class="ruby-constant">ActiveSupport</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-node">&quot;XmlMini_#{name}&quot;</span>)
+19:       <span class="ruby-keyword kw">end</span>
+20:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001270" class="method">
+  <div id="M001270_title" class="title">
+    <b>with_backend</b>(name) {|| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001270_source')" id="l_M001270_source">show source</a> ]</p>
+  <div id="M001270_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini.rb, line 22</span>
+22:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with_backend</span>(<span class="ruby-identifier">name</span>)
+23:       <span class="ruby-identifier">old_backend</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">backend</span> = <span class="ruby-identifier">backend</span>, <span class="ruby-identifier">name</span>
+24:       <span class="ruby-keyword kw">yield</span>
+25:     <span class="ruby-keyword kw">ensure</span>
+26:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">backend</span> = <span class="ruby-identifier">old_backend</span>
+27:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

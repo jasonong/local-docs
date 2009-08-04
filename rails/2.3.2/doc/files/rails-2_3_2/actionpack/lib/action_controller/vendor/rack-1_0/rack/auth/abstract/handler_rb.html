@@ -1,0 +1,56 @@
+  <div id="fileHeader">
+    <h1>handler.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/handler.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  module Auth
+    # Rack::Auth::AbstractHandler implements common authentication functionality.
+    #
+    # +realm+ should be set for all handlers.
+
+    class AbstractHandler
+
+      attr_accessor :realm
+
+      def initialize(app, realm=nil, &amp;authenticator)
+        @app, @realm, @authenticator = app, realm, authenticator
+      end
+
+
+      private
+
+      def unauthorized(www_authenticate = challenge)
+        return [ 401,
+          { 'Content-Type' =&gt; 'text/plain',
+            'Content-Length' =&gt; '0',
+            'WWW-Authenticate' =&gt; www_authenticate.to_s },
+          []
+        ]
+      end
+
+      def bad_request
+        return [ 400,
+          { 'Content-Type' =&gt; 'text/plain',
+            'Content-Length' =&gt; '0' },
+          []
+        ]
+      end
+
+    end
+  end
+end
+</pre>
+    </div>

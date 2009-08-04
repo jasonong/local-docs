@@ -1,0 +1,98 @@
+  <div id="C00000260">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />OpenIDAuth<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/auth/openid_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb</a>
+
+Parent:&nbsp;
+Rack::Auth::AbstractHandler
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+A class developed out of the request to use <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> as an authentication
+middleware. The request will be sent to the <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> instance unless the
+block evaluates to true. For example in rackup, you can use it as such:
+</p>
+<pre>
+  use Rack::Session::Pool
+  use Rack::Auth::OpenIDAuth, realm, openid_options do |env|
+    env['rack.session'][:authkey] == a_string
+  end
+  run RackApp
+</pre>
+<p>
+Or simply:
+</p>
+<pre>
+  app = Rack::Auth::OpenIDAuth.new app, realm, openid_options, &amp;auth
+</pre>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000892&name=call" >call</a></li>
+  <li><a href="index.html?a=M000891&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>oid</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000891" class="method">
+  <div id="M000891_title" class="title">
+    <b>new</b>(app, realm, options={}, &amp;auth)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000891_source')" id="l_M000891_source">show source</a> ]</p>
+  <div id="M000891_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 469</span>
+469:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">auth</span>)
+470:         <span class="ruby-ivar">@oid</span> = <span class="ruby-constant">OpenID</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">options</span>)
+471:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">app</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">auth</span>)
+472:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000892" class="method">
+  <div id="M000892_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000892_source')" id="l_M000892_source">show source</a> ]</p>
+  <div id="M000892_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 474</span>
+474:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+475:         <span class="ruby-identifier">to</span> = <span class="ruby-identifier">auth</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>) <span class="ruby-operator">?</span> <span class="ruby-ivar">@app</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@oid</span>
+476:         <span class="ruby-identifier">to</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">env</span>
+477:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

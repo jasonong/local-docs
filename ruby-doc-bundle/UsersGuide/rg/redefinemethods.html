@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Redefinition of methods</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="inheritance.html">
+ <img border=0 src="a2l.gif" alt="Inheritance"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accesscontrol.html">
+ <img border=0 src="a2r.gif" alt="Access control"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Redefinition of methods</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>In a subclass, we can change the behavior of the instances by
+redefining superclass methods.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Human</b></font>
+    |<font color="#ffff00"><b>   def identify</b></font>
+    |<font color="#ffff00"><b>     print "I'm a person.\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b>   def train_toll(age)</b></font>
+    |<font color="#ffff00"><b>     if age &lt; 12</b></font>
+    |<font color="#ffff00"><b>       print "Reduced fare.\n";</b></font>
+    |<font color="#ffff00"><b>     else</b></font>
+    |<font color="#ffff00"><b>       print "Normal fare.\n";</b></font>
+    |<font color="#ffff00"><b>     end</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> Human.new.identify</b></font>
+I'm a person.
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> class Student1&lt;Human</b></font>
+    |<font color="#ffff00"><b>   def identify</b></font>
+    |<font color="#ffff00"><b>     print "I'm a student.\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> Student1.new.identify</b></font>
+I'm a student.
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>Suppose we would rather enhance the superclass's <code>identify</code>
+method than entirely replace it.  For this we can use <code>super</code>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Student2&lt;Human</b></font>
+    |<font color="#ffff00"><b>   def identify</b></font>
+    |<font color="#ffff00"><b>     super</b></font>
+    |<font color="#ffff00"><b>     print "I'm a student too.\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> Student2.new.identify</b></font>
+I'm a human.
+I'm a student too.
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p><code>super</code> lets us pass arguments to the original method.
+It is sometimes said that there are two kinds of people...</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Dishonest&lt;Human</b></font>
+    |<font color="#ffff00"><b>   def train_toll(age)</b></font>
+    |<font color="#ffff00"><b>     super(11) # we want a cheap fare.</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> Dishonest.new.train_toll(25)</b></font>
+Reduced fare. 
+<font color="#50ffff"><b>   nil</b></font>
+<font color="#50ffff"><b></b></font>
+ruby&gt;<font color="#ffff00"><b> class Honest&lt;Human</b></font>
+    |<font color="#ffff00"><b>   def train_toll(age)</b></font>
+    |<font color="#ffff00"><b>     super(age) # pass the argument we were given</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> Honest.new.train_toll(25)</b></font>
+Normal fare. 
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="inheritance.html">
+ <img border=0 src="a2l.gif" alt="Inheritance"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accesscontrol.html">
+ <img border=0 src="a2r.gif" alt="Access control"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

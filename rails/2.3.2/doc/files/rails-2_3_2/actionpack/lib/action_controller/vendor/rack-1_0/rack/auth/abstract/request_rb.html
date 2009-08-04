@@ -1,0 +1,56 @@
+  <div id="fileHeader">
+    <h1>request.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/abstract/request.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  module Auth
+    class AbstractRequest
+
+      def initialize(env)
+        @env = env
+      end
+
+      def provided?
+        !authorization_key.nil?
+      end
+
+      def parts
+        @parts ||= @env[authorization_key].split(' ', 2)
+      end
+
+      def scheme
+        @scheme ||= parts.first.downcase.to_sym
+      end
+
+      def params
+        @params ||= parts.last
+      end
+
+
+      private
+
+      AUTHORIZATION_KEYS = ['HTTP_AUTHORIZATION', 'X-HTTP_AUTHORIZATION', 'X_HTTP_AUTHORIZATION']
+
+      def authorization_key
+        @authorization_key ||= AUTHORIZATION_KEYS.detect { |key| @env.has_key?(key) }
+      end
+
+    end
+
+  end
+end
+</pre>
+    </div>

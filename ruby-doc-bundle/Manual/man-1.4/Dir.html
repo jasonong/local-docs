@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Dir</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Data.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Hash.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Dir</H1>
+<dd> 
+<P>
+The class for the directory stream.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Enum.html"><code>Enumerable</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<DT>
+<A NAME="Dir.aref">
+<CODE>self[<VAR>pattern</VAR>]</CODE></A>
+<DD>
+<A NAME="Dir.glob">
+<DT><CODE>glob(<VAR>pattern</VAR>)</CODE></A>
+<DD>
+<p>
+Expands a wild-card <var>pattern</var>, then returns the results in an
+array of strings.
+</p>
+
+<p>
+Wild-cards are:
+</p>
+<blockquote>
+<DL COMPACT>
+
+<DT><SAMP>*</SAMP>
+<DD>
+Matches any string, including the null string
+<DT><SAMP>?</SAMP>
+<DD>
+Matches any single character
+<DT><SAMP>[ ]</SAMP>
+<DD>
+Matches any one of enclosed  character.  A pair of characters
+separated by a `<samp>-</samp>' sign denotes a range.  If the first
+character following `<samp>[</samp>' is a `<samp>^</samp>', then any
+character not enclosed is matched.
+<DT><SAMP>{ }</SAMP>
+<DD>
+Expanded to combinations of comma separating string within braces.
+For example, `<samp>foo{a,b,c}</samp>' will be expanded into three
+strings, `<samp>fooa</samp>', `<samp>foob</samp>',
+`<samp>fooc</samp>'.  The generated names need not to be exist.
+</DL>
+</blockquote>
+
+<DT>
+<A NAME="Dir.chdir">
+<CODE>chdir(<VAR>path</VAR>)</CODE></A>
+<DD>
+<p>
+Changes the current directory to the <var>path</var>.
+</p>
+
+<DT>
+<A NAME="Dir.chroot">
+<CODE>chroot(<VAR>path</VAR>)</CODE></A>
+<DD>
+<p>
+Changes the root directory to <var>path</var>.  See
+<samp>chroot(2)</samp>.  Only the super-user may change the root directory
+</p>
+<p>
+There is no way to back up the old root directory.
+</p>
+
+<DT>
+<A NAME="Dir.getwd">
+<CODE>getwd</CODE></A>
+<DD>
+<DT><A NAME="Dir.pwd">
+<CODE>pwd</CODE></A>
+<DD>
+<p>
+Returns the absolute pathname of the current directory.
+</p>
+
+<DT>
+<A NAME="Dir.foreach">
+<CODE>foreach(<VAR>path</VAR>)</CODE></A>
+<DD>
+<p>
+iterates over the items in the directory specified by
+<code>path</code>.  It works like:
+
+<blockquote>
+<pre>
+dir = Dir.open(<var>path</var>)
+begin
+  dir.each {
+    ...
+  }
+ensure
+  dir.close
+end
+</pre>
+</blockquote>
+</p>
+
+<DT>
+<A NAME="Dir.mkdir">
+<CODE>mkdir(<VAR>path</VAR>[, <VAR>mode</VAR>])</CODE></A>
+<DD>
+<p>
+Creates a directory named <var>path</var>.  the permission of a newly
+created directory specified by <var>mode</var>.  The default mode is
+<samp>0777</samp>, which will be modified by users <samp>umask</samp>
+<code>(mode & ~umask)</code>.
+</p>
+
+<DT>
+<A NAME="Dir.open">
+<CODE>open(<VAR>path</VAR>)</CODE></A>
+<DD>
+<p>
+Opens the directory stream corresponding to the directory
+<var>path</var>.
+</p>
+
+<DT>
+<A NAME="Dir.delete"><CODE>delete(<VAR>path</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="Dir.rmdir"><CODE>rmdir(<VAR>path</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="Dir.unlink"><CODE>unlink(<VAR>path</VAR>)</CODE></A>
+<DD>
+<p>
+Deletes the directory, which must be empty.
+</p>
+</DL>
+
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="close">
+<CODE>close</CODE></A>
+<DD>
+<p>
+Closes the directory stream.  Later operation to the directory stream
+raises an exception.
+</p>
+
+<DT>
+<A NAME="each">
+<CODE>each {|<VAR>item</VAR>|...}</CODE></A>
+<DD>
+<p>
+Gives each item in the directory as the block parameter.
+</p>
+
+<DT><A NAME="read"><CODE>read</CODE></A> 
+<DD>
+<p>
+Returns the next item in the directory stream.
+</p>
+
+<DT><A NAME="rewind">
+<CODE>rewind</CODE></A>
+<DD>
+<p>
+Resets the position of the directory stream to the beginning of the
+directory. 
+</p>
+
+<DT><A NAME="seek">
+<CODE>seek(<VAR>pos</VAR>)</CODE></A>
+<DD>
+<p>
+Sets the location of the directory stream to the <var>pos</var>.  The
+<var>pos</var> must be an offset returned by
+<code><a href="#tell"></a>Dir#tell</code>.
+</p>
+
+<DT>
+<A NAME="tell">
+<CODE>tell</CODE></A>
+<DD>
+<p>
+Returns the current position of the directory stream.
+</p>
+</DL>
+
+</dl>
+
+<HR>
+<A HREF="Data.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Hash.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

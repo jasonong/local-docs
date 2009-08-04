@@ -1,0 +1,93 @@
+  <div id="C00000287">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ShowStatus<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/showstatus_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showstatus.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000287&name=Rack::ShowStatus">Rack::ShowStatus</a>
+catches all empty responses the app it wraps and replaces them with a site
+explaining the error.
+</p>
+<p>
+Additional details can be put into <tt>rack.showstatus.detail</tt> and will
+be shown as HTML. If such details exist, the error page is always rendered,
+even if the reply was not empty.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000968&name=call" >call</a></li>
+  <li><a href="index.html?a=M000967&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000967" class="method">
+  <div id="M000967_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000967_source')" id="l_M000967_source">show source</a> ]</p>
+  <div id="M000967_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showstatus.rb, line 14</span>
+14:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+15:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+16:       <span class="ruby-ivar">@template</span> = <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">TEMPLATE</span>)
+17:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000968" class="method">
+  <div id="M000968_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000968_source')" id="l_M000968_source">show source</a> ]</p>
+  <div id="M000968_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showstatus.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+20:       <span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span> = <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+21:       <span class="ruby-identifier">headers</span> = <span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">HeaderHash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">headers</span>)
+22:       <span class="ruby-identifier">empty</span> = <span class="ruby-identifier">headers</span>[<span class="ruby-value str">'Content-Length'</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
+23: 
+24:       <span class="ruby-comment cmt"># client or server error, or explicit message</span>
+25:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">400</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">empty</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.showstatus.detail&quot;</span>]
+26:         <span class="ruby-identifier">req</span> = <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
+27:         <span class="ruby-identifier">message</span> = <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP_STATUS_CODES</span>[<span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_i</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_s</span>
+28:         <span class="ruby-identifier">detail</span> = <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.showstatus.detail&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">message</span>
+29:         <span class="ruby-identifier">body</span> = <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)
+30:         <span class="ruby-identifier">size</span> = <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span>.<span class="ruby-identifier">bytesize</span>(<span class="ruby-identifier">body</span>)
+31:         [<span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-value str">&quot;Content-Type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;text/html&quot;</span>, <span class="ruby-value str">&quot;Content-Length&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">size</span>.<span class="ruby-identifier">to_s</span>), [<span class="ruby-identifier">body</span>]]
+32:       <span class="ruby-keyword kw">else</span>
+33:         [<span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span>]
+34:       <span class="ruby-keyword kw">end</span>
+35:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

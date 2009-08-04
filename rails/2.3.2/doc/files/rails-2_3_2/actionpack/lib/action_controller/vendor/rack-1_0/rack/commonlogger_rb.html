@@ -1,0 +1,80 @@
+  <div id="fileHeader">
+    <h1>commonlogger.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/commonlogger.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  # Rack::CommonLogger forwards every request to an +app+ given, and
+  # logs a line in the Apache common log format to the +logger+, or
+  # rack.errors by default.
+
+  class CommonLogger
+    def initialize(app, logger=nil)
+      @app = app
+      @logger = logger
+    end
+
+    def call(env)
+      dup._call(env)
+    end
+
+    def _call(env)
+      @env = env
+      @logger ||= self
+      @time = Time.now
+      @status, @header, @body = @app.call(env)
+      [@status, @header, self]
+    end
+
+    def close
+      @body.close if @body.respond_to? :close
+    end
+
+    # By default, log to rack.errors.
+    def &lt;&lt;(str)
+      @env[&quot;rack.errors&quot;].write(str)
+      @env[&quot;rack.errors&quot;].flush
+    end
+
+    def each
+      length = 0
+      @body.each { |part|
+        length += part.size
+        yield part
+      }
+
+      @now = Time.now
+
+      # Common Log Format: http://httpd.apache.org/docs/1.3/logs.html#common
+      # lilith.local - - [07/Aug/2006 23:58:02] &quot;GET / HTTP/1.1&quot; 500 -
+      #             %{%s - %s [%s] &quot;%s %s%s %s&quot; %d %s\n} %
+      @logger &lt;&lt; %{%s - %s [%s] &quot;%s %s%s %s&quot; %d %s %0.4f\n} %
+        [
+         @env['HTTP_X_FORWARDED_FOR'] || @env[&quot;REMOTE_ADDR&quot;] || &quot;-&quot;,
+         @env[&quot;REMOTE_USER&quot;] || &quot;-&quot;,
+         @now.strftime(&quot;%d/%b/%Y %H:%M:%S&quot;),
+         @env[&quot;REQUEST_METHOD&quot;],
+         @env[&quot;PATH_INFO&quot;],
+         @env[&quot;QUERY_STRING&quot;].empty? ? &quot;&quot; : &quot;?&quot;+@env[&quot;QUERY_STRING&quot;],
+         @env[&quot;HTTP_VERSION&quot;],
+         @status.to_s[0..3],
+         (length.zero? ? &quot;-&quot; : length.to_s),
+         @now - @time
+        ]
+    end
+  end
+end
+</pre>
+    </div>

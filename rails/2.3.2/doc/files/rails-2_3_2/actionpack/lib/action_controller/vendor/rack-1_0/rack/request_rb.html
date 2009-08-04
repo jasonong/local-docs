@@ -1,0 +1,260 @@
+  <div id="fileHeader">
+    <h1>request.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/request.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'rack/utils'
+
+module Rack
+  # Rack::Request provides a convenient interface to a Rack
+  # environment.  It is stateless, the environment +env+ passed to the
+  # constructor will be directly modified.
+  #
+  #   req = Rack::Request.new(env)
+  #   req.post?
+  #   req.params[&quot;data&quot;]
+  #
+  # The environment hash passed will store a reference to the Request object
+  # instantiated so that it will only instantiate if an instance of the Request
+  # object doesn't already exist.
+
+  class Request
+    # The environment of the request.
+    attr_reader :env
+
+    def self.new(env)
+      if self == Rack::Request
+        env[&quot;rack.request&quot;] ||= super
+      else
+        super
+      end
+    end
+
+    def initialize(env)
+      @env = env
+    end
+
+    def body;            @env[&quot;rack.input&quot;]                       end
+    def scheme;          @env[&quot;rack.url_scheme&quot;]                  end
+    def script_name;     @env[&quot;SCRIPT_NAME&quot;].to_s                 end
+    def path_info;       @env[&quot;PATH_INFO&quot;].to_s                   end
+    def port;            @env[&quot;SERVER_PORT&quot;].to_i                 end
+    def request_method;  @env[&quot;REQUEST_METHOD&quot;]                   end
+    def query_string;    @env[&quot;QUERY_STRING&quot;].to_s                end
+    def content_length;  @env['CONTENT_LENGTH']                   end
+    def content_type;    @env['CONTENT_TYPE']                     end
+
+    # The media type (type/subtype) portion of the CONTENT_TYPE header
+    # without any media type parameters. e.g., when CONTENT_TYPE is
+    # &quot;text/plain;charset=utf-8&quot;, the media-type is &quot;text/plain&quot;.
+    #
+    # For more information on the use of media types in HTTP, see:
+    # http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.7
+    def media_type
+      content_type &amp;&amp; content_type.split(/\s*[;,]\s*/, 2)[0].downcase
+    end
+
+    # The media type parameters provided in CONTENT_TYPE as a Hash, or
+    # an empty Hash if no CONTENT_TYPE or media-type parameters were
+    # provided.  e.g., when the CONTENT_TYPE is &quot;text/plain;charset=utf-8&quot;,
+    # this method responds with the following Hash:
+    #   { 'charset' =&gt; 'utf-8' }
+    def media_type_params
+      return {} if content_type.nil?
+      content_type.split(/\s*[;,]\s*/)[1..-1].
+        collect { |s| s.split('=', 2) }.
+        inject({}) { |hash,(k,v)| hash[k.downcase] = v ; hash }
+    end
+
+    # The character set of the request body if a &quot;charset&quot; media type
+    # parameter was given, or nil if no &quot;charset&quot; was specified. Note
+    # that, per RFC2616, text/* media types that specify no explicit
+    # charset are to be considered ISO-8859-1.
+    def content_charset
+      media_type_params['charset']
+    end
+
+    def host
+      # Remove port number.
+      (@env[&quot;HTTP_HOST&quot;] || @env[&quot;SERVER_NAME&quot;]).gsub(/:\d+\z/, '')
+    end
+
+    def script_name=(s); @env[&quot;SCRIPT_NAME&quot;] = s.to_s             end
+    def path_info=(s);   @env[&quot;PATH_INFO&quot;] = s.to_s               end
+
+    def get?;            request_method == &quot;GET&quot;                  end
+    def post?;           request_method == &quot;POST&quot;                 end
+    def put?;            request_method == &quot;PUT&quot;                  end
+    def delete?;         request_method == &quot;DELETE&quot;               end
+    def head?;           request_method == &quot;HEAD&quot;                 end
+
+    # The set of form-data media-types. Requests that do not indicate
+    # one of the media types presents in this list will not be eligible
+    # for form-data / param parsing.
+    FORM_DATA_MEDIA_TYPES = [
+      nil,
+      'application/x-www-form-urlencoded',
+      'multipart/form-data'
+    ]
+
+    # Determine whether the request body contains form-data by checking
+    # the request media_type against registered form-data media-types:
+    # &quot;application/x-www-form-urlencoded&quot; and &quot;multipart/form-data&quot;. The
+    # list of form-data media types can be modified through the
+    # +FORM_DATA_MEDIA_TYPES+ array.
+    def form_data?
+      FORM_DATA_MEDIA_TYPES.include?(media_type)
+    end
+
+    # Returns the data recieved in the query string.
+    def GET
+      if @env[&quot;rack.request.query_string&quot;] == query_string
+        @env[&quot;rack.request.query_hash&quot;]
+      else
+        @env[&quot;rack.request.query_string&quot;] = query_string
+        @env[&quot;rack.request.query_hash&quot;]   =
+          Utils.parse_nested_query(query_string)
+      end
+    end
+
+    # Returns the data recieved in the request body.
+    #
+    # This method support both application/x-www-form-urlencoded and
+    # multipart/form-data.
+    def POST
+      if @env[&quot;rack.request.form_input&quot;].eql? @env[&quot;rack.input&quot;]
+        @env[&quot;rack.request.form_hash&quot;]
+      elsif form_data?
+        @env[&quot;rack.request.form_input&quot;] = @env[&quot;rack.input&quot;]
+        unless @env[&quot;rack.request.form_hash&quot;] =
+            Utils::Multipart.parse_multipart(env)
+          form_vars = @env[&quot;rack.input&quot;].read
+
+          # Fix for Safari Ajax postings that always append \0
+          form_vars.sub!(/\0\z/, '')
+
+          @env[&quot;rack.request.form_vars&quot;] = form_vars
+          @env[&quot;rack.request.form_hash&quot;] = Utils.parse_nested_query(form_vars)
+
+          begin
+            @env[&quot;rack.input&quot;].rewind if @env[&quot;rack.input&quot;].respond_to?(:rewind)
+          rescue Errno::ESPIPE
+            # Handles exceptions raised by input streams that cannot be rewound
+            # such as when using plain CGI under Apache
+          end
+        end
+        @env[&quot;rack.request.form_hash&quot;]
+      else
+        {}
+      end
+    end
+
+    # The union of GET and POST data.
+    def params
+      self.put? ? self.GET : self.GET.update(self.POST)
+    rescue EOFError =&gt; e
+      self.GET
+    end
+
+    # shortcut for request.params[key]
+    def [](key)
+      params[key.to_s]
+    end
+
+    # shortcut for request.params[key] = value
+    def []=(key, value)
+      params[key.to_s] = value
+    end
+
+    # like Hash#values_at
+    def values_at(*keys)
+      keys.map{|key| params[key] }
+    end
+
+    # the referer of the client or '/'
+    def referer
+      @env['HTTP_REFERER'] || '/'
+    end
+    alias referrer referer
+
+
+    def cookies
+      return {}  unless @env[&quot;HTTP_COOKIE&quot;]
+
+      if @env[&quot;rack.request.cookie_string&quot;] == @env[&quot;HTTP_COOKIE&quot;]
+        @env[&quot;rack.request.cookie_hash&quot;]
+      else
+        @env[&quot;rack.request.cookie_string&quot;] = @env[&quot;HTTP_COOKIE&quot;]
+        # According to RFC 2109:
+        #   If multiple cookies satisfy the criteria above, they are ordered in
+        #   the Cookie header such that those with more specific Path attributes
+        #   precede those with less specific.  Ordering with respect to other
+        #   attributes (e.g., Domain) is unspecified.
+        @env[&quot;rack.request.cookie_hash&quot;] =
+          Utils.parse_query(@env[&quot;rack.request.cookie_string&quot;], ';,').inject({}) {|h,(k,v)|
+            h[k] = Array === v ? v.first : v
+            h
+          }
+      end
+    end
+
+    def xhr?
+      @env[&quot;HTTP_X_REQUESTED_WITH&quot;] == &quot;XMLHttpRequest&quot;
+    end
+
+    # Tries to return a remake of the original request URL as a string.
+    def url
+      url = scheme + &quot;://&quot;
+      url &lt;&lt; host
+
+      if scheme == &quot;https&quot; &amp;&amp; port != 443 ||
+          scheme == &quot;http&quot; &amp;&amp; port != 80
+        url &lt;&lt; &quot;:#{port}&quot;
+      end
+
+      url &lt;&lt; fullpath
+
+      url
+    end
+
+    def fullpath
+      path = script_name + path_info
+      path &lt;&lt; &quot;?&quot; &lt;&lt; query_string  unless query_string.empty?
+      path
+    end
+
+    def accept_encoding
+      @env[&quot;HTTP_ACCEPT_ENCODING&quot;].to_s.split(/,\s*/).map do |part|
+        m = /^([^\s,]+?)(?:;\s*q=(\d+(?:\.\d+)?))?$/.match(part) # From WEBrick
+
+        if m
+          [m[1], (m[2] || 1.0).to_f]
+        else
+          raise &quot;Invalid value for Accept-Encoding: #{part.inspect}&quot;
+        end
+      end
+    end
+
+    def ip
+      if addr = @env['HTTP_X_FORWARDED_FOR']
+        addr.split(',').last.strip
+      else
+        @env['REMOTE_ADDR']
+      end
+    end
+  end
+end
+</pre>
+    </div>

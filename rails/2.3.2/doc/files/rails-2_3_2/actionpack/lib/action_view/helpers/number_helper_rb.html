@@ -1,0 +1,322 @@
+  <div id="fileHeader">
+    <h1>number_helper.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/helpers/number_helper.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionView
+  module Helpers #:nodoc:
+    # Provides methods for converting numbers into formatted strings.
+    # Methods are provided for phone numbers, currency, percentage,
+    # precision, positional notation, and file size.
+    module NumberHelper
+      # Formats a +number+ into a US phone number (e.g., (555) 123-9876). You can customize the format
+      # in the +options+ hash.
+      #
+      # ==== Options
+      # * &lt;tt&gt;:area_code&lt;/tt&gt;  - Adds parentheses around the area code.
+      # * &lt;tt&gt;:delimiter&lt;/tt&gt;  - Specifies the delimiter to use (defaults to &quot;-&quot;).
+      # * &lt;tt&gt;:extension&lt;/tt&gt;  - Specifies an extension to add to the end of the
+      #   generated number.
+      # * &lt;tt&gt;:country_code&lt;/tt&gt;  - Sets the country code for the phone number.
+      #
+      # ==== Examples
+      #  number_to_phone(5551234)                                           # =&gt; 555-1234
+      #  number_to_phone(1235551234)                                        # =&gt; 123-555-1234
+      #  number_to_phone(1235551234, :area_code =&gt; true)                    # =&gt; (123) 555-1234
+      #  number_to_phone(1235551234, :delimiter =&gt; &quot; &quot;)                     # =&gt; 123 555 1234
+      #  number_to_phone(1235551234, :area_code =&gt; true, :extension =&gt; 555) # =&gt; (123) 555-1234 x 555
+      #  number_to_phone(1235551234, :country_code =&gt; 1)                    # =&gt; +1-123-555-1234
+      #
+      #  number_to_phone(1235551234, :country_code =&gt; 1, :extension =&gt; 1343, :delimiter =&gt; &quot;.&quot;)
+      #  =&gt; +1.123.555.1234 x 1343
+      def number_to_phone(number, options = {})
+        number       = number.to_s.strip unless number.nil?
+        options      = options.symbolize_keys
+        area_code    = options[:area_code] || nil
+        delimiter    = options[:delimiter] || &quot;-&quot;
+        extension    = options[:extension].to_s.strip || nil
+        country_code = options[:country_code] || nil
+
+        begin
+          str = &quot;&quot;
+          str &lt;&lt; &quot;+#{country_code}#{delimiter}&quot; unless country_code.blank?
+          str &lt;&lt; if area_code
+            number.gsub!(/([0-9]{1,3})([0-9]{3})([0-9]{4}$)/,&quot;(\\1) \\2#{delimiter}\\3&quot;)
+          else
+            number.gsub!(/([0-9]{0,3})([0-9]{3})([0-9]{4})$/,&quot;\\1#{delimiter}\\2#{delimiter}\\3&quot;)
+            number.starts_with?('-') ? number.slice!(1..-1) : number
+          end
+          str &lt;&lt; &quot; x #{extension}&quot; unless extension.blank?
+          str
+        rescue
+          number
+        end
+      end
+
+      # Formats a +number+ into a currency string (e.g., $13.65). You can customize the format
+      # in the +options+ hash.
+      #
+      # ==== Options
+      # * &lt;tt&gt;:precision&lt;/tt&gt;  -  Sets the level of precision (defaults to 2).
+      # * &lt;tt&gt;:unit&lt;/tt&gt;       - Sets the denomination of the currency (defaults to &quot;$&quot;).
+      # * &lt;tt&gt;:separator&lt;/tt&gt;  - Sets the separator between the units (defaults to &quot;.&quot;).
+      # * &lt;tt&gt;:delimiter&lt;/tt&gt;  - Sets the thousands delimiter (defaults to &quot;,&quot;).
+      # * &lt;tt&gt;:format&lt;/tt&gt;     - Sets the format of the output string (defaults to &quot;%u%n&quot;). The field types are:
+      #
+      #     %u  The currency unit
+      #     %n  The number
+      #
+      # ==== Examples
+      #  number_to_currency(1234567890.50)                    # =&gt; $1,234,567,890.50
+      #  number_to_currency(1234567890.506)                   # =&gt; $1,234,567,890.51
+      #  number_to_currency(1234567890.506, :precision =&gt; 3)  # =&gt; $1,234,567,890.506
+      #
+      #  number_to_currency(1234567890.50, :unit =&gt; &quot;&amp;pound;&quot;, :separator =&gt; &quot;,&quot;, :delimiter =&gt; &quot;&quot;)
+      #  # =&gt; &amp;pound;1234567890,50
+      #  number_to_currency(1234567890.50, :unit =&gt; &quot;&amp;pound;&quot;, :separator =&gt; &quot;,&quot;, :delimiter =&gt; &quot;&quot;, :format =&gt; &quot;%n %u&quot;)
+      #  # =&gt; 1234567890,50 &amp;pound;
+      def number_to_currency(number, options = {})
+        options.symbolize_keys!
+
+        defaults  = I18n.translate(:'number.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+        currency  = I18n.translate(:'number.currency.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+        defaults  = defaults.merge(currency)
+
+        precision = options[:precision] || defaults[:precision]
+        unit      = options[:unit]      || defaults[:unit]
+        separator = options[:separator] || defaults[:separator]
+        delimiter = options[:delimiter] || defaults[:delimiter]
+        format    = options[:format]    || defaults[:format]
+        separator = '' if precision == 0
+
+        begin
+          format.gsub(/%n/, number_with_precision(number,
+            :precision =&gt; precision,
+            :delimiter =&gt; delimiter,
+            :separator =&gt; separator)
+          ).gsub(/%u/, unit)
+        rescue
+          number
+        end
+      end
+
+      # Formats a +number+ as a percentage string (e.g., 65%). You can customize the
+      # format in the +options+ hash.
+      #
+      # ==== Options
+      # * &lt;tt&gt;:precision&lt;/tt&gt;  - Sets the level of precision (defaults to 3).
+      # * &lt;tt&gt;:separator&lt;/tt&gt;  - Sets the separator between the units (defaults to &quot;.&quot;).
+      # * &lt;tt&gt;:delimiter&lt;/tt&gt;  - Sets the thousands delimiter (defaults to &quot;&quot;).
+      #
+      # ==== Examples
+      #  number_to_percentage(100)                                        # =&gt; 100.000%
+      #  number_to_percentage(100, :precision =&gt; 0)                       # =&gt; 100%
+      #  number_to_percentage(1000, :delimiter =&gt; '.', :separator =&gt; ',') # =&gt; 1.000,000%
+      #  number_to_percentage(302.24398923423, :precision =&gt; 5)           # =&gt; 302.24399%
+      def number_to_percentage(number, options = {})
+        options.symbolize_keys!
+
+        defaults   = I18n.translate(:'number.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+        percentage = I18n.translate(:'number.percentage.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+        defaults  = defaults.merge(percentage)
+
+        precision = options[:precision] || defaults[:precision]
+        separator = options[:separator] || defaults[:separator]
+        delimiter = options[:delimiter] || defaults[:delimiter]
+
+        begin
+          number_with_precision(number,
+            :precision =&gt; precision,
+            :separator =&gt; separator,
+            :delimiter =&gt; delimiter) + &quot;%&quot;
+        rescue
+          number
+        end
+      end
+
+      # Formats a +number+ with grouped thousands using +delimiter+ (e.g., 12,324). You can
+      # customize the format in the +options+ hash.
+      #
+      # ==== Options
+      # * &lt;tt&gt;:delimiter&lt;/tt&gt;  - Sets the thousands delimiter (defaults to &quot;,&quot;).
+      # * &lt;tt&gt;:separator&lt;/tt&gt;  - Sets the separator between the units (defaults to &quot;.&quot;).
+      #
+      # ==== Examples
+      #  number_with_delimiter(12345678)                        # =&gt; 12,345,678
+      #  number_with_delimiter(12345678.05)                     # =&gt; 12,345,678.05
+      #  number_with_delimiter(12345678, :delimiter =&gt; &quot;.&quot;)     # =&gt; 12.345.678
+      #  number_with_delimiter(12345678, :seperator =&gt; &quot;,&quot;)     # =&gt; 12,345,678
+      #  number_with_delimiter(98765432.98, :delimiter =&gt; &quot; &quot;, :separator =&gt; &quot;,&quot;)
+      #  # =&gt; 98 765 432,98
+      #
+      # You can still use &lt;tt&gt;number_with_delimiter&lt;/tt&gt; with the old API that accepts the
+      # +delimiter+ as its optional second and the +separator+ as its
+      # optional third parameter:
+      #  number_with_delimiter(12345678, &quot; &quot;)                     # =&gt; 12 345.678
+      #  number_with_delimiter(12345678.05, &quot;.&quot;, &quot;,&quot;)             # =&gt; 12.345.678,05
+      def number_with_delimiter(number, *args)
+        options = args.extract_options!
+        options.symbolize_keys!
+
+        defaults = I18n.translate(:'number.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+
+        unless args.empty?
+          ActiveSupport::Deprecation.warn('number_with_delimiter takes an option hash ' +
+            'instead of separate delimiter and precision arguments.', caller)
+          delimiter = args[0] || defaults[:delimiter]
+          separator = args[1] || defaults[:separator]
+        end
+
+        delimiter ||= (options[:delimiter] || defaults[:delimiter])
+        separator ||= (options[:separator] || defaults[:separator])
+
+        begin
+          parts = number.to_s.split('.')
+          parts[0].gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, &quot;\\1#{delimiter}&quot;)
+          parts.join(separator)
+        rescue
+          number
+        end
+      end
+
+      # Formats a +number+ with the specified level of &lt;tt&gt;:precision&lt;/tt&gt; (e.g., 112.32 has a precision of 2).
+      # You can customize the format in the +options+ hash.
+      #
+      # ==== Options
+      # * &lt;tt&gt;:precision&lt;/tt&gt;  - Sets the level of precision (defaults to 3).
+      # * &lt;tt&gt;:separator&lt;/tt&gt;  - Sets the separator between the units (defaults to &quot;.&quot;).
+      # * &lt;tt&gt;:delimiter&lt;/tt&gt;  - Sets the thousands delimiter (defaults to &quot;&quot;).
+      #
+      # ==== Examples
+      #  number_with_precision(111.2345)                    # =&gt; 111.235
+      #  number_with_precision(111.2345, :precision =&gt; 2)   # =&gt; 111.23
+      #  number_with_precision(13, :precision =&gt; 5)         # =&gt; 13.00000
+      #  number_with_precision(389.32314, :precision =&gt; 0)  # =&gt; 389
+      #  number_with_precision(1111.2345, :precision =&gt; 2, :separator =&gt; ',', :delimiter =&gt; '.')
+      #  # =&gt; 1.111,23
+      #
+      # You can still use &lt;tt&gt;number_with_precision&lt;/tt&gt; with the old API that accepts the
+      # +precision+ as its optional second parameter:
+      #   number_with_precision(number_with_precision(111.2345, 2)   # =&gt; 111.23
+      def number_with_precision(number, *args)
+        options = args.extract_options!
+        options.symbolize_keys!
+
+        defaults           = I18n.translate(:'number.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+        precision_defaults = I18n.translate(:'number.precision.format', :locale =&gt; options[:locale],
+                                                                        :raise =&gt; true) rescue {}
+        defaults           = defaults.merge(precision_defaults)
+
+        unless args.empty?
+          ActiveSupport::Deprecation.warn('number_with_precision takes an option hash ' +
+            'instead of a separate precision argument.', caller)
+          precision = args[0] || defaults[:precision]
+        end
+
+        precision ||= (options[:precision] || defaults[:precision])
+        separator ||= (options[:separator] || defaults[:separator])
+        delimiter ||= (options[:delimiter] || defaults[:delimiter])
+
+        begin
+          rounded_number = (Float(number) * (10 ** precision)).round.to_f / 10 ** precision
+          number_with_delimiter(&quot;%01.#{precision}f&quot; % rounded_number,
+            :separator =&gt; separator,
+            :delimiter =&gt; delimiter)
+        rescue
+          number
+        end
+      end
+
+      STORAGE_UNITS = [:byte, :kb, :mb, :gb, :tb].freeze
+
+      # Formats the bytes in +size+ into a more understandable representation
+      # (e.g., giving it 1500 yields 1.5 KB). This method is useful for
+      # reporting file sizes to users. This method returns nil if
+      # +size+ cannot be converted into a number. You can customize the
+      # format in the +options+ hash.
+      #
+      # ==== Options
+      # * &lt;tt&gt;:precision&lt;/tt&gt;  - Sets the level of precision (defaults to 1).
+      # * &lt;tt&gt;:separator&lt;/tt&gt;  - Sets the separator between the units (defaults to &quot;.&quot;).
+      # * &lt;tt&gt;:delimiter&lt;/tt&gt;  - Sets the thousands delimiter (defaults to &quot;&quot;).
+      #
+      # ==== Examples
+      #  number_to_human_size(123)                                          # =&gt; 123 Bytes
+      #  number_to_human_size(1234)                                         # =&gt; 1.2 KB
+      #  number_to_human_size(12345)                                        # =&gt; 12.1 KB
+      #  number_to_human_size(1234567)                                      # =&gt; 1.2 MB
+      #  number_to_human_size(1234567890)                                   # =&gt; 1.1 GB
+      #  number_to_human_size(1234567890123)                                # =&gt; 1.1 TB
+      #  number_to_human_size(1234567, :precision =&gt; 2)                     # =&gt; 1.18 MB
+      #  number_to_human_size(483989, :precision =&gt; 0)                      # =&gt; 473 KB
+      #  number_to_human_size(1234567, :precision =&gt; 2, :separator =&gt; ',')  # =&gt; 1,18 MB
+      #
+      # You can still use &lt;tt&gt;number_to_human_size&lt;/tt&gt; with the old API that accepts the
+      # +precision+ as its optional second parameter:
+      #  number_to_human_size(1234567, 2)    # =&gt; 1.18 MB
+      #  number_to_human_size(483989, 0)     # =&gt; 473 KB
+      def number_to_human_size(number, *args)
+        return nil if number.nil?
+
+        options = args.extract_options!
+        options.symbolize_keys!
+
+        defaults = I18n.translate(:'number.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+        human    = I18n.translate(:'number.human.format', :locale =&gt; options[:locale], :raise =&gt; true) rescue {}
+        defaults = defaults.merge(human)
+
+        unless args.empty?
+          ActiveSupport::Deprecation.warn('number_to_human_size takes an option hash ' +
+            'instead of a separate precision argument.', caller)
+          precision = args[0] || defaults[:precision]
+        end
+
+        precision ||= (options[:precision] || defaults[:precision])
+        separator ||= (options[:separator] || defaults[:separator])
+        delimiter ||= (options[:delimiter] || defaults[:delimiter])
+
+        storage_units_format = I18n.translate(:'number.human.storage_units.format', :locale =&gt; options[:locale], :raise =&gt; true)
+
+        if number.to_i &lt; 1024
+          unit = I18n.translate(:'number.human.storage_units.units.byte', :locale =&gt; options[:locale], :count =&gt; number.to_i, :raise =&gt; true)
+          storage_units_format.gsub(/%n/, number.to_i.to_s).gsub(/%u/, unit)
+        else
+          max_exp  = STORAGE_UNITS.size - 1
+          number   = Float(number)
+          exponent = (Math.log(number) / Math.log(1024)).to_i # Convert to base 1024
+          exponent = max_exp if exponent &gt; max_exp # we need this to avoid overflow for the highest unit
+          number  /= 1024 ** exponent
+
+          unit_key = STORAGE_UNITS[exponent]
+          unit = I18n.translate(:&quot;number.human.storage_units.units.#{unit_key}&quot;, :locale =&gt; options[:locale], :count =&gt; number, :raise =&gt; true)
+
+          begin
+            escaped_separator = Regexp.escape(separator)
+            formatted_number = number_with_precision(number,
+              :precision =&gt; precision,
+              :separator =&gt; separator,
+              :delimiter =&gt; delimiter
+            ).sub(/(\d)(#{escaped_separator}[1-9]*)?0+\z/, '\1\2').sub(/#{escaped_separator}\z/, '')
+            storage_units_format.gsub(/%n/, formatted_number).gsub(/%u/, unit)
+          rescue
+            number
+          end
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

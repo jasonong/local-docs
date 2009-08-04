@@ -1,0 +1,554 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Socket</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<dl>
+<dt> <a name="Socket::Constants"><H1>Socket::Constants</H1></a>
+<dd> 
+<P>
+The modules that contains the constants (such as <code>AF_INET</code>)
+required for the socket operations.
+</P>
+<dt> <a name="BasicSocket"><H1>BasicSocket</H1></a>
+<dd> 
+<P>
+The abstract class for the sockets.  The operations are
+defined in the subclasses.  For instance 
+<code><a href="#TCPSocket">TCPSocket</a></code> for the
+Internet domain stream socket.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="IO.html"><code>IO</code></A>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="bso_getsockname"><code>getsockname</code></a>
+<dd> 
+<P>
+Returns the information of the socket in the sockaddr structure packed 
+in the string.  See <samp>getsockname(2)</samp> for detail.
+</P>
+<dt> <a name="bso_getsockopt"><code>getsockopt(<var>level</var>, <var>optname</var>)</code></a>
+<dd> 
+<P>
+Get options of the socket.  See <samp>getsockopt(2)</samp>.  Returns
+the option data packed in the string.
+</P>
+<dt> <a name="bso_getpeername"><code>getpeername</code></a>
+<dd> 
+<P>
+Returns the information of the peer connected to the socket.  Returns
+the sockaddr structure packed in the string.  See
+<samp>getpeername(2)</samp> for detail.
+</P>
+<dt> <a name="bso_recv">
+</a><code>recv(<var>len</var>[, <var>flags</var>])</code>
+<dd> 
+<P>
+Receives data from the socket and returns as an string.  The
+<var>len</var> is the maximum length of the receiving data.
+See <samp>recv(2)</samp>.  The default value for the flags
+is 0.  The constants for <var>flags</var> are defined in
+<code>Socket</code> class
+(ex. <code>Socket::SO_LINGER</code>).  It bypasses stdio, so
+mixing this with other kinds of reads/eof checks may cause
+confusion.
+</P>
+
+<dt> <a name="bso_send"><code>send(<var>mesg</var>, <var>flags</var>[, <var>to</var>])</code></a>
+<dd> 
+<P>
+Sends the <var>mesg</var> through the socket.  See
+<samp>send(2)</samp> for detail.  You have to specify the <var>to</var>
+argument for the unconnected socket.  Reurns the length of data sent.
+</P>
+<dt> <a name="bso_setsockopt"><code>setsockopt(<var>level</var>, <var>optname</var>, <var>optval</var>)</code></a>
+<dd> 
+<P>
+Sets socket options.  See <samp>setsockopt(2)</samp> for detail.
+</P>
+<dt> <a name="bso_shutdown"><code>shutdown([<var>how</var>])</code></a>
+<dd> 
+<P>
+Causes the connection of the socket to be shut down.  If
+<var>how</var> is 0, further receives will be rejected.  If
+<var>how</var> is 1, further sends will be rejected.  If
+<var>how</var> is 2, further sends and receives will be rejected.
+The default value for the <var>how</var> is 2.
+See <samp>shutdown(2)</samp>.
+</P>
+</DL>
+</DL>
+
+<hr>
+<dl>
+<dt> <a name="IPSocket"><H1>IPSocket</H1></a>
+<dd> 
+<P>
+The class for the Internet domain socket.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="#BasicSocket"><code>BasicSocket</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="IPSocket.getaddress"></a>
+<code>getaddress(<var>host</var>)</code>
+<dd> 
+<p>
+Returns the address of the host.  The address is an octet
+decimal string.
+</p>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="tip_addr"><code>addr</code></a>
+<dd> 
+<P>
+Returns the array contains socket connection information.  The first
+element is the string <code>"AF_INET"</code>.  The second element is
+the port number.  The third element is the host representing string.
+The fourth element is the IP address of the host in the octet decimal
+string.
+</P>
+<dt> <a name="tip_peeraddr"><code>peeraddr</code></a>
+<dd> 
+<P>
+Returns the array contains the peer's socket information.  The
+elements of the array is same as the ones which
+<a href="#tip_addr"><code>addr</code></a> returns.
+</P>
+</DL>
+</DL>
+
+<hr>
+<dl>
+<dt> <a name="TCPSocket"><H1>TCPSocket</H1></a>
+<dd> 
+<P>
+The class for the Internet domain stream socket.  The socket
+programming will be much easier using this class.  For example, the
+socket client that sends the user input will be:
+<blockquote>
+<pre>
+require "socket"
+
+port = if ARGV.size &gt; 0 then ARGV.shift else 4444 end
+print port, "\n"
+
+s = TCPSocket.open("localhost", port)
+
+while gets
+  s.write($_)
+  print(s.gets)
+end
+s.close
+</pre>
+</blockquote>
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="#IPSocket"><code>IPSocket</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="TCPSocket.open"><code>open(<var>host</var>, <var>service</var>)</code></a>
+<dd> 
+<dt> <a name="TCPSocket.new"><code>new(<var>host</var>, <var>service</var>)</code></a>
+<dd> 
+<P>
+Creates and returns the socket connected to the specified
+<var>service</var> on the <var>host</var>.  The <var>host</var> is the 
+host name string.  The <var>service</var> is the service name
+registered in the <samp>/etc/services</samp> (or in NIS), or the port
+number.
+</P>
+<dt> <a name="TCPSocket.gethostbyname"><code>gethostbyname(<var>host</var>)</code></a>
+<dd> 
+<P>
+Returns the array conaining the host information from the host name or
+the IP address (32 bit integer or string such as
+<code>"127.0.0.1"</code>).  The first element of the array is the
+hostname.  The second element is the array of the host aliases
+(possibly empty).  The third element is the address type.  And
+sequence of the addresses follows.  The addresses are octet decimal
+string (like <code>"127.0.0.1"</code>).
+</P>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="tcp_recvfrom"><code>recvfrom(<var>len</var>[, <var>flags</var>])</code></a>
+<dd> 
+<P>
+Receives data from the socket and returns the pair of data and the
+address of the sender.  Refer <a href="#tip_addr">IPSocket#addr</a>
+for the address format.  For arguments, see 
+<a href="#bso_recv"><code>recv</code></a>.
+</P>
+</DL>
+</DL>
+
+<hr>
+<dl>
+<dt> <a name="TCPServer"><H1>TCPServer</H1></a>
+<dd> 
+<P>
+The server side of the Internet stream socket.  This class makes
+building server much easier.  For example, the echo server will be:
+</P>
+<blockquote>
+<pre>
+require "socket"
+
+gs = TCPServer.open(0)
+socks = [gs]
+addr = gs.addr
+addr.shift
+printf("server is on %d\n", addr.join(":"))
+
+while true
+  nsock = select(socks)
+  next if nsock == nil
+  for s in nsock[0]
+    if s == gs
+      socks.push(s.accept)
+      print(s, " is accepted\n")
+    else
+      if s.eof?
+	print(s, " is gone\n")
+	s.close
+	socks.delete(s)
+      else
+	str = s.gets
+	s.write(str)
+      end
+    end
+  end
+end
+</pre>
+</blockquote>
+Even shorter using thread:
+<blockquote>
+<pre>
+require "socket"
+
+gs = TCPServer.open(0)
+addr = gs.addr
+addr.shift
+printf("server is on %d\n", addr.join(":"))
+
+while true
+  ns = gs.accept
+  print(ns, " is accepted\n")
+  Thread.start do
+    s =	ns			# save to dynamic variable
+    while s.gets
+      s.write($_)
+    end
+    print(s, " is gone\n")
+    s.close
+  end
+end
+</pre>
+</blockquote>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="#TCPSocket"><code>TCPSocket</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="TCPServer.new"><code>new([<var>host</var>, ]<var>service</var>)</code></a>
+<dd> 
+<dt> <a name="TCPServer.open"><code>open([<var>host</var>, ]<var>service</var>)</code></a>
+<dd> 
+<P>
+Opens new server connection.  The <var>service</var> is the service
+name registered in the <samp>/etc/services</samp> (or in NIS), or the
+port number.  If <var>host</var> is given, only the connection from
+the specified host will be accepted.  If <var>host</var> is not
+specified, connection from any host will be accepted.
+</P>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="tsv_accept"><code>accept</code></a>
+<dd> 
+<P>
+Accepts the request for the connection, and returns the
+<code>TCPSocket</code> connected to the client.
+</P>
+</DL>
+</DL>
+
+<hr>
+<dl>
+<dt> <a name="UDPSocket"><H1>UDPSocket</H1></a>
+<dd> 
+<P>
+The UDP/IP datagram socket class.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="#IPSocket"><code>IPSocket</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="UDPSocket.open">
+<code>open()</code></a>
+<dd> 
+<dt> 
+<a name="UDPSocket.new">
+<code>new()</code></a>
+<dd> 
+<P>
+Returns new UDP socket.
+</P>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="udp_bind"><code>bind(<var>host</var>, <var>port</var>)</code></a>
+<dd> 
+<P>
+Binds the socket to the <var>port</var> on the <var>host</var>.
+</P>
+<dt> <a name="udp_connect"><code>connect(<var>host</var>, <var>port</var>)</code></a>
+<dd> 
+<P>
+Connects the socket to the <var>port</var> on the <var>host</var>.
+</P>
+<dt> <a name="udp_recvfrom"><code>recvfrom(<var>len</var>[, <var>flags</var>])</code></a>
+<dd> 
+<P>
+Receives data from the socket and returns the pair of data and the
+address of the sender.  Refer <a href="#tip_addr">IPSocket#addr</a>
+for the address format.  For arguments, see 
+<a href="#bso_recv"><code>recv</code></a>.
+</P>
+<dt> <a name="udp_send"><code>send(<var>mesg</var>, <var>flags[, </var><var>host</var>, <var>port</var>])</code></a>
+<dd> 
+<P>
+Sends the <var>mesg</var> through the socket.  See
+<samp>send(2)</samp> for detail.  You have to specify the
+<var>host</var> and <var>port</var> arguments for the unconnected
+socket.  Reurns the length of data sent.
+</P>
+</DL>
+</DL>
+
+<hr>
+<dl>
+<dt> <a name="UNIXSocket"><H1>UNIXSocket</H1></a>
+<dd> 
+<P>
+The UNIX domain stream socket.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="#BasicSocket"><code>BasicSocket</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="UNIXSocket.open"><code>open(<var>path</var>)</code></a>
+<dd> 
+<dt>
+<a name="UNIXSocket.new"><code>new(<var>path</var>)</code></a>
+<dd> 
+<P>
+The socket associated to the <var>path</var>.
+</P>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="uso_addr"><code>addr</code></a>
+<dd> 
+<P>
+Returns the array contains socket connection information.  The first
+element is the string <code>"AF_UNIX"</code>.  The second element is
+the path associated to the socket.
+</P>
+<dt> <a name="uso_path"><code>path</code></a>
+<dd> 
+<p>
+Returns the path associated to the socket.
+</p>
+<dt> <a name="uso_peeraddr"><code>peeraddr</code></a>
+<dd> 
+<P>
+Returns the array contains the peer's socket information.  The
+elements of the array is same as the ones which
+<a href="#uso_addr"><code>addr</code></a> returns.
+</P>
+<dt> <a name="uso_recvfrom"><code>recvfrom(<var>len</var>[, <var>flags</var>])</code></a>
+<dd> 
+<P>
+Receives data from the socket and returns the pair of data and the
+path of the sender.  For arguments, see 
+<a href="#so_recv"><code>recv</code></a>.
+</P>
+</DL>
+</DL>
+
+<hr>
+<dl>
+<a name="UNIXServer"></a>
+<dt> <H1>UNIXServer</H1>
+<dd> 
+<P>
+<P>
+The server side of the UNIX stream socket.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="#UNIXSocket"><code>UNIXSocket</code></A>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="usv_accept"><code>accept</code></a>
+<dd> 
+<P>
+Accepts the request for the connection, and returns the
+<code>UNIXSocket</code> connected to the client.
+</P>
+</DL>
+</DL>
+
+<hr>
+<dl>
+<dt> <a name="Socket"><H1>Socket</H1></a>
+<dd> 
+<P>
+<code>Socket</code> provides the low level access to the socket
+features of the operating system.  Its methods are about same level of
+the Perl's socket functions.  The socket addresses are represented by
+the C structure packed into the string.
+</P>
+<p>
+Normally, the socket programming are done by the high level socket
+classes like 
+<code><a href="#TCPSocket">TCPSocket</a></code> and
+<code><a href="#TCPServer">TCPServer</a></code>.
+</p>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="#BasicSocket"><code>BasicSocket</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="Socket.open"><code>open(<var>domain</var>, <var>type</var>, <var>protocol</var>)</code></a>
+<dd> 
+<dt> <a name="Socket.new"><code>new(<var>domain</var>, <var>type</var>, <var>protocol</var>)</code></a>
+<dd> 
+<P>
+Creates new socket.  <var>domain</var>, <var>type</var>, and
+<var>protocol</var> are specified by the constant found in the C
+header files.  Most of the constants are defined as class constants in 
+<code>Socket</code> class.  <var>domain</var> and <var>type</var> can
+be specified by the string name.  But all possible values may not
+available by the string.
+</P>
+<dt> 
+<a name="Socket.for_fd"><code>for_fd(<var>fd</var>)</code></a>
+<dd> 
+<P>
+Creates new socket object corresponding the file discriptor <var>fd</var>.
+</P>
+<dt> <a name="Socket.pair"><code>pair(<var>domain</var>, <var>type</var>, <var>protocol</var>)</code></a>
+<dd> 
+<dt> 
+<a name="Socket.socketpair"><code>socketpair(<var>domain</var>, <var>type</var>, <var>protocol</var>)</code></a>
+<dd> 
+<P>
+Returns the pair of the connected sockets.  See <samp>socketpair(2)</samp>.
+The argument specification is same to 
+<code><a href="#Socket.open">Socket.open</a></code>.
+</P>
+<dt> <a name="Socket.gethostbyname"><code>gethostbyname(<var>host</var>)</code></a>
+<dd> 
+<P>
+Returns the array conaining the host information from the host name or
+the IP address (32 bit integer or string such as
+<code>"127.0.0.1"</code>).  The first element of the array is the
+hostname.  The second element is the array of the host aliases
+(possibly empty).  The third element is the address type.  And
+sequence of the addresses follows.  The addresses are packed string.
+</P>
+<dt> <a name="Socket.gethostbyaddr"><code>gethostbyaddr(<var>host</var>)</code></a>
+<dd> 
+<P>
+Returns the array conaining the host information from the packed
+<code>struct sockaddr</code>.  Data in the array is as decribed in
+<a href="#Socket.gethostbyname">gethostbyname</a>.  host name or the IP
+address (32 bit integer or string such as <code>"127.0.0.1"</code>).
+</P>
+<dt> <a name="Socket.getservbyname"><code>getservbyname(<var>service</var>[, <var>proto</var>])</code></a>
+<dd> 
+<P>
+Returns the port number correnspoinding <var>service</var> and
+<var>proto</var>.  The default value for the <var>proto</var> is
+<samp>"tcp"</samp>.
+</P>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <a name="so_accept"><code>accept</code></a>
+<dd> 
+<P>
+Accepts the connection and returns the pair of the socket for the new
+connection and address of the connection.  See <samp>accept(2)</samp>.
+</P>
+<dt> <a name="so_bind"><code>bind(<var>addr</var>)</code></a>
+<dd> 
+<P>
+Binds the socket to the <var>addr</var>.  See <samp>bind(2)</samp>.
+The <var>addr</var> is the sockaddr structure packed into the string.
+</P>
+<dt> <a name="so_connect"><code>connect(<var>addr</var>)</code></a>
+<dd> 
+<P>
+Connects the socket to the <var>addr</var>.  The <var>addr</var> is
+the sockaddr structure packed into the string.
+</P>
+<dt> <a name="so_listen"><code>listen(<var>backlog</var>)</code></a>
+<dd> 
+<P>
+Specifies the connection queue limit for the socket.  See
+<samp>listen(2)</samp>.
+</P>
+<dt> <a name="so_recvfrom"><code>recvfrom(<var>len</var>[, <var>flags</var>])</code></a>
+<dd> 
+<P>
+Receives data from the socket and returns the pair of data and the
+address of the sender.  For arguments, see 
+<a href="#so_recv"><code>recv</code></a>.
+</P>
+</DL>
+</DL>
+
+</BODY>
+</HTML>

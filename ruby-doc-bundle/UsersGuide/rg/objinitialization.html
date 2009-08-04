@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Object initialization</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accessors.html">
+ <img border=0 src="a2l.gif" alt="Accessors"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="misc.html">
+ <img border=0 src="a2r.gif" alt="Nuts and bolts"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Object initialization</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Our Fruit class from the previous chapter had two instance variables,
+one to describe the kind of fruit and another to describe its
+condition.  It was only after writing a custom <code>inspect</code>
+method for the class that we realized it didn't make sense for a piece
+of fruit to lack those characteristics.  Fortunately, ruby provides a
+way to ensure that instance variables always get initialized.</p>
+<h3><a name="label:0" id="label:0">The <code>initialize</code> method</a></h3><!-- RDLabel: "The initialize method" -->
+<p>Whenever Ruby creates a new object, it looks for a method named
+<code>initialize</code> and executes it.  So one simple thing we can
+do is use an <code>initialize</code> method to put default values into
+all the instance variables, so the <code>inspect</code> method will
+have something to say.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   def initialize</b></font>
+    |<font color="#ffff00"><b>     @kind = "apple"</b></font>
+    |<font color="#ffff00"><b>     @condition = "ripe"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f4 = Fruit.new</b></font>
+<font color="#50ffff"><b>   "a ripe apple"</b></font></font></pre></td></tr></table>
+<h3><a name="label:1" id="label:1">Changing assumptions to requirements</a></h3><!-- RDLabel: "Changing assumptions to requirements" -->
+<p>There will be times when a default value doesn't make a lot of sense.
+Is there such a thing as a default kind of fruit?  It may be
+preferable to require that each piece of fruit have its kind specified
+at the time of its creation.  To do this, we would add a formal
+argument to the <code>initialize</code> method.  For reasons we won't
+get into here, arguments you supply to <code>new</code> are actually
+delivered to <code>initialize</code>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   def initialize( k )</b></font>
+    |<font color="#ffff00"><b>     @kind = k</b></font>
+    |<font color="#ffff00"><b>     @condition = "ripe"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f5 = Fruit.new "mango"</b></font>
+<font color="#50ffff"><b>   "a ripe mango"</b></font>
+ruby&gt;<font color="#ffff00"><b> f6 = Fruit.new</b></font>
+<font color="#50ffff"><b>ERR: (eval):1:in `initialize': wrong # of arguments(0 for 1)</b></font></font></pre></td></tr></table>
+<h3><a name="label:2" id="label:2">Flexible initialization</a></h3><!-- RDLabel: "Flexible initialization" -->
+<p>Above we see that once an argument is associated with the
+<code>initialize</code> method, it can't be left off without
+generating an error.  If we want to be more considerate, we can use
+the argument if it is given, or fall back to default values otherwise.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   def initialize( k="apple" )</b></font>
+    |<font color="#ffff00"><b>     @kind = k</b></font>
+    |<font color="#ffff00"><b>     @condition = "ripe"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f5 = Fruit.new "mango"</b></font>
+<font color="#50ffff"><b>   "a ripe mango"</b></font>
+ruby&gt;<font color="#ffff00"><b> f6 = Fruit.new</b></font>
+<font color="#50ffff"><b>   "a ripe apple"</b></font></font></pre></td></tr></table>
+<p>You can use default argument values for any method, not just
+<code>initialize</code>.  The argument list must be arranged so that
+those with default values come last.</p>
+<p>Sometimes it is useful to provide several ways to initialize an
+object.  Although it is outside the scope of this tutorial, ruby
+supports object reflection and variable-length argument lists, which
+together effectively allow method overloading.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accessors.html">
+ <img border=0 src="a2l.gif" alt="Accessors"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="misc.html">
+ <img border=0 src="a2r.gif" alt="Nuts and bolts"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

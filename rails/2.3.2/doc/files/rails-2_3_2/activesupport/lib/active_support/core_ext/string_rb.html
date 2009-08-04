@@ -1,0 +1,41 @@
+  <div id="fileHeader">
+    <h1>string.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/string.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre># encoding: utf-8
+
+require 'active_support/core_ext/string/inflections'
+require 'active_support/core_ext/string/conversions'
+require 'active_support/core_ext/string/access'
+require 'active_support/core_ext/string/starts_ends_with'
+require 'active_support/core_ext/string/iterators'
+require 'active_support/core_ext/string/multibyte'
+require 'active_support/core_ext/string/xchar'
+require 'active_support/core_ext/string/filters'
+require 'active_support/core_ext/string/behavior'
+
+class String #:nodoc:
+  include ActiveSupport::CoreExtensions::String::Access
+  include ActiveSupport::CoreExtensions::String::Conversions
+  include ActiveSupport::CoreExtensions::String::Filters
+  include ActiveSupport::CoreExtensions::String::Inflections
+  include ActiveSupport::CoreExtensions::String::StartsEndsWith
+  include ActiveSupport::CoreExtensions::String::Iterators
+  include ActiveSupport::CoreExtensions::String::Behavior
+  include ActiveSupport::CoreExtensions::String::Multibyte
+end
+</pre>
+    </div>

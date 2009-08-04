@@ -1,0 +1,73 @@
+  <div id="C00000713">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ConnectionManagement<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool_rb.html');">rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002040&name=call" >call</a></li>
+  <li><a href="index.html?a=M002039&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002039" class="method">
+  <div id="M002039_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002039_source')" id="l_M002039_source">show source</a> ]</p>
+  <div id="M002039_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 356</span>
+356:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+357:         <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+358:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002040" class="method">
+  <div id="M002040_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002040_source')" id="l_M002040_source">show source</a> ]</p>
+  <div id="M002040_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 360</span>
+360:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+361:         <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+362:       <span class="ruby-keyword kw">ensure</span>
+363:         <span class="ruby-comment cmt"># Don't return connection (and peform implicit rollback) if</span>
+364:         <span class="ruby-comment cmt"># this request is a part of integration test</span>
+365:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">env</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-value str">&quot;rack.test&quot;</span>)
+366:           <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">clear_active_connections!</span>
+367:         <span class="ruby-keyword kw">end</span>
+368:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,515 @@
+<HTML>
+<HEAD>
+<TITLE>File</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="IO.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Match.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>File</H1>
+<dd> 
+<P>
+The class for accessing files.  Normally, created by
+<code><a href="function.html#open">open</a></code>.  This class has
+singleton-methods that the <code><a href="FileTest.html">FileTest</a></code>
+class has.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="IO.html"><code>IO</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd>
+<DL COMPACT>
+<DT>
+<A NAME="File.atime">
+<CODE>atime(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the last accessed time of the file.
+</p>
+
+<DT>
+<A NAME="File.basename">
+<CODE>basename(<VAR>filename</VAR>[, <VAR>suffix</VAR>])</CODE></A>
+<DD>
+<p>
+Returns the last slash-delimited component of the <var>filename</var>.
+If <var>suffix</var> is supplied and is identical to the end of name,
+it is removed from filename.
+</p>
+<p>
+Example:
+</p>
+<blockquote>
+<PRE>
+basename("ruby/ruby.c")
+	=&gt; "ruby.c"
+basename("ruby/ruby.c", ".c")
+        =&gt; "ruby"
+</PRE>
+</blockquote>
+
+<DT>
+<A NAME="File.ctime">
+<CODE>ctime(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the last status change time of the file.
+</p>
+
+<DT>
+<A NAME="File.chmod">
+<CODE>chmod(<VAR>mode</VAR>, <VAR>path</VAR>, <VAR>file</VAR>...)</CODE></A>
+<DD>
+<p>
+Change the mode of the <code>file</code>s to the <var>mode</var>.
+Returns the number of the file it processed.  See <samp>chmod(2)</samp>.
+</p>
+
+<DT>
+<A NAME="File.chown">
+<CODE>chown(<VAR>owner</VAR>, <VAR>group</VAR>, <VAR>file</VAR>...)</CODE></A>
+<DD>
+<p>
+Change the owner and the groups of the <code>file</code>s to the
+<var>owner</var>.  Only super-user can change the owner of the file.
+Returns the number of the file it processed.
+</p>
+<p>
+The owner and the group can leave unchanged with supplying
+<code>nil</code> or <code>-1</code> to as the argument.
+</p>
+
+<DT>
+<A NAME="File.dirname">
+<CODE>dirname(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns all but the final slash-delimited component of
+<var>filename</var>.  Returns <code>"."</code> (meaning the current
+directory), if <var>filename</var> is a single component.
+</p>
+
+<DT>
+<A NAME="File.expand_path"><CODE>expand_path(<VAR>path</VAR>[,<var>default_dir</var>])</CODE></A>
+<DD>
+<p>
+Converts <var>path</var> to absolute, and canonicalized path.
+
+Second arg <var>default_dir</var> is directory to start with if
+<var>path</var> is relative (does not start with slash); if
+<var>default_dir</var> is nil or missing, the current directory of the
+process is used.
+
+An initial `<samp>~</samp>' expands to your home directory.  An initial
+`<samp>~USER</samp>' expands to USER's home directory.
+</p>
+
+<blockquote>
+<PRE>
+expand_path("..")
+       =&gt; "/home/matz/work"
+expand_path("~")
+       =&gt; "/home/matz"
+expand_path("~matz")
+       =&gt; "/home/matz"
+</PRE>
+</blockquote>
+
+<DT>
+<A NAME="File.ftype">
+<CODE>ftype(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns a string which describes the type of the file.  The string is either:
+</p>
+
+<blockquote>
+<CODE>"file"</CODE><br>
+<CODE>"directory"</CODE><br>
+<CODE>"characterSpecial"</CODE><br>
+<CODE>"blockSpecial"</CODE><br>
+<CODE>"fifo"</CODE><br>
+<CODE>"link"</CODE><br>
+<CODE>"socket"</CODE>
+</blockquote>
+<p>
+<dt> <a name="File.join">
+<code>join(<var>item</var>...)</code></a>
+<dd> 
+<p>
+Combines file names using <code>File::Separator</code>.
+</p>
+<p>
+It works just like:
+<pre>
+<blockquote>
+[items,..].join(File::Separator)
+</blockquote>
+</pre>
+</p>
+
+<DT>
+<A NAME="File.link">
+<CODE>link(<VAR>old</VAR>, <VAR>new</VAR>)</CODE></A>
+<DD>
+<p>
+Creates a new hard link to old (existing) file.  See <samp>link(2)</samp>.
+</p>
+
+<DT>
+<A NAME="File.lstat">
+<CODE>lstat(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Does the same thing as the <code><a href="#File.stat">stat</a></code>,
+but stats a symbolic link instead of the file the symbolic link points
+to.
+</p>
+
+<DT>
+<A NAME="File.mtime">
+<CODE>mtime(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the last modified time of the file.
+</p>
+
+<dt> 
+<A NAME="File.open">
+<CODE>open(<VAR>path</VAR>[, <var>mode</var>])</CODE></A>
+<dd> 
+<dt> 
+<A NAME="File.new">
+<CODE>new(<VAR>path</VAR>[, <var>mode</var>])</CODE></A>
+<dd> 
+<p>
+Opens the file specified by <var>path</var>, and
+returns a <code>File</code> object associated with that file.  
+</p>
+<p>
+The <var>mode</var> argument specifies the mode for the
+opened file, which is either <code>"r"</code>,
+<code>"r+"</code>, <code>"w"</code>, <code>"w+"</code>,
+<code>"a"</code>, <code>"a+"</code>.  See
+<samp>fopen(3)</samp>.  If <var>mode</var> omitted, the
+default is <code>"r"</code>.
+</p>
+<p>
+if <var>mode</var> is a integer, it is considered like the
+second argument to <samp>open(2)</samp>.  One of the flags
+must be either <code>RDONLY</code>, <code>WRONLY</code> or
+<code>RDWR</code>.  Flags may also be bitwise-or'd with one
+or more of <code>APPEND</code>, <code>CREAT</code>,
+<code>EXCL</code>, <code>NONBLOCK</code>,
+<code>TRUNC</code>, <code>NOCTTY</code>,
+<code>BINARY</code>.
+</p>
+<p>
+If a new file is created as part of opening it, permissions
+(an integer) is used to set the permissions for the new file
+in conjunction with the process's file mode creation mask.
+Permissions defaults to 0666.
+</p>
+<p>
+If <code>open</code> is called with block, the block will be
+executed with a newly opened file object.  The file object
+will be closed automatically after executing the block.
+</p>
+
+<DT>
+<A NAME="File.readlink">
+<CODE>readlink(<VAR>path</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the symbolic link path as a string.
+</p>
+
+<DT>
+<A NAME="File.rename">
+<CODE>rename(<VAR>from</VAR>, <VAR>to</VAR>)</CODE></A>
+<DD>
+<p>
+Renames file, moving it across the directories if required.  See
+<samp>rename(2)</samp>.  If <var>to</var>-file already exists, it will be
+overwritten.
+</p>
+
+<DT>
+<A NAME="File.size">
+<CODE>size(<VAR>pathname</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the size of the file specified by the <var>pathname</var> in bytes.
+</p>
+
+<DT>
+<A NAME="File.split">
+<CODE>split(<VAR>pathname</VAR>)</CODE></A>
+<DD>
+<p>
+Splits the <var>pathname</var> in a pair
+<code>[<var>head</var>, <var>tail</var>]</code>, where
+<var>tail</var> is the last pathname component and <var>head</var> is
+everything leading up to that.
+</p>
+
+<DT>
+<A NAME="File.stat">
+<CODE>stat(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the status info of the <var>filename</var> in the <code>Stat</code>
+<a href="Struct.html">structure</a>, which has attributes as follows:
+</p>
+<blockquote>
+<PRE>
+dev	 	# device number of file-system
+ino		# i-node number
+mode		# file mode
+nlink		# number of hard links
+uid		# user ID of owner
+gid		# group ID of owner
+rdev		# device type (special files only)
+size		# total size, in bytes
+blksize		# preferred blocksize for file-system I/O
+blocks		# number of blocks allocated
+atime		# time of last access
+mtime		# time of last modification
+ctime		# time of last i-node change
+</PRE>
+</blockquote>
+<p>
+For more detail, see <samp>stat(2)</samp>.  Some fields are filled
+with 0, if that field is not supported on your system.
+</p>
+
+<DT>
+<A NAME="File.symlink">
+<CODE>symlink(<VAR>old</VAR>, <VAR>new</VAR>)</CODE></A>
+<DD>
+<p>
+Created a <var>new</var> symbolic link to the <var>old</var>-file.
+</p>
+
+<DT>
+<A NAME="File.truncate">
+<CODE>truncate(<VAR>path</VAR>, <VAR>length</VAR>)</CODE></A>
+<DD>
+<p>
+truncate the file specified by <var>path</var> to at most
+<var>length</var> byte.
+</p>
+
+<DT>
+<A NAME="File.unlink">
+<CODE>unlink(<VAR>file</VAR>...)</CODE></A>
+<DD>
+<DT>
+<A NAME="File.delete">
+<CODE>delete(<VAR>file</VAR>...)</CODE></A>
+<DD>
+<p>
+Deletes <var>file</var>s.  Returns the number of files successfully
+deleted.   Use <code><a href="Dir.html#Dir.rmdir">Dir.rmdir</a></code>
+instead to delete directories.
+</p>
+
+<DT>
+<A NAME="File.umask"><CODE>umask([<VAR>umask</VAR>])</CODE></A>
+<DD>
+<p>
+Changes umask of the user.  Returns the current mask.  If
+<var>umask</var> is not specified, just current returns the current
+mask value.
+</p>
+
+<DT>
+<A NAME="File.utime">
+<CODE>utime(<VAR>atime</VAR>, <VAR>mtime</VAR>, <VAR>file</VAR>...)</CODE></A>
+<DD>
+<p>
+Change the access and modification times on each <var>file</var>s.
+Returns the number of files successfully changed.  The first two
+arguments must be either the number or the instance of the
+<code><a href="Time.html">Time</a></code> class.
+</p>
+</DL>
+
+<P>
+In addition, the <code>File</code> class has class methods
+defined in <code><a href="FileTest.html">FileTest</a></code>.
+</P>
+
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="atime">
+<CODE>atime</CODE></A>
+<DD>
+<p>
+Returns the last accessed time of the file.
+</p>
+
+<DT>
+<A NAME="ctime">
+<CODE>ctime</CODE></A>
+<DD>
+<p>
+Returns the last status change time of the file.
+</p>
+
+<DT>
+<A NAME="chmod">
+<CODE>chmod(<VAR>mode</VAR>)</CODE></A>
+<DD>
+<p>
+Change the mode of the <code>file</code>s to the <var>mode</var>.
+See <samp>chmod(2)</samp>.
+</p>
+
+<DT>
+<A NAME="chown">
+<CODE>chown(<VAR>owner</VAR>, <VAR>group</VAR>)</CODE></A>
+<DD>
+
+<p>
+Change the owner and the groups of the <code>file</code>s to the
+<var>owner</var>.  Only super-user can change the owner of the file.
+The owner and the group can be unchanched with supplying
+<code>nil</code> or <code>-1</code> to as the argument.
+</p>
+
+<DT>
+<A NAME="eof">
+<CODE>eof</CODE></A>
+<DD>
+<DT><A NAME="eof_p">
+<CODE>eof?</CODE></A>
+<DD>
+<p>
+Returns true, if the file pointer reached at the end of file.
+</p>
+
+<DT>
+<A NAME="flock">
+<CODE>flock(<var>operation</var>)</CODE></A>
+<DD>
+<p>
+Applys or removes an advisory lock on the file.  <code>flock()</code>
+returns false if <code>LOCK_NB</code> supplied as the operation and
+the call would block.  Valid operations are given below:
+</p>
+<dl COMPACT>
+<dt> <code>LOCK_SH</code>
+<dd> 
+Shared lock.  More than one process may hold a shared lock for a given
+file at a given time.
+<dt> <code>LOCK_EX</code>
+<dd> 
+Exclusive lock.  Only one process may hold an exclusive lock for a
+given file at a given time.
+<dt> <code>LOCK_UN</code>
+<dd> 
+Unlock. 
+<dt> <code>LOCK_NB</code>
+<dd> 
+Don't block when locking.  May be specified (by or'ing) along with one
+of the other operations.
+</dl>
+
+<p>
+These constants are defined under the class <code>File</code>.
+</p>
+
+<DT>
+<A NAME="lstat">
+<CODE>lstat</CODE></A>
+<DD>
+<p>
+Does the same thing as the <code><a href="#stat">stat</a></code>,
+but stats a symbolic link instead of the file the symbolic link points
+to.
+</p>
+
+<DT>
+<A NAME="mtime">
+<CODE>mtime</CODE></A>
+<DD>
+<p>
+Returns the last modified time of the file.
+</p>
+
+<DT><A NAME="reopen"><CODE>reopen(<var>io</var>)</CODE></A>
+<DD>
+<p>
+Reconnect <code>self</code> to <var>io</var>.  It also changes the
+class of the stream.
+</p>
+
+<DT><CODE>reopen(<var>path</var>, <var>mode</var>)</CODE>
+<DD>
+<p>
+Opens and reconnects the file specified by <var>path</var>, with
+<var>mode</var>.  
+</p>
+
+<DT>
+<A NAME="path">
+<CODE>path</CODE></A>
+<DD>
+<p>
+Returns pathname of the opened file.
+</p>
+
+<DT>
+<A NAME="stat">
+<CODE>stat</CODE></A>
+<DD>
+<p>
+Returns the status info of the file in the <code>Stat</code>
+<a href="Struct.html">structure</a>.
+</p>
+
+<DT>
+<A NAME="truncate">
+<CODE>truncate(<VAR>length</VAR>)</CODE></A>
+<DD>
+<p>
+truncate the file to at most <var>length</var> byte.  The file must be 
+opened in the write mode.
+</p>
+</DL>
+<dt> <h2>Constants:</h2>
+<dd>
+<DL COMPACT>
+<dt> <a name="Separator"><code>Separator</code></a> 
+<dd>
+<p>
+The separating character of the file path, which is normally
+<samp>"/"</samp>.
+</p>
+</DL>
+</DL>
+
+<HR>
+<A HREF="IO.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Match.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

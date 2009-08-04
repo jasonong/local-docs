@@ -1,0 +1,103 @@
+  <div id="fileHeader">
+    <h1>mongrel.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'mongrel'
+require 'stringio'
+require 'rack/content_length'
+require 'rack/chunked'
+
+module Rack
+  module Handler
+    class Mongrel &lt; ::Mongrel::HttpHandler
+      def self.run(app, options={})
+        server = ::Mongrel::HttpServer.new(options[:Host] || '0.0.0.0',
+                                           options[:Port] || 8080)
+        # Acts like Rack::URLMap, utilizing Mongrel's own path finding methods.
+        # Use is similar to #run, replacing the app argument with a hash of 
+        # { path=&gt;app, ... } or an instance of Rack::URLMap.
+        if options[:map]
+          if app.is_a? Hash
+            app.each do |path, appl|
+              path = '/'+path unless path[0] == ?/
+              server.register(path, Rack::Handler::Mongrel.new(appl))
+            end
+          elsif app.is_a? URLMap
+            app.instance_variable_get(:@mapping).each do |(host, path, appl)|
+             next if !host.nil? &amp;&amp; !options[:Host].nil? &amp;&amp; options[:Host] != host
+             path = '/'+path unless path[0] == ?/
+             server.register(path, Rack::Handler::Mongrel.new(appl))
+            end
+          else
+            raise ArgumentError, &quot;first argument should be a Hash or URLMap&quot;
+          end
+        else
+          server.register('/', Rack::Handler::Mongrel.new(app))
+        end
+        yield server  if block_given?
+        server.run.join
+      end
+
+      def initialize(app)
+        @app = Rack::Chunked.new(Rack::ContentLength.new(app))
+      end
+
+      def process(request, response)
+        env = {}.replace(request.params)
+        env.delete &quot;HTTP_CONTENT_TYPE&quot;
+        env.delete &quot;HTTP_CONTENT_LENGTH&quot;
+
+        env[&quot;SCRIPT_NAME&quot;] = &quot;&quot;  if env[&quot;SCRIPT_NAME&quot;] == &quot;/&quot;
+
+        env.update({&quot;rack.version&quot; =&gt; [0,1],
+                     &quot;rack.input&quot; =&gt; request.body || StringIO.new(&quot;&quot;),
+                     &quot;rack.errors&quot; =&gt; $stderr,
+
+                     &quot;rack.multithread&quot; =&gt; true,
+                     &quot;rack.multiprocess&quot; =&gt; false, # ???
+                     &quot;rack.run_once&quot; =&gt; false,
+
+                     &quot;rack.url_scheme&quot; =&gt; &quot;http&quot;,
+                   })
+        env[&quot;QUERY_STRING&quot;] ||= &quot;&quot;
+        env.delete &quot;PATH_INFO&quot;  if env[&quot;PATH_INFO&quot;] == &quot;&quot;
+
+        status, headers, body = @app.call(env)
+
+        begin
+          response.status = status.to_i
+          response.send_status(nil)
+
+          headers.each { |k, vs|
+            vs.split(&quot;\n&quot;).each { |v|
+              response.header[k] = v
+            }
+          }
+          response.send_header
+
+          body.each { |part|
+            response.write part
+            response.socket.flush
+          }
+        ensure
+          body.close  if body.respond_to? :close
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,59 @@
+  <div id="fileHeader">
+    <h1>request.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'rack/auth/abstract/request'
+require 'rack/auth/digest/params'
+require 'rack/auth/digest/nonce'
+
+module Rack
+  module Auth
+    module Digest
+      class Request &lt; Auth::AbstractRequest
+
+        def method
+          @env['rack.methodoverride.original_method'] || @env['REQUEST_METHOD']
+        end
+
+        def digest?
+          :digest == scheme
+        end
+
+        def correct_uri?
+          (@env['SCRIPT_NAME'].to_s + @env['PATH_INFO'].to_s) == uri
+        end
+
+        def nonce
+          @nonce ||= Nonce.parse(params['nonce'])
+        end
+
+        def params
+          @params ||= Params.parse(parts.last)
+        end
+
+        def method_missing(sym)
+          if params.has_key? key = sym.to_s
+            return params[key]
+          end
+          super
+        end
+
+      end
+    end
+  end
+end
+</pre>
+    </div>

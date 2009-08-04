@@ -1,0 +1,172 @@
+  <div id="C00000125">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />RequestForgeryProtection<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/request_forgery_protection_rb.html');">rails-2.3.2/actionpack/lib/action_controller/request_forgery_protection.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000285&name=form_authenticity_token" >form_authenticity_token</a></li>
+  <li><a href="index.html?a=M000281&name=included" >included</a></li>
+  <li><a href="index.html?a=M000286&name=protect_against_forgery?" >protect_against_forgery?</a></li>
+  <li><a href="index.html?a=M000284&name=verifiable_request_format?" >verifiable_request_format?</a></li>
+  <li><a href="index.html?a=M000283&name=verified_request?" >verified_request?</a></li>
+  <li><a href="index.html?a=M000282&name=verify_authenticity_token" >verify_authenticity_token</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Module "<a href="#" onclick="jsHref('classes/ActionController/RequestForgeryProtection/ClassMethods.html');" class="link">ActionController::RequestForgeryProtection::ClassMethods</a>"<br />
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000281" class="method">
+  <div id="M000281_title" class="title">
+    <b>included</b>(base)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000281_source')" id="l_M000281_source">show source</a> ]</p>
+  <div id="M000281_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/request_forgery_protection.rb, line 6</span>
+ 6:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
+ 7:       <span class="ruby-identifier">base</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+ 8:         <span class="ruby-identifier">helper_method</span> <span class="ruby-identifier">:form_authenticity_token</span>
+ 9:         <span class="ruby-identifier">helper_method</span> <span class="ruby-identifier">:protect_against_forgery?</span>
+10:       <span class="ruby-keyword kw">end</span>
+11:       <span class="ruby-identifier">base</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">ClassMethods</span>)
+12:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Protected Instance methods</div>
+<div id="M000285" class="method">
+  <div id="M000285_title" class="title">
+    <b>form_authenticity_token</b>()
+  </div>
+  <div class="description">
+  <p>
+Sets the token value for the current session. Pass a <tt>:secret</tt>
+option in <tt>protect_from_forgery</tt> to add a custom salt to the hash.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000285_source')" id="l_M000285_source">show source</a> ]</p>
+  <div id="M000285_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/request_forgery_protection.rb, line 100</span>
+100:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">form_authenticity_token</span>
+101:         <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:_csrf_token</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">SecureRandom</span>.<span class="ruby-identifier">base64</span>(<span class="ruby-value">32</span>)
+102:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000286" class="method">
+  <div id="M000286_title" class="title">
+    <b>protect_against_forgery?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000286_source')" id="l_M000286_source">show source</a> ]</p>
+  <div id="M000286_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/request_forgery_protection.rb, line 104</span>
+104:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">protect_against_forgery?</span>
+105:         <span class="ruby-identifier">allow_forgery_protection</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">request_forgery_protection_token</span>
+106:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000284" class="method">
+  <div id="M000284_title" class="title">
+    <b>verifiable_request_format?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000284_source')" id="l_M000284_source">show source</a> ]</p>
+  <div id="M000284_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/request_forgery_protection.rb, line 94</span>
+94:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">verifiable_request_format?</span>
+95:         <span class="ruby-operator">!</span><span class="ruby-identifier">request</span>.<span class="ruby-identifier">content_type</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">content_type</span>.<span class="ruby-identifier">verify_request?</span>
+96:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000283" class="method">
+  <div id="M000283_title" class="title">
+    <b>verified_request?</b>()
+  </div>
+  <div class="description">
+  <p>
+Returns true or false if a request is verified. Checks:
+</p>
+<ul>
+<li>is the format restricted? By default, only HTML and AJAX requests are
+checked.
+
+</li>
+<li>is it a GET request? Gets should be safe and idempotent
+
+</li>
+<li>Does the <a
+href="index.html?a=M000285&name=form_authenticity_token">form_authenticity_token</a>
+match the given token value from the params?
+
+</li>
+</ul>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000283_source')" id="l_M000283_source">show source</a> ]</p>
+  <div id="M000283_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/request_forgery_protection.rb, line 87</span>
+87:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">verified_request?</span>
+88:         <span class="ruby-operator">!</span><span class="ruby-identifier">protect_against_forgery?</span>     <span class="ruby-operator">||</span>
+89:           <span class="ruby-identifier">request</span>.<span class="ruby-identifier">method</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:get</span>      <span class="ruby-operator">||</span>
+90:           <span class="ruby-operator">!</span><span class="ruby-identifier">verifiable_request_format?</span> <span class="ruby-operator">||</span>
+91:           <span class="ruby-identifier">form_authenticity_token</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">request_forgery_protection_token</span>]
+92:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000282" class="method">
+  <div id="M000282_title" class="title">
+    <b>verify_authenticity_token</b>()
+  </div>
+  <div class="description">
+  <p>
+The actual before_filter that is used. Modify this to change how you handle
+unverified requests.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000282_source')" id="l_M000282_source">show source</a> ]</p>
+  <div id="M000282_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/request_forgery_protection.rb, line 78</span>
+78:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">verify_authenticity_token</span>
+79:         <span class="ruby-identifier">verified_request?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidAuthenticityToken</span>)
+80:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

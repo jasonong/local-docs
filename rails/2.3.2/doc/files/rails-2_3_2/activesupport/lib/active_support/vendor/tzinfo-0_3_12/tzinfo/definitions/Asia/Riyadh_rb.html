@@ -1,0 +1,37 @@
+  <div id="fileHeader">
+    <h1>Riyadh.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/vendor/tzinfo-0.3.12/tzinfo/definitions/Asia/Riyadh.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'tzinfo/timezone_definition'
+
+module TZInfo
+  module Definitions
+    module Asia
+      module Riyadh
+        include TimezoneDefinition
+        
+        timezone 'Asia/Riyadh' do |tz|
+          tz.offset :o0, 11212, 0, :LMT
+          tz.offset :o1, 10800, 0, :AST
+          
+          tz.transition 1949, 12, :o1, 52558899197, 21600
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

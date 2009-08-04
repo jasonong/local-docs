@@ -1,0 +1,242 @@
+<HTML>
+<HEAD>
+<TITLE>Process</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Prec.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="bundle.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Process</H1>
+<dd> 
+<P>
+The module for operating (UNIX) processes. 
+Like <a href="Math.html"><code>Math</code></a> module, all
+methods defined in this module are
+<a href="Module.html#module_function">module functions</a>.
+</P>
+<p>
+Notice the <code>Process</code> is not a class for process object, but the
+module for methods to operate processes.
+</p>
+<dt> <h2>Module Attributes:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="egid">
+<CODE>egid</CODE></A>
+<DD>
+<p>
+Returns the current effective group ID of the process.
+</p>
+
+<DT>
+<A NAME="egid_eq">
+<CODE>egid= <VAR>gid</VAR></CODE></A>
+<DD>
+<p>
+Sets the current effective group ID of the process to <var>gid</var>.
+</p>
+
+<DT>
+<A NAME="euid">
+<CODE>euid</CODE></A>
+<DD>
+<p>
+Returns the current effective user ID of the process.
+</p>
+
+<DT>
+<A NAME="euid_eq">
+<CODE>euid= <VAR>uid</VAR></CODE></A>
+<DD>
+<p>
+Sets the current effective user ID of the process to <var>uid</var>.
+</p>
+
+<DT>
+<A NAME="gid">
+<CODE>gid</CODE></A>
+<DD>
+<p>
+Returns the current real group ID of the process.
+</p>
+
+<DT>
+<A NAME="gid_eq">
+<CODE>gid= <VAR>gid</VAR></CODE></A>
+<DD>
+<p>
+Sets the current real group ID of the process to <var>gid</var>.
+</p>
+
+<DT>
+<A NAME="pid">
+<CODE>pid</CODE></A>
+<DD>
+<p>
+Returns the process ID of the process, which is same as the value of
+the variable `<code>$$</code>'.
+</p>
+
+<DT>
+<A NAME="ppid">
+<CODE>ppid</CODE></A>
+<DD>
+<p>
+Returns the process ID of the parent process.  Under UN*X, the process
+ID will be 1 (the pid of <samp>init</samp>) after the parent process
+terminates.
+</p>
+
+<DT>
+<A NAME="uid">
+<CODE>uid</CODE></A>
+<DD>
+<p>
+Returns the real user ID of the process.
+</p>
+
+<DT>
+<A NAME="uid_eq">
+<CODE>uid= <VAR>uid</VAR></CODE></A>
+<DD>
+<p>
+Sets the real user ID of the process to <var>uid</var>.
+</p>
+</DL>
+
+<dt> <h2>Module Functions:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="getpgrp">
+<CODE>getpgrp([<VAR>pid</VAR>])</CODE></A>
+<DD>
+<p>
+Returns the current process group for the <var>pid</var>, 0 for the
+current process.  If PID is omitted, returns process group of current
+process.
+</p>
+
+<DT>
+<A NAME="getpriority">
+<CODE>getpriority(<VAR>which</VAR>, <VAR>who</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the current priority for a process, a process group, or a
+user.  (See <samp>getpriority(2)</samp>.)  The Process module defines
+the constants for <var>which</var>, <VAR>PRIO_PROCESS</VAR>,
+<VAR>PRIO_PGRP</VAR>, <VAR>PRIO_USER</VAR>.
+</p>
+
+<DT><A NAME="kill"><CODE>kill(<VAR>signal</VAR>, <VAR>pid</VAR>...)</CODE></A>
+<DD>
+<p>
+Sends <var>signal</var> to the specified <var>pid</var>.
+<var>signal</var> must be a string or a integer to specify the
+signal to send.  If the signal is negative (or <code>-</code> before
+the signal name), it kills process groups instead of processes.
+</p>
+
+<DT>
+<A NAME="setpgrp">
+<CODE>setpgrp(<VAR>pid</VAR>, <VAR>pgrp</VAR>)</CODE></A>
+<DD>
+<p>
+Sets the current process group for the <var>PID</var>, 0 for the current
+process. 
+</p>
+
+<DT>
+<A NAME="setpriority">
+<CODE>setpriority(<VAR>which</VAR>, <VAR>who</VAR>, <VAR>prio</VAR>)</CODE></A>
+<DD>
+<p>
+Sets the current priority for a process, a process group, or a user.
+(See <samp>setpriority(2)</samp>.)  The Process module defines
+the constants for <var>which</var>, <VAR>PRIO_PROCESS</VAR>,
+<VAR>PRIO_PGRP</VAR>, <VAR>PRIO_USER</VAR>.
+</p>
+
+<DT>
+<A NAME="setsid"><CODE>setsid()</CODE></A>
+<DD>
+<p>
+Creates a new session, and detaches tty.  Returns the session ID of
+the new session.
+</p>
+
+<DT><A NAME="wait"><CODE>wait</CODE></A>
+<DD>
+<p>
+Waits for a child process to terminate and returns the pid of the
+deceased process, or raise <code>Errno::ECHILD</code> if there are no
+child processes.
+</p>
+
+<DT><A NAME="waitpid"><CODE>waitpid(<VAR>pid</VAR>, <VAR>flags</VAR>)</CODE></A>
+<DD>
+<p>
+Waits for a particular child process specified by <var>pid</var> to
+terminate and returns the pid of the deceased process, or raise
+<code>Errno::ECHILD</code> if there is no such child process.
+Returns <code>nil</code> if the process did
+not terminated yet in the non-blocking mode.  Non-blocking wait is
+only available on machines supporting either the
+<samp>waitpid(2)</samp> or <samp>wait4(2)</samp> system calls.
+However, waiting for a particular pid with FLAGS of <code>nil</code> or 0 is implemented
+everywhere.
+</p>
+
+</DL>
+<dt> <h2>Constants:</h2>
+<dd> 
+<DL COMPACT>
+<dt> <code>PRIO_PROCESS</code>
+<dd> 
+<p>
+Specifies process priority for <code>getpriority</code>/<code>setpriority</code>.
+</p>
+<dt> <code>PRIO_PGRP</code>
+<dd> 
+<p>
+Specifies process group priority.
+</p>
+<dt> <code>PRIO_USER</code>
+<dd> 
+<p>
+Specifies user priority.
+</p>
+<dt> <code>WNOHANG</code>
+<dd> 
+<p>
+Means to return immediately if no child has exited.
+</p>
+<dt> <code>WUNTRACED</code>
+<dd> 
+<p>
+Means to also return for children which are stopped,
+and whose status has not been reported. 
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Prec.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="bundle.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

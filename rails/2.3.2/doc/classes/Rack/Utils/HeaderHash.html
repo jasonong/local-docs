@@ -1,0 +1,223 @@
+  <div id="C00000265">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />HeaderHash<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/utils_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb</a>
+
+Parent:&nbsp;
+Hash
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+A case-insensitive Hash that preserves the original case of a header when
+set.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000911&name=[]" >[]</a></li>
+  <li><a href="index.html?a=M000912&name=[]=" >[]=</a></li>
+  <li><a href="index.html?a=M000913&name=delete" >delete</a></li>
+  <li><a href="index.html?a=M000915&name=has_key?" >has_key?</a></li>
+  <li><a href="index.html?a=M000914&name=include?" >include?</a></li>
+  <li><a href="index.html?a=M000917&name=key?" >key?</a></li>
+  <li><a href="index.html?a=M000916&name=member?" >member?</a></li>
+  <li><a href="index.html?a=M000919&name=merge" >merge</a></li>
+  <li><a href="index.html?a=M000918&name=merge!" >merge!</a></li>
+  <li><a href="index.html?a=M000909&name=new" >new</a></li>
+  <li><a href="index.html?a=M000910&name=to_hash" >to_hash</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000909" class="method">
+  <div id="M000909_title" class="title">
+    <b>new</b>(hash={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000909_source')" id="l_M000909_source">show source</a> ]</p>
+  <div id="M000909_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 189</span>
+189:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">hash</span>={})
+190:         <span class="ruby-ivar">@names</span> = {}
+191:         <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span> }
+192:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000911" class="method">
+  <div id="M000911_title" class="title">
+    <b>[]</b>(k)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000911_source')" id="l_M000911_source">show source</a> ]</p>
+  <div id="M000911_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 205</span>
+205:       <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">k</span>)
+206:         <span class="ruby-keyword kw">super</span> <span class="ruby-ivar">@names</span>[<span class="ruby-identifier">k</span>.<span class="ruby-identifier">downcase</span>]
+207:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000912" class="method">
+  <div id="M000912_title" class="title">
+    <b>[]=</b>(k, v)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000912_source')" id="l_M000912_source">show source</a> ]</p>
+  <div id="M000912_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 209</span>
+209:       <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>)
+210:         <span class="ruby-identifier">delete</span> <span class="ruby-identifier">k</span>
+211:         <span class="ruby-ivar">@names</span>[<span class="ruby-identifier">k</span>.<span class="ruby-identifier">downcase</span>] = <span class="ruby-identifier">k</span>
+212:         <span class="ruby-keyword kw">super</span> <span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>
+213:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000913" class="method">
+  <div id="M000913_title" class="title">
+    <b>delete</b>(k)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000913_source')" id="l_M000913_source">show source</a> ]</p>
+  <div id="M000913_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 215</span>
+215:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">k</span>)
+216:         <span class="ruby-keyword kw">super</span> <span class="ruby-ivar">@names</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">k</span>.<span class="ruby-identifier">downcase</span>)
+217:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000915" class="method">
+  <div id="M000915_title" class="title">
+    <b>has_key?</b>(k)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M000914&name=include?">include?</a>
+</p>
+  </div>
+</div>
+<div id="M000914" class="method">
+  <div id="M000914_title" class="title">
+    <b>include?</b>(k)
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M000915&name=has_key?">has_key?</a>
+  <a href="index.html?a=M000916&name=member?">member?</a>
+  <a href="index.html?a=M000917&name=key?">key?</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000914_source')" id="l_M000914_source">show source</a> ]</p>
+  <div id="M000914_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 219</span>
+219:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">include?</span>(<span class="ruby-identifier">k</span>)
+220:         <span class="ruby-ivar">@names</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">downcase</span>
+221:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000917" class="method">
+  <div id="M000917_title" class="title">
+    <b>key?</b>(k)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M000914&name=include?">include?</a>
+</p>
+  </div>
+</div>
+<div id="M000916" class="method">
+  <div id="M000916_title" class="title">
+    <b>member?</b>(k)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M000914&name=include?">include?</a>
+</p>
+  </div>
+</div>
+<div id="M000919" class="method">
+  <div id="M000919_title" class="title">
+    <b>merge</b>(other)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000919_source')" id="l_M000919_source">show source</a> ]</p>
+  <div id="M000919_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 232</span>
+232:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge</span>(<span class="ruby-identifier">other</span>)
+233:         <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">dup</span>
+234:         <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">merge!</span> <span class="ruby-identifier">other</span>
+235:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000918" class="method">
+  <div id="M000918_title" class="title">
+    <b>merge!</b>(other)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000918_source')" id="l_M000918_source">show source</a> ]</p>
+  <div id="M000918_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 227</span>
+227:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">other</span>)
+228:         <span class="ruby-identifier">other</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span> }
+229:         <span class="ruby-keyword kw">self</span>
+230:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000910" class="method">
+  <div id="M000910_title" class="title">
+    <b>to_hash</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000910_source')" id="l_M000910_source">show source</a> ]</p>
+  <div id="M000910_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/utils.rb, line 194</span>
+194:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_hash</span>
+195:         <span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>, (<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>)<span class="ruby-operator">|</span>
+196:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-identifier">:to_ary</span>
+197:             <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_ary</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+198:           <span class="ruby-keyword kw">else</span>
+199:             <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span>
+200:           <span class="ruby-keyword kw">end</span>
+201:           <span class="ruby-identifier">hash</span>
+202:         <span class="ruby-keyword kw">end</span>
+203:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

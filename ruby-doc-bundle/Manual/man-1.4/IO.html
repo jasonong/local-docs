@@ -1,0 +1,555 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>IO</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Hash.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="File.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>IO</H1>
+<dd> 
+<P>
+The <code>IO</code> class provides the basic IO feature.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A> <p>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Enum.html"><code>Enumerable</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<DT>
+<A NAME="IO.foreach">
+<CODE>foreach(<VAR>path</VAR>[, <var>rs</var>])</CODE></A>
+<DD>
+<p>
+Iterates over each line from the IO port specified by
+<code>path</code>.  It works like:
+
+<blockquote>
+<pre>
+port = open(<var>path</var>)
+begin
+  port.each_line {
+    ...
+  }
+ensure
+  port.close
+end
+</pre>
+</blockquote>
+</p>
+<p>
+Lines are separated by the value of the optional argument
+<var>rs</var>, which default value is defined by the variable
+<a href="variable.html#slash"><code>$/</code></a>.
+</p>
+
+<DT>
+<A NAME="IO.new"><CODE>new(<VAR>fd</VAR>[,<var>mode</var>])</CODE></A>
+<DD>
+<p>
+Creates a stream associated with the file descriptor <var>fd</var>.
+</p>
+
+<DT>
+<A NAME="IO.popen">
+<CODE>popen(<VAR>command</VAR> [, <var>mode</var>])</CODE></A>
+<DD>
+<p>
+Performs the <var>command</var> as a sub-process, and
+associates pipes to the standard input/output of the
+sub-process.  The <var>mode</var> argument specifies the
+mode for the opened IO port, which is either <code>"r"</code>,
+<code>"r+"</code>, <code>"w"</code>, <code>"w+"</code>,
+<code>"a"</code>, <code>"a+"</code>.  If <var>mode</var>
+omitted, the default is <code>"r"</code>
+</p>
+
+<p>
+If the command name is <code>"-"</code>, Ruby forks, and
+create pipe-line to the child process.
+</p>
+
+<DT>
+<A NAME="IO.pipe">
+<CODE>pipe</CODE></A>
+<DD>
+<p>
+Opens a pair of connected pipes like the corresponding system call, and
+returns them in the array of two elements (read-side first, write-side
+next).
+</p>
+
+<DT>
+<A NAME="IO.readlines">
+<CODE>readlines(<VAR>path</VAR>[, <var>rs</var>])</CODE></A>
+<DD>
+<p>
+Reads entire lines from the IO port specified by
+<code>path</code> and returns an array containing the lines
+read.  It works like:
+
+<blockquote>
+<pre>
+port = open(<var>path</var>)
+begin
+  port.each_line {
+    ...
+  }
+ensure
+  port.close
+end
+</pre>
+</blockquote>
+</p>
+<p>
+Lines are separated by the value of the optional argument
+<var>rs</var>, which default value is defined by the variable
+<a href="variable.html#slash"><code>$/</code></a>.
+</p>
+
+<DT><A NAME="IO.select">
+<CODE>select(<VAR>reads</VAR>[, <VAR>writes</VAR>[, <VAR>excepts</VAR>[, <VAR>timeout</VAR>]]])</CODE></A>
+<DD>
+<p>
+Calls <SAMP>select(2)</SAMP> system call.  <var>Reads</var>,
+<var>writes</var>, <var>excepts</var> are specified arrays containing
+instances of the IO class (or its subclass), or <code>nil</code>.
+</p>
+<p>
+The <var>timeout</var> must be either an integer, Float,
+<code><a href="Time.html">Time</a></code>, or <code>nil</code>.
+If the <var>timeout</var> is <code>nil</code>,
+<code>select</code> would not time out.
+<p>
+<code>select</code> returns <code>nil</code> in case of timeout,
+otherwise returns an array of 3 elements, which are subset of argument 
+arrays. 
+</p>
+
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+<DT>
+<A NAME="lshift">
+<CODE>self &#60;&#60; <VAR>object</VAR></CODE></A>
+<DD>
+<p>
+Output <var>object</var> to the IO port.  If <var>object</var> is not
+a string, it will be converted into the string using <code>to_s</code>.
+This method returns self, so that the code below works:
+
+<blockquote>
+<pre>
+$stdout &#60;&#60; 1 &#60;&#60; " is a " &#60;&#60; Fixnum &#60;&#60; "\n"
+</pre>
+</blockquote>
+
+</p>
+
+<DT>
+<A NAME="binmode"><CODE>binmode</CODE></A>
+<DD>
+<p>
+Changes the stream into binary mode.  This is useful only under MSDOS.
+There's no way to reset to ascii mode except re-opening the stream.
+</p>
+
+<DT>
+<A NAME="close">
+<CODE>close</CODE></A>
+<DD>
+<p>
+Closes the IO port.  All operations on the closed IO port
+will raise an exception.  IO ports are automatically closed
+when they are garbage-collected. 
+</p>
+
+<DT>
+<A NAME="closed_p">
+<CODE>closed?</CODE></A>
+<DD>
+<p>
+Returns true if the IO port closed.
+</p>
+
+<DT>
+<A NAME="each">
+<CODE>each([<var>rs</var>]) {|<VAR>line</VAR>|...}</CODE></A>
+<DD>
+<A NAME="each_line">
+<DT><CODE>each_line([<var>rs</var>]) {|<VAR>line</VAR>|...}</CODE></A>
+<DD>
+<p>
+Iterates over each line from the IO port.  The IO port must be opened
+in read-mode. (See <a href="function.html#open"><code>open</code></a>)
+</p>
+<p>
+Lines are separated by the value of the optional argument
+<var>rs</var>, which default value is defined by the variable
+<a href="variable.html#slash"><code>$/</code></a>.
+</p>
+
+<DT>
+<A NAME="each_byte">
+<CODE>each_byte {|<VAR>ch</VAR>|...}</CODE></A>
+<DD>
+<p>
+Reads byte by byte from the IO port.  The IO port must be opened
+in read-mode. (See <a href="function.html#open"><code>open</code></a>)
+</p>
+
+<DT>
+<A NAME="eof"><CODE>eof</CODE></A>
+<DD>
+<DT>
+<A NAME="eof_p"><CODE>eof?</CODE></A>
+<DD>
+<p>
+Returns true it the stream reaches end of file.
+</p>
+
+<DT>
+<A NAME="fcntl">
+<CODE>fcntl(<var>cmd</var>, <var>arg</var>)</CODE></A>
+<DD>
+<p>
+Performs system call <code>fcntl</code> on the IO object.  See
+<samp>fcntl(2)</samp> for detail.
+</p>
+<p>
+If the <var>arg</var> is a number, the numeric value is passed to
+the system call.  If the <code>arg</code> is a string, it is treated
+as the packed structure.  The default <var>arg</var> value is 0.
+</p>
+
+<DT>
+<A NAME="fileno"><CODE>fileno</CODE></A>
+<DD>
+<DT><A NAME="to_i"><CODE>to_i</CODE></A>
+<DD>
+<p>
+Returns the file descriptor number of the IO port.
+</p>
+
+<DT>
+<A NAME="flush">
+<CODE>flush</CODE></A>
+<DD>
+<p>
+Flushes the internal buffer of the IO port.
+</p>
+
+<DT>
+<A NAME="getc">
+<CODE>getc</CODE></A>
+<DD>
+<p>
+Reads the next character from the IO port, and returns an fixnum
+corresponding that character.  Returns <code>nil</code> at the
+end of file.
+</p>
+
+<DT>
+<A NAME="gets">
+<CODE>gets([<var>rs</var>])</CODE></A>
+<DD>
+<p>
+Reads a line from the IO port, or <code>nil</code> on end of
+file. Works mostly same as <a href="#each"><code>each</code></a>, but
+<code>gets</code> does not iterate.
+</p>
+<p>
+Lines are separated by the value of the optional argument
+<var>rs</var>, which default value is defined by the variable
+<a href="variable.html#slash"><code>$/</code></a>.
+</p>
+<p>
+The line read is set to the variable 
+<a href="variable.html#uscore"><code>$_</code></a>.
+</p>
+
+<DT>
+<A NAME="ioctl">
+<CODE>ioctl(<var>cmd</var>, <var>arg</var>)</CODE></A>
+<DD>
+<p>
+Performs system call <code>ioctl</code> on the IO object.  See
+<samp>ioctl(2)</samp> for detail.
+</p>
+<p>
+If the <var>arg</var> is a number, the numeric value is passed to
+the system call.  If the <code>arg</code> is a string, it is treated
+as the packed structure.  The default <var>arg</var> value is 0.
+</p>
+
+<DT>
+<A NAME="isatty"><CODE>isatty</CODE></A>
+<DD>
+<DT><A NAME="tty_p"><CODE>tty?</CODE></A>
+<DD>
+<p>
+Returns true if the IO port connected to the tty.
+</p>
+
+<DT><A NAME="lineno"><CODE>lineno</CODE></A>
+<DD>
+<p>
+Returns the current line number of the IO.
+</p>
+
+<DT>
+<A NAME="lineno_eq"><CODE>lineno= <VAR>number</VAR></CODE></A>
+<DD>
+<p>
+Sets the line number of the IO.
+</p>
+
+<DT>
+<A NAME="pos"><CODE>pos</CODE></A>
+<DD>
+<p>
+Returns the current position of the file pointer.
+</p>
+
+<DT>
+<A NAME="pos_eq"><CODE>pos= <var>pos</var></CODE></A>
+<DD>
+<p>
+Moves the file pointer to the <var>pos</var>.
+</p>
+
+<DT>
+<A NAME="print"><CODE>print <VAR>arg</VAR>...</CODE></A>
+<DD>
+<p>
+Outputs arguments to the IO port.
+</p>
+
+<DT>
+<A NAME="printf"><CODE>printf(<VAR>format</VAR>, <VAR>arg</VAR>...)</CODE></A>
+<DD>
+<p>
+Output arguments to the IO port with formatting like <code>printf</code>
+in C language.
+</p>
+
+<DT>
+<A NAME="putc"><CODE>putc(<VAR>c</VAR>)</CODE></A>
+<DD>
+<p>
+Writes the character <VAR>c</VAR> to the stream.
+</p>
+
+<DT>
+<A NAME="puts">
+<CODE>puts(<VAR>obj</VAR>...)</CODE></A>
+<DD>
+<p>
+Outputs an <var>obj</var> to the IO port, then newline for each
+arguments.
+</p>
+
+<DT>
+<A NAME="read">
+<CODE>read [<VAR>length</VAR>]</CODE></A>
+<DD>
+<p>
+Attempts to read <var>length</var> bytes of data from the IO port.  If 
+no <var>length</var> given, reads all data until <code>EOF</code>.
+</p>
+<p>
+returns <var>nil</var> at <code>EOF</code>.
+</p>
+
+
+<DT>
+<A NAME="readchar">
+<CODE>readchar</CODE></A>
+<DD>
+<p>
+Reads a character from the IO port, just like
+<code><a href="#getc">getc</a></code>, but raises an
+<code>EOFError</code> exception at the end of file.
+</p>
+
+<DT>
+<A NAME="readline">
+<CODE>readline([<var>rs</var>])</CODE></A>
+<DD>
+<p>
+Reads a line from the IO port, just like
+<code><a href="#gets">gets</a></code>, but raises an
+<code>EOFError</code> exception at the end of file.
+</p>
+<p>
+Each lines is separated by the value of the optional argument
+<var>rs</var>, which default value is defined by the variable
+<a href="variable.html#slash"><code>$/</code></a>.
+</p>
+<p>
+The line read is set to the variable <code>$_</code> just like
+<code>IO#gets</code>.
+</p>
+
+<DT>
+<A NAME="readlines">
+<CODE>readlines([<var>rs</var>])</CODE></A>
+<DD>
+<p>
+Reads entire lines from the IO port and returns an array containing
+the lines read.
+</p>
+<p>
+Lines are separated by the value of the optional argument
+<var>rs</var>, which default value is defined by the variable
+<a href="variable.html#slash"><code>$/</code></a>.
+</p>
+
+<DT><A NAME="reopen"><CODE>reopen(<var>io</var>)</CODE></A>
+<DD>
+<p>
+Reconnect <code>self</code> to <var>io</var>.  It also changes the
+class of the stream.
+</p>
+
+<DT>
+<A NAME="rewind">
+<CODE>rewind</CODE></A>
+<DD>
+<p>
+Resets the position of the file pointer to the beginning of the file.
+</p>
+
+<DT>
+<A NAME="seek">
+<CODE>seek(<VAR>offset</VAR>, <VAR>whence</VAR>)</CODE></A>
+<DD>
+<p>
+Moves the file pointer to the <var>offset</var>.  The value for <var>whence</var> 
+are 0 th set the file pointer to <var>offset</var>, 1 to set it to
+current plus <var>offset</var>, 2 to set it to EOF plus offset.
+</p>
+
+<DT>
+<A NAME="stat">
+<CODE>stat</CODE></A>
+<DD>
+<p>
+Returns the status info of the file in the <code>Stat</code>
+<a href="Struct.html">structure</a>, which has attributes as follows:
+</p>
+<blockquote>
+<PRE>
+dev	 	# device number of file-system
+ino		# i-node number
+mode		# file mode
+nlink		# number of hard links
+uid		# user ID of owner
+gid		# group ID of owner
+rdev		# device type (special files only)
+size		# total size, in bytes
+blksize		# preferred blocksize for file-system I/O
+blocks		# number of blocks allocated
+atime		# time of last access
+mtime		# time of last modification
+ctime		# time of last i-node change
+</PRE>
+</blockquote>
+<p>
+For more detail, see <samp>stat(2)</samp>.  Some fields are filled
+with 0, if that field is not supported on your system.
+</p>
+
+<DT>
+<A NAME="sync">
+<CODE>sync</CODE></A>
+<DD>
+<p>
+Returns the `sync' mode of the IO port.  When the `sync' mode is true, 
+the internal buffer will be flushed, everytime something written to
+the output port.
+</p>
+
+<DT>
+<A NAME="sync_eq">
+<CODE>sync= <VAR>newstate</VAR></CODE></A>
+<DD>
+<p>
+Sets the `sync' mode of the IO port.
+</p>
+
+<DT>
+<A NAME="sysread">
+<CODE>sysread(<VAR>length</VAR>)</CODE></A>
+<DD>
+<p>
+Attempts to read <var>length</var> bytes of data from the IO port,
+using the system call read(2).  It bypasses stdio, so mixing this with
+other kinds of reads/eof checks may cause confusion.
+</p>
+
+<DT>
+<A NAME="syswrite">
+<CODE>syswrite(<VAR>string</VAR>)</CODE></A>
+<DD>
+<p>
+Attempts to write data from the <var>string</var> to the IO port,
+using the write(2) system call.  It bypasses stdio, so mixing this
+with prints may cause confusion.
+</p>
+
+<DT>
+<A NAME="tell">
+<CODE>tell</CODE></A>
+<DD>
+
+<p>
+Returns the current position of the file pointer.
+</p>
+
+<DT>
+<A NAME="write">
+<CODE>write(<VAR>str</VAR>)</CODE></A>
+<DD>
+<p>
+Outputs the string to the IO port.  Returns the number of bytes written.
+</p>
+
+<dt> 
+<a name="ungetc"></a>
+<code>ungetc(<var>c</var>)</code>
+<dd> 
+<p>
+Pushes <code>c</code> back to the stream.  Only one push-back is
+guaranteed.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Hash.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="File.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

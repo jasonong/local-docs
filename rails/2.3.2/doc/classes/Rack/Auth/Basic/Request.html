@@ -1,0 +1,81 @@
+  <div id="C00000256">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Request<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/auth/basic_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/basic.rb</a>
+
+Parent:&nbsp;
+Auth::AbstractRequest
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000874&name=basic?" >basic?</a></li>
+  <li><a href="index.html?a=M000875&name=credentials" >credentials</a></li>
+  <li><a href="index.html?a=M000876&name=username" >username</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000874" class="method">
+  <div id="M000874_title" class="title">
+    <b>basic?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000874_source')" id="l_M000874_source">show source</a> ]</p>
+  <div id="M000874_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/basic.rb, line 43</span>
+43:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">basic?</span>
+44:           <span class="ruby-identifier">:basic</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">scheme</span>
+45:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000875" class="method">
+  <div id="M000875_title" class="title">
+    <b>credentials</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000875_source')" id="l_M000875_source">show source</a> ]</p>
+  <div id="M000875_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/basic.rb, line 47</span>
+47:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">credentials</span>
+48:           <span class="ruby-ivar">@credentials</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">&quot;m*&quot;</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp re">/:/</span>, <span class="ruby-value">2</span>)
+49:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000876" class="method">
+  <div id="M000876_title" class="title">
+    <b>username</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000876_source')" id="l_M000876_source">show source</a> ]</p>
+  <div id="M000876_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/basic.rb, line 51</span>
+51:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">username</span>
+52:           <span class="ruby-identifier">credentials</span>.<span class="ruby-identifier">first</span>
+53:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

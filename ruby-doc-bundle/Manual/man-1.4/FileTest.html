@@ -1,0 +1,226 @@
+<HTML>
+<HEAD>
+<TITLE>FileTest</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Enum.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="GC.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>FileTest</H1>
+<dd> 
+<P>
+<code>FileTest</code> is the collection of the file test
+functions.  It can be used for inclusion.
+</P>
+<dt> <h2>Module Functions:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="blockdev_p">
+<CODE>blockdev?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is the
+block special file.
+</p>
+
+<DT>
+<A NAME="chardev_p">
+<CODE>chardev?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is the
+character special file.
+</p>
+
+<DT>
+<A NAME="executable_p">
+<CODE>executable?(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>filename</var> is
+executable by the effective user/group id.
+</p>
+
+<DT>
+<A NAME="executable_real_p">
+<CODE>executable_real?(<VAR>filename</VAR>)</CODE></A>
+<DD>
+
+<p>
+Returns true if the file specified by the <var>filename</var> is
+executable by the real user/group id.
+</p>
+
+<DT>
+<A NAME="exist_p">
+<CODE>exist?(<VAR>file</VAR>)</CODE></A>
+<DD>
+
+<p>
+Returns true if the file specified by the <var>file</var> exists.
+</p>
+
+<DT>
+<A NAME="grpowned_p">
+<CODE>grpowned?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> has gid
+of effective group.
+</p>
+
+<DT>
+<A NAME="directory_p">
+<CODE>directory?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is a
+directory.
+</p>
+
+<DT>
+<A NAME="file_p">
+<CODE>file?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is a
+regular file.
+</p>
+
+<DT>
+<A NAME="pipe_p">
+<CODE>pipe?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is a
+named pipe (FIFO).
+</p>
+
+<DT>
+<A NAME="socket_p">
+<CODE>socket?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is a
+socket.
+</p>
+
+<DT>
+<A NAME="owned_p">
+<CODE>owned?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is
+owned by you.
+</p>
+
+<DT>
+<A NAME="readable_p">
+<CODE>readable?(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>filename</var> is
+readable by you.
+</p>
+
+<DT>
+<A NAME="readable_real">
+<CODE>readable_real?(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>filename</var> is
+readable by your real uid/gid.
+</p>
+
+<DT>
+<A NAME="setuid_p">
+<CODE>setuid?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the setuid bit of the file specified by the
+<var>file</var> is set.
+</p>
+
+<DT>
+<A NAME="setgid">
+<CODE>setgid?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the setgid bit of the file specified by the
+<var>file</var> is set.
+</p>
+
+<DT>
+<A NAME="size_p">
+<CODE>size?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the size of the file specified by the <var>file</var>.
+Returns <code>nil</code> if it does not exist or is empty.
+</p>
+
+<DT>
+<A NAME="sticky_p">
+<CODE>sticky?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the sticky bit of the file specified by the
+<var>file</var> is set.
+</p>
+
+<DT><A NAME="symlink_p">
+<CODE>symlink?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> is a
+symbolic link.
+</p>
+
+<DT>
+<A NAME="writable">
+<CODE>writable?(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>filename</var> is
+writable by you.
+</p>
+
+<DT>
+<A NAME="writable_real_p">
+<CODE>writable_real?(<VAR>filename</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>filename</var> is
+writable by your real uid/gid.
+</p>
+
+<DT>
+<A NAME="zero_p">
+<CODE>zero?(<VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if the file specified by the <var>file</var> exists,
+and the size of the file is 0.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Enum.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="GC.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

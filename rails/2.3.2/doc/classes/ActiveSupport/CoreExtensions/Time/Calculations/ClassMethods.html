@@ -1,0 +1,151 @@
+  <div id="C00000529">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />ClassMethods<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/time/calculations_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/time/calculations.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001385&name====" >===</a></li>
+  <li><a href="index.html?a=M001386&name=days_in_month" >days_in_month</a></li>
+  <li><a href="index.html?a=M001389&name=local_time" >local_time</a></li>
+  <li><a href="index.html?a=M001387&name=time_with_datetime_fallback" >time_with_datetime_fallback</a></li>
+  <li><a href="index.html?a=M001388&name=utc_time" >utc_time</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001385" class="method">
+  <div id="M001385_title" class="title">
+    <b>===</b>(other)
+  </div>
+  <div class="description">
+  <p>
+Overriding case equality method so that it returns true for <a
+href="index.html?a=C00000594&name=ActiveSupport::TimeWithZone">ActiveSupport::TimeWithZone</a>
+instances
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001385_source')" id="l_M001385_source">show source</a> ]</p>
+  <div id="M001385_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/time/calculations.rb, line 30</span>
+30:           <span class="ruby-keyword kw">def</span> <span class="ruby-operator">===</span>(<span class="ruby-identifier">other</span>)
+31:             <span class="ruby-identifier">other</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Time</span>)
+32:           <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001386" class="method">
+  <div id="M001386_title" class="title">
+    <b>days_in_month</b>(month, year = now.year)
+  </div>
+  <div class="description">
+  <p>
+Return the number of days in the given month. If no year is specified, it
+will use the current year.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001386_source')" id="l_M001386_source">show source</a> ]</p>
+  <div id="M001386_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/time/calculations.rb, line 36</span>
+36:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">days_in_month</span>(<span class="ruby-identifier">month</span>, <span class="ruby-identifier">year</span> = <span class="ruby-identifier">now</span>.<span class="ruby-identifier">year</span>)
+37:             <span class="ruby-keyword kw">return</span> <span class="ruby-value">29</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">month</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">::</span><span class="ruby-constant">Date</span>.<span class="ruby-identifier">gregorian_leap?</span>(<span class="ruby-identifier">year</span>)
+38:             <span class="ruby-constant">COMMON_YEAR_DAYS_IN_MONTH</span>[<span class="ruby-identifier">month</span>]
+39:           <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001389" class="method">
+  <div id="M001389_title" class="title">
+    <b>local_time</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Wraps class method <tt><a
+href="index.html?a=M001387&name=time_with_datetime_fallback">time_with_datetime_fallback</a></tt>
+with <tt>utc_or_local</tt> set to <tt>:local</tt>.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001389_source')" id="l_M001389_source">show source</a> ]</p>
+  <div id="M001389_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/time/calculations.rb, line 57</span>
+57:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">local_time</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+58:             <span class="ruby-identifier">time_with_datetime_fallback</span>(<span class="ruby-identifier">:local</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+59:           <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001387" class="method">
+  <div id="M001387_title" class="title">
+    <b>time_with_datetime_fallback</b>(utc_or_local, year, month=1, day=1, hour=0, min=0, sec=0, usec=0)
+  </div>
+  <div class="description">
+  <p>
+Returns a new Time if requested year can be accommodated by Ruby&#8217;s
+Time class (i.e., if year is within either 1970..2038 or 1902..2038,
+depending on system architecture); otherwise returns a DateTime
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001387_source')" id="l_M001387_source">show source</a> ]</p>
+  <div id="M001387_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/time/calculations.rb, line 44</span>
+44:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">time_with_datetime_fallback</span>(<span class="ruby-identifier">utc_or_local</span>, <span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">day</span>=<span class="ruby-value">1</span>, <span class="ruby-identifier">hour</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">min</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">sec</span>=<span class="ruby-value">0</span>, <span class="ruby-identifier">usec</span>=<span class="ruby-value">0</span>)
+45:             <span class="ruby-operator">::</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">utc_or_local</span>, <span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>, <span class="ruby-identifier">usec</span>)
+46:           <span class="ruby-keyword kw">rescue</span>
+47:             <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">utc_or_local</span>.<span class="ruby-identifier">to_sym</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:local</span> <span class="ruby-operator">?</span> <span class="ruby-operator">::</span><span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">local_offset</span> <span class="ruby-operator">:</span> <span class="ruby-value">0</span>
+48:             <span class="ruby-operator">::</span><span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">civil</span>(<span class="ruby-identifier">year</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">hour</span>, <span class="ruby-identifier">min</span>, <span class="ruby-identifier">sec</span>, <span class="ruby-identifier">offset</span>)
+49:           <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001388" class="method">
+  <div id="M001388_title" class="title">
+    <b>utc_time</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Wraps class method <tt><a
+href="index.html?a=M001387&name=time_with_datetime_fallback">time_with_datetime_fallback</a></tt>
+with <tt>utc_or_local</tt> set to <tt>:utc</tt>.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001388_source')" id="l_M001388_source">show source</a> ]</p>
+  <div id="M001388_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/time/calculations.rb, line 52</span>
+52:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">utc_time</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+53:             <span class="ruby-identifier">time_with_datetime_fallback</span>(<span class="ruby-identifier">:utc</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+54:           <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

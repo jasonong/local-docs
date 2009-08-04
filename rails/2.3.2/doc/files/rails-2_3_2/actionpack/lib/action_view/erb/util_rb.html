@@ -1,0 +1,57 @@
+  <div id="fileHeader">
+    <h1>util.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/erb/util.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'erb'
+
+class ERB
+  module Util
+    HTML_ESCAPE = { '&amp;' =&gt; '&amp;amp;',  '&gt;' =&gt; '&amp;gt;',   '&lt;' =&gt; '&amp;lt;', '&quot;' =&gt; '&amp;quot;' }
+    JSON_ESCAPE = { '&amp;' =&gt; '\u0026', '&gt;' =&gt; '\u003E', '&lt;' =&gt; '\u003C' }
+
+    # A utility method for escaping HTML tag characters.
+    # This method is also aliased as &lt;tt&gt;h&lt;/tt&gt;.
+    #
+    # In your ERb templates, use this method to escape any unsafe content. For example:
+    #   &lt;%=h @person.name %&gt;
+    #
+    # ==== Example:
+    #   puts html_escape(&quot;is a &gt; 0 &amp; a &lt; 10?&quot;)
+    #   # =&gt; is a &amp;gt; 0 &amp;amp; a &amp;lt; 10?
+    def html_escape(s)
+      s.to_s.gsub(/[&amp;&quot;&gt;&lt;]/) { |special| HTML_ESCAPE[special] }
+    end
+
+    # A utility method for escaping HTML entities in JSON strings.
+    # This method is also aliased as &lt;tt&gt;j&lt;/tt&gt;.
+    #
+    # In your ERb templates, use this method to escape any HTML entities:
+    #   &lt;%=j @person.to_json %&gt;
+    #
+    # ==== Example:
+    #   puts json_escape(&quot;is a &gt; 0 &amp; a &lt; 10?&quot;)
+    #   # =&gt; is a \u003E 0 \u0026 a \u003C 10?
+    def json_escape(s)
+      s.to_s.gsub(/[&amp;&quot;&gt;&lt;]/) { |special| JSON_ESCAPE[special] }
+    end
+
+    alias j json_escape
+    module_function :j
+    module_function :json_escape
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,31 @@
+  <div id="fileHeader">
+    <h1>enumerable.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/json/encoders/enumerable.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Enumerable
+  # Returns a JSON string representing the enumerable. Any +options+
+  # given will be passed on to its elements. For example:
+  #
+  #   users = User.find(:all)
+  #   # =&gt; users.to_json(:only =&gt; :name)
+  #
+  # will pass the &lt;tt&gt;:only =&gt; :name&lt;/tt&gt; option to each user.
+  def to_json(options = {}) #:nodoc:
+    &quot;[#{map { |value| ActiveSupport::JSON.encode(value, options) } * ', '}]&quot;
+  end
+end
+</pre>
+    </div>

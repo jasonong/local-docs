@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Exception processing: rescue</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="constants.html">
+ <img border=0 src="a2l.gif" alt="Class constants"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="ensure.html">
+ <img border=0 src="a2r.gif" alt="Exception processing: ensure"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Exception processing: rescue</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>An executing program can run into unexpected problems.  A file
+that it it wants to read might not exist; the disk might be full when
+it wants to save some data; the user may provide it with some
+unsuitable kind of input.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> file = open("some_file")</b></font>
+<font color="#50ffff"><b>ERR: (eval):1:in `open': No such file or directory - some_file</b></font></font></pre></td></tr></table>
+<p>A robust program will handle these situations sensibly and
+gracefully.  Meeting that expectation can be an exasperating
+task.  C programmers are expected to check the result of every
+system call that could possibly fail, and immediately decide what is
+to be done:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#d8d8e0"><tr><td><pre><font color="black">FILE *file = fopen("some_file", "r");
+if (file == NULL) {
+  fprintf( stderr, "File doesn't exist.\n" );
+  exit(1);
+}
+bytes_read = fread( buf, 1, bytes_desired, file );
+if (bytes_read != bytes_desired ) {
+  /* do more error handling here ... */
+}
+...</font></pre></td></tr></table>
+<p>This is such a tiresome practice that programmers can tend to grow
+careless and neglect it, and the result is a program that doesn't
+handle exceptions well.  On the other hand, doing the job right
+can make programs hard to read, because there is so much error
+handling cluttering up the meaningful code.</p>
+<p>In ruby, as in many modern languages, we can handle exceptions for
+blocks of code in a compartmentalized way, thus dealing with surprises
+effectively but not unduly burdening either the programmer or anyone
+else trying to read the code later.  The block of code marked
+with <code>begin</code> executes until there is an exception, which causes
+control to be transferred to a block of error handling code, which is
+marked with <code>rescue</code>.  If no exception occurs, the
+<code>rescue</code> code is not used.  The following method returns
+the first line of a text file, or <code>nil</code> if there is an
+exception:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">def first_line( filename )
+  begin
+    file = open("some_file")
+    info = file.gets
+    file.close
+    info  # Last thing evaluated is the return value
+  rescue
+    nil   # Can't read the file? then don't return a string
+  end
+end</font></pre></td></tr></table>
+<p>There will be times when we would like to be able to creatively
+work around a problem.  Here, if the file we want is unavailable,
+we try to use standard input instead:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">begin
+  file = open("some_file")
+rescue
+  file = STDIN
+end
+
+begin
+  # ... process the input ...
+rescue
+  # ... and deal with any other exceptions here.
+end</font></pre></td></tr></table>
+<p><code>retry</code> can be used in the <code>rescue</code> code to start the
+<code>begin</code> code over again.  It lets us rewrite the previous
+example a little more compactly:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">fname = "some_file"
+begin
+  file = open(fname)
+  # ... process the input ...
+rescue
+  fname = "STDIN"
+  retry
+end</font></pre></td></tr></table>
+<p>However, there is a flaw here.  A nonexistent file will make
+this code retry in an infinite loop.  You need to watch out for
+such pitfalls when using <code>retry</code> for exception processing. </p>
+<p>Every ruby library raises an exception if any error occurs, and you
+can raise exceptions explicitly in your code too.  To raise an
+exception, use <code>raise</code>.  It takes one argument, which
+should be a string that describes the exception.  The argument is
+optional but should not be omitted.  It can be accessed later via
+the special global variable <code>$!</code>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> raise "test error"</b></font>
+<font color="#50ffff"><b>   test error</b></font>
+ruby&gt;<font color="#ffff00"><b> begin</b></font>
+    |<font color="#ffff00"><b>   raise "test2"</b></font>
+    |<font color="#ffff00"><b> rescue</b></font>
+    |<font color="#ffff00"><b>   print "An error occurred: ",$!, "\n"</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+An error occurred: test2
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="constants.html">
+ <img border=0 src="a2l.gif" alt="Class constants"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="ensure.html">
+ <img border=0 src="a2r.gif" alt="Exception processing: ensure"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

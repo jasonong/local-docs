@@ -1,0 +1,461 @@
+  <div id="C00000719">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Table<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions_rb.html');">rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+Represents a SQL table in an abstract way for updating a table. Also see <a
+href="index.html?a=C00000712&name=TableDefinition">TableDefinition</a> and
+<a
+href="index.html?a=M001952&name=SchemaStatements#create_table">SchemaStatements#create_table</a>
+</p>
+<p>
+Available transformations are:
+</p>
+<pre>
+  change_table :table do |t|
+    t.column
+    t.index
+    t.timestamps
+    t.change
+    t.change_default
+    t.rename
+    t.references
+    t.belongs_to
+    t.string
+    t.text
+    t.integer
+    t.float
+    t.decimal
+    t.datetime
+    t.timestamp
+    t.time
+    t.date
+    t.binary
+    t.boolean
+    t.remove
+    t.remove_references
+    t.remove_belongs_to
+    t.remove_index
+    t.remove_timestamps
+  end
+</pre>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002091&name=belongs_to" >belongs_to</a></li>
+  <li><a href="index.html?a=M002084&name=change" >change</a></li>
+  <li><a href="index.html?a=M002085&name=change_default" >change_default</a></li>
+  <li><a href="index.html?a=M002081&name=column" >column</a></li>
+  <li><a href="index.html?a=M002082&name=index" >index</a></li>
+  <li><a href="index.html?a=M002080&name=new" >new</a></li>
+  <li><a href="index.html?a=M002090&name=references" >references</a></li>
+  <li><a href="index.html?a=M002086&name=remove" >remove</a></li>
+  <li><a href="index.html?a=M002093&name=remove_belongs_to" >remove_belongs_to</a></li>
+  <li><a href="index.html?a=M002087&name=remove_index" >remove_index</a></li>
+  <li><a href="index.html?a=M002092&name=remove_references" >remove_references</a></li>
+  <li><a href="index.html?a=M002088&name=remove_timestamps" >remove_timestamps</a></li>
+  <li><a href="index.html?a=M002089&name=rename" >rename</a></li>
+  <li><a href="index.html?a=M002083&name=timestamps" >timestamps</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002080" class="method">
+  <div id="M002080_title" class="title">
+    <b>new</b>(table_name, base)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002080_source')" id="l_M002080_source">show source</a> ]</p>
+  <div id="M002080_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 554</span>
+554:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">base</span>)
+555:         <span class="ruby-ivar">@table_name</span> = <span class="ruby-identifier">table_name</span>
+556:         <span class="ruby-ivar">@base</span> = <span class="ruby-identifier">base</span>
+557:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002091" class="method">
+  <div id="M002091_title" class="title">
+    <b>belongs_to</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M002090&name=references">references</a>
+</p>
+  </div>
+</div>
+<div id="M002084" class="method">
+  <div id="M002084_title" class="title">
+    <b>change</b>(column_name, type, options = {})
+  </div>
+  <div class="description">
+  <p>
+Changes the column&#8217;s definition according to the new options. See <a
+href="index.html?a=M002034&name=TableDefinition#column">TableDefinition#column</a>
+for details of the options you can use.
+</p>
+<h5>Examples</h5>
+<pre>
+ t.change(:name, :string, :limit =&gt; 80)
+ t.change(:description, :text)
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002084_source')" id="l_M002084_source">show source</a> ]</p>
+  <div id="M002084_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 594</span>
+594:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">change</span>(<span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">options</span> = {})
+595:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">change_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">options</span>)
+596:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002085" class="method">
+  <div id="M002085_title" class="title">
+    <b>change_default</b>(column_name, default)
+  </div>
+  <div class="description">
+  <p>
+Sets a new default value for a column. See <a
+href="index.html?a=M001960&name=SchemaStatements#change_column_default">SchemaStatements#change_column_default</a>
+</p>
+<h5>Examples</h5>
+<pre>
+ t.change_default(:qualification, 'new')
+ t.change_default(:authorized, 1)
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002085_source')" id="l_M002085_source">show source</a> ]</p>
+  <div id="M002085_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 602</span>
+602:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">change_default</span>(<span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">default</span>)
+603:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">change_column_default</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">default</span>)
+604:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002081" class="method">
+  <div id="M002081_title" class="title">
+    <b>column</b>(column_name, type, options = {})
+  </div>
+  <div class="description">
+  <p>
+Adds a new column to the named table. See <a
+href="index.html?a=M002034&name=TableDefinition#column">TableDefinition#column</a>
+for details of the options you can use.
+</p>
+<h5>Example</h5>
+<h6>Creating a simple column</h6>
+<pre>
+ t.column(:name, :string)
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002081_source')" id="l_M002081_source">show source</a> ]</p>
+  <div id="M002081_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 564</span>
+564:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">column</span>(<span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">options</span> = {})
+565:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">add_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">options</span>)
+566:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002082" class="method">
+  <div id="M002082_title" class="title">
+    <b>index</b>(column_name, options = {})
+  </div>
+  <div class="description">
+  <p>
+Adds a new index to the table. <tt>column_name</tt> can be a single Symbol,
+or an Array of Symbols. See <a
+href="index.html?a=M001962&name=SchemaStatements#add_index">SchemaStatements#add_index</a>
+</p>
+<h5>Examples</h5>
+<h6>Creating a simple index</h6>
+<pre>
+ t.index(:name)
+</pre>
+<h6>Creating a unique index</h6>
+<pre>
+ t.index([:branch_id, :party_id], :unique =&gt; true)
+</pre>
+<h6>Creating a named index</h6>
+<pre>
+ t.index([:branch_id, :party_id], :unique =&gt; true, :name =&gt; 'by_branch_party')
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002082_source')" id="l_M002082_source">show source</a> ]</p>
+  <div id="M002082_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 578</span>
+578:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>(<span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">options</span> = {})
+579:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">add_index</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">options</span>)
+580:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002090" class="method">
+  <div id="M002090_title" class="title">
+    <b>references</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Adds a reference. Optionally adds a <tt>type</tt> column.
+<tt>references</tt> and <tt><a
+href="index.html?a=M002091&name=belongs_to">belongs_to</a></tt> are
+acceptable.
+</p>
+<h5>Examples</h5>
+<pre>
+ t.references(:goat)
+ t.references(:goat, :polymorphic =&gt; true)
+ t.belongs_to(:goat)
+</pre>
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M002091&name=belongs_to">belongs_to</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002090_source')" id="l_M002090_source">show source</a> ]</p>
+  <div id="M002090_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 649</span>
+649:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">references</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+650:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">extract_options!</span>
+651:         <span class="ruby-identifier">polymorphic</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:polymorphic</span>)
+652:         <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+653:           <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">add_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-node">&quot;#{col}_id&quot;</span>, <span class="ruby-identifier">:integer</span>, <span class="ruby-identifier">options</span>)
+654:           <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">add_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-node">&quot;#{col}_type&quot;</span>, <span class="ruby-identifier">:string</span>, <span class="ruby-identifier">polymorphic</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">polymorphic</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">options</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">polymorphic</span>.<span class="ruby-identifier">nil?</span>
+655:         <span class="ruby-keyword kw">end</span>
+656:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002086" class="method">
+  <div id="M002086_title" class="title">
+    <b>remove</b>(*column_names)
+  </div>
+  <div class="description">
+  <p>
+Removes the column(s) from the table definition.
+</p>
+<h5>Examples</h5>
+<pre>
+ t.remove(:qualification)
+ t.remove(:qualification, :experience)
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002086_source')" id="l_M002086_source">show source</a> ]</p>
+  <div id="M002086_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 610</span>
+610:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">column_names</span>)
+611:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">remove_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-identifier">column_names</span>)
+612:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002093" class="method">
+  <div id="M002093_title" class="title">
+    <b>remove_belongs_to</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a
+href="index.html?a=M002092&name=remove_references">remove_references</a>
+</p>
+  </div>
+</div>
+<div id="M002087" class="method">
+  <div id="M002087_title" class="title">
+    <b>remove_index</b>(options = {})
+  </div>
+  <div class="description">
+  <p>
+Removes the given index from the table.
+</p>
+<h5>Examples</h5>
+<h6>Remove the suppliers_name_index in the suppliers table</h6>
+<pre>
+  t.remove_index :name
+</pre>
+<h6>Remove the index named accounts_branch_id_index in the accounts table</h6>
+<pre>
+  t.remove_index :column =&gt; :branch_id
+</pre>
+<h6>Remove the index named accounts_branch_id_party_id_index in the accounts table</h6>
+<pre>
+  t.remove_index :column =&gt; [:branch_id, :party_id]
+</pre>
+<h6>Remove the index named by_branch_party in the accounts table</h6>
+<pre>
+  t.remove_index :name =&gt; :by_branch_party
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002087_source')" id="l_M002087_source">show source</a> ]</p>
+  <div id="M002087_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 625</span>
+625:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_index</span>(<span class="ruby-identifier">options</span> = {})
+626:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">remove_index</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-identifier">options</span>)
+627:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002092" class="method">
+  <div id="M002092_title" class="title">
+    <b>remove_references</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Removes a reference. Optionally removes a <tt>type</tt> column. <tt><a
+href="index.html?a=M002092&name=remove_references">remove_references</a></tt>
+and <tt><a
+href="index.html?a=M002093&name=remove_belongs_to">remove_belongs_to</a></tt>
+are acceptable.
+</p>
+<h5>Examples</h5>
+<pre>
+ t.remove_references(:goat)
+ t.remove_references(:goat, :polymorphic =&gt; true)
+ t.remove_belongs_to(:goat)
+</pre>
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M002093&name=remove_belongs_to">remove_belongs_to</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002092_source')" id="l_M002092_source">show source</a> ]</p>
+  <div id="M002092_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 665</span>
+665:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_references</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+666:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">extract_options!</span>
+667:         <span class="ruby-identifier">polymorphic</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:polymorphic</span>)
+668:         <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+669:           <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">remove_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-node">&quot;#{col}_id&quot;</span>)
+670:           <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">remove_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-node">&quot;#{col}_type&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">polymorphic</span>.<span class="ruby-identifier">nil?</span>
+671:         <span class="ruby-keyword kw">end</span>
+672:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002088" class="method">
+  <div id="M002088_title" class="title">
+    <b>remove_timestamps</b>()
+  </div>
+  <div class="description">
+  <p>
+Removes the timestamp columns (created_at and updated_at) from the table.
+</p>
+<h5>Example</h5>
+<pre>
+ t.remove_timestamps
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002088_source')" id="l_M002088_source">show source</a> ]</p>
+  <div id="M002088_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 632</span>
+632:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_timestamps</span>
+633:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">remove_timestamps</span>(<span class="ruby-ivar">@table_name</span>)
+634:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002089" class="method">
+  <div id="M002089_title" class="title">
+    <b>rename</b>(column_name, new_column_name)
+  </div>
+  <div class="description">
+  <p>
+Renames a column.
+</p>
+<h5>Example</h5>
+<pre>
+ t.rename(:description, :name)
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002089_source')" id="l_M002089_source">show source</a> ]</p>
+  <div id="M002089_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 639</span>
+639:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rename</span>(<span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">new_column_name</span>)
+640:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">rename_column</span>(<span class="ruby-ivar">@table_name</span>, <span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">new_column_name</span>)
+641:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002083" class="method">
+  <div id="M002083_title" class="title">
+    <b>timestamps</b>()
+  </div>
+  <div class="description">
+  <p>
+Adds timestamps (created_at and updated_at) columns to the table. See <a
+href="index.html?a=M001969&name=SchemaStatements#add_timestamps">SchemaStatements#add_timestamps</a>
+</p>
+<h5>Example</h5>
+<pre>
+ t.timestamps
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002083_source')" id="l_M002083_source">show source</a> ]</p>
+  <div id="M002083_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb, line 585</span>
+585:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">timestamps</span>
+586:         <span class="ruby-ivar">@base</span>.<span class="ruby-identifier">add_timestamps</span>(<span class="ruby-ivar">@table_name</span>)
+587:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+<TITLE>Range</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Proc.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Regexp.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Range</H1>
+<dd> 
+<P>
+The <code>Range</code> class describes the interval.  The range object 
+is created by the range operator (<code>..</code> or <code>...</code>).
+The range object created by <code>..</code> operator include end.
+The range object created by <code>...</code> operator
+does not include end.
+</P>
+<P>
+For example:
+</P>
+
+<blockquote>
+<PRE>
+for i in 1..5
+  ...
+end
+</PRE>
+</blockquote>
+
+<P>
+iterates over 1 to 5, including 5.  On the other hand, <code>1...5</code> 
+iterates over 1 through 4.
+</P>
+
+<P>
+The both operands for the range operator must be comparable with
+<code>&lt;=&gt;</code> opeator.  In addition they must have
+<code>succ</code> method for <code>each</code> operation.
+</P>
+<p>
+Note That an interval contains both ends.
+</p>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Enum.html"><code>Enumerable</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd>
+<DL COMPACT>
+<DT>
+<A NAME="Range.new">
+<CODE>new(<VAR>first</VAR>,<var>last</var>[, exclude_end])</CODE></A>
+<DD>
+<p>
+Creates the range object from <var>first</var> to <var>last</var>.
+Optional third argument specifies whether the range include <var>last</var>
+or not.  If the third argument is ommitted, the range will include
+the <var>last</var>
+</p>
+</DL>
+
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="eqq">
+<CODE>self === <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Returns true if <code>other</code> is within the range.  This operator 
+is mostly used by the <code>case</code> statement.
+</p>
+
+<DT>
+<A NAME="each">
+<CODE>each {|<var>item</var>| ...}</CODE></A>
+<DD>
+<p>
+Iterates over each item within the range.
+</p>
+
+<DT>
+<A NAME="exclude_end_p"><CODE>exclude_end?</CODE></A>
+<DD>
+<p>
+Returns true if the range will exclude the end.
+</p>
+
+<DT>
+<A NAME="first"><CODE>first</CODE></A>
+<DD>
+<DT>
+<A NAME="begin"><CODE>begin</CODE></A>
+<DD>
+<p>
+Returns the start point of the range.
+</p>
+
+<DT>
+<A NAME="last"><CODE>last</CODE></A>
+<DD>
+<DT>
+<A NAME="end"><CODE>end</CODE></A>
+<DD>
+<p>
+Returns the end point of the range.
+</p>
+
+<DT>
+<A NAME="length"><CODE>length</CODE></A>
+<DD>
+<DT>
+<A NAME="size"><CODE>size</CODE></A>
+<DD>
+<p>
+Returns length of the range (last - first + 1).
+</p>
+
+</DL>
+</dl>
+
+<HR>
+<A HREF="Proc.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Regexp.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

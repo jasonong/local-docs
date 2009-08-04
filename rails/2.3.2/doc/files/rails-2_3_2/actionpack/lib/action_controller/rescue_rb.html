@@ -1,0 +1,202 @@
+  <div id="fileHeader">
+    <h1>rescue.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/rescue.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController #:nodoc:
+  # Actions that fail to perform as expected throw exceptions. These
+  # exceptions can either be rescued for the public view (with a nice
+  # user-friendly explanation) or for the developers view (with tons of
+  # debugging information). The developers view is already implemented by
+  # the Action Controller, but the public view should be tailored to your
+  # specific application.
+  #
+  # The default behavior for public exceptions is to render a static html
+  # file with the name of the error code thrown.  If no such file exists, an
+  # empty response is sent with the correct status code.
+  #
+  # You can override what constitutes a local request by overriding the
+  # &lt;tt&gt;local_request?&lt;/tt&gt; method in your own controller. Custom rescue
+  # behavior is achieved by overriding the &lt;tt&gt;rescue_action_in_public&lt;/tt&gt;
+  # and &lt;tt&gt;rescue_action_locally&lt;/tt&gt; methods.
+  module Rescue
+    LOCALHOST = '127.0.0.1'.freeze
+
+    DEFAULT_RESCUE_RESPONSE = :internal_server_error
+    DEFAULT_RESCUE_RESPONSES = {
+      'ActionController::RoutingError'             =&gt; :not_found,
+      'ActionController::UnknownAction'            =&gt; :not_found,
+      'ActiveRecord::RecordNotFound'               =&gt; :not_found,
+      'ActiveRecord::StaleObjectError'             =&gt; :conflict,
+      'ActiveRecord::RecordInvalid'                =&gt; :unprocessable_entity,
+      'ActiveRecord::RecordNotSaved'               =&gt; :unprocessable_entity,
+      'ActionController::MethodNotAllowed'         =&gt; :method_not_allowed,
+      'ActionController::NotImplemented'           =&gt; :not_implemented,
+      'ActionController::InvalidAuthenticityToken' =&gt; :unprocessable_entity
+    }
+
+    DEFAULT_RESCUE_TEMPLATE = 'diagnostics'
+    DEFAULT_RESCUE_TEMPLATES = {
+      'ActionView::MissingTemplate'       =&gt; 'missing_template',
+      'ActionController::RoutingError'    =&gt; 'routing_error',
+      'ActionController::UnknownAction'   =&gt; 'unknown_action',
+      'ActionView::TemplateError'         =&gt; 'template_error'
+    }
+
+    RESCUES_TEMPLATE_PATH = ActionView::Template::EagerPath.new_and_loaded(
+      File.join(File.dirname(__FILE__), &quot;templates&quot;))
+
+    def self.included(base) #:nodoc:
+      base.cattr_accessor :rescue_responses
+      base.rescue_responses = Hash.new(DEFAULT_RESCUE_RESPONSE)
+      base.rescue_responses.update DEFAULT_RESCUE_RESPONSES
+
+      base.cattr_accessor :rescue_templates
+      base.rescue_templates = Hash.new(DEFAULT_RESCUE_TEMPLATE)
+      base.rescue_templates.update DEFAULT_RESCUE_TEMPLATES
+
+      base.extend(ClassMethods)
+      base.send :include, ActiveSupport::Rescuable
+
+      base.class_eval do
+        alias_method_chain :perform_action, :rescue
+      end
+    end
+
+    module ClassMethods
+      def call_with_exception(env, exception) #:nodoc:
+        request = env[&quot;action_controller.rescue.request&quot;] ||= Request.new(env)
+        response = env[&quot;action_controller.rescue.response&quot;] ||= Response.new
+        new.process(request, response, :rescue_action, exception)
+      end
+    end
+
+    protected
+      # Exception handler called when the performance of an action raises
+      # an exception.
+      def rescue_action(exception)
+        rescue_with_handler(exception) ||
+          rescue_action_without_handler(exception)
+      end
+
+      # Overwrite to implement custom logging of errors. By default
+      # logs as fatal.
+      def log_error(exception) #:doc:
+        ActiveSupport::Deprecation.silence do
+          if ActionView::TemplateError === exception
+            logger.fatal(exception.to_s)
+          else
+            logger.fatal(
+              &quot;\n#{exception.class} (#{exception.message}):\n  &quot; +
+              clean_backtrace(exception).join(&quot;\n  &quot;) + &quot;\n\n&quot;
+            )
+          end
+        end
+      end
+
+      # Overwrite to implement public exception handling (for requests
+      # answering false to &lt;tt&gt;local_request?&lt;/tt&gt;).  By default will call
+      # render_optional_error_file.  Override this method to provide more
+      # user friendly error messages.
+      def rescue_action_in_public(exception) #:doc:
+        render_optional_error_file response_code_for_rescue(exception)
+      end
+
+      # Attempts to render a static error page based on the
+      # &lt;tt&gt;status_code&lt;/tt&gt; thrown, or just return headers if no such file
+      # exists. At first, it will try to render a localized static page.
+      # For example, if a 500 error is being handled Rails and locale is :da,
+      # it will first attempt to render the file at &lt;tt&gt;public/500.da.html&lt;/tt&gt;
+      # then attempt to render &lt;tt&gt;public/500.html&lt;/tt&gt;. If none of them exist,
+      # the body of the response will be left empty.
+      def render_optional_error_file(status_code)
+        status = interpret_status(status_code)
+        locale_path = &quot;#{Rails.public_path}/#{status[0,3]}.#{I18n.locale}.html&quot; if I18n.locale
+        path = &quot;#{Rails.public_path}/#{status[0,3]}.html&quot;
+
+        if locale_path &amp;&amp; File.exist?(locale_path)
+          render :file =&gt; locale_path, :status =&gt; status, :content_type =&gt; Mime::HTML
+        elsif File.exist?(path)
+          render :file =&gt; path, :status =&gt; status, :content_type =&gt; Mime::HTML
+        else
+          head status
+        end
+      end
+
+      # True if the request came from localhost, 127.0.0.1. Override this
+      # method if you wish to redefine the meaning of a local request to
+      # include remote IP addresses or other criteria.
+      def local_request? #:doc:
+        request.remote_addr == LOCALHOST &amp;&amp; request.remote_ip == LOCALHOST
+      end
+
+      # Render detailed diagnostics for unhandled exceptions rescued from
+      # a controller action.
+      def rescue_action_locally(exception)
+        @template.instance_variable_set(&quot;@exception&quot;, exception)
+        @template.instance_variable_set(&quot;@rescues_path&quot;, RESCUES_TEMPLATE_PATH)
+        @template.instance_variable_set(&quot;@contents&quot;,
+          @template.render(:file =&gt; template_path_for_local_rescue(exception)))
+
+        response.content_type = Mime::HTML
+        render_for_file(rescues_path(&quot;layout&quot;),
+          response_code_for_rescue(exception))
+      end
+
+      def rescue_action_without_handler(exception)
+        log_error(exception) if logger
+        erase_results if performed?
+
+        # Let the exception alter the response if it wants.
+        # For example, MethodNotAllowed sets the Allow header.
+        if exception.respond_to?(:handle_response!)
+          exception.handle_response!(response)
+        end
+
+        if consider_all_requests_local || local_request?
+          rescue_action_locally(exception)
+        else
+          rescue_action_in_public(exception)
+        end
+      end
+
+    private
+      def perform_action_with_rescue #:nodoc:
+        perform_action_without_rescue
+      rescue Exception =&gt; exception
+        rescue_action(exception)
+      end
+
+      def rescues_path(template_name)
+        RESCUES_TEMPLATE_PATH[&quot;rescues/#{template_name}.erb&quot;]
+      end
+
+      def template_path_for_local_rescue(exception)
+        rescues_path(rescue_templates[exception.class.name])
+      end
+
+      def response_code_for_rescue(exception)
+        rescue_responses[exception.class.name]
+      end
+
+      def clean_backtrace(exception)
+        defined?(Rails) &amp;&amp; Rails.respond_to?(:backtrace_cleaner) ?
+          Rails.backtrace_cleaner.clean(exception.backtrace) :
+          exception.backtrace
+      end
+  end
+end
+</pre>
+    </div>

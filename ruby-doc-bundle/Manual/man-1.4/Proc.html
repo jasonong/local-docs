@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<TITLE>Proc</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Float.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Range.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Proc</H1>
+<dd> 
+<P>
+The <code>Proc</code> is the procedure object, which is the
+encapsulated block with context, such as local variables and stack
+frames.  The <code>Proc</code> object acts like an unnamed function
+except it does not have its own local variable scope. (Although, local
+variables which appear first in the block can have distinct value for
+each <code>Proc</code>.) The non local jump such as
+<code>return</code>, <code>break</code>, <code>next</code>,
+<code>redo</code>, <code>retry</code> raise the exceptions, once
+returned from <code>Proc</code> creation methods.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="Proc.new">
+<CODE>new</CODE></A>
+<DD>
+<p>
+Wraps the block with context and creates a new procedure object.
+</p>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="aref"><CODE>self[<VAR>arg</VAR>...]</CODE></A>
+<DD>
+<DT>
+<A NAME="call">
+<CODE>call(<VAR>arg</VAR>...)</CODE></A>
+<DD>
+<p>
+Executes the procedure wrapped in the object.  Arguments to the
+<code>call</code> are assigned to the block parameter.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Float.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Range.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

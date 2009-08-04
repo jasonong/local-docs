@@ -1,0 +1,70 @@
+  <div id="fileHeader">
+    <h1>nonce.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/nonce.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'digest/md5'
+
+module Rack
+  module Auth
+    module Digest
+      # Rack::Auth::Digest::Nonce is the default nonce generator for the
+      # Rack::Auth::Digest::MD5 authentication handler.
+      #
+      # +private_key+ needs to set to a constant string.
+      #
+      # +time_limit+ can be optionally set to an integer (number of seconds),
+      # to limit the validity of the generated nonces.
+
+      class Nonce
+
+        class &lt;&lt; self
+          attr_accessor :private_key, :time_limit
+        end
+
+        def self.parse(string)
+          new(*string.unpack(&quot;m*&quot;).first.split(' ', 2))
+        end
+
+        def initialize(timestamp = Time.now, given_digest = nil)
+          @timestamp, @given_digest = timestamp.to_i, given_digest
+        end
+
+        def to_s
+          [([ @timestamp, digest ] * ' ')].pack(&quot;m*&quot;).strip
+        end
+
+        def digest
+          ::Digest::MD5.hexdigest([ @timestamp, self.class.private_key ] * ':')
+        end
+
+        def valid?
+          digest == @given_digest
+        end
+
+        def stale?
+          !self.class.time_limit.nil? &amp;&amp; (@timestamp - Time.now.to_i) &lt; self.class.time_limit
+        end
+
+        def fresh?
+          !stale?
+        end
+
+      end
+    end
+  end
+end
+</pre>
+    </div>

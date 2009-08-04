@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<TITLE>ObjectSpace</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Math.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Prec.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>ObjectSpace</H1>
+<dd> 
+<P>
+The module to iterate over living objects.
+</P>
+<dt> <h2>Module Functions:</h2>
+<dd> 
+<DL COMPACT>
+<DT>
+<A NAME="add_finalizer">
+<CODE>add_finalizer(<var>proc</var>)</CODE></A>
+<DD>
+<p>
+Sets the <var>proc</var> as the finalizer.  When the object that
+specified by <a href="#call_finalizer"><code>call_finalizer</code></a>
+are going to be recycled, the finalizers are called with their ID's
+(c.f <a href="Object.html#id">Object#id</a>).
+</p>
+
+<DT>
+<A NAME="call_finalizer">
+<CODE>call_finalizer(<var>obj</var>)</CODE></A>
+<DD>
+<p>
+Set the finalizer flag for the object.  The finalizers are called when
+objects that the flag set are going to recycle.
+</p>
+
+<DT>
+<A NAME="finalizers">
+<CODE>finalizers</CODE></A>
+<DD>
+<p>
+Returns the list of the finalizers.
+</p>
+
+<DT>
+<A NAME="each_object">
+<CODE>each_object([<var>class_or_module</var>])</CODE></A>
+<DD>
+<p>
+Iterates over all living objects which is instance of the
+<var>class_or_module</var>.  Without an argument, it
+iterates over all existing objects.
+</p>
+<DT>
+<A NAME="garbage_collect">
+<CODE>garbage_collect</CODE></A>
+<DD>
+<p>
+Starts collecting objects which is no longer accessed from anywhere.
+</p>
+
+<DT>
+<A NAME="remove_finalizer">
+<CODE>remove_finalizer(<var>proc</var>)</CODE></A>
+<DD>
+<p>
+Removes the <var>proc</var> from the finalizers.
+</p>
+
+</DL>
+</dl>
+
+<HR>
+<A HREF="Math.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Prec.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

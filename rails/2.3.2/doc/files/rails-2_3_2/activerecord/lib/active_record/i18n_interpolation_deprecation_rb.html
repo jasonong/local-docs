@@ -1,0 +1,44 @@
+  <div id="fileHeader">
+    <h1>i18n_interpolation_deprecation.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activerecord/lib/active_record/i18n_interpolation_deprecation.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre># Deprecates the use of the former message interpolation syntax in activerecord
+# as in &quot;must have %d characters&quot;. The new syntax uses explicit variable names
+# as in &quot;{{value}} must have {{count}} characters&quot;.
+
+require 'i18n/backend/simple'
+module I18n
+  module Backend
+    class Simple
+      DEPRECATED_INTERPOLATORS = { '%d' =&gt; '{{count}}', '%s' =&gt; '{{value}}' }
+
+      protected
+        def interpolate_with_deprecated_syntax(locale, string, values = {})
+          return string unless string.is_a?(String)
+
+          string = string.gsub(/%d|%s/) do |s|
+            instead = DEPRECATED_INTERPOLATORS[s]
+            ActiveSupport::Deprecation.warn &quot;using #{s} in messages is deprecated; use #{instead} instead.&quot;
+            instead
+          end
+
+          interpolate_without_deprecated_syntax(locale, string, values)
+        end
+        alias_method_chain :interpolate, :deprecated_syntax
+    end
+  end
+end</pre>
+    </div>

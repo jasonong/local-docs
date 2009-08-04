@@ -1,0 +1,143 @@
+  <div id="C00000288">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ShowExceptions<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/showexceptions_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showexceptions.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000288&name=Rack::ShowExceptions">Rack::ShowExceptions</a>
+catches all exceptions raised from the app it wraps. It shows a useful
+backtrace with the sourcefile and clickable context, the whole <a
+href="index.html?a=C00000238&name=Rack">Rack</a> environment and the
+request data.
+</p>
+<p>
+Be careful when you use this on public-facing sites as it could reveal
+information helpful to attackers.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000970&name=call" >call</a></li>
+  <li><a href="index.html?a=M000969&name=new" >new</a></li>
+  <li><a href="index.html?a=M000971&name=pretty" >pretty</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">CONTEXT</td>
+    <td>=</td>
+    <td class="attr-value">7</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000969" class="method">
+  <div id="M000969_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000969_source')" id="l_M000969_source">show source</a> ]</p>
+  <div id="M000969_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showexceptions.rb, line 18</span>
+18:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+19:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+20:       <span class="ruby-ivar">@template</span> = <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">TEMPLATE</span>)
+21:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000970" class="method">
+  <div id="M000970_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000970_source')" id="l_M000970_source">show source</a> ]</p>
+  <div id="M000970_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showexceptions.rb, line 23</span>
+23:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+24:       <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+25:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">StandardError</span>, <span class="ruby-constant">LoadError</span>, <span class="ruby-constant">SyntaxError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+26:       <span class="ruby-identifier">backtrace</span> = <span class="ruby-identifier">pretty</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">e</span>)
+27:       [<span class="ruby-value">500</span>,
+28:        {<span class="ruby-value str">&quot;Content-Type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;text/html&quot;</span>,
+29:         <span class="ruby-value str">&quot;Content-Length&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">join</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">to_s</span>},
+30:        <span class="ruby-identifier">backtrace</span>]
+31:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000971" class="method">
+  <div id="M000971_title" class="title">
+    <b>pretty</b>(env, exception)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000971_source')" id="l_M000971_source">show source</a> ]</p>
+  <div id="M000971_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showexceptions.rb, line 33</span>
+33:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pretty</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">exception</span>)
+34:       <span class="ruby-identifier">req</span> = <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
+35:       <span class="ruby-identifier">path</span> = (<span class="ruby-identifier">req</span>.<span class="ruby-identifier">script_name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">path_info</span>).<span class="ruby-identifier">squeeze</span>(<span class="ruby-value str">&quot;/&quot;</span>)
+36: 
+37:       <span class="ruby-identifier">frames</span> = <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+38:         <span class="ruby-identifier">frame</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>
+39:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/(.*?):(\d+)(:in `(.*)')?/</span>
+40:           <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">filename</span> = <span class="ruby-identifier">$1</span>
+41:           <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">lineno</span> = <span class="ruby-identifier">$2</span>.<span class="ruby-identifier">to_i</span>
+42:           <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">function</span> = <span class="ruby-identifier">$4</span>
+43: 
+44:           <span class="ruby-keyword kw">begin</span>
+45:             <span class="ruby-identifier">lineno</span> = <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">lineno</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+46:             <span class="ruby-identifier">lines</span> = <span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">readlines</span>(<span class="ruby-identifier">frame</span>.<span class="ruby-identifier">filename</span>)
+47:             <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">pre_context_lineno</span> = [<span class="ruby-identifier">lineno</span><span class="ruby-operator">-</span><span class="ruby-constant">CONTEXT</span>, <span class="ruby-value">0</span>].<span class="ruby-identifier">max</span>
+48:             <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">pre_context</span> = <span class="ruby-identifier">lines</span>[<span class="ruby-identifier">frame</span>.<span class="ruby-identifier">pre_context_lineno</span><span class="ruby-operator">...</span><span class="ruby-identifier">lineno</span>]
+49:             <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">context_line</span> = <span class="ruby-identifier">lines</span>[<span class="ruby-identifier">lineno</span>].<span class="ruby-identifier">chomp</span>
+50:             <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">post_context_lineno</span> = [<span class="ruby-identifier">lineno</span><span class="ruby-operator">+</span><span class="ruby-constant">CONTEXT</span>, <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">min</span>
+51:             <span class="ruby-identifier">frame</span>.<span class="ruby-identifier">post_context</span> = <span class="ruby-identifier">lines</span>[<span class="ruby-identifier">lineno</span><span class="ruby-operator">+</span><span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">frame</span>.<span class="ruby-identifier">post_context_lineno</span>]
+52:           <span class="ruby-keyword kw">rescue</span>
+53:           <span class="ruby-keyword kw">end</span>
+54: 
+55:           <span class="ruby-identifier">frame</span>
+56:         <span class="ruby-keyword kw">else</span>
+57:           <span class="ruby-keyword kw">nil</span>
+58:         <span class="ruby-keyword kw">end</span>
+59:       }.<span class="ruby-identifier">compact</span>
+60: 
+61:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.errors&quot;</span>].<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{exception.class}: #{exception.message}&quot;</span>
+62:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.errors&quot;</span>].<span class="ruby-identifier">puts</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">l</span><span class="ruby-operator">|</span> <span class="ruby-value str">&quot;\t&quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">l</span> }
+63:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.errors&quot;</span>].<span class="ruby-identifier">flush</span>
+64: 
+65:       [<span class="ruby-ivar">@template</span>.<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)]
+66:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

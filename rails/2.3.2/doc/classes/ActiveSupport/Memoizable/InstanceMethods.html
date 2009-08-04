@@ -1,0 +1,154 @@
+  <div id="C00000486">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />InstanceMethods<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/memoizable_rb.html');">rails-2.3.2/activesupport/lib/active_support/memoizable.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001219&name=flush_cache" >flush_cache</a></li>
+  <li><a href="index.html?a=M001215&name=freeze_with_memoizable" >freeze_with_memoizable</a></li>
+  <li><a href="index.html?a=M001214&name=included" >included</a></li>
+  <li><a href="index.html?a=M001216&name=memoize_all" >memoize_all</a></li>
+  <li><a href="index.html?a=M001218&name=prime_cache" >prime_cache</a></li>
+  <li><a href="index.html?a=M001217&name=unmemoize_all" >unmemoize_all</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001214" class="method">
+  <div id="M001214_title" class="title">
+    <b>included</b>(base)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001214_source')" id="l_M001214_source">show source</a> ]</p>
+  <div id="M001214_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/memoizable.rb, line 8</span>
+ 8:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base</span>)
+ 9:         <span class="ruby-identifier">base</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+10:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">base</span>.<span class="ruby-identifier">method_defined?</span>(<span class="ruby-identifier">:freeze_without_memoizable</span>)
+11:             <span class="ruby-identifier">alias_method_chain</span> <span class="ruby-identifier">:freeze</span>, <span class="ruby-identifier">:memoizable</span>
+12:           <span class="ruby-keyword kw">end</span>
+13:         <span class="ruby-keyword kw">end</span>
+14:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001219" class="method">
+  <div id="M001219_title" class="title">
+    <b>flush_cache</b>(*syms, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001219_source')" id="l_M001219_source">show source</a> ]</p>
+  <div id="M001219_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/memoizable.rb, line 44</span>
+44:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush_cache</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">syms</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+45:         <span class="ruby-identifier">syms</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sym</span><span class="ruby-operator">|</span>
+46:           <span class="ruby-identifier">methods</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+47:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^_unmemoized_(#{sym})/</span>
+48:               <span class="ruby-identifier">ivar</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Memoizable</span>.<span class="ruby-identifier">memoized_ivar_for</span>(<span class="ruby-identifier">$1</span>)
+49:               <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">ivar</span>).<span class="ruby-identifier">clear</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">instance_variable_defined?</span>(<span class="ruby-identifier">ivar</span>)
+50:             <span class="ruby-keyword kw">end</span>
+51:           <span class="ruby-keyword kw">end</span>
+52:         <span class="ruby-keyword kw">end</span>
+53:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001215" class="method">
+  <div id="M001215_title" class="title">
+    <b>freeze_with_memoizable</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001215_source')" id="l_M001215_source">show source</a> ]</p>
+  <div id="M001215_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/memoizable.rb, line 16</span>
+16:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">freeze_with_memoizable</span>
+17:         <span class="ruby-identifier">memoize_all</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">frozen?</span>
+18:         <span class="ruby-identifier">freeze_without_memoizable</span>
+19:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001216" class="method">
+  <div id="M001216_title" class="title">
+    <b>memoize_all</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001216_source')" id="l_M001216_source">show source</a> ]</p>
+  <div id="M001216_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/memoizable.rb, line 21</span>
+21:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">memoize_all</span>
+22:         <span class="ruby-identifier">prime_cache</span> <span class="ruby-value str">&quot;.*&quot;</span>
+23:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001218" class="method">
+  <div id="M001218_title" class="title">
+    <b>prime_cache</b>(*syms)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001218_source')" id="l_M001218_source">show source</a> ]</p>
+  <div id="M001218_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/memoizable.rb, line 29</span>
+29:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prime_cache</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">syms</span>)
+30:         <span class="ruby-identifier">syms</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sym</span><span class="ruby-operator">|</span>
+31:           <span class="ruby-identifier">methods</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+32:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^_unmemoized_(#{sym})/</span>
+33:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method</span>(<span class="ruby-identifier">m</span>).<span class="ruby-identifier">arity</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+34:                 <span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">$1</span>)
+35:               <span class="ruby-keyword kw">else</span>
+36:                 <span class="ruby-identifier">ivar</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Memoizable</span>.<span class="ruby-identifier">memoized_ivar_for</span>(<span class="ruby-identifier">$1</span>)
+37:                 <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">ivar</span>, {})
+38:               <span class="ruby-keyword kw">end</span>
+39:             <span class="ruby-keyword kw">end</span>
+40:           <span class="ruby-keyword kw">end</span>
+41:         <span class="ruby-keyword kw">end</span>
+42:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001217" class="method">
+  <div id="M001217_title" class="title">
+    <b>unmemoize_all</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001217_source')" id="l_M001217_source">show source</a> ]</p>
+  <div id="M001217_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/memoizable.rb, line 25</span>
+25:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unmemoize_all</span>
+26:         <span class="ruby-identifier">flush_cache</span> <span class="ruby-value str">&quot;.*&quot;</span>
+27:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

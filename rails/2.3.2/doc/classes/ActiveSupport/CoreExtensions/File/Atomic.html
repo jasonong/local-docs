@@ -1,0 +1,88 @@
+  <div id="C00000582">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Atomic<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/file/atomic_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/file/atomic.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001582&name=atomic_write" >atomic_write</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001582" class="method">
+  <div id="M001582_title" class="title">
+    <b>atomic_write</b>(file_name, temp_dir = Dir.tmpdir) {|temp_file| ...}
+  </div>
+  <div class="description">
+  <p>
+Write to a file atomically. Useful for situations where you don&#8217;t
+want other processes or threads to see half-written files.
+</p>
+<pre>
+  File.atomic_write(&quot;important.file&quot;) do |file|
+    file.write(&quot;hello&quot;)
+  end
+</pre>
+<p>
+If your temp directory is not on the same filesystem as the file
+you&#8217;re trying to write, you can provide a different temporary
+directory.
+</p>
+<pre>
+  File.atomic_write(&quot;/data/something.important&quot;, &quot;/data/tmp&quot;) do |f|
+    file.write(&quot;hello&quot;)
+  end
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001582_source')" id="l_M001582_source">show source</a> ]</p>
+  <div id="M001582_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/file/atomic.rb, line 18</span>
+18:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">atomic_write</span>(<span class="ruby-identifier">file_name</span>, <span class="ruby-identifier">temp_dir</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">tmpdir</span>)
+19:           <span class="ruby-identifier">require</span> <span class="ruby-value str">'tempfile'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">Tempfile</span>)
+20: 
+21:           <span class="ruby-identifier">temp_file</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">file_name</span>), <span class="ruby-identifier">temp_dir</span>)
+22:           <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">temp_file</span>
+23:           <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">close</span>
+24: 
+25:           <span class="ruby-keyword kw">begin</span>
+26:             <span class="ruby-comment cmt"># Get original file permissions</span>
+27:             <span class="ruby-identifier">old_stat</span> = <span class="ruby-identifier">stat</span>(<span class="ruby-identifier">file_name</span>)
+28:           <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+29:             <span class="ruby-comment cmt"># No old permissions, write a temp file to determine the defaults</span>
+30:             <span class="ruby-identifier">check_name</span> = <span class="ruby-identifier">join</span>(<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">file_name</span>), <span class="ruby-node">&quot;.permissions_check.#{Thread.current.object_id}.#{Process.pid}.#{rand(1000000)}&quot;</span>)
+31:             <span class="ruby-identifier">open</span>(<span class="ruby-identifier">check_name</span>, <span class="ruby-value str">&quot;w&quot;</span>) { }
+32:             <span class="ruby-identifier">old_stat</span> = <span class="ruby-identifier">stat</span>(<span class="ruby-identifier">check_name</span>)
+33:             <span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">check_name</span>)
+34:           <span class="ruby-keyword kw">end</span>
+35: 
+36:           <span class="ruby-comment cmt"># Overwrite original file with temp file</span>
+37:           <span class="ruby-identifier">rename</span>(<span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">file_name</span>)
+38: 
+39:           <span class="ruby-comment cmt"># Set correct permissions on new file</span>
+40:           <span class="ruby-identifier">chown</span>(<span class="ruby-identifier">old_stat</span>.<span class="ruby-identifier">uid</span>, <span class="ruby-identifier">old_stat</span>.<span class="ruby-identifier">gid</span>, <span class="ruby-identifier">file_name</span>)
+41:           <span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">old_stat</span>.<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file_name</span>)
+42:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,90 @@
+  <div id="C00000583">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Base64<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/base64_rb.html');">rails-2.3.2/activesupport/lib/active_support/base64.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000583&name=Base64">Base64</a> provides utility
+methods for encoding and de-coding binary data using a base 64
+representation. A base 64 representation of binary data consists entirely
+of printable US-ASCII characters. The <a
+href="index.html?a=C00000583&name=Base64">Base64</a> module is included in
+Ruby 1.8, but has been removed in Ruby 1.9.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001584&name=decode64" >decode64</a></li>
+  <li><a href="index.html?a=M001583&name=encode64" >encode64</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001584" class="method">
+  <div id="M001584_title" class="title">
+    <b>decode64</b>(data)
+  </div>
+  <div class="description">
+  <p>
+Decodes a base 64 encoded string to its original representation.
+</p>
+<pre>
+ ActiveSupport::Base64.decode64(&quot;T3JpZ2luYWwgdW5lbmNvZGVkIHN0cmluZw==&quot;)
+ # =&gt; &quot;Original unencoded string&quot;
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001584_source')" id="l_M001584_source">show source</a> ]</p>
+  <div id="M001584_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/base64.rb, line 28</span>
+28:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decode64</span>(<span class="ruby-identifier">data</span>)
+29:         <span class="ruby-identifier">data</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-value str">&quot;m&quot;</span>).<span class="ruby-identifier">first</span>
+30:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001583" class="method">
+  <div id="M001583_title" class="title">
+    <b>encode64</b>(data)
+  </div>
+  <div class="description">
+  <p>
+Encodes a string to its base 64 representation. Each 60 characters of
+output is separated by a newline character.
+</p>
+<pre>
+ ActiveSupport::Base64.encode64(&quot;Original unencoded string&quot;)
+ # =&gt; &quot;T3JpZ2luYWwgdW5lbmNvZGVkIHN0cmluZw==\n&quot;
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001583_source')" id="l_M001583_source">show source</a> ]</p>
+  <div id="M001583_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/base64.rb, line 20</span>
+20:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-identifier">data</span>)
+21:         [<span class="ruby-identifier">data</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-value str">&quot;m&quot;</span>)
+22:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

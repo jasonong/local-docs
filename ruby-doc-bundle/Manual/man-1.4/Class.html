@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Class</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Module.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Numeric.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Class</H1>
+<dd> 
+<P>
+The class of the classes.  To tell the truth, each class have the
+unnamed class (which is the <i>meta-class</i> of the class), the class 
+<code>Class</code> is the class of these <i>meta-classes</i>.  It is
+complicated, but it is not important for using Ruby.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Module.html"><code>Module</code></A>
+</dl>
+
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<dt> <a name="ancestors"><code>ancestors</code></a>
+<dd> 
+<p>
+Returns the list of the superclass and inclded modules with precedence.
+</p>
+
+<DT>
+<A NAME="method_defined">
+<CODE>method_defined?(<VAR>id</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true, if the instance of the Class has the method specified
+by the <var>id</var>.
+</p>
+
+<DT>
+<A NAME="inherited"><CODE>inherited(<VAR>subclass</VAR>)</CODE></A>
+<DD>
+<p>
+Will be called when a subclass of the receiver created.  The 
+argument is the newly created subclass.
+</p>
+
+<DT>
+<A NAME="new">
+<CODE>new(...)</CODE></A>
+<DD>
+<p>
+Creates an instance of the class.  This arguments to this
+method will pass to the <code>initialize</code>.
+</p>
+
+<DT>
+<A NAME="name"><CODE>name()</CODE></A>
+<DD>
+<p>
+Returns the class name.
+</p>
+
+<DT>
+<A NAME="superclass">
+<CODE>superclass</CODE></A>
+<DD>
+<p>
+Returns the superclass of the class.
+</p>
+
+</DL>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<dl>
+<dt>
+<a name="new"><code>new([<var>superclass</var>])</code></a>
+<dd> 
+<p>
+Creates an anonymous class, which superclass is specified by 
+<var>superclass</var>.  The default value for the <var>superclass</var>
+is the class <code>Object</code>.
+</p>
+</dl>
+</dl>
+
+<HR>
+<A HREF="Module.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Numeric.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

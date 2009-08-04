@@ -1,0 +1,122 @@
+  <div id="C00000815">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />TranslationHelper<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_view/helpers/translation_helper_rb.html');">rails-2.3.2/actionpack/lib/action_view/helpers/translation_helper.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002457&name=l" >l</a></li>
+  <li><a href="index.html?a=M002456&name=localize" >localize</a></li>
+  <li><a href="index.html?a=M002455&name=t" >t</a></li>
+  <li><a href="index.html?a=M002454&name=translate" >translate</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002457" class="method">
+  <div id="M002457_title" class="title">
+    <b>l</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M002456&name=localize">localize</a>
+</p>
+  </div>
+</div>
+<div id="M002456" class="method">
+  <div id="M002456_title" class="title">
+    <b>localize</b>(*args)
+  </div>
+  <div class="description">
+  <p>
+Delegates to <a
+href="index.html?a=M002670&name=I18n.localize">I18n.localize</a> with no
+additional functionality.
+</p>
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M002457&name=l">l</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002456_source')" id="l_M002456_source">show source</a> ]</p>
+  <div id="M002456_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/helpers/translation_helper.rb, line 23</span>
+23:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">localize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+24:         <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">localize</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+25:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002455" class="method">
+  <div id="M002455_title" class="title">
+    <b>t</b>(key, options = {})
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M002454&name=translate">translate</a>
+</p>
+  </div>
+</div>
+<div id="M002454" class="method">
+  <div id="M002454_title" class="title">
+    <b>translate</b>(key, options = {})
+  </div>
+  <div class="description">
+  <p>
+Delegates to <a
+href="index.html?a=M002669&name=I18n#translate">I18n#translate</a> but also
+performs two additional functions. First, it&#8217;ll catch
+MissingTranslationData exceptions and turn them into inline spans that
+contains the missing key, such that you can see in a view what is missing
+where.
+</p>
+<p>
+Second, it&#8217;ll scope the key by the current partial if the key starts
+with a period. So if you call translate(&quot;.foo&quot;) from the
+people/index.html.erb template, you&#8217;ll actually be calling <a
+href="index.html?a=M002669&name=I18n.translate">I18n.translate</a>(&quot;people.index.foo&quot;).
+This makes it less repetitive to translate many keys within the same
+partials and gives you a simple framework for scoping them consistently. If
+you don&#8217;t prepend the key with a period, nothing is converted.
+</p>
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M002455&name=t">t</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002454_source')" id="l_M002454_source">show source</a> ]</p>
+  <div id="M002454_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/helpers/translation_helper.rb, line 13</span>
+13:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">translate</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">options</span> = {})
+14:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:raise</span>] = <span class="ruby-keyword kw">true</span>
+15:         <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">translate</span>(<span class="ruby-identifier">scope_key_by_partial</span>(<span class="ruby-identifier">key</span>), <span class="ruby-identifier">options</span>)
+16:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">I18n</span><span class="ruby-operator">::</span><span class="ruby-constant">MissingTranslationData</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+17:         <span class="ruby-identifier">keys</span> = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:normalize_translation_keys</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">locale</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">key</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:scope</span>])
+18:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">'span'</span>, <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">', '</span>), <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'translation_missing'</span>)
+19:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

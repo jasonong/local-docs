@@ -1,0 +1,389 @@
+<HTML>
+<HEAD>
+<TITLE>Object</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Kernel.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Array.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Object</H1>
+<dd> 
+<P>
+The super class of all the Ruby class hierarchy.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Kernel.html"><code>Kernel</code></A>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="eq">
+<CODE>self == <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Checks if two objects are <strong>equal</strong>.  The default
+definition in the <code>Kernel</code> class checks by object ID.  It
+should be redefined in subclasses according to the characteristic of
+the class.
+</p>
+
+<DT>
+<A NAME="clone"><CODE>clone</CODE></A>
+<DD>
+<DT><A NAME="dup"><CODE>dup</CODE></A>
+<DD>
+<p>
+Returns the copy of the object.  For cloned object, 
+
+<blockquote>
+<pre>
+obj == obj.clone
+</pre>
+</blockquote>
+<code></code>
+
+is always true, though 
+
+<blockquote>
+<pre>
+obj.equal?(obj.clone)
+</pre>
+</blockquote>
+<code></code>
+
+is false most of the time.
+</p>
+<p>
+the <code>dup</code> method is defined as:
+
+<blockquote>
+<pre>
+def dup
+  self.clone
+end
+</pre>
+</blockquote>
+</p>
+
+<p>
+<code>clone</code> and <code>dup</code> copy the receiver, but they do
+not copy the objects pointed by the receiver (i.e shallow copy).
+</p>
+
+<DT>
+<A NAME="display"><CODE>display([<VAR>port</VAR>])</CODE></A>
+<DD>
+<p>
+Prints <code>self</code> to the <var>port</var>.  The <var>port</var>'s
+default value is <code>$&gt;</code>.
+</p>
+<blockquote>
+<pre>
+def display(out=$&gt;)
+  out.print self
+end
+public :display
+</pre>
+</blockquote>
+
+<DT>
+<A NAME="eql_p">
+<CODE>eql?(<VAR>other</VAR>)</CODE></A>
+<DD>
+<p>
+Checks if two objects are <strong>equal</strong>.  This method is used
+by <a href="Hash.html"><code>Hash</code></a> to compare whether two
+keys are same.  When this method is redefined, the <code>hash</code>
+method should be updated.
+</p>
+<p>
+The default definition of the method <code>eql?</code> is
+like blow:
+</p>
+<p>
+<blockquote>
+<pre>
+def eql?(other)
+  self == other
+end
+</pre>
+</blockquote>
+</p>
+
+<DT>
+<A NAME="equal_p">
+<CODE>equal?(<VAR>other</VAR>)</CODE></A>
+<DD>
+<p>
+Checks if two objects have same object ID.  This method
+should not be redefined in the subclass.
+</p>
+
+<DT>
+<A NAME="match"><CODE>self =~ <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Method for old style match like <code>obj =~ /RE/</code>.
+The default definitions is `<code><a href="#equal">==</a></code>'.
+</p>
+
+<DT>
+<A NAME="eqq">
+<CODE>self === <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+This method is used to compare in <code><a href="syntax.html#case">case</a></code>. 
+The default definitions is `<code><a href="#equal">==</a></code>'.
+</p>
+
+<DT>
+<A NAME="extend">
+<CODE>extend(module...)</CODE></A>
+<DD>
+<p>
+Extends <code>self</code> by adding methods defined in
+<var>module</var>s as singleton-methods.
+</p>
+
+<DT>
+<A NAME="hash">
+<CODE>hash</CODE></A>
+<DD>
+<p>
+Returns the integer hash value of the object.  It is used in the
+<code><a href="Hash.html">Hash</a></code> class to calculate the
+holding place of an object.  The hash value of two objects must be
+equal, where these two objects are equal by using <code>eql?</code>
+operator.  So, whenever you redefine the definition of the
+<code>eql?</code> operator in any class, don't forget to redefine
+<code>hash</code> method according to the definition.
+</p>
+
+<DT>
+<A NAME="id">
+<CODE>id</CODE></A>
+<DD>
+<p>
+Returns the unique integer value for each object.
+</p>
+
+<DT>
+<A NAME="inspect">
+<CODE>inspect</CODE></A>
+<DD>
+<p>
+Returns the human-readable string representation of the receiver.
+</p>
+
+<DT>
+<A NAME="initialize">
+<CODE>initialize(...)</CODE></A>
+<DD>
+<p>
+The initialize method for the user-defined classes.  This method will
+be called from <code><a href="Class.html#new">Class#new</a></code> to
+initialize the newly created object.
+The default behavior is to do nothing.  It is assumed that this method
+will be redefined in the subclasses.  The argument to
+<code><a href="Class.html#new">Class#new</a></code> will be passed to
+the <code>initialize</code>
+</p>
+
+<p>
+the method named <code>initialize</code> automatically falls under
+private visibility.
+</p>
+
+<DT>
+<A NAME="instance_eval"><CODE>instance_eval(<VAR>expr</VAR>)</CODE></A>
+<DD>
+<DT>
+<CODE>instance_eval{...}</CODE>
+<DD>
+<p>
+Evaluates the <var>expr</var> string in the object context.  If block
+supplied for the method, the block is evaluated under the receiver's
+context.  This allows to avoid compiling the string everytime.
+</p>
+<p>
+In <var>instance_eval</var>'s context, <code>self</code> is bound to
+the object, so that instance variables and methods of the receiver are
+accessed.
+</p>
+
+<DT>
+<A NAME="instance_of_p">
+<CODE>instance_of?(<VAR>class</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true, if <code>self</code> is an instance of the specified
+<var>class</var>.  It is always true, when
+<CODE><a href="#kind_of_p">obj.kind_of?(c)</a></CODE> is true.
+</p>
+
+<DT>
+<A NAME="instance_variables"><CODE>instance_variables()</CODE></A>
+<DD>
+<p>
+Returns the array of <code>self</code>'s instance variable names.
+</p>
+
+<DT>
+<A NAME="kind_of_p">
+<CODE>kind_of?(<VAR>class</VAR>)</CODE></A>
+<DD>
+<dt> 
+<A NAME="is_a_p">
+<code>is_a?(<VAR>class</VAR>)</code></A>
+<dd>
+<p>
+Returns true, if <code>self</code> is an instance of the specified
+<var>class</var>, or its subclass.
+</p>
+
+<DT>
+<A NAME="method_missing">
+<CODE>method_missing(<var>msg_id</var>, ...)</CODE></A>
+<DD>
+
+<p>
+Will be called when the specified method is not defined for the
+receiver.  The first argument, <var>msg_id</var> is the method name as
+a symbol.  The second and later arguments are the arguments given to
+the undefined method, if any.
+</p>
+
+<dt> <a name="methods"><code>methods</code></a>
+<dd> 
+<p>
+Returns the array of the public method names which defined in the receiver.
+</p>
+
+<DT>
+<A NAME="nil_p">
+<CODE>nil?</CODE></A>
+<DD>
+
+<p>
+Checks whether the receiver is <code>nil</code> or not.
+</p>
+
+<dt> <a name="private_methods"><code>private_methods</code></a>
+<dd> 
+<p>
+Returns the array of the private method names which defined in the
+receiver.
+</p>
+
+<dt> <a name="remove_instance_variable"><code>remove_instance_variable(<var>name</var>)</code></a>
+<dd> 
+<p>
+Removes specified instance variable from the object.  It does not
+raise any exception even if the object does not have named instance
+variable.
+</p>
+
+<dt> <a name="respond_to_p">
+<code>respond_to?(<var>mesg</var>[,<var>priv</var>])</code></a>
+<dd> 
+<p>
+Returns true if the receiver has the public method named
+<var>mesg</var>.  <var>Mesg</var> must be the symbol fixnum or the
+string.  It returns true for private methods, if the optional argument
+<var>priv</var> given, and its value is true,
+</p>
+
+<DT><A NAME="send">
+<CODE>send(<VAR>symbol</VAR>[, <VAR>args</VAR>...])</CODE></A>
+<DD>
+
+<p>
+calls the method specified by the <var>symbol</var>, with
+<var>args</var>. 
+</p>
+
+<DT><A NAME="singleton_method_added"><CODE>singleton_method_added(<var>id</var>)</CODE></A>
+<DD>
+<p>
+Will be called when the singleton method defined for the receiver.
+</p>
+
+<dt> <a name="singleton_methods"><code>singleton_methods</code></a>
+<dd> 
+<p>
+Returns the array of the singleton method names which defined in the receiver.
+</p>
+
+<DT><A NAME="taint"><CODE>taint</CODE></A>
+<DD>
+<p>
+Turns on `taint mark' of the object.
+</p>
+
+<DT><A NAME="tainted_p"><CODE>tainted?</CODE></A>
+<DD>
+<p>
+Returns true if the string is `tainted'.
+</p>
+
+<DT>
+<A NAME="to_s">
+<CODE>to_s</CODE></A>
+<DD>
+<p>
+Returns the string representation of the <code>self</code>.
+This method is used internally by
+<code><a href="function.html#print">print</a></code> and
+<code><a href="function.html#sprintf">sprintf</a></code>.
+</p>
+
+<DT>
+<A NAME="to_a">
+<CODE>to_a</CODE></A>
+<DD>
+<p>
+Converts the <code>self</code> into an array.  Returns an array of 1
+element contains <code>self</code> for classes would not be converted
+into an array naturally.
+</p>
+
+<DT><A NAME="type">
+<CODE>type</CODE></A>
+<DD>
+<p>
+Returns the receiver's class.
+</p>
+
+<DT><A NAME="untaint"><CODE>untaint</CODE></A>
+<DD>
+<p>
+Turns off `taint mark' of the object.  Programmers should be responsible
+for the security issue caused by removing the taint mark.  The mark
+can't be removed if the security level ($SAFE) is greater than or equals
+to level 3.
+</p>
+
+</DL>
+</dl>
+
+<HR>
+<A HREF="Kernel.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Array.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

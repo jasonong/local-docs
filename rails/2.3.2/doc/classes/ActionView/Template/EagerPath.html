@@ -1,0 +1,77 @@
+  <div id="C00000866">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />EagerPath<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_view/template_rb.html');">rails-2.3.2/actionpack/lib/action_view/template.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActionView/Template/Path.html');">
+Path
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002630&name=[]" >[]</a></li>
+  <li><a href="index.html?a=M002629&name=load!" >load!</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002630" class="method">
+  <div id="M002630_title" class="title">
+    <b>[]</b>(path)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002630_source')" id="l_M002630_source">show source</a> ]</p>
+  <div id="M002630_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/template.rb, line 74</span>
+74:       <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">path</span>)
+75:         <span class="ruby-identifier">load!</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@loaded</span>
+76:         <span class="ruby-ivar">@paths</span>[<span class="ruby-identifier">path</span>]
+77:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002629" class="method">
+  <div id="M002629_title" class="title">
+    <b>load!</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002629_source')" id="l_M002629_source">show source</a> ]</p>
+  <div id="M002629_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/template.rb, line 60</span>
+60:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load!</span>
+61:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@loaded</span>
+62:         
+63:         <span class="ruby-ivar">@paths</span> = {}
+64:         <span class="ruby-identifier">templates_in_path</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">template</span><span class="ruby-operator">|</span>
+65:           <span class="ruby-identifier">template</span>.<span class="ruby-identifier">load!</span>
+66:           <span class="ruby-identifier">template</span>.<span class="ruby-identifier">accessible_paths</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+67:             <span class="ruby-ivar">@paths</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-identifier">template</span>
+68:           <span class="ruby-keyword kw">end</span>
+69:         <span class="ruby-keyword kw">end</span>
+70:         <span class="ruby-ivar">@paths</span>.<span class="ruby-identifier">freeze</span>
+71:         <span class="ruby-ivar">@loaded</span> = <span class="ruby-keyword kw">true</span>
+72:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

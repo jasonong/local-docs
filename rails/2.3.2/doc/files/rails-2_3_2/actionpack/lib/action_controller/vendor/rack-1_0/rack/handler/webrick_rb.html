@@ -1,0 +1,86 @@
+  <div id="fileHeader">
+    <h1>webrick.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/webrick.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'webrick'
+require 'stringio'
+require 'rack/content_length'
+
+module Rack
+  module Handler
+    class WEBrick &lt; ::WEBrick::HTTPServlet::AbstractServlet
+      def self.run(app, options={})
+        server = ::WEBrick::HTTPServer.new(options)
+        server.mount &quot;/&quot;, Rack::Handler::WEBrick, app
+        trap(:INT) { server.shutdown }
+        yield server  if block_given?
+        server.start
+      end
+
+      def initialize(server, app)
+        super server
+        @app = Rack::ContentLength.new(app)
+      end
+
+      def service(req, res)
+        env = req.meta_vars
+        env.delete_if { |k, v| v.nil? }
+
+        env.update({&quot;rack.version&quot; =&gt; [0,1],
+                     &quot;rack.input&quot; =&gt; StringIO.new(req.body.to_s),
+                     &quot;rack.errors&quot; =&gt; $stderr,
+
+                     &quot;rack.multithread&quot; =&gt; true,
+                     &quot;rack.multiprocess&quot; =&gt; false,
+                     &quot;rack.run_once&quot; =&gt; false,
+
+                     &quot;rack.url_scheme&quot; =&gt; [&quot;yes&quot;, &quot;on&quot;, &quot;1&quot;].include?(ENV[&quot;HTTPS&quot;]) ? &quot;https&quot; : &quot;http&quot;
+                   })
+
+        env[&quot;HTTP_VERSION&quot;] ||= env[&quot;SERVER_PROTOCOL&quot;]
+        env[&quot;QUERY_STRING&quot;] ||= &quot;&quot;
+        env[&quot;REQUEST_PATH&quot;] ||= &quot;/&quot;
+        if env[&quot;PATH_INFO&quot;] == &quot;&quot;
+          env.delete &quot;PATH_INFO&quot;
+        else
+          path, n = req.request_uri.path, env[&quot;SCRIPT_NAME&quot;].length
+          env[&quot;PATH_INFO&quot;] = path[n, path.length-n]
+        end
+
+        status, headers, body = @app.call(env)
+        begin
+          res.status = status.to_i
+          headers.each { |k, vs|
+            if k.downcase == &quot;set-cookie&quot;
+              res.cookies.concat vs.split(&quot;\n&quot;)
+            else
+              vs.split(&quot;\n&quot;).each { |v|
+                res[k] = v
+              }
+            end
+          }
+          body.each { |part|
+            res.body &lt;&lt; part
+          }
+        ensure
+          body.close  if body.respond_to? :close
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

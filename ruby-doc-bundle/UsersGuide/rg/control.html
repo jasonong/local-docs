@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Control structures</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="backtoexamples.html">
+ <img border=0 src="a2l.gif" alt="Back to the simple examples"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="iterators.html">
+ <img border=0 src="a2r.gif" alt="Iterators"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Control structures</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>This chapter explores more of ruby's control structures.</p>
+<h3><a name="label:0" id="label:0"><code>case</code></a></h3><!-- RDLabel: "case" -->
+<p>We use the <code>case</code> statement to test a sequence of
+conditions.  This is superficially similar to <code>switch</code>
+in C and Java but is considerably more powerful, as we shall see.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> i=8</b></font>
+ruby&gt;<font color="#ffff00"><b> case i</b></font>
+    |<font color="#ffff00"><b> when 1, 2..5</b></font>
+    |<font color="#ffff00"><b>   print "1..5\n"</b></font>
+    |<font color="#ffff00"><b> when 6..10</b></font>
+    |<font color="#ffff00"><b>   print "6..10\n"</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+6..10
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p><code>2..5</code> is an expression which means the <em>range</em>
+between 2 and 5, inclusive.  The following expression tests
+whether the value of <code>i</code> falls within that range: </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">(2..5) === i</font></pre></td></tr></table>
+<p><code>case</code> internally uses the relationship operator <code>===</code> to
+check for several conditions at a time.  In keeping with ruby's
+object oriented nature, <code>===</code> is interpreted suitably for the
+object that appeared in the <code>when</code> condition.  For example,
+the following code tests string equality in the first <code>when</code>, and
+regular expression matching in the second <code>when</code>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> case 'abcdef'</b></font>
+    |<font color="#ffff00"><b> when 'aaa', 'bbb'</b></font>
+    |<font color="#ffff00"><b>   print "aaa or bbb\n"</b></font>
+    |<font color="#ffff00"><b> when /def/</b></font>
+    |<font color="#ffff00"><b>   print "includes /def/\n"</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+includes /def/
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<h3><a name="label:1" id="label:1"><code>while</code></a></h3><!-- RDLabel: "while" -->
+<p>Ruby provides convenient ways to construct loops, although you will
+find in the next chapter that learning how to use <em>iterators</em>
+will make it unnecessary to write explicit loops very often.</p>
+<p>A <code>while</code> is a repeated <code>if</code>.  We used it in our
+word-guessing puzzle and in the regular expression programs (see the
+<a href="regexp.html">previous chapter</a>); there, it took the form
+<code>while <em>condition</em> ... end</code> surrounding a block of code to
+be repeated while <em>condition</em> was true.  But <code>while</code>
+and <code>if</code> can as easily be applied to individual statements:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> i = 0</b></font>
+<font color="#50ffff"><b>   0</b></font>
+ruby&gt;<font color="#ffff00"><b> print "It's zero.\n" if i==0</b></font>
+It's zero.
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> print "It's negative.\n" if i&lt;0</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> print "#{i+=1}\n" while i&lt;3</b></font>
+1
+2
+3
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>Sometimes you want to negate a test condition.  An
+<code>unless</code> is a negated <code>if</code>, and an <code>until</code> is a negated
+<code>while</code>.  We'll leave it up to you to experiment with these.</p>
+<p>There are four ways to interrupt the progress of a loop from
+inside.  First, <code>break</code> means, as in C, to escape from the
+loop entirely.  Second, <code>next</code> skips to the beginning of
+the next iteration of the loop (corresponding to C's
+<code>continue</code>).  Third, ruby has <code>redo</code>, which
+restarts the current iteration.  The following is C code
+illustrating the meanings of <code>break</code>, <code>next,</code> and
+<code>redo</code>:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#d8d8e0"><tr><td><pre><font color="black">while (condition) {
+ label_redo:
+   goto label_next;        /* ruby's "next" */
+   goto label_break;       /* ruby's "break" */
+   goto label_redo;        /* ruby's "redo" */
+   ...
+   ...
+ label_next:
+}
+label_break:
+...</font></pre></td></tr></table>
+<p>The fourth way to get out of a loop from the inside is
+<code>return</code>.  An evaluation of <code>return</code> causes
+escape not only from a loop but from the method that contains the
+loop.  If an argument is given, it will be returned from the
+method call, otherwise <code>nil</code> is returned.</p>
+<h3><a name="label:2" id="label:2"><code>for</code></a></h3><!-- RDLabel: "for" -->
+<p>C programmers will be wondering by now how to make a "for"
+loop.  Ruby's <code>for</code> is a little more interesting than you
+might expect.  The loop below runs once for each element in the
+collection:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">for elt in collection
+  ...
+end</font></pre></td></tr></table>
+<p>The collection can be a range of values (this is what most people
+mean when they talk about a for loop):</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> for num in (4..6)</b></font>
+    |<font color="#ffff00"><b>    print num,"\n"</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+4
+5
+6
+<font color="#50ffff"><b>   4..6</b></font></font></pre></td></tr></table>
+<p>It may also be some other kind of collection, such as an
+array:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> for elt in [100,-9.6,"pickle"]</b></font>
+    |<font color="#ffff00"><b>    print "#{elt}\t(#{elt.type})\n"</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+100    (Fixnum)
+-9.6   (Float)
+pickle (String)
+<font color="#50ffff"><b>   [100, -9.6, "pickle"]</b></font></font></pre></td></tr></table>
+<p>But we're getting ahead of ourselves.  <code>for</code> is really
+another way of writing <code>each</code>, which, it so happens, is our first
+example of an iterator.  The following two forms are
+equivalent:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">#  If you're used to C or Java, you might prefer this.
+for i in collection
+  ...
+end
+
+#  A Smalltalk programmer might prefer this.
+collection.each {|i|
+  ...
+}</font></pre></td></tr></table>
+<p>Iterators can often be substituted for conventional loops, and once
+you get used to them, they are generally easier to deal with.  So
+let's move on and learn more about them.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="backtoexamples.html">
+ <img border=0 src="a2l.gif" alt="Back to the simple examples"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="iterators.html">
+ <img border=0 src="a2r.gif" alt="Iterators"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

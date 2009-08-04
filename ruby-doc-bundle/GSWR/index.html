@@ -1,0 +1,223 @@
+<HTML><HEAD><TITLE>Getting Started With Ruby</TITLE>
+<LINK REL="stylesheet" HREF="../wiki.css">
+</HEAD><BODY BGCOLOR="#FFF8F8">
+<H1>Getting Started With Ruby</H1>
+<!-- Saved directly from the Wiki, linked to local stylesheet, and header and footer
+removed -->
+
+<p>
+by <a href="mailto:gsinclair@soyabean.com.au">[Gavin Sinclair]</a>
+<p>
+<H2>Introduction</H2>
+
+<p>
+This document presents some resources available to help newcomers to Ruby solve their problems, advance their knowledge, and participate in the Ruby community.
+<p>
+It is located in two places: the <em>Wiki</em> (where it was developed), and the <em>Ruby Documentation Bundle</em> (for where it was intended).  Since the reader may see it in one without knowing about the other, both are briefly explained here.
+<p>
+<UL>
+<li> The Wiki is a Ruby community resource.  On the Wiki, this document lives <a href="http://www.rubygarden.org/ruby?GavinSinclair/GettingStartedWithRuby">[here]</a>.
+</UL>
+<p>
+<UL>
+<li> The <em>Ruby Documentation Bundle</em> (hereafter known as <em>the bundle</em>) is a package of various useful Ruby documents, intended for ease of access, that includes this document as an introduction.  It can be found at <a href="http://www.ruby-doc.org">http://www.ruby-doc.org</a>.
+</UL>
+<p>
+<H3>Structure</H3>
+
+<p>
+There are two parts to this document.
+<p>
+<DL>
+<dt>Some Ruby Essentials<dd>    Describes the various resources beginners should be familiar with in order to have a good foundation in the language.
+</DL>
+<p>
+<DL>
+<dt>Participating in the Ruby Community<dd>    Describes the Internet resources available to all Rubyists, and guidelines for making the most of them.
+</DL>
+<p>
+They are somewhat inter-dependent, and some information is repeated between them.  There are also forward references.  This is because the resources and the community grow out of each other, so it is difficult, and not desirable, to define them linearly.
+<p>
+<H3>Typographical Conventions</H3>
+
+<p>
+Colloquial Ruby resources are italicised (<em>ruby-talk</em>, <em>The Pickaxe</em>, <em>the bundle</em>) wherever they are used, and all resources - colloquial or otherwise - are set in bold where they are defined.
+<p>
+<H3>Feedback</H3>
+
+<p>
+This document has become larger than I intended.  It consists of personal recommendations, not official Ruby information (or anything like that).  If it is useful, good.  If it could be improved, I'd especially like to know.  Email feedback in any case is most welcome.
+<p>
+<p>
+<H2>Some Ruby Essentials</H2>
+
+<p>
+When you get started with Ruby, it's important to have a good grounding.  I assume you've successfully installed Ruby, but there are some packages you should install and resources you should be familiar with.  The following sections provide some advice along these lines.
+<p>
+<H3>Essential Learning Resources</H3>
+
+<p>
+The place where just about every Ruby beginner starts is <strong>The Pickaxe</strong>, aka <em>Programming Ruby: The Pragmatic Programmer's Guide</em>.  This is available free online (at <a href="http://www.rubycentral.com/book">http://www.rubycentral.com/book</a>) and is also included in <em>the bundle</em>.
+<p>
+When you're reasonably familiar with Ruby, but want to learn more and see how to accomplish all sorts of tasks with it, then <em>The Ruby Way</em>, by Hal Fulton, is the logical next step.
+<p>
+<strong>The FAQ</strong> (see the Ruby homepage for a link) is frequently updated with solutions to problems posted in the mailing list, and should be consulted and digested.
+<p>
+New to the Ruby scene are two <strong>tutorials</strong>, both aimed at beginner programmers.  The other resources mentioned above assume some programming knowledge, so if that assumption doesn't apply to you, check out the tutorials first.
+<p>
+Every beginner (and just about everyone else) should install <strong>the bundle</strong> (the <em>Ruby Documentation Bundle</em>).  It contains nothing original except this document, but it provides easy access to <em>The Pickaxe</em>, the FAQ, a tutorial and other documents.
+<p>
+<H3>Special-Purpose Books</H3>
+
+<p>
+Some other books come highly recommended.  See <a href="http://www.rubygarden.org/ruby?RubyBookList">[here]</a> for a complete list of Ruby books, and for more details of the ones mentioned briefly below.
+<p>
+<em>Teach Yourself Ruby in 21 Days</em> is reportedly an excellent guide for those without much prior experience.
+<p>
+<em>Ruby in a Nutshell</em> is a handy reference; nothing more, nothing less.
+<p>
+<em>Ruby Developer's Guide</em> contains very useful information about non-core issues like database and web programming.
+<p>
+<H3>Essential Tools: ri and irb</H3>
+
+<p>
+Your Ruby installation may already include <strong>ri</strong>, but you should check the <em>RAA</em> to see if a more recent version is available.  It is an online reference to the built-in Ruby classes (e.g. Array, File, Integer).  By specifying a class and/or a method, <em>ri</em> will give you information about it.  The information comes directly from <em>The Pickaxe</em>.  See <a href="http://www.pragmaticprogrammer.com/ruby/downloads/ri.html">[this page]</a> for more info.
+<p>
+<strong>irb</strong> stands for <em>Interactive Ruby</em>.  It is an environment in which you can play around with Ruby's features and experiment.  It is particularly useful for finding out various things and testing techniques before putting them in your program.  For example, if you don't remember how <tt>to_i</tt> works on a String that doesn't contain (only) a number, why bother to look it up when you can just use <em>irb</em> to find out:
+<p>
+<PRE>
+  irb(main):001:0&gt; <em>"abc".to_i</em>
+  <em>0</em>
+  irb(main):002:0&gt; <em>"abc123".to_i</em>
+  <em>0</em>
+  irb(main):007:0&gt; <em>"123abc".to_i</em>
+  <em>123</em>
+</PRE>
+<p>
+<em>irb</em> comes standard with Ruby, but you should check for the latest version on the <em>RAA</em>.
+<p>
+It often happens that people ask questions on <em>ruby-talk</em> that are easily answered with one of the above (I've probably done it about five times now...).  <em>Every</em> Ruby programmer needs to know how to use these tools.  They <em>will</em> help your programs to run right first time!
+<p>
+<H3>Websites</H3>
+
+<p>
+<DL>
+<dt><a href="http://www.rubycentral.com">[Ruby Central]</a><dd>    Ruby Central has a good links section and generally contains some interesting material.
+</DL>
+<p>
+<DL>
+<dt><a href="http://www.ruby-lang.org/en">[The Ruby Homepage]</a><dd>    A bit of everything.  As of early 2003 (not yet at time of writing), the new site features much-improved presentation and links to other resources.
+</DL>
+<p>
+<DL>
+<dt><a href="http://www.ruby-lang.org/raa">[The RAA]</a><dd>    The Ruby Application Archive.  At time of writing, there are 766 packages available for download.  Some very important packages are listed in the next section.
+</DL>
+<p>
+<DL>
+<dt><a href="http://www.ruby-talk.org">[The ''ruby-talk'' website]</a><dd>    Here you can browse and search the <em>ruby-talk</em> archives.  These contain a wealth of information that can likely help you.
+</DL>
+<p>
+<DL>
+<dt><a href="http://www.ruby-doc.org">[The Ruby-Doc Project]</a><dd>    Several projects have existed with names varying on "ruby doc".  This one collects documentation and offers a web query interface to <em>ri</em> and <em>The Pickaxe</em>.
+</DL>
+<p>
+<H3>Important Packages</H3>
+
+<p>
+Programming often involves doing things that the language can't do natively - XML, database, web, etc.  If you're just starting out with Ruby, but have some specific tasks in mind, there's probably something for you on the RAA (or perhaps bundled with your Ruby distribution).
+<p>
+The following packages are examined in <em>Ruby Developer's Guide</em>:
+<UL>
+<li> For database programming - <strong>DBI</strong>.
+<li> For XML-related tasks - <strong>REXML</strong>.  There are others, but this one will probably do what you want, in a nice Ruby style.
+<li> For web services and distributed Ruby - <strong>XML-RPC</strong>, <strong>SOAP4R</strong> and <strong>DRb</strong>.
+<li> For web programming - <strong>mod_ruby</strong>, <strong>eruby</strong>
+<li> For GUI programming - <strong>Ruby/GTK</strong>, <strong>FXRuby</strong>
+</UL>
+<p>
+Other packages in mature states and common use:
+<UL>
+<li> <strong>Test::Unit</strong> for unit testing
+<li> <strong>Log4r</strong> for logging
+<li> <strong>Win32OLE</strong> for Windows automation
+<li> <strong>RDoc</strong> for API document generation from source code
+</UL>
+<p>
+Every beginner should at least know about these packages, so that they know they have somewhere to turn when these sort of tasks come up.
+<p>
+<H2>Participating in the Ruby Community</H2>
+
+<p>
+The <em>Ruby Community</em> is generally understood to be that body of people who do one or more of the following things:
+<UL>
+<li> participate in <em>ruby-talk</em> or on IRC
+<li> create and/or maintain packages in the <em>Ruby Application Archive</em>
+<li> make an original and miscellaneous contribution to Ruby advocacy (for example, <a href="http://www.rubyxml.org">http://www.rubyxml.org</a> or <a href="http://www.rubydoc.org">http://www.rubydoc.org</a>)
+</UL>
+<p>
+The following sections detail these and other community resources, and give guidelines on their use.
+<p>
+<H3>The Mailing List and Newsgroup</H3>
+
+<p>
+<strong>ruby-talk</strong> is the name of a mailing list (<tt>ruby-talk@ruby-lang.org</tt>) and a newsgroup (<tt>comp.lang.ruby</tt>) that, thanks to a small piece of Ruby code, are actually the same thing.  That is, messages on the mailing list appear on the newsgroup and vice versa.
+<p>
+More information can be found in the <strong>comp.lang.ruby FAQ</strong> (included in the bundle), but I'll make a few comments here.
+<p>
+The <em>ruby-talk</em> community has been noticably friendly in general, including its treatment of people asking questions that are easily answered elsewhere.  However, it is basic netiquette to do some research before posting.  In the case of Ruby, this research should consist of examining <em>ri</em> and <em>The Pickaxe</em> for technical information.  If your question is more theoretical, ask yourself whether it's likely to have been asked before.  If a simple search of the archives turns up nothing, then chances are your question is unique; if it turns up not-quite-relevant material, you at least will have an idea of what has been discussed before, and will likely produce a more educated post than you would have otherwise.
+<p>
+Discussion on <em>ruby-talk</em> is sometimes quite general in nature, and occasionally wanders off-topic.  That's OK, since it seems that many regular posters have a broad or deep experience, and good communication skills, so the discussion is often interesting and useful.  Since Ruby contains good features from many languages, we often learn a thing or two about other languages as well.
+<p>
+<em>ruby-talk</em> has its own webpage: <a href="http://www.ruby-talk.org">http://www.ruby-talk.org</a>.  On this page, you can browse (through a nice web interface) and search the archives, as well as join the list and get help on it.  It's a terrific webpage, and my advice to budding Rubyists is to use it (or a newsreader) to "lurk" for a while before posting, unless you have a specific question.  Just browsing the recent entries will inform you of recent announcements (software, webpages, etc.), important questions, and general Ruby musings, so that you gain an insight into what people are doing with Ruby and how they are doing it.
+<p>
+Every week, a "Ruby Weekly News" is posted that summarises announcements and interesting threads on <em>ruby-talk</em> for the week.  This can be seen <a href="http://www.rubygarden.org/rurl/html/index.html">[here]</a>.
+<p>
+<H3>IRC</H3>
+
+<p>
+There is an IRC channel where Rubyists gather.  The channel is populated most of the time because there are Rubyists in so many timezones.
+<p>
+The IRC server is: <strong>irc.openprojects.net</strong>.  The channel is: <strong>#ruby-lang</strong>
+<p>
+Newbies should get stuck into IRC: they'll often get a quick response, and the conversational style allows feedback without clogging the mailing list.
+<p>
+<H3>The Wiki</H3>
+
+<p>
+The Wiki is located at <a href="http://www.rubygarden.org/ruby">http://www.rubygarden.org/ruby</a>.  Briefly, a Wiki is a set of webpages that can be edited by anybody, using a special markup language that is greatly simpler than HTML.  It is an interesting concept.  I encourage all Rubyists to browse the Wiki and, where comfortable, make changes.
+<p>
+Being a kind of chaos, the Wiki contains a lot of information but little enforced organisation.  Hence, it is sometimes like a bulletin board where people simply post their point of view, and sometimes like a collection of half-sorted information.  It takes a bit of getting used to, but it is a valuable resource.
+<p>
+The Wiki is ideally suited for creating small documents, like this one, because the formatting is simple, and hosting is taken care of.  The other option, editing my own HTML and finding somewhere to host it, is no real option at all.  It can also be useful for tracking projects, but there are perhaps better ways to do that.
+<p>
+<H3>The RAA</H3>
+
+<p>
+The <strong>Ruby Application Archive</strong> (RAA) is the repository of user-contributed code (libraries and applications).  Containing 766 projects at time of writing, this site is naturally an important community resource.  Many crucial libraries live there, many merely useful ones, and many experimental ones.  If you find something you want that is incomplete, think of it as an opportunity to contribute.
+<p>
+It is a great place to find sample code if you need some to study.
+<p>
+<H3>User Groups</H3>
+
+<p>
+See if there is a Ruby Users Group in your area.  A large list of such groups is maintained on the Wiki at <a href="ruby?RubyUserGroups">RubyUserGroups</a>.  Some groups only have one or two members; if so, get in touch with them anyway and add your name.  Once a critical mass is formed, you can enjoy monthly meetings, and perhaps collaborate on projects.
+<p>
+<p>
+<H2>Conclusion</H2>
+
+<p>
+If you are learning Ruby and need some help, or just want to soak up some knowledge and experience, seek out fellow Rubyists in user groups, on IRC and on <em>ruby-talk</em> - whatever mix suits your preferences.
+<p>
+Before you do, however, read at least some of <em>The Pickaxe</em> and browse some other resources (newcomer's guide, FAQ, tutorials: all included in <em>the bundle</em>).  They are there for your benefit!  If you want a paperback book to help you in the beginning, choose between <em>The Pickaxe</em> and <em>Teach Yourself Ruby in 21 Days</em>, depending on your skill level.
+<p>
+Being able to use <em>ri</em> and <em>irb</em> is very important.  The first is for reference, the second for experimentation.  Very important indeed.
+<p>
+It may be possible to gain advanced knowledge of Ruby without reading <em>The Ruby Way</em>, but you will thank yourself for owning it, especially if you want to know how to use Ruby to accomplish all sorts of tasks.  For more specialised tasks, be sure to check out <em>Ruby Developer's Guide</em>.
+<p>
+Community participation - even passive - will boost your familiarity with the language as you see problems and solutions being discussed, and eventually presented on the RAA.  Active participation, when you're ready, will offer opportunities to learn through contribution, which is ultimately what the prosperity of Ruby thrives on.
+<p>
+Good luck!
+<p>
+<hr>
+
+</body></html>

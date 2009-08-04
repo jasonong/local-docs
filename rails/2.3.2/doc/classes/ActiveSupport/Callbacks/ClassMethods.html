@@ -1,0 +1,47 @@
+  <div id="C00000503">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />ClassMethods<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/callbacks_rb.html');">rails-2.3.2/activesupport/lib/active_support/callbacks.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001298&name=define_callbacks" >define_callbacks</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001298" class="method">
+  <div id="M001298_title" class="title">
+    <b>define_callbacks</b>(*callbacks)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001298_source')" id="l_M001298_source">show source</a> ]</p>
+  <div id="M001298_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/callbacks.rb, line 205</span>
+205:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">define_callbacks</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">callbacks</span>)
+206:         <span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">callback</span><span class="ruby-operator">|</span>
+207:           <span class="ruby-identifier">class_eval</span> <span class="ruby-value str">&quot;def self.\#{callback}(*methods, &amp;block)                             # def self.before_save(*methods, &amp;block)\ncallbacks = CallbackChain.build(:\#{callback}, *methods, &amp;block)  #   callbacks = CallbackChain.build(:before_save, *methods, &amp;block)\n@\#{callback}_callbacks ||= CallbackChain.new                     #   @before_save_callbacks ||= CallbackChain.new\n@\#{callback}_callbacks.concat callbacks                          #   @before_save_callbacks.concat callbacks\nend                                                                # end\n#\ndef self.\#{callback}_callback_chain                                # def self.before_save_callback_chain\n@\#{callback}_callbacks ||= CallbackChain.new                     #   @before_save_callbacks ||= CallbackChain.new\n#\nif superclass.respond_to?(:\#{callback}_callback_chain)           #   if superclass.respond_to?(:before_save_callback_chain)\nCallbackChain.new(                                             #     CallbackChain.new(\nsuperclass.\#{callback}_callback_chain +                      #       superclass.before_save_callback_chain +\n@\#{callback}_callbacks                                       #       @before_save_callbacks\n)                                                              #     )\nelse                                                             #   else\n@\#{callback}_callbacks                                         #     @before_save_callbacks\nend                                                              #   end\nend                                                                # end\n&quot;</span>
+208:         <span class="ruby-keyword kw">end</span>
+209:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

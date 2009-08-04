@@ -1,0 +1,63 @@
+  <div id="fileHeader">
+    <h1>uploaded_file.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/uploaded_file.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController
+  module UploadedFile
+    def self.included(base)
+      base.class_eval do
+        attr_accessor :original_path, :content_type
+        alias_method :local_path, :path
+      end
+    end
+
+    def self.extended(object)
+      object.class_eval do
+        attr_accessor :original_path, :content_type
+        alias_method :local_path, :path
+      end
+    end
+
+    # Take the basename of the upload's original filename.
+    # This handles the full Windows paths given by Internet Explorer
+    # (and perhaps other broken user agents) without affecting
+    # those which give the lone filename.
+    # The Windows regexp is adapted from Perl's File::Basename.
+    def original_filename
+      unless defined? @original_filename
+        @original_filename =
+          unless original_path.blank?
+            if original_path =~ /^(?:.*[:\\\/])?(.*)/m
+              $1
+            else
+              File.basename original_path
+            end
+          end
+      end
+      @original_filename
+    end
+  end
+
+  class UploadedStringIO &lt; StringIO
+    include UploadedFile
+  end
+
+  class UploadedTempfile &lt; Tempfile
+    include UploadedFile
+  end
+end
+</pre>
+    </div>

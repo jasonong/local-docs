@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>MatchingData</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="File.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Module.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>MatchingData</H1>
+<dd> 
+<P>
+The status of the regular expression match.  The value of the variable
+<a href="variable.html#tilde"><code>$~</code></a> is the instance of this class.
+</p>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="size"><CODE>size</CODE></A>
+<DD>
+<DT>
+<A NAME="length"><CODE>length</CODE></A>
+<DD>
+<p>
+Returns the number of the subpatterns (i.e. $~.to_a.size).
+</p>
+<DT> 
+<A NAME="offset"><CODE>offset(<VAR>n</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the offsets ([start, end]) of the nth subpattern.
+0 means the whole match.
+</p>
+<DT> 
+<A NAME="begin"><CODE>begin(<VAR>n</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the starting offset of the nth match.
+0 means the whole match.
+</p>
+<DT> 
+<A NAME="end"><CODE>end(<VAR>n</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the end offset of the nth match.
+0 means the whole match.
+</p>
+<DT> 
+<A NAME="to_a"><CODE>to_a</CODE></A>
+<DD>
+<p>
+Returns the array of the subpatterns, which is [$&amp;, $1, $2,...].
+</p>
+<DT> 
+<A NAME="aref"><CODE>self[<VAR>n</VAR>]</CODE></A>
+<DD>
+<p>
+Returns the nth subpattern.
+</p>
+<DT> 
+<A NAME="pre_match"><CODE>pre_match</CODE></A>
+<DD>
+<p>
+Returns the string preceding the match (i.e. $`).
+</p>
+<DT> 
+<A NAME="post_match"><CODE>post_match</CODE></A>
+<DD>
+<p>
+Returns the string following the match (i.e. $').
+</p>
+<DT> 
+<A NAME="string"><CODE>string</CODE></A>
+<DD>
+<p>
+Returns the string where the match was performed.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="File.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Module.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

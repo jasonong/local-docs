@@ -1,0 +1,135 @@
+  <div id="fileHeader">
+    <h1>enumerable.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/enumerable.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'active_support/ordered_hash'
+
+module Enumerable
+  # Ruby 1.8.7 introduces group_by, but the result isn't ordered. Override it.
+  remove_method(:group_by) if [].respond_to?(:group_by) &amp;&amp; RUBY_VERSION &lt; '1.9'
+
+  # Collect an enumerable into sets, grouped by the result of a block. Useful,
+  # for example, for grouping records by date.
+  #
+  # Example:
+  #
+  #   latest_transcripts.group_by(&amp;:day).each do |day, transcripts| 
+  #     p &quot;#{day} -&gt; #{transcripts.map(&amp;:class).join(', ')}&quot;
+  #   end
+  #   &quot;2006-03-01 -&gt; Transcript&quot;
+  #   &quot;2006-02-28 -&gt; Transcript&quot;
+  #   &quot;2006-02-27 -&gt; Transcript, Transcript&quot;
+  #   &quot;2006-02-26 -&gt; Transcript, Transcript&quot;
+  #   &quot;2006-02-25 -&gt; Transcript&quot;
+  #   &quot;2006-02-24 -&gt; Transcript, Transcript&quot;
+  #   &quot;2006-02-23 -&gt; Transcript&quot;
+  def group_by
+    assoc = ActiveSupport::OrderedHash.new
+
+    each do |element|
+      key = yield(element)
+
+      if assoc.has_key?(key)
+        assoc[key] &lt;&lt; element
+      else
+        assoc[key] = [element]
+      end
+    end
+
+    assoc
+  end unless [].respond_to?(:group_by)
+
+  # Calculates a sum from the elements. Examples:
+  #
+  #  payments.sum { |p| p.price * p.tax_rate }
+  #  payments.sum(&amp;:price)
+  #
+  # The latter is a shortcut for:
+  #
+  #  payments.inject { |sum, p| sum + p.price }
+  #
+  # It can also calculate the sum without the use of a block.
+  #
+  #  [5, 15, 10].sum # =&gt; 30
+  #  [&quot;foo&quot;, &quot;bar&quot;].sum # =&gt; &quot;foobar&quot;
+  #  [[1, 2], [3, 1, 5]].sum =&gt; [1, 2, 3, 1, 5]
+  #
+  # The default sum of an empty list is zero. You can override this default:
+  #
+  #  [].sum(Payment.new(0)) { |i| i.amount } # =&gt; Payment.new(0)
+  #
+  def sum(identity = 0, &amp;block)
+    return identity unless size &gt; 0
+
+    if block_given?
+      map(&amp;block).sum
+    else
+      inject { |sum, element| sum + element }
+    end
+  end
+
+  # Iterates over a collection, passing the current element *and* the
+  # +memo+ to the block. Handy for building up hashes or
+  # reducing collections down to one object. Examples:
+  #
+  #   %w(foo bar).each_with_object({}) { |str, hsh| hsh[str] = str.upcase } #=&gt; {'foo' =&gt; 'FOO', 'bar' =&gt; 'BAR'}
+  #
+  # *Note* that you can't use immutable objects like numbers, true or false as
+  # the memo. You would think the following returns 120, but since the memo is
+  # never changed, it does not.
+  #
+  #   (1..5).each_with_object(1) { |value, memo| memo *= value } # =&gt; 1
+  #
+  def each_with_object(memo, &amp;block)
+    returning memo do |m|
+      each do |element|
+        block.call(element, m)
+      end
+    end
+  end unless [].respond_to?(:each_with_object)
+
+  # Convert an enumerable to a hash. Examples:
+  #
+  #   people.index_by(&amp;:login)
+  #     =&gt; { &quot;nextangle&quot; =&gt; &lt;Person ...&gt;, &quot;chade-&quot; =&gt; &lt;Person ...&gt;, ...}
+  #   people.index_by { |person| &quot;#{person.first_name} #{person.last_name}&quot; }
+  #     =&gt; { &quot;Chade- Fowlersburg-e&quot; =&gt; &lt;Person ...&gt;, &quot;David Heinemeier Hansson&quot; =&gt; &lt;Person ...&gt;, ...}
+  # 
+  def index_by
+    inject({}) do |accum, elem|
+      accum[yield(elem)] = elem
+      accum
+    end
+  end
+  
+  # Returns true if the collection has more than 1 element. Functionally equivalent to collection.size &gt; 1.
+  # Works with a block too ala any?, so people.many? { |p| p.age &gt; 26 } # =&gt; returns true if more than 1 person is over 26.
+  def many?(&amp;block)
+    size = block_given? ? select(&amp;block).size : self.size
+    size &gt; 1
+  end
+
+  # Returns true if none of the elements match the given block.
+  #
+  #   success = responses.none? {|r| r.status / 100 == 5 }
+  #
+  # This is a builtin method in Ruby 1.8.7 and later.
+  def none?(&amp;block)
+    !any?(&amp;block)
+  end unless [].respond_to?(:none?)
+end
+</pre>
+    </div>

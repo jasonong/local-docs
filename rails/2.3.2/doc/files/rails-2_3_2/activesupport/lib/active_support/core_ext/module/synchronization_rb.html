@@ -1,0 +1,58 @@
+  <div id="fileHeader">
+    <h1>synchronization.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/module/synchronization.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Module
+  # Synchronize access around a method, delegating synchronization to a
+  # particular mutex. A mutex (either a Mutex, or any object that responds to 
+  # #synchronize and yields to a block) must be provided as a final :with option.
+  # The :with option should be a symbol or string, and can represent a method, 
+  # constant, or instance or class variable.
+  # Example:
+  #   class SharedCache
+  #     @@lock = Mutex.new
+  #     def expire
+  #       ...
+  #     end
+  #     synchronize :expire, :with =&gt; :@@lock
+  #   end
+  def synchronize(*methods)
+    options = methods.extract_options!
+    unless options.is_a?(Hash) &amp;&amp; with = options[:with]
+      raise ArgumentError, &quot;Synchronization needs a mutex. Supply an options hash with a :with key as the last argument (e.g. synchronize :hello, :with =&gt; :@mutex).&quot;
+    end
+
+    methods.each do |method|
+      aliased_method, punctuation = method.to_s.sub(/([?!=])$/, ''), $1
+
+      if method_defined?(&quot;#{aliased_method}_without_synchronization#{punctuation}&quot;)
+        raise ArgumentError, &quot;#{method} is already synchronized. Double synchronization is not currently supported.&quot;
+      end
+
+      module_eval(&lt;&lt;-EOS, __FILE__, __LINE__)
+        def #{aliased_method}_with_synchronization#{punctuation}(*args, &amp;block)     # def expire_with_synchronization(*args, &amp;block)
+          #{with}.synchronize do                                                    #   @@lock.synchronize do
+            #{aliased_method}_without_synchronization#{punctuation}(*args, &amp;block)  #     expire_without_synchronization(*args, &amp;block)
+          end                                                                       #   end
+        end                                                                         # end
+      EOS
+
+      alias_method_chain method, :synchronization
+    end
+  end
+end
+</pre>
+    </div>

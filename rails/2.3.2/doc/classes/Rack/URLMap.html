@@ -1,0 +1,128 @@
+  <div id="C00000282">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />URLMap<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/urlmap_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000282&name=Rack::URLMap">Rack::URLMap</a> takes a
+hash mapping urls or paths to apps, and dispatches accordingly. Support for
+HTTP/1.1 host names exists if the URLs start with <tt>http://</tt> or
+<tt>https://</tt>.
+</p>
+<p>
+<a href="index.html?a=C00000282&name=URLMap">URLMap</a> modifies the
+SCRIPT_NAME and PATH_INFO such that the part relevant for dispatch is in
+the SCRIPT_NAME, and the rest in the PATH_INFO. This should be taken care
+of when you need to reconstruct the URL in order to create links.
+</p>
+<p>
+<a href="index.html?a=C00000282&name=URLMap">URLMap</a> dispatches in such
+a way that the longest paths are tried first, since they are most specific.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000961&name=call" >call</a></li>
+  <li><a href="index.html?a=M000959&name=new" >new</a></li>
+  <li><a href="index.html?a=M000960&name=remap" >remap</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000959" class="method">
+  <div id="M000959_title" class="title">
+    <b>new</b>(map = {})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000959_source')" id="l_M000959_source">show source</a> ]</p>
+  <div id="M000959_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb, line 15</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">map</span> = {})
+16:       <span class="ruby-identifier">remap</span>(<span class="ruby-identifier">map</span>)
+17:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000961" class="method">
+  <div id="M000961_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000961_source')" id="l_M000961_source">show source</a> ]</p>
+  <div id="M000961_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb, line 36</span>
+36:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+37:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;PATH_INFO&quot;</span>].<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">squeeze</span>(<span class="ruby-value str">&quot;/&quot;</span>)
+38:       <span class="ruby-identifier">script_name</span> = <span class="ruby-identifier">env</span>[<span class="ruby-value str">'SCRIPT_NAME'</span>]
+39:       <span class="ruby-identifier">hHost</span>, <span class="ruby-identifier">sName</span>, <span class="ruby-identifier">sPort</span> = <span class="ruby-identifier">env</span>.<span class="ruby-identifier">values_at</span>(<span class="ruby-value str">'HTTP_HOST'</span>,<span class="ruby-value str">'SERVER_NAME'</span>,<span class="ruby-value str">'SERVER_PORT'</span>)
+40:       <span class="ruby-ivar">@mapping</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">host</span>, <span class="ruby-identifier">location</span>, <span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
+41:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">hHost</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">host</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">sName</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">host</span> \
+42:           <span class="ruby-operator">||</span> (<span class="ruby-identifier">host</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">hHost</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sName</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">hHost</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sName</span><span class="ruby-operator">+</span><span class="ruby-value str">':'</span><span class="ruby-operator">+</span><span class="ruby-identifier">sPort</span>)))
+43:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">location</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>, <span class="ruby-identifier">location</span>.<span class="ruby-identifier">size</span>]
+44:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">path</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">size</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">path</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">size</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?/</span>
+45: 
+46:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">app</span>.<span class="ruby-identifier">call</span>(
+47:           <span class="ruby-identifier">env</span>.<span class="ruby-identifier">merge</span>(
+48:             <span class="ruby-value str">'SCRIPT_NAME'</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">script_name</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">location</span>),
+49:             <span class="ruby-value str">'PATH_INFO'</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">path</span>[<span class="ruby-identifier">location</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]))
+50:       }
+51:       [<span class="ruby-value">404</span>, {<span class="ruby-value str">&quot;Content-Type&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;text/plain&quot;</span>}, [<span class="ruby-node">&quot;Not Found: #{path}&quot;</span>]]
+52:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000960" class="method">
+  <div id="M000960_title" class="title">
+    <b>remap</b>(map)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000960_source')" id="l_M000960_source">show source</a> ]</p>
+  <div id="M000960_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/urlmap.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remap</span>(<span class="ruby-identifier">map</span>)
+20:       <span class="ruby-ivar">@mapping</span> = <span class="ruby-identifier">map</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">location</span>, <span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
+21:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">location</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">%r{\Ahttps?://(.*?)(/.*)}</span>
+22:           <span class="ruby-identifier">host</span>, <span class="ruby-identifier">location</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span>
+23:         <span class="ruby-keyword kw">else</span>
+24:           <span class="ruby-identifier">host</span> = <span class="ruby-keyword kw">nil</span>
+25:         <span class="ruby-keyword kw">end</span>
+26: 
+27:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">location</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?/</span>
+28:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;paths need to start with /&quot;</span>
+29:         <span class="ruby-keyword kw">end</span>
+30:         <span class="ruby-identifier">location</span> = <span class="ruby-identifier">location</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'/'</span>)
+31: 
+32:         [<span class="ruby-identifier">host</span>, <span class="ruby-identifier">location</span>, <span class="ruby-identifier">app</span>]
+33:       }.<span class="ruby-identifier">sort_by</span> { <span class="ruby-operator">|</span>(<span class="ruby-identifier">h</span>, <span class="ruby-identifier">l</span>, <span class="ruby-identifier">a</span>)<span class="ruby-operator">|</span> [<span class="ruby-operator">-</span><span class="ruby-identifier">l</span>.<span class="ruby-identifier">size</span>, <span class="ruby-identifier">h</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">size</span>] }  <span class="ruby-comment cmt"># Longest path first</span>
+34:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

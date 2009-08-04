@@ -1,0 +1,2744 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+ <META NAME="GENERATOR" CONTENT="SGML-Tools 1.0.9">
+ <TITLE>The Ruby Language FAQ</TITLE>
+
+
+</HEAD>
+<BODY>
+<H1>The Ruby Language FAQ</H1>
+
+<H4>Originally by: 
+<A HREF="mailto:shugo@netlab.co.jp">Shugo Maeda</A>.
+Now maintained by
+<A HREF="mailto:dave@pragmaticprogrammer.com">Dave Thomas</A>
+with help from 
+<A HREF="mailto:andy@pragmaticprogrammer.com">Andy Hunt</A>.
+ </H4>
+Thanks Thanks to 
+<A HREF="mailto:gotoken@math.sci.hokudai.ac.jp">gotoken</A>> for the
+original English translation.
+Also, thanks to
+Arima Yasuhiro,
+John Dell'Aquila,
+Robert Gustavsson
+Clemens Hintze,
+Josh Huber,
+H Morita,
+Aleksi Niemel&auml;,
+Hugh Sasse,
+Conrad Schneiker,
+Larry W. Virden,
+Jim Weirich,
+and of course, Matz.
+$Revision: 1.1 $--$Date: 2002/12/17 03:35:59 $
+<P><HR>
+<EM>Ruby is a modern object-oriented language, combining elements of Perl, Smalltalk, and Scheme in a simple yet powerful syntax.
+This document contains Frequently Asked Questions about Ruby with
+answers.
+The code examples in this document have been run using Ruby version
+1.6.8. A French version of this document is available at
+<A HREF="http://rubyfr.org">rubyfr.org</A>.</EM>
+<HR>
+<H2><A NAME="s1">1. General questions</A></H2>
+
+<P>
+<P>
+<H2>1.1 What is Ruby?</H2>
+
+<P>
+<P>Ruby is a <EM>simple and powerful object-oriented programming
+language</EM>, created by Yukihiro Matsumoto (who goes by the handle
+"matz" in this document and on the mailing lists).
+<P>Like Perl, Ruby is good at text processing. Like Smalltalk, everything 
+in Ruby is an object, and Ruby has blocks, iterators, meta-classes and 
+other good stuff.
+<P>You can use Ruby to write servers, experiment with prototypes, and for
+everyday programming tasks. As a fully-integrated object-oriented
+language, Ruby scales well.
+<P>Ruby features:
+<P>
+<UL>
+<LI>Simple syntax,</LI>
+<LI>Basic OO features (classes, methods, objects, and so on),</LI>
+<LI>Special OO features (Mix-ins, singleton methods, renaming, ...),</LI>
+<LI>Operator overloading,</LI>
+<LI>Exception handling,</LI>
+<LI>Iterators and closures,</LI>
+<LI>Garbage collection,</LI>
+<LI>Dynamic loading (depending on the architecture),</LI>
+<LI>High transportability (runs on various Unices, Windows, DOS,
+OSX, OS/2, Amiga, and so on)</LI>
+</UL>
+<P>
+<H2>1.2 Show me some Ruby code.</H2>
+
+<P>Let's define a class called Person, with a name and an age. We'll test 
+our code by creating a few people and examining them.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Person
+  attr_accessor :name, :age
+  def initialize(name, age)
+    @name = name
+    @age  = age.to_i
+  end
+  def inspect
+    "#@name (#@age)"
+  end
+end
+
+p1 = Person.new('elmo', 4)
+p2 = Person.new('zoe', 7)
+
+p1               # -&gt; elmo (4)
+p2               # -&gt; zoe (7)
+</PRE></td></tr></table>
+<P>Now let's populate an array of people by reading their names and ages
+from a file containing lines like:
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+bert:    8
+cookie: 11
+elmo:    4
+ernie:   8
+zoe:     7
+</PRE></td></tr></table>
+<P>The code uses regular expressions to parse successive lines from the
+input file, creating a new <CODE>Person</CODE> object for each match and
+pushing it on to the end of the array <CODE>people</CODE>.
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+
+people = Array.new
+
+File.foreach("ages") { |l|
+  people &lt;&lt; Person.new($1, $2) if l =~ /(.*):\s+(\d+)/
+}
+
+people           # -&gt; [bert (8), cookie (11), elmo (4), ernie (8), zoe (7)]
+</PRE></td></tr></table>
+<P>Now, let's sort the result based on the person's age. There are
+many ways to do this. We can define a sort block, which tells Ruby how 
+to do the comparison of two people:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+sorted = people.sort do |a,b| a.age &lt;=&gt; b.age end
+sorted           # -&gt; [elmo (4), zoe (7), bert (8), ernie (8), cookie (11)]
+</PRE></td></tr></table>
+<P>Another way would be to change the comparison method for class <CODE>Person</CODE>:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Person
+  def &lt;=&gt;(other)
+    @age &lt;=&gt; other.age
+  end
+end
+people.sort      # -&gt; [elmo (4), zoe (7), bert (8), ernie (8), cookie (11)]
+</PRE></td></tr></table>
+<P>
+<H2>1.3 Why the name 'Ruby'?</H2>
+
+<P>
+<P>Influenced by Perl, Matz wanted to use a jewel name for his new language,
+so he named Ruby after a colleague's birthstone.
+<P>Later, he realized that Ruby comes right after Perl in several
+situations. In birthstones, pearl is June, ruby is July. When
+measuring font sizes, pearl is 5pt, ruby is 5.5pt.  He thought Ruby
+was a good name for a programming language newer (and hopefully better)
+than Perl.
+<P><EM>(Based on an explanation from matz in [ruby-talk:00394] on June 11,
+1999.)</EM>
+<P>
+<H2>1.4 What is the history of Ruby?</H2>
+
+<P>The following a summary of a posting made by Matz in [ruby-talk:00382]
+on June 4, 1999.  (The birthday of Ruby is corrected in
+[ruby-list:15977]).
+<P>
+<BLOCKQUOTE>
+Well, Ruby was born on February 24 1993.  I was talking with
+my colleague about the possibility of an object-oriented scripting
+language.  I knew Perl (Perl4, not Perl5), but I didn't like it
+really, because it had smell of toy language (it still has).  The
+object-oriented scripting language seemed very promising.
+</BLOCKQUOTE>
+
+<BLOCKQUOTE>
+I knew Python then.  But I didn't like it, because I didn't think it
+was a true object-oriented language---OO features appeared to be
+add-on to the language.  As a language manic and OO fan for 15 years,
+I really wanted a genuine object-oriented, easy-to-use
+scripting language.  I looked for, but couldn't find one.
+</BLOCKQUOTE>
+
+<BLOCKQUOTE>
+So, I decided to make it.  It took several months to make the
+interpreter run.  I put it the features I love to have in my language,
+such as iterators, exception handling, garbage collection.
+</BLOCKQUOTE>
+
+<BLOCKQUOTE>
+Then, I reorganized the features of Perl into a class library, and
+implemented them.  I posted Ruby 0.95 to the Japanese domestic
+newsgroups in Dec. 1995. 
+</BLOCKQUOTE>
+
+<BLOCKQUOTE>
+Since then, highly active mailing lists have been established and web
+pages formed. 
+</BLOCKQUOTE>
+<P>
+<H2>1.5 Where is the Ruby Home Page?</H2>
+
+<P>
+<P>The official Ruby Home Page is
+<CODE>
+<A HREF="http://www.ruby-lang.org">http://www.ruby-lang.org</A></CODE>
+(in English) and
+<CODE>
+<A HREF="http://www.ruby-lang.org/ja">http://www.ruby-lang.org/ja/</A></CODE>
+(in Japanese).
+<P>You can also find Ruby information at <CODE>
+<A HREF="http://dev.rubycentral.com">http://www.rubycentral.com</A></CODE>. In particular, there is a
+complete
+<A HREF="http://www.rubycentral.com/book/builtins.html">online reference</A>
+to Ruby's built-in classes and methods.
+<P>
+<H2><A NAME="newsgroup"></A> 1.6 Is there a Ruby newsgroup?</H2>
+
+<P><CODE>comp.lang.ruby</CODE> was established in May, 2000 (thanks to the
+efforts of 
+<A HREF="mailto:schneiker@jump.net">Conrad Schneiker</A>).
+<P>
+<H2><A NAME="mailing_list"></A> 1.7 Is there a Ruby mailing list?</H2>
+
+<P>
+<P>There are five mailing lists now talking about Ruby. The first is in
+English, the last four in Japanese:
+<P>
+<UL>
+<LI><CODE>ruby-talk</CODE>: English language discussion of Ruby.</LI>
+<LI><CODE>ruby-list</CODE>: Japanese language discussion of 
+Ruby.</LI>
+<LI><CODE>ruby-dev</CODE>: List for Ruby developers.</LI>
+<LI><CODE>ruby-ext</CODE>: List for people writing extensions for or with Ruby.</LI>
+<LI><CODE>ruby-math</CODE>: Ruby in mathematics.</LI>
+</UL>
+<P>See 
+<A HREF="http://www.ruby-lang.org/en/ml.html">joining the mailing list</A>.
+<P>You can search the mailing list archives using
+<A HREF="http://blade.nagaokaut.ac.jp/ruby/ruby-talk/index.shtml">http://blade.nagaokaut.ac.jp/ruby/ruby-talk/index.shtml</A>. (This 
+is the url for the ruby-talk list: munge as required for the others).
+<P>
+<H2>1.8 **Changed** How can I thread the mailing list in mutt?</H2>
+
+<P>
+<P>The Ruby mailing list software adds a prefix to the subject lines, for 
+example [ruby-talk:1234]. This can confuse the threading in some mail
+user agents.
+<P>
+<P>
+<P>In mutt, you can get threading to work using the following variable
+setting.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+# reply regexp, to support MLs like ruby-talk.
+set reply_regexp="^(\[[a-z0-9:-]+\][[:space:]]*)?(re([\[0-9\]+])*|aw):[[:space:]]*"
+</PRE></td></tr></table>
+<P>
+<H2>1.9 Which is correct, Ruby or ruby?</H2>
+
+<P>
+<P>Officially, the language is called ``Ruby''.  On most systems, it is
+invoked using the command ``<CODE>ruby</CODE>''.  It's OK to use ruby
+instead of Ruby.
+<P>Please <EM>don't</EM> use RUBY as the language name.
+<P>Originally, or historically, it was called ``ruby''.
+<P>
+<H2>1.10 Are there any Ruby books?</H2>
+
+<P>
+<A HREF="http://www.awlonline.com/product/0,2627,0201710897,00.html">Programming Ruby: The Pragmatic Programmer's Guide</A>, (the
+Pickaxe Book)
+by David Thomas and Andrew Hunt: ISBN 0-20171-089-7,
+Addison-Wesley, October 2000.
+<P>
+<P>A Japanese language Ruby reference book by matz, et al 
+and published by ASCII is available in Japan (ISBN
+4-7561-3254-5). An English translation, ``
+<A HREF="http://www.awlonline.com/product/0,2627,020171096X,00.html">The Ruby Programming Language</A>,''
+is in the works from
+Addison-Wesley (ISBN 020171096X).
+<P>
+<P>>
+<P>A Japanese language ``Ruby Pocket Reference'' is published by
+O'Reilly Japan (ISBN 4-87311-023-8). Let O'Reilly in the US know if
+you'd like to see a translation.
+<P>
+<P>>
+<P>In addition, ``
+<A HREF="http://www.oreilly.com/catalog/regex/">Mastering Regular Expressions</A>,''
+by Jeffrey Friedl, (the Hip Owl Book):
+ISBN 1-56592-257-3 from O'Reilly &amp; Associates, is a
+reference work that covers the art and implementation of regular
+expressions in various programming languages. Most of it is highly
+relevant to Ruby regular expressions.
+<P>
+<H2>1.11 Which editors provide support for Ruby.</H2>
+
+<P>
+<P>
+<UL>
+<LI><B>
+<A HREF="http://www.gnu.org/software/emacs/emacs.html">Emacs</A></B> or
+<B>
+<A HREF="http://www.xemacs.org">XEmacs</A></B>:
+ruby-mode.el is supplied in the Ruby distribution. With some
+versions of XEmacs, you may need to add (load "font-lock") to your
+.emacs file to allow ruby-mode.el to detect the syntax highlighting
+package you're using.
+</LI>
+<LI><B>
+<A HREF="http://www.vim.org">Vim</A></B>: Vim 5.7 and
+later have Ruby syntax files as standard in the runtime package. For
+prior versions, a syntax
+file for Ruby is available at
+<A HREF="http://www.xs4all.nl/~hipster/lib/ruby/ruby.vim">http://www.xs4all.nl/~hipster/lib/ruby/ruby.vim</A>.
+</LI>
+<LI><B>
+<A HREF="http://jedit.sourceforge.net">Jedit</A></B>: A
+portable editor written in Java, comes with support for Ruby.
+</LI>
+<LI><B>
+<A HREF="http://space.mit.edu/~davis/jed.html">Jed</A></B>:
+An s-lang file supporting Ruby is available at
+<A HREF="http://www.kondara.org/~g/slang/ruby.sl">http://www.kondara.org/~g/slang/ruby.sl</A>.
+</LI>
+<LI><B>Nedit</B> (
+<A HREF="http://www.nedit.org">http://www.nedit.org</A>): Eric
+Santonacci has written Ruby support for Nedit, available from
+<A HREF="ftp://ftp.talc.fr/pub/ruby/ruby.nedit-0.1.tar.gz">ftp://ftp.talc.fr/pub/ruby/ruby.nedit-0.1.tar.gz</A>.
+</LI>
+<LI>Barry Shultz has written a Ruby definition file for TextPad,
+available at
+<A HREF="http://www.textpad.com/add-ons/ntsyn.html">http://www.textpad.com/add-ons/ntsyn.html</A>.
+</LI>
+</UL>
+<P>
+<H2>1.12 How can I annotate Ruby code with its results?</H2>
+
+<P>
+<P>People commonly annotate Ruby code by showing the results of executing 
+each statement as a comment attached to that statement. For example,
+in the following code, we show that the assignment generates the
+string "Billy Bob", and then result of extracting some substrings.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  str = "Billy" + " Bob"           # -&gt; "Billy Bob"
+  str[0,1] + str[2,1] + str[-2,2]  # -&gt; "Blob"
+</PRE></td></tr></table>
+<P>Gotoken's <CODE>xmp</CODE> package, available from
+<A HREF="http://www.ruby-lang.org/en/raa-list.rhtml?name=xmp">http://www.ruby-lang.org/en/raa-list.rhtml?name=xmp</A>
+is a utility that annotates Ruby source code this way.
+<P>
+<P>
+<P>Emacs and vim users can integrate this with their editing
+environments, which is useful if you want to send people e-mail with
+annotated Ruby code. Having installed xmp, Emacs users can add the
+following to their .emacs file:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+(defun ruby-xmp-region (reg-start reg-end)
+  "Pipe the region through Ruby's xmp utility and replace the region with
+   the result."
+  (interactive "r")
+  (shell-command-on-region reg-start reg-end
+                           "ruby -r xmp -n -e 'xmp($_, \"%l\t\t# %r\n\")'"
+                           t))
+   
+(global-set-key [(meta f10)] 'ruby-xmp-region)
+</PRE></td></tr></table>
+<P>Vim users can use the mapping (thanks to hipster):
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+map &lt;M-F10&gt; :!ruby -r xmp -n -e 'xmp($_, "\%l\t\t\# \%r\n")'&lt;CR&gt;
+</PRE></td></tr></table>
+<P>In both cases, highlight a region of code and hit Meta-F10 to annotate 
+it.
+<P>
+<H2>1.13 I can't understand Ruby even after reading the manual!</H2>
+
+<P>
+<P>The syntax of Ruby has been fairly stable since Ruby 1.0, but
+new features are added every now and then. So, the books and the
+online documentation can get behind.
+<P>If you have a problem, feel free to ask in the mailing list (see 
+<A HREF="#mailing_list">ruby-talk mailing list</A>).  Generally you'll
+get timely answers from matz himself, the author of the language, from
+other gurus, and from those who've solved problems similar to your
+own.
+<P>Please include the output of <CODE>ruby -v</CODE> along with any
+problematic source code.
+<P>If you have a problem using <CODE>
+<A HREF="#irb">irb</A></CODE>, be
+aware that it has some limitations.  Try the script using <CODE>irb
+--single-irb</CODE>, or directly using the <CODE>ruby</CODE> command.
+<P>There might be similar questions in the mailing list, and it is good
+netiquette to read through recent mails (RFC1855:3.1.1, 3.1.2) before
+asking.  But do ask on the list, and a correct answer will be
+forthcoming.
+<P>
+<H2><A NAME="s2">2. How Does Ruby Stack Up Against...?</A></H2>
+
+<P>
+<P>
+<H2>2.1 How Does Ruby Compare With Python?</H2>
+
+<P>Python and Ruby are both object oriented languages that provide a
+smooth transition from procedural to OO programming styles. Smalltalk,
+by contrast, is object only - you can't do anything until you understand
+objects, inheritance and the sizable Smalltalk class hierarchy. By
+providing procedural training wheels, Python and Ruby ``fix'' one of
+the features that may have kept Smalltalk out of the mainstream.
+The two languages differ by approaching this solution from
+opposite directions.
+<P>
+<P>Python is a hybrid language. It has functions for procedural
+programming and objects for OO programming. Python bridges
+the two worlds by allowing functions and methods to interconvert
+using the explicit ``self'' parameter of every method def. When a
+function is inserted into an object, the first argument automagically
+becomes a reference to the receiver.
+<P>
+<P>Ruby is a pure OO language that can masquerade as a procedural one.
+It has no functions, only method calls. In a Ruby method the receiver,
+also called self, is a hidden argument like ``this'' in C++. A ``def''
+statement outside of a class definition, which is a function in
+Python, is actually a method call in Ruby. These ersatz functions
+become private methods of class Object, the root of the Ruby class
+hierarchy. Procedural programming is neatly solved from the other
+direction - everything is an object. If the user doesn't grok objects
+yet, they can just pretend that ``def'' is a function definition and
+still get useful work done.
+<P>
+<P>Ruby's OO purity provides a number features that Python lacks or is
+still working toward: a unified type/class hierarchy, metaclasses, the
+ability to subclass <EM>everything</EM>, and uniform method invocation
+(none of this <CODE>len()</CODE> is a function but <CODE>items()</CODE> is a
+method rubbish).  Ruby, like Smalltalk, only supports single
+inheritance, but it does have a very powerful mixin concept: a class
+definition may include a module, which inserts that module's methods,
+constants, etc. into the class.
+<P>
+<P>Ruby, again like Smalltalk, provides closures and code blocks and uses
+them to the same good effect. The Ruby collection classes and
+iterators are outstanding, much more powerful and elegant than the ad
+hoc solutions that Python is sprouting (lambdas and list comprehensions).
+<P>
+<P>Ruby's syntax and design philosophy are heavily influenced by Perl. It
+has a lot of syntactic variability. Statement modifiers (if, unless,
+while, until, etc.) may appear at the end of any statement. Some key
+words are optional (the ``then'' in an ``if'' statement for example).
+Parentheses may sometimes be elided in method calls. The
+receiver of a method may usually be elided.  Many, many things are
+lifted directly from Perl. Built in regular expressions, $_ and
+friends, here documents, the single-quoted / double-quoted string
+distinction, $ and @ prefixes to distinguish different kinds of names
+and so forth.
+<P>
+<P>If you like Perl, you will like Ruby and be right at home with its
+syntax. If you like Smalltalk, you will like Ruby and be right at home
+with its semantics. If you like Python, you may or may not be put off
+by the huge difference in design philosophy between Python and
+Ruby/Perl.
+<P>
+<P>Ruby is much more complex than Python but its features, for
+the most part, hang together well. Ruby is well designed and full
+of neat ideas that might be mined for P3K. I'm not sure how many
+Python programmers will be attracted to it though - it hasn't won me
+over (yet). But it is worthy of serious study and could be a real threat
+to Perl.
+<P>
+<P><EM>Posted by 
+<A HREF="mailto:jbd@alum.mit.edu">John Dell'Aquila</A> in <CODE>comp.lang.python</CODE>,
+11/17/2000. Reproduced with permission.</EM>
+<P>
+<H2><A NAME="s3">3. Installing Ruby</A></H2>
+
+<P>
+<P>
+<H2>3.1 What operating systems support Ruby?</H2>
+
+<P>Ruby is developed under Linux, and is written in fairly
+straightforward C. It runs under UNIX, DOS, Windows 95/98/NT/2000, Mac 
+OSX,
+BeOS, Amiga, Acorn Risc OS, and OS/2.
+<P>August 2002:
+<P>MacOSX 10.2 now comes with ruby installed by default.
+(ruby 1.6.7 (2002-03-01) [powerpc-darwin6.0])
+See http://developer.apple.com/technotes/tn2002/tn2053.html.
+<P>
+<P>H Morita notes:
+<P>There's a MacOS (not X) port of Ruby, by Hisakuni FUJIMOTO at
+<A HREF="http://www.imasy.or.jp/~hisa/ruby/macruby.html">http://www.imasy.or.jp/~hisa/ruby/macruby.html</A>. However
+it's based on Ruby 1.1b7, and hasn't been updated since December
+1999. It's highly experimental. It may crash and sometimes freeze the OS,
+even with the sample scripts included in the Ruby
+distribution. (Sounds like fun ;-).
+<P>
+<P>>
+<P>Rob tells us that there's Ruby 1.6.4 for OS/2 at 
+<A HREF="http://www.aminet.org/systems/os2/dev/misc/">http://www.aminet.org/systems/os2/dev/misc/</A>.
+However, that link seems broken: can anyone give us something that works?
+<P>
+<P>
+<H2>3.2 Where can I get Ruby sources?</H2>
+
+<P>
+<P>The latest version of Ruby can be downloaded from:
+<CODE>
+<A HREF="http://www.ruby-lang.org/en/download.html">http://www.ruby-lang.org/en/download.html</A></CODE>
+Mirror sites are also listed on this page.
+<P>
+<P>Also on this page is a link to a nightly snapshot of the development
+tree.
+<P>
+<H2>3.3 Can I get to the development source tree?</H2>
+
+<P>
+<P>If you have a CVS client, you can check out the current source tree
+using:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+% cvs -d :pserver:anonymous@cvs.netlab.co.jp:/home/cvs login
+(Logging in to anonymous@cvs.netlab.co.jp)
+CVS password: guest
+% cvs -d :pserver:anonymous@cvs.netlab.co.jp:/home/cvs co ruby
+</PRE></td></tr></table>
+<P>If you do not have CVS you can get a nightly snapshot of the
+development source from
+<A HREF="ftp://ftp.netlab.co.jp/pub/lang/ruby/snapshot.tar.gz">ftp://ftp.netlab.co.jp/pub/lang/ruby/snapshot.tar.gz</A>.
+<P>
+<H2>3.4 How do I compile Ruby?</H2>
+
+<P>
+<P>Under Unix, Ruby uses the autoconf system to configure the build
+environment. You don't need the autoconf command on your box to build
+Ruby from a distribution; just use the commands:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+% ./configure  [configure options]
+% make
+% make test
+% make install
+</PRE></td></tr></table>
+<P>You may need superuser privileges to install Ruby if you don't
+override the default installation location
+(<CODE>/usr/local</CODE>). You can get a
+full list of configure options using:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+% ./configure --help
+</PRE></td></tr></table>
+<P>If you are working from the CVS archive, you may need to run
+<CODE>autoconf</CODE> before running <CODE>configure</CODE>.
+<P>
+<H2>3.5 **Changed** How do I tell Ruby where my libraries are?</H2>
+
+<P>On some systems, the build process may fail to find libraries used by
+extension modules (for example the <CODE>dbm</CODE> libraries).
+<P>You can tell Ruby where to find libraries using options to
+<CODE>configure</CODE>. From [ruby-talk:5041]:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  ./configure --with-xxx-yyy=DIR
+</PRE></td></tr></table>
+<P>where <EM>xxx</EM> is either
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  opt           extra software path in general
+  dbm           path for dbm library
+  gdbm          path for gdbm library
+  x11           ...for X11..
+  tk            ...for Tk...
+  tcl           ...for Tcl...
+</PRE></td></tr></table>
+<P>and <EM>yyy</EM> is either
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  dir           specifies -I DIR/include -L DIR/lib
+  include       specifies -I DIR
+  lib           specifies -L DIR
+</PRE></td></tr></table>
+<P>On HP-UX, there may be problems building with gcc. Try using the
+native compiler instead. WATANABE Tetsuya recommends:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  CC="cc -Ae" CFLAGS=-O ./configure --prefix=/opt/gnu
+</PRE></td></tr></table>
+<P>There may also be problems with HP's native sed. He recommends
+installing the GNU equivalent.
+<P>
+<H2>3.6 Are precompiled binaries available?</H2>
+
+<P>
+<P>A single download that contains everything you
+need to run Ruby under various Windows operating systems.
+is available from 
+<A HREF="http://www.rubycentral.com/downloads/ruby-install.html">RubyCentral's One-click Windows installer</A>. This
+installation uses cygwin, and includes Tk support.
+<P>If you want other installation options, precompiled binaries for
+Windows are also available from 
+<A HREF="http://www.os.rim.or.jp/~eban/">http://www.os.rim.or.jp/~eban/</A>.
+If you download the <CODE>ruby-1.x.y-yyyymmdd-i386-cygwin.tar.gz</CODE>
+package (which is a good choice), you'll also need to download the
+cygwin DLL, available from the same page.
+<P>
+<BLOCKQUOTE>
+<A HREF="mailto:Reuben.Thomas@cl.cam.ac.uk">Reuben Thomas</A>
+writes:
+<P>You could mention that there's a port to Acorn RISC OS, currently of
+v1.4.3. I made the port, and have no plans to maintain it, but I did send
+the patches to matz, so newer versions may well compile too.
+<P>I do provide a binary
+distribution of 1.4.3 for the Acorn at 
+<A HREF="http://www.cl.cam.ac.uk/users/rrt1001/ruby.zip">http://www.cl.cam.ac.uk/users/rrt1001/ruby.zip</A>.
+</BLOCKQUOTE>
+<P>
+<P>
+<H2>3.7 What's all this 'cygwin', 'mingw', and 'djgpp' stuff?</H2>
+
+<P>Ruby is written to take advantage of the rich feature set of a Unix
+environment. Unfortunately, Windows is missing some of the functions,
+and implements others differently. As a result, some kind of mapping
+layer is needed to run Ruby (and other Unix-based programs) under
+windows.
+<P>
+<P>You may come across different versions of the Ruby executable that use 
+different wrapper mapping layers.
+<P>
+<P>The rbdj version is a stand-alone version of the Windows binary of
+Ruby.  It uses the DJ Delorie tools
+(
+<A HREF="www.delorie.com">http://www.delorie.com</A>).
+<P>
+<P>The rbcw version is a Windows binary of Ruby that requires the cygwin
+library, available at
+<A HREF="http://www.cygwin.com">http://www.cygwin.com</A>
+or from the Ruby download pages.  Cygwin is a both an emulation layer
+and a set of utilities initially produced by Cygnus Solutions (now
+part of Redhat). The Cygwin version of Ruby probably has the fullest
+set of features under Windows, so most programmers will want to use
+it.
+<P>
+<P>To use the rbcw version, you will need to install the cygwin .dll
+separately.  Once you have installed cygwin on your computer, copy
+cygwin1.dll (which is found in the <CODE>bin</CODE> subdirectory of the
+cygwin distribution) to your Windows\System32 folder (or somewhere else on your
+path). 
+<P><EM>Thanks to Anders Schneiderman for the basis of this
+description</EM>
+<P>
+<P>
+<H2>3.8 Why doesn't Tk graphics work under Windows?</H2>
+
+<P>
+<OL>
+<LI>Is Tk installed correctly on your Windows box? Go to
+<A HREF="http://dev.scriptics.com/software/tcltk/">http://dev.scriptics.com/software/tcltk/</A>
+to find a precompiled binary Tcl/Tk distribution for 
+your box.</LI>
+<LI>Are the environment variables <CODE>TCL_LIBRARY</CODE> and
+<CODE>TK_LIBRARY</CODE> pointing to the directories containing tcl and tk?</LI>
+<LI>Is the tk library in your path?</LI>
+</OL>
+<P>
+<P>
+<H2><A NAME="s4">4. Variables, constants, and arguments</A> </H2>
+
+<P>
+<P>
+<H2><A NAME="assignment"></A> 4.1 Does assignment generate a new copy of an object?</H2>
+
+<P>
+<P>All variables and constants reference (point at) some object. (The
+exception is uninitialized local variables, which reference
+nothing. These raise a <CODE>NameError</CODE> exception if used).  When
+you assign to a variable, or initialize a constant, you set the object
+that the variable or constant references.
+<P>Assignment on its own therefore never creates a new copy of an object.
+<P>There's a slightly deeper explanation in certain special cases. 
+Instances of Fixnum, NilClass, TrueClass, and FalseClass are contained
+directly in variables or constants--there is no reference involved. A
+variable holding the number 42 or the constant <CODE>true</CODE>, actually 
+holds the value, and not a reference to it. Assignment therefore
+physically produces a copy of objects of these types. We discuss this
+more in 
+<A HREF="#immediate">Immediate and Reference Objects</A>.
+<P>
+<H2>4.2 What is the scope of a local variable?</H2>
+
+<P>
+<P>A new scope for a local variable is introduced in the
+(1)&nbsp;toplevel (main), (2)&nbsp;a class (or module) definition, or
+(3)&nbsp;a method definition.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+i  =  1       # (1)
+class Demo
+  i = 2       # (2)
+  def meth
+    i = 3     # (3)
+    print "In method, i = ", i, "\n"
+  end
+  print "In class, i = ", i, "\n"
+end
+print "At top level, i = ", i, "\n"
+Demo.new.meth
+
+Produces:
+
+In class, i = 2
+At top level, i = 1
+In method, i = 3
+</PRE></td></tr></table>
+<P>(Note that the class definition is executable code: the trace message
+it contains is written as the class is defined).
+<P>A block (``{'' ... ``}'' or <CODE>do</CODE> ... <CODE>end</CODE>) almost introduces a
+new scope&nbsp;;-) Locals created within a block are not accessible
+outside the block.  However, if a local within the block has the same
+name as an existing local variable in the caller's scope, then no new
+local is created, and you can subsequently access that variable
+outside the block.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+a = 0
+1.upto(3) do |i|
+  a += i
+  b = i*i
+end
+a                # -&gt; 6
+# b is not defined here
+</PRE></td></tr></table>
+<P>This becomes significant when you use threading--each thread receives
+its own copy of the variables local to the thread's block:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+threads = []
+
+for name in ['one', 'two' ] do
+  threads &lt;&lt; Thread.new { 
+    localName = name
+    a = 0
+    3.times do |i|
+      Thread.pass
+      a += i
+      print localName, ": ", a, "\n"
+    end
+  }
+end
+
+threads.each {|t| t.join }
+
+Produces:
+
+onetwo: : 00
+
+onetwo: : 11
+
+onetwo: : 33
+</PRE></td></tr></table>
+<P><CODE>while</CODE>, <CODE>until</CODE>, and <CODE>for</CODE> are control
+structures, not blocks, so local variables within them will be
+accessible in the enclosing environment.
+<CODE>loop</CODE>, however, is a method and the associated block
+introduces a new scope.
+<P>
+<H2>4.3 When does a local variable become accessible?</H2>
+
+<P>
+<P>Actually, the question may be better asked as: "at what point does Ruby 
+work out that something is a variable?" The problem arises because the 
+simple expression ``a'' could be either a variable <EM>or</EM> a call
+to a method with no parameters. To decide which is the case, Ruby
+looks for assignment statements. If at some point in the source prior
+to the use of ``a'' it sees it being assigned to, it decides to parse
+``a'' as a variable, otherwise it treats it as a method. As a somewhat
+pathological case of this, consider this code fragment, submitted by
+Clemens Hintze:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def a
+  print "Function 'a' called\n"
+  99
+end
+ 
+for i in 1..2
+  if i == 2
+    print "a=", a, "\n"
+  else
+    a = 1
+    print "a=", a, "\n"
+  end
+end 
+
+Produces:
+
+a=1
+Function 'a' called
+a=99
+</PRE></td></tr></table>
+<P>During the parse, Ruby sees the use of ``a'' in the first print
+statement and, as it hasn't yet seen any assignment to ``a'', assumes
+that it is a method call. By the time it gets to the second print
+statement, though, it <EM>has</EM> seen an assignment, and so treats
+``a'' as a variable.
+<P>Note that the assignment does not have to be executed---Ruby just has
+to have seen it. This program does not raise an error.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+a = 1 if false; a  # -&gt; nil
+</PRE></td></tr></table>
+<P>This issue with variables is not normally a problem. If you do bump
+into it, try putting an assignment such as <CODE>a = nil</CODE> before the
+first access to the variable.  This has the additional benefit of
+speeding up the access time to local variables that subsequently
+appear in loops.
+<P>
+<H2>4.4 What is the scope of a constant?</H2>
+
+<P>
+<P>A constant defined in a class/module definition can be accessed
+directly within that class or module's definition.
+<P>You can directly access the constants in outer classes and modules
+from within nested classes and constants.
+<P>You can also directly access constants in superclasses and included
+modules.
+<P>Apart from these cases, you can access class and module constants
+using the <CODE>::</CODE> operator--<CODE>ModuleName::CONST1</CODE> or
+<CODE>ClassName::CONST2</CODE>.
+<P>
+<H2>4.5 How are arguments passed?</H2>
+
+<P>
+<P>The actual argument is <EM>assigned</EM> to the formal argument when
+the method is invoked. (See 
+<A HREF="#assignment">assignment</A>
+for more on the semantics of assignment.)
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  def addOne(n)
+    n += 1
+  end
+  a = 1
+  addOne(a)      # -&gt; 2
+  a              # -&gt; 1
+</PRE></td></tr></table>
+<P>As you are passing object references, it is possible that a method may
+modify the contents of a mutable object passed in to it.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  def downer(string)
+    string.downcase!
+  end
+  a = "HELLO"    # -&gt; "HELLO"
+  downer(a)      # -&gt; "hello"
+  a              # -&gt; "hello"
+</PRE></td></tr></table>
+<P>There is no equivalent of other language's pass-by-reference
+semantics.
+<P>
+<H2>4.6 Does assignment to a formal argument influence the actual argument?</H2>
+
+<P>
+<P>A formal argument is a local variable.  Within a method, assigning to
+a formal argument simply changes the argument to reference another object.
+<P>
+<P>
+<H2>4.7 What happens when I invoke a method via a formal argument?</H2>
+
+<P>
+<P>All Ruby variables (including method arguments) act as references to
+objects. You can invoke methods in these objects to get or change the object's 
+state and to make the object do something. You can do this with
+objects passed to methods. You need to be careful when doing this, as
+these kinds of side effects can make programs hard to follow.
+<P>
+<H2>4.8 What does ``<CODE>*</CODE>'' prepended to an argument mean?</H2>
+
+<P>
+<P>When used as part of a formal parameter list, the asterisk allows
+arbitrary numbers of arguments to be passed to a method by collecting
+them into an array, and assigning that array to the starred parameter.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def foo(prefix, *all)
+  for e in all
+    print prefix, e, " "
+  end
+end
+
+foo("val=", 1, 2, 3)
+
+Produces:
+
+val=1 val=2 val=3 
+</PRE></td></tr></table>
+<P>When used in a method call, <CODE>*</CODE> expands an array, passing
+its individual elements as arguments.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+a = [1, 2, 3]
+foo(*a)
+</PRE></td></tr></table>
+<P>You can prepend <CODE>*</CODE> to the last argument of
+<OL>
+<LI>Left hand side of a multiple assignment.</LI>
+<LI>Right hand side of a multiple assignment.</LI>
+<LI>Definition of method formal arguments.</LI>
+<LI>Actual arguments in a method call.</LI>
+<LI>In <CODE>when</CODE> clause of <CODE>case</CODE> structure.</LI>
+</OL>
+<P>For example:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+x, *y = [7, 8, 9]
+x                # -&gt; 7
+y                # -&gt; [8, 9]
+x,    = [7, 8, 9]
+x                # -&gt; 7
+x     = [7, 8, 9]
+x                # -&gt; [7, 8, 9]
+</PRE></td></tr></table>
+<P>
+<H2>4.9 What does ``<CODE>&amp;</CODE>'' prepended to an argument mean?</H2>
+
+<P>
+<P>If the last formal argument of a method is preceeded with an
+ampersand, a block following the method call will be converted into a
+<CODE>Proc</CODE> object and assigned to the formal parameter.
+<P>If the last actual argument in a method invocation is a <CODE>Proc</CODE>
+object, you can preceed its name with an ampersand to convert in into
+a block. The method may then use <CODE>yield</CODE> to call it.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+square = proc { |i| i*i }
+
+def meth1(&amp;b)
+  print b.call(9), "\n"
+end
+
+meth1 { |i| i+i }
+
+def meth2
+  print yield(8), "\n"
+end
+
+meth2 { |i| i+i }
+meth2 &amp;square
+
+Produces:
+
+18
+16
+64
+</PRE></td></tr></table>
+<P>
+<H2>4.10 How can I specify a default value for a formal argument?</H2>
+
+<P>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def greet(p1='hello', p2='world')
+  print "#{p1} #{p2}\n"
+end
+
+greet
+greet "hi"
+greet "morning", "mom"
+
+Produces:
+
+hello world
+hi world
+morning mom
+</PRE></td></tr></table>
+<P>The default value (which can be an arbitrary expression) is evaluated
+when the method is invoked. It is evaluated using the scope of the
+method.
+<P>
+<H2>4.11 How do I pass arguments to a block?</H2>
+
+<P>
+<P>The formal parameters of a block appear between vertical bars at the
+start of the block:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+proc { |a, b| a &lt;=&gt; b }
+</PRE></td></tr></table>
+<P>These parameters are actually local variables. If an existing local of 
+the same name exists when the block executes, that variable will be
+modified by the call to the block. This may or may not be a good thing.
+<P>Typically, arguments are passed to a block using <CODE>yield</CODE> (or an 
+iterator that calls <CODE>yield</CODE>), or by using the
+<CODE>Proc.call</CODE> method.
+<P>
+<H2>4.12 Why did my object change unexpectedly?</H2>
+
+<P>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+A = a = b = "abc"
+b.concat("d")    # -&gt; "abcd"
+a                # -&gt; "abcd"
+A                # -&gt; "abcd"
+</PRE></td></tr></table>
+<P>Variables hold <EM>references</EM> to objects. The assignment <CODE>A =
+a = b = &quot;abc&quot;</CODE> put a reference to the string ``abc''
+into <CODE>A</CODE>, <CODE>a</CODE>, and <CODE>b</CODE>.
+<P>When you called <CODE>b.concat(&quot;d&quot;)</CODE>, you invoked the
+<CODE>concat</CODE> method on that object, changing it from ``abc'' to
+``abcd''. Because <CODE>a</CODE> and <CODE>A</CODE> also reference that same
+object, their apparent value changes too.
+<P>This is less of a problem in practice than it might appear.
+<P>In addition, as of Ruby 1.5.2, all objects may be <EM>frozen</EM>, protecting
+them from change. 
+<P>
+<H2>4.13 Does the value of a constant ever change?</H2>
+
+<P>
+<P>A constant is a variable whose name starts with an upper case letter.
+In older Ruby implementations, when a constant was assigned a new
+value, a warning was issued. In newer Rubies, constants may not be
+reassigned from within instance methods, but can otherwise be changed
+at will.
+<P>
+<H2><A NAME="s5">5. Iterators</A></H2>
+
+<P>
+<P>
+<H2>5.1 What is an iterator?</H2>
+
+<P>
+<P>An iterator is a method which accepts a block or a <CODE>Proc</CODE>
+object. In the source file, the block is placed immediately after the
+invocation of the method. Iterators are used to produce user-defined
+control structures--especially loops.
+<P>Let's look at an example to see how this works. Iterators are often
+used to repeat the same action on each element of a collection,
+like this:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+data = [1, 2, 3]
+data.each do |i|
+  print i, "\n"
+end
+
+Produces:
+
+1
+2
+3
+</PRE></td></tr></table>
+<P>The <CODE>each</CODE> method of the array <CODE>data</CODE> is passed the
+<CODE>do...end</CODE> block, and executes it repeatedly. On each call, the 
+block is passed successive elements of the array.
+<P>You can define blocks with <CODE>{</CODE>...<CODE>}</CODE> in place of
+<CODE>do</CODE>...<CODE>end</CODE>.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+data = [1, 2, 3]
+data.each { |i|
+  print i, "\n"
+}
+
+Produces:
+
+1
+2
+3
+</PRE></td></tr></table>
+<P>This code has the same meaning as the last example.  However, in some
+cases, precedence issues cause <CODE>do</CODE>...<CODE>end</CODE> and
+<CODE>{</CODE>...<CODE>}</CODE> to act differently.
+<P>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+foobar a, b do .. end # foobar is the iterator.
+foobar a, b { .. }    # b is the iterator.
+</PRE></td></tr></table>
+
+This is because <CODE>{...}</CODE> binds more tightly to the preceding expression
+than does a <CODE>do</CODE> block. The first example is equivalent to
+<CODE>foobar(a, b) do...</CODE>, while the second is <CODE>foobar(a, b
+{...})</CODE>.
+<P>
+<H2>5.2 How can I pass a block to an iterator?</H2>
+
+<P>
+<P>You simply place the block after the iterator call. You can also pass
+a <CODE>Proc</CODE> object by prepending &amp; to the variable or constant
+name that refers to the <CODE>Proc</CODE>.
+<P>
+<H2>5.3 How is a block used in an iterator?</H2>
+
+<P>
+<P>There are three ways to execute a block from an iterator method: (1)
+the <CODE>yield</CODE> control structure; (2) calling a <CODE>Proc</CODE>
+argument (made from a block) with <CODE>call</CODE>; and (3) using
+<CODE>Proc.new</CODE> followed by a call.
+<P>The <CODE>yield</CODE> statement calls the block, optionally passing it
+one or more arguments.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def myIterator
+  yield 1,2
+end
+myIterator { |a,b| puts a, b }
+
+Produces:
+
+1
+2
+</PRE></td></tr></table>
+<P>If a method definition has a block argument (the last formal parameter
+has an ampersand (&amp;) prepended), it will receive the attached
+block, converted to a <CODE>Proc</CODE> object.  This may be called using
+<CODE>method.call(args...)</CODE>.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def myIterator(&amp;b)
+  b.call(2,3)
+end
+myIterator { |a,b| puts a, b }
+
+Produces:
+
+2
+3
+</PRE></td></tr></table>
+<P><CODE>Proc.new</CODE> (or the equivalent <CODE>proc</CODE> or <CODE>lambda</CODE>
+calls), when used in an iterator definition, takes the
+block which is given to the method as its argument, generates a
+procedure object from it. (<CODE>proc</CODE> and <CODE>lambda</CODE> are
+effectively synonyms.)
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def myIterator
+  Proc.new.call(3,4)
+  proc.call(4,5)
+  lambda.call(5,6)
+end
+myIterator { |a,b| puts a, b }
+
+Produces:
+
+3
+4
+4
+5
+5
+6
+</PRE></td></tr></table>
+<P>Perhaps surprisingly, <CODE>Proc.new</CODE> and friends do not in any
+sense <EM>consume</EM> the block attached to the method--each call to
+<CODE>Proc.new</CODE> generates a new procedure object out of the same
+block.
+<P>You can tell if there is a block associated with a method by calling
+<CODE>block_given?</CODE>.
+<P>
+<H2>5.4 What does <CODE>Proc.new</CODE> without a block do?</H2>
+
+<P>
+<P><CODE>Proc.new</CODE> without a block cannot generate a procedure object
+and an error occurs.  In a method definition, however,
+<CODE>Proc.new</CODE> without a block implies the existence of a block
+at the time the method is called, and so no error will occur.
+<P>
+<H2>5.5 How can I run iterators in parallel?</H2>
+
+<P>
+<P>Matz's solution, in [ruby-talk:5252], uses threads:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  require 'thread'
+
+  def combine(*args)
+    queues = []
+    threads = []
+    for it in args
+      queue = SizedQueue.new(1)
+      th = Thread.start(it, queue) do |i,q|
+        self.send(it) do |x|
+          q.push x
+        end
+      end
+      queues.push queue
+      threads.push th
+    end
+    loop do
+      ary = []
+      for q in queues
+        ary.push q.pop
+      end
+      yield ary
+      for th in threads
+        return unless th.status
+      end
+    end
+  end
+  public :combine
+
+  def it1 ()
+    yield 1; yield 2; yield 3
+  end
+
+  def it2 ()
+    yield 4; yield 5; yield 6
+  end
+
+  combine('it1','it2') do |x|
+    # x is (1, 4), then (2, 5), then (3, 6)
+  end
+</PRE></td></tr></table>
+<P>
+<P>
+<H2><A NAME="s6">6. Syntax</A></H2>
+
+<P>
+<P>
+<H2>6.1 What does <CODE>:var</CODE> mean?</H2>
+
+<P>
+<P>A colon followed by a name generates an integer(Fixnum) called a
+<EM>symbol</EM> which corresponds one to one with the identifier.
+<CODE>&quot;var&quot;.intern</CODE> gives the same integer as
+<CODE>:var</CODE>, but the ``:'' form will create a local symbol if it
+doesn't already exist.
+<P>The routines &quot;catch&quot;, &quot;throw&quot;,
+&quot;autoload&quot;, and so on, require a string or a symbol as an
+argument.
+<P>&quot;method_missing&quot;, &quot;method_added&quot; and
+&quot;singleton_method_added&quot; (and others) require a symbol.
+<P>The fact that a symbol springs into existence the first time it is
+referenced is sometimes used to assign unique values to constants:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+NORTH = :NORTH
+SOUTH = :SOUTH
+EAST  = :EAST
+WEST  = :WEST
+</PRE></td></tr></table>
+<P>
+<H2>6.2 How can I access the value of a symbol?</H2>
+
+<P>
+<P>To get the value of the variable corresponding to a symbol, you can
+use <CODE>id2name</CODE> to get the name of the variable, and then
+<CODE>eval</CODE> that to get that variable's contents.
+In the scope of &quot;symbol&quot;, do <CODE>eval(:symbol.id2name)</CODE>.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+a = 'This is the content of "a"'
+b = eval(:a.id2name)
+a.id == b.id  # b now references the same object as a
+</PRE></td></tr></table>
+<P>If your symbol corresponds to the name of a method, you can use the
+<CODE>Method.method</CODE> function to return a corresponding
+<CODE>Method</CODE> object, which you may then call.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Demo
+  def meth
+    "Hello, world"
+  end
+end
+
+d = Demo.new         # -&gt; #&lt;Demo:0x401b4400&gt;
+m = d.method(:meth)  # -&gt; #&lt;Method: Demo(Demo)#meth&gt;
+m.call               # -&gt; "Hello, world"
+</PRE></td></tr></table>
+<P>
+<H2>6.3 Is <CODE>loop</CODE> a control structure?</H2>
+
+<P>
+<P>Although <CODE>loop</CODE> looks like a control structure, it is actually
+a method defined in <CODE>Kernel</CODE>.  The block which follows
+introduces a new scope for local variables.
+<P>
+<H2>6.4 Ruby doesn't have a post-test loop</H2>
+
+<P>
+<P><B>Q:</B> Ruby does not have a <CODE>do { ... } while</CODE> construct,
+so how can I implement loops that test the condition at the end.
+<P><EM>Clemens Hintze says:</EM> You can use a combination of Ruby's <CODE>begin
+... end</CODE> and the <CODE>while</CODE> or <CODE>until</CODE> statement
+modifiers to achieve the same effect:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+i = 0
+begin
+  puts "i = #{i}"
+  i += 1
+end until i &gt; 4
+
+Produces:
+
+i = 0
+i = 1
+i = 2
+i = 3
+i = 4
+</PRE></td></tr></table>
+<P>
+<P>
+<H2>6.5 <CODE>a +b</CODE> gives an error!</H2>
+
+<P>
+<P>Ruby works hard to distinguish method calls from operators, and
+variable names from method names. Unfortunately, there's no way it can
+get it right all the time. In this case, ``<CODE>a&nbsp;+b</CODE>'' is parsed
+as ``<CODE>a(+b)</CODE>''.  Remove the space to the left of ``<CODE>+</CODE>'' or add
+a space to the right of ``<CODE>+</CODE>,'' and it will be parsed as an
+addition.
+<P>
+<H2>6.6 <CODE>s = "x"; puts s *10</CODE> gives an error.</H2>
+
+<P>
+<P>Again, Ruby sees the asymmetrical space and parses it as
+<CODE>puts(s(*10))</CODE> (which isn't too smart, really). Use
+``<CODE>s*10</CODE>'' or ``<CODE>s&nbsp;*&nbsp;10</CODE>'' to get the desired
+result.
+<P>
+<H2>6.7 Why can't I pass a hash literal to a method: <CODE>p&nbsp;{}</CODE>?</H2>
+
+<P>
+<P>The <CODE>{}</CODE> is parsed as a block, not a Hash constructor.
+You can force the <CODE>{}</CODE> to be treated as an expression by making 
+the fact that it's a parameter explicit: <CODE>p({})</CODE>.
+<P>
+<H2>6.8 I can't get <CODE>def pos=(val)</CODE> to work.</H2>
+
+<P>
+<P>I have the following code, but I cannot use the method
+<CODE>pos&nbsp;=&nbsp;1</CODE>.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def pos=(val)
+   print @pos, "\n"
+   @pos = val
+end
+</PRE></td></tr></table>
+<P>Methods with <CODE>=</CODE> appended must be called with a receiver
+(without the receiver, you're just assigning to a local variable).
+Invoke it as <CODE>self.pos = 1</CODE>.
+<P>
+<H2>6.9 What is the difference between <CODE>'\1'</CODE> and <CODE>'\\1'</CODE>?</H2>
+
+<P>
+<P>They have the same meaning.  In a single quote string, only <CODE>\'</CODE> and
+<CODE>\\</CODE> are transformed and other combinations remain unchanged.
+<P>However, in a doubled quoted string, <CODE>&quot;\1&quot;</CODE> is the byte
+<CODE>\001</CODE>, while <CODE>&quot;\\1&quot;</CODE> is the two character string
+containing a backslash and the character &quot;1&quot;.
+<P>
+<H2>6.10 What's the difference between ``<CODE>or</CODE>'' and ``<CODE>||</CODE>''?</H2>
+
+<P>
+<P><B>Q:</B> ``<CODE>p(nil || &quot;Hello&quot;)</CODE>'' prints &quot;Hello&quot;,
+while ``<CODE>p(nil or &quot;Hello&quot;)</CODE>'' gives a parse error.
+<P><B>A:</B> <CODE>||</CODE> combines terms within an expression. Because
+the first term in this case is <CODE>nil</CODE>, the second term is
+evaluated.
+<P><CODE>or</CODE> is used to combine expressions in conditionals. Ruby is
+not expecting a conditional statement in an argument list.
+<P>
+<H2><A NAME="s7">7. Methods</A></H2>
+
+<P>
+<P>
+<H2>7.1 How does Ruby choose which method to invoke?</H2>
+
+<P>
+<P>Ruby binds all messages to methods dynamically. It searches first for
+singleton methods in the receiver, then for methods defined in the
+receiver's own class, and finally for methods defined in the
+receiver's superclasses (including any modules which may have been
+mixed in).  You can see the order of searching by displaying
+<CODE>Classname.ancestors</CODE>, which shows the ancestor classes and
+modules of <CODE>ClassName</CODE>.
+<P>If after searching the alternatives a matching method could not
+be found, Ruby tries to invoke a method called <CODE>method_missing</CODE>,
+repeating the same search procedure to find it. This allows you to
+handle messages to unknown methods, and is often used to provide
+dynamic interfaces to classes.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+module Indexed
+  def [](n)
+    to_a[n]
+  end
+end
+class String
+  include Indexed
+end
+String.ancestors                # -&gt; [String, Indexed, Enumerable, Comparable, Object, Kernel]
+"abcde".gsub!(/./, "\\&amp;\n")[1]  # -&gt; 10
+</PRE></td></tr></table>
+<P>This program does not return &quot;b\n&quot; as one expects, but
+returns 10.  When the method <CODE>[]</CODE> is searched for, it is found
+in class <CODE>String</CODE>, before searching <CODE>Indexed</CODE>.  You
+should directly redefine [] in class String.
+<P>
+<H2>7.2 Are <CODE>+</CODE>, <CODE>-</CODE>, <CODE>*</CODE> ... operators?</H2>
+
+<P>
+<P><CODE>+</CODE>, <CODE>-</CODE>, and the like are not operators but method
+calls. They can, therefore, be overloaded by new definitions.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class MyString &lt; String
+  def -(other)            # New method
+    self[0...other.size]  # self truncated to other's size
+  end
+end
+</PRE></td></tr></table>
+<P>However, the following are built-in control structures, not methods,
+which cannot be overridden.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+=, .., ..., !, not, ||, &amp;&amp;, and, or, ::
+</PRE></td></tr></table>
+<P>To overload or to define unary operators, you can use
+<CODE>+@</CODE> and <CODE>-@</CODE> as the method names.
+<P><CODE>=</CODE> is used to define a method to set an attribute of the object:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Test
+  def attribute=(val)
+    @attribute = val
+  end
+end
+t = Test.new
+t.attribute = 1
+</PRE></td></tr></table>
+<P>If operators such as <CODE>+</CODE> and <CODE>-</CODE> are defined, Ruby
+automatically handles the self assignment forms (<CODE>+=</CODE>,
+<CODE>-=</CODE> and so on).
+<P>
+<P>
+<H2>7.3 Where are <CODE>++</CODE> and <CODE>- -</CODE>?</H2>
+
+<P>
+<P>Ruby does not have the autoincrement and autodecrement operators. You
+can use <CODE>+=&nbsp;1</CODE> and <CODE>-=&nbsp;1</CODE> instead.
+<P>
+<P>
+<H2>7.4 All these objects are fine, but does Ruby have any simple functions?</H2>
+
+<P>
+<P>Yes and no. Ruby has methods that <EM>look</EM> like functions in
+languages such as C or Perl:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def writeln(str)
+  print(str, "\n")
+end
+
+writeln("Hello, World!")
+
+Produces:
+
+Hello, World!
+</PRE></td></tr></table>
+<P>However, they're actually method calls with the receiver omitted.
+In this case, Ruby assumes the receiver is <CODE>self</CODE>.
+<P>So, <CODE>writeln</CODE> resembles a function but it's actually a method
+belonging to class <CODE>Object</CODE> and sent as a message to the
+hidden receiver <CODE>self</CODE>.  Ruby is a pure object-oriented language..
+<P>Of course you can use such methods as if they were functions.
+<P>
+<H2>7.5 So where do all these function-like methods come from?</H2>
+
+<P>
+<P>All classes in Ruby are derived from class <CODE>Object</CODE>. The
+definition of class <CODE>Object</CODE> mixes-in the methods defined in
+the <CODE>Kernel</CODE> module. These methods are therefore available
+within every object in the system.
+<P>Even if you're writing a simple Ruby program without classes, you're
+actually working inside class <CODE>Object</CODE>.
+<P>
+<H2>7.6 Can I access an object's instance variables?</H2>
+
+<P>
+<P>An object's instance variables (those variables starting with
+<CODE>@</CODE>) are not directly accessible outside the object. This
+promotes good encapsulation. However, Ruby makes it easy for you to
+define accessors to these instance variables in such a way that users
+of your class can treat instance variables just like attributes.
+Just use one or more of
+<CODE>Module.attr</CODE>, <CODE>attr_reader</CODE>, <CODE>attr_writer</CODE>, or
+<CODE>attr_accessor</CODE>.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Person
+  attr           :name           # read only
+  attr_accessor  :wearing_a_hat  # read/write
+  def initialize(name)
+    @name = name
+  end
+end
+
+p = Person.new("Dave")
+p.name           # -&gt; "Dave"
+p.wearing_a_hat  # -&gt; nil
+p.wearing_a_hat = true
+p.wearing_a_hat  # -&gt; true
+</PRE></td></tr></table>
+<P>You can also define your own accessor functions (perhaps to perform
+validation, or to handle derived attributes). The read accessor is
+simply a method that takes no parameters, and the assignment accessor
+is a method name ending in <CODE>=</CODE> that takes a single parameter.
+Although there can be no space between the method name and the
+<CODE>=</CODE> in the method definition, you can insert spaces there when
+you <EM>call</EM> the method, making it look like any other
+assignment.  You can also utilize self assignments such as <CODE>+=</CODE>
+and <CODE>-=</CODE>, as long as the corresponding <CODE>+</CODE> or <CODE>-</CODE>
+methods are defined.
+<P>
+<H2>7.7 What's the difference between <CODE>private</CODE> and <CODE>protected</CODE>?</H2>
+
+<P>
+<P>The visibility keyword <CODE>private</CODE> makes a method callable only
+in a function form, and so it can only have <CODE>self</CODE> as a
+receiver.  A private method is callable only within the class in which
+the method was defined or in its subclasses.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Test
+  def func
+    return 99
+  end
+  def test(other)
+    p func
+    p other.func
+  end
+end
+t1 = Test.new
+t2 = Test.new
+
+t1.test(t2)
+
+# Now make 'func' private
+
+class Test
+  private :func
+end
+
+t1.test(t2)
+
+Produces:
+
+99
+99
+99
+prog.rb:7:in `test': private method `func' called for #&lt;Test:0x401b4284&gt; (NameError)
+        from prog.rb:21
+</PRE></td></tr></table>
+<P>Protected methods are also callable only from within their own class or
+its subclasses, but they can be called both as functions form and
+using a receiver.  For example,
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def &lt;=&gt;(other)
+  age &lt;=&gt; other.age
+end
+</PRE></td></tr></table>
+<P>Will compile if <CODE>age</CODE> is a protected method, but not if it is
+private. 
+<P>
+<P>These features help you control access to your class's internals.
+<P>
+<P>
+<H2>7.8 How can I change the visibility of a method?</H2>
+
+<P>
+<P>You change the visibility of methods using <CODE>private</CODE>,
+<CODE>protected</CODE> and <CODE>public</CODE>. When used without parameters
+during a class definition, they affect the visibility of subsequent
+methods. When used with parameters, they change the visibility of the
+named methods.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Foo
+  def test
+    print "hello\n"
+  end
+  private :test
+end
+
+foo = Foo.new
+foo.test
+
+Produces:
+
+prog.rb:9: private method `test' called for #&lt;Foo:0x401b4694&gt; (NameError)
+</PRE></td></tr></table>
+<P>You can make a class method private using <CODE>private_class_method</CODE>.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Foo
+  def Foo.test
+    print "hello\n"
+  end
+  private_class_method :test
+end
+
+Foo.test
+
+Produces:
+
+prog.rb:8: private method `test' called for Foo:Class (NameError)
+</PRE></td></tr></table>
+<P>The default visibility for the methods defined in a class is
+public. The exception is the instance initializing method,
+<CODE>initialize</CODE>.
+<P>Methods defined at the toplevel are also public by default.
+<P>
+<H2>7.9 Can an identifier beginning with a capital letter be a method name?</H2>
+
+<P>
+<P>Yes, you can, but we don't do it lightly! If Ruby sees a capitalized
+name followed by a space, it will probably (depending on the context)
+assume it's a constant, not a method name. So, if you use capitalized
+method names, always remember to put parameter lists in parentheses,
+and always put the parentheses next to the method name with no
+intervening spaces. (This last suggestion is a good idea anyway!)
+<P>
+<H2>7.10 Calling <CODE>super</CODE> gives an <CODE>ArgumentError</CODE>.</H2>
+
+<P>
+<P>Invoking <CODE>super</CODE> with no parameters in a method passes all the
+arguments of that method to a method of the same name in a superclass.
+If the number of arguments to the original method disagrees with that
+of the higher-level method,
+an <CODE>ArgumentError</CODE> is raised. To get around this, simply call 
+<CODE>super</CODE> and pass a suitable number of arguments.
+<P>
+<H2>7.11 How can I call the a method of the same name two levels up?</H2>
+
+<P>
+<P><CODE>super</CODE> invokes the same named method one level up.  If you're
+overloading a method in a more distant ancestor, use <CODE>alias</CODE> to 
+give it an new name before masking it with your method definition. You 
+can then call it using that aliased name.
+<P>
+<H2>7.12 How can I invoke an original built-in method after redefining it?</H2>
+
+<P>
+<P>Within the method definition, you can use <CODE>super</CODE>.  You can
+also use <CODE>alias</CODE> to give it an alternative name. Finally, you
+can call the original method as a singleton method of <CODE>Kernel</CODE>.
+<P>
+<H2><A NAME="destructive"></A> 7.13 What is a destructive method?</H2>
+
+<P>
+<P>A destructive method is one which alters the state of an
+object. String, Array, and Hash, and others have such methods.
+Often there are two versions of a method, one with a plain name, the
+other with the same, but followed by <CODE>!</CODE>. The plain version 
+takes a copy of the receiver, makes its change to it, and returns the
+copy. The version with the <CODE>!</CODE> modifies the receiver in place.
+<P>Beware, however, that there are a fair number of destructive methods
+that don't have an <CODE>!</CODE>, including assignment operators
+(<CODE>name=</CODE>), array assignment (<CODE>[]=</CODE>), and methods such as 
+<CODE>Array.delete</CODE>.
+<P>
+<H2>7.14 Why can destructive methods be dangerous?</H2>
+
+<P>
+<P>Remember that assignment in most cases just copies object references,
+and that parameter passing is equivalent to assignment. This means you 
+can end up with multiple variables referencing the same object. If one 
+of those variables is used to invoke a destructive method, the object
+referenced by all of them will be changed.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def foo(str)
+  str.sub!(/foo/, "baz")
+end
+
+obj = "foo"
+foo(obj)         # -&gt; "baz"
+obj              # -&gt; "baz"
+</PRE></td></tr></table>
+<P>In this case the actual argument is altered.
+<P>
+<H2>7.15 Can I return multiple values from a method?</H2>
+
+<P>
+<P>Yes and no.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def m1
+  return 1, 2, 3
+end
+def m2
+  return [1, 2, 3]
+end
+m1               # -&gt; [1, 2, 3]
+m2               # -&gt; [1, 2, 3]
+</PRE></td></tr></table>
+<P>So, only one <EM>thing</EM> is returned, but that thing can be an
+arbitrarily complex object. In the case of arrays, you can use
+multiple assignment to get the effect of multiple return values. For
+example:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def foo
+  return 20, 4, 17
+end
+
+a, b, c = foo
+a                # -&gt; 20
+b                # -&gt; 4
+c                # -&gt; 17
+</PRE></td></tr></table>
+<P>
+<H2><A NAME="s8">8. Classes and modules</A></H2>
+
+<P>
+<P>
+<H2>8.1 Can a class definition be repeated?</H2>
+
+<P>
+<P>A class can be defined repeatedly. Each definition is added to
+the last definition.  If a method is redefined, the former one
+is overridden and lost.
+<P>
+<H2>8.2 Are there class variables?</H2>
+
+<P>
+<P>As of Ruby 1.5.3, there are. A variable prefixed with two at signs is
+a class variable, accessible within both instance and class methods of 
+the class.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  class CountEm
+    @@children = 0
+    def initialize
+      @@children += 1
+      @myNumber = @@children
+    end
+    def whoAmI
+     "I'm child number #@myNumber (out of #@@children)"
+    end
+    def CountEm.totalChildren
+      @@children
+    end
+  end
+
+  c1 = CountEm.new
+  c2 = CountEm.new
+  c3 = CountEm.new
+  c1.whoAmI              # -&gt; "I'm child number 1 (out of 3)"
+  c3.whoAmI              # -&gt; "I'm child number 3 (out of 3)"
+  CountEm.totalChildren  # -&gt; 3
+</PRE></td></tr></table>
+<P>Earlier versions of Ruby do not have class variables. However,
+container classes (<CODE>Array</CODE>, <CODE>Hash</CODE>, etc) assigned to a
+class constant can be used to give the same effect. This example uses
+an array. Some folks feel hashes are better.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Foo
+  F = [ 0 ]          # pseudo class variable - Array 'F'
+  def foo
+    F[0] += 1
+    puts F[0]
+  end
+end
+</PRE></td></tr></table>
+<P>This reports on the number of times <CODE>foo</CODE> is called across
+<EM>all</EM> instances of class <CODE>Foo</CODE>.
+<P>
+<H2>8.3 What is a class instance variable?</H2>
+
+<P>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Foo
+  @a = 123   # (1)
+  def foo
+    p @a     # (2) ... nil not 123
+  end
+end
+</PRE></td></tr></table>
+<P>(1)&nbsp;is a class instance variable, and (2)&nbsp;is an ordinary
+instance variable (which, not having been initialized, has a value of
+<CODE>nil</CODE>).  (2)&nbsp;belongs to an instance of class <CODE>Foo</CODE>,
+and (1)&nbsp;belongs to the class object <CODE>Foo</CODE>, which is an
+instance of <CODE>Class</CODE> class. (phew!)
+<P>There is no way to access class instance variables from instance
+methods.
+<P>
+<H2><A NAME="singleton_method"></A> 8.4 What is a singleton method?</H2>
+
+<P>
+<P>A singleton method is an instance method associated with one specific object.
+<P>You create a singleton method by including the object in the
+definition:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Foo
+end
+
+foo = Foo.new
+bar = Foo.new
+def foo.hello
+  puts "Hello"
+end
+foo.hello
+bar.hello
+
+Produces:
+
+Hello
+prog.rb:10: undefined method `hello' for #&lt;Foo:0x401b45f4&gt; (NameError)
+</PRE></td></tr></table>
+<P>Singleton methods are useful when you want to add a method to an
+object and creating a new subclass is not appropriate.
+<P>
+<H2><A NAME="class_method"></A> 8.5 Does Ruby have class methods?</H2>
+
+<P>
+<P>A 
+<A HREF="#singleton_method">singleton method</A> of a class
+object is called a class method.  (Actually, the class method is
+defined in the metaclass, but that is pretty much transparent).
+Another way of looking at it is to say that a class method is a method
+whose receiver is a class.
+<P>It all comes down to the fact that you can call class methods without
+having to have instances of that class (objects) as the receiver.
+<P>Let's create a singleton method of class <CODE>Foo</CODE>:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Foo
+  def Foo.test
+    "this is foo"
+  end
+end
+
+#It is invoked this way.
+
+Foo.test         # -&gt; "this is foo"
+</PRE></td></tr></table>
+<P>In this example, <CODE>Foo.test</CODE> is a class method.
+<P>Methods which are defined in class <CODE>Class</CODE> can
+be used as class methods for every class(!)
+<P>
+<H2>8.6 What is a singleton class?</H2>
+
+<P>
+<P>A Singleton class is an anonymous class that is created by subclassing
+the class associated with a particular object. They are another way of
+extending the functionality associated with just one object.
+<P>Take the lowly <CODE>Foo</CODE>:
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Foo        # -&gt; hello&lt;&lt;7&gt;&gt;nil
+  def hello
+    print "hello"
+  end
+end
+
+foo = Foo.new
+foo.hello
+</PRE></td></tr></table>
+<P>Now let's say we need to add class-level functionality to just this
+one instance:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class &lt;&lt; foo
+  attr :name, TRUE
+  def hello
+    "hello. I'm " +  @name + "\n"
+  end
+end
+
+foo.name = "Tom"
+foo.hello        # -&gt; "hello. I'm Tom\n"
+</PRE></td></tr></table>
+<P>We've customized <CODE>foo</CODE> without changing the characteristics of <CODE>Foo</CODE>,
+<P>
+<H2>8.7 What is a module function?</H2>
+
+<P>
+<P>A <EM>module function</EM> is a private,  singleton method defined in
+a module. In effect, it is similar to a 
+<A HREF="#class_method">class method</A>, in that it can be called using the
+<CODE>Module.method</CODE> notation:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+Math.sqrt(2)     # -&gt; 1.414213562
+</PRE></td></tr></table>
+<P>However, because modules can be mixed in to classes, module functions
+can also be used without the prefix (that's how all those
+<CODE>Kernel</CODE> functions are made available to objects):
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+include Math
+sqrt(2)          # -&gt; 1.414213562
+</PRE></td></tr></table>
+<P>
+<P>Use <CODE>module_function</CODE> to make a method a module function.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+module Test
+  def thing
+    # ...
+  end
+  module_function :thing
+end
+</PRE></td></tr></table>
+<P>
+<P>
+<H2>8.8 What is the difference between a class and a module?</H2>
+
+<P>
+<P>Modules are collections of methods and constants. They cannot generate
+instances. Classes may generate instances (objects), and have
+per-instance state (instance variables).
+<P>Modules may be mixed in to classes and other modules. The mixed-in
+module's constants and methods blend into that class's own, augmenting
+the class's functionality. Classes, however, cannot be mixed in to
+anything.
+<P>A class may inherit from another class, but not from a module.
+<P>A module may not inherit from anything.
+<P>
+<H2>8.9 Can you subclass modules?</H2>
+
+<P>
+<P>No. However, a module may be included in a class or another module to
+mimic multiple inheritance (the <EM>mixin</EM> facility).
+<P>This does not generate a subclass (which would require inheritance), but
+does generate an <CODE>is_a?</CODE> relationship between the class and the 
+module.
+<P>
+<H2>8.10 Give me an example of a mix-in</H2>
+
+<P>
+<P>The module <CODE>Comparable</CODE> provides a variety of comparison
+operators (&lt;, &lt;=, &gt;, <CODE>between?</CODE> and so on). It defines
+these in terms of calls to the general comparison method,
+<CODE>&lt;=&gt;</CODE>. However, it does not itself define
+<CODE>&lt;=&gt;</CODE>.
+<P>Say you want to create a class where comparisons are based on the
+number of legs an animal has:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class MyClass
+  include Comparable
+  attr :legs
+  def initialize(name, legs)
+   @name, @legs = name, legs
+  end
+  def &lt;=&gt;(o)
+    return @legs &lt;=&gt; o.legs
+  end
+end
+c = MyClass.new('cat', 4)
+s = MyClass.new('snake', 0)
+p = MyClass.new('parrot', 2)
+
+c &lt; s          # -&gt; false
+s &lt; c          # -&gt; true
+p &gt;= s         # -&gt; true
+p.between?(s, c)  # -&gt; true
+[p, s, c].sort    # -&gt; [snake, parrot, cat]
+</PRE></td></tr></table>
+<P>All <CODE>MyClass</CODE> must do is define its own semantics for the
+operator <CODE>&lt;=&gt;</CODE>, and mix-in the <CODE>Comparable</CODE>
+module. <CODE>Comparable</CODE>'s methods now become indistinguishable from
+<CODE>MyClass</CODE>'s and your class suddenly sprouts new
+functionality. And because the same <CODE>Comparable</CODE> module is used 
+my many classes, your new class will share a consistent and well
+understood semantic.
+<P>
+<H2>8.11 Why are there two ways of defining class methods?</H2>
+
+<P>
+<P>You can define a class method in the class definition, and you can
+define a class method at the top level?
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+class Demo
+  def Demo.classMethod
+  end
+end
+
+def Demo.anotherClassMethod
+end
+</PRE></td></tr></table>
+<P>There is only one significant difference between the two.  In the
+class definition you can refer to the class's constants directly, as
+the constants are within scope.  At the top level, you have to use the
+<CODE>Class::CONST</CODE> notation.
+<P>
+<H2>8.12 What is the difference between <CODE>load</CODE> and <CODE>require</CODE>?</H2>
+
+<P>
+<P><CODE>load</CODE> will load and execute a Ruby program (<CODE>*.rb</CODE>).
+<P><CODE>require</CODE> loads Ruby programs as well, but will also load binary
+Ruby extension modules (shared libraries or DLLs). In addition,
+<CODE>require</CODE> ensures that a feature is never loaded more than
+once.
+<P>
+<H2>8.13 What is the difference between <CODE>include</CODE> and <CODE>extend</CODE>?</H2>
+
+<P>
+<P><CODE>include</CODE> mixes a  module into a class or another module. Methods
+from that the module are called function-style (without a receiver).
+<P><CODE>extend</CODE> is used to include a module in an object(instance).
+Methods in the module become methods in the object.
+<P>
+<H2>8.14 What does <CODE>self</CODE> mean?</H2>
+
+<P>
+<P><CODE>self</CODE> is the currently executing receiver--the object to which
+a method is applied.  A function-style method call implies
+<CODE>self</CODE> as the receiver.
+<P>
+<H2>8.15 Why can't I load variables from a separate file?</H2>
+
+<P>
+<P>Say <CODE>file1</CODE> contains:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+var1 = 99
+</PRE></td></tr></table>
+<P>and some other file loads it in:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+require 'file1'
+puts var1
+
+Produces:
+
+prog.rb:2: undefined local variable or method `var1' for #&lt;Object:0x401c1ce0&gt; (NameError)
+</PRE></td></tr></table>
+<P>You get an error because <CODE>load</CODE> and <CODE>require</CODE> arrange
+for local variables to be stored into a separate, anonymous namespace, 
+effectively discarding them. This is designed to protect your code
+from being polluted.
+<P>
+<H2><A NAME="s9">9. Builtin libraries</A></H2>
+
+<P>
+<P>
+<H2>9.1 What does <CODE>instance_methods(nil)</CODE> return?</H2>
+
+<P>
+<P>The method <CODE>instance_methods</CODE> returns an array containing the
+names of methods that the receiver responds to. This will include the
+methods in superclasses and in mixed-in modules.
+<P><CODE>instance_methods(nil)</CODE> returns
+the name of just those  methods which are defined in the object's class.
+<P>
+<H2>9.2 How do random number seeds work?</H2>
+
+<P>
+<P>It depends. In Ruby versions prior to 1.5.2, the random number
+generator had (by default) a constant seed, and so would produce the
+same series of numbers each time a program was run. If you needed less
+deterministic behaviors, you called <CODE>srand</CODE> to set up a less
+predictable seed.
+<P>Newer Rubys (Rubies?) have a different behavior. If <CODE>rand</CODE> is called
+without a prior call to <CODE>srand</CODE>, Ruby will generate its own
+random(ish) seed. Successive runs of a program that does not use
+<CODE>srand</CODE> will generate different sequences of random numbers. To 
+get the old, predictable, behavior (perhaps for testing), call
+<CODE>srand</CODE> with a constant seed.
+<P>
+<H2><A NAME="immediate"></A> 9.3 What is the difference between an immediate value and a reference?</H2>
+
+<P>
+<P><CODE>Fixnum</CODE>, <CODE>true</CODE>, <CODE>nil</CODE>, and <CODE>false</CODE> are
+implemented as immediate values. With immediate values, variables hold
+the objects themselves, rather than references to them.
+<P>Singleton methods cannot be defined for such objects.  Two
+<CODE>Fixnum</CODE>s of the same value always represent the same
+object instance, so (for example) instance variables for the
+<CODE>Fixnum</CODE> with the value "one" are shared between all the "ones" 
+is the system. This makes it impossible to define a singleton method
+for just one of these.
+<P>
+<H2><A NAME="nil_false"></A> 9.4 What is the difference between <CODE>nil</CODE> and <CODE>false</CODE>?</H2>
+
+<P>
+<P>First the similarity. <CODE>nil</CODE> and <CODE>false</CODE> are the only two 
+values that evaluate to false in a boolean context.
+<P>However, they are instances of different classes (<CODE>NilClass</CODE>
+and <CODE>FalseClass</CODE>), and have different behaviors elsewhere.
+<P>We recommend that predicate methods (those whose name ends with a
+question mark) return <CODE>true</CODE> or <CODE>false</CODE>. Other methods
+that need to indicate failure should return <CODE>nil</CODE>.
+<P>
+<P>
+<H2>9.5 I read a file and changed it, but the file on disk has not changed.</H2>
+
+<P>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+open("example", "r+").readlines.each_with_index{|l, i|
+  l[0,0] = (i+1).to_s + ": " }
+</PRE></td></tr></table>
+<P>This program does not add line numbers to the file &quot;example&quot;.
+It does read the contents of the file, and for each line read prepend 
+the line number, but the data is never written back. The code below
+<EM>does</EM> update the file (although somewhat dangerously, as it
+takes no backup before starting the update):
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+io = open("example", "r+")
+ary = io.readlines
+ary.each_with_index{|l, i| l[0,0] = (i+1).to_s + ": "}
+io.rewind
+io.print ary
+io.close
+</PRE></td></tr></table>
+<P>
+<H2>9.6 How can I process a file and update its contents?</H2>
+
+<P>
+<P>Using the command-line option <CODE>-i</CODE>, or built-in variable <CODE>$-i</CODE>,
+you can read a file and replace it.
+<P>The code in the preceding question, which added line numbers to file,
+is probably best written using this technique:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+$ ruby -i -ne 'print "#$.: #$_"' example
+</PRE></td></tr></table>
+<P>If you want to preserve the original file, use <CODE>-i.bak</CODE> to
+create a backup.
+<P>
+<H2>9.7 I wrote a file, copied it, but the end of the copy seems to be lost.</H2>
+
+<P>
+<P>This code will not work correctly:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+open('file', 'w').print "This is a file.\n"
+system 'cp file newfile'
+</PRE></td></tr></table>
+<P>Because I/O is buffered, <CODE>file</CODE> is being copied <EM>before</EM> 
+its contents have been written to disk. <CODE>newfile</CODE> will probably 
+be empty. However, when the program terminates, the buffers are
+flushed, and <CODE>file</CODE> has the expected content.
+<P>The problem doesn't arise if you close <CODE>file</CODE> before copying:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+f = open('file', 'w')
+f.print "This is a file.\n"
+f.close
+system "cp file newfile"
+</PRE></td></tr></table>
+<P>
+<P>
+<H2>9.8 How can I get the line number in current input file?</H2>
+
+<P>
+<P>As you read from a file, Ruby increments a line number counter in the
+global variable <CODE>$.</CODE>. This is also available using the
+<CODE>lineno</CODE> attribute of the <CODE>File</CODE> object.
+<P>The special constant <CODE>ARGF</CODE> is a file-like object that can be
+used to read all the input files specified on the command line (or
+standard input if there are no files). ARGF is used implicitly by code 
+such as:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+while gets
+  print $_
+end
+</PRE></td></tr></table>
+<P>In this case, <CODE>$.</CODE> will be the cumulative number of lines read 
+across all input files. To get the line number in the current file,
+use
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+ARGF.file.lineno
+</PRE></td></tr></table>
+<P>You can also get the name of the current file using
+<CODE>ARGF.file.path</CODE>.
+<P>
+<H2>9.9 How can I use <CODE>less</CODE> to display my program's output?</H2>
+
+<P>
+<P>I tried the following, but nothing came out:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+f = open '|less', 'w'
+f.print "abc\n"
+</PRE></td></tr></table>
+<P>That's because the program ends immediately, and <CODE>less</CODE> never
+gets a chance to see the stuff you've written to it, never mind to
+display it. Use <CODE>close</CODE> to wait until <CODE>less</CODE> ends.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+f = open '|less', 'w'
+f.print "abc\n"
+f.close
+</PRE></td></tr></table>
+<P>
+<H2>9.10 What happens to a <CODE>File</CODE> object which is no longer referenced?</H2>
+
+<P>
+<P>A <CODE>File</CODE> object which is no longer referenced becomes
+eligible for garbage collection. The file will be closed automatically when 
+the <CODE>File</CODE> object is garbage collected. 
+<P>
+<H2>9.11 I feel uneasy if I don't close a file.</H2>
+
+<P>
+<P>There are at least four good ways of ensuring that you do close a
+file:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+(1)  f = open "file"
+     begin
+       f.each {|l| print l}
+     ensure
+       f.close
+     end
+
+(2)  File.open("file") { |f|
+       f.readlines.each { |l| print l }
+     }
+     
+(3)  IO.foreach("file") {|l| print l}
+
+(4)  IO.readlines("file").each {|l| print l}
+</PRE></td></tr></table>
+<P>
+<H2>9.12 How can I sort files by their modified time?</H2>
+
+<P>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+Dir.glob("*").sort{|a,b| File.mtime(b) &lt;=&gt; File.mtime(a)}
+</PRE></td></tr></table>
+<P>Although this works (returning a list in reverse chronological order)
+it isn't very efficient, as it fetches the files' modification times
+from the operating system on every comparison.
+<P>More efficiency can be bought with some extra complexity:
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+Dir.glob("*").collect! {|f| [File.mtime(f), f]}.
+  sort{|a,b| b[0] &lt;=&gt; a[0]}.collect! {|e| e[1]}
+</PRE></td></tr></table>
+<P>
+<H2>9.13 How can I count the frequency of words in a file?</H2>
+
+<P>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+freq = Hash.new(0)
+open("example").read.scan(/\w+/){|w| freq[w] += 1}
+freq.keys.sort.each {|k| print k, "-", freq[k], "\n"}
+
+Produces:
+
+and-1
+is-3
+line-3
+one-1
+this-3
+three-1
+two-1
+</PRE></td></tr></table>
+<P>
+<H2>9.14 Why is an empty string not <CODE>false</CODE>?</H2>
+
+<P>
+<P><B>Q:</B> An empty string (&quot;&quot;) returns <CODE>true</CODE> in a conditional
+expression! In Perl, it's <CODE>false</CODE>.
+<P><B>A:</B> In Ruby, only <CODE>nil</CODE> and <CODE>false</CODE> are false in
+conditional contexts. This is a way of gaining speed--both
+<CODE>nil</CODE> and <CODE>false</CODE> have immediate values, so they can be
+tested without having to chase a reference to an object.
+<P>You can use <CODE>empty?</CODE>, compare the string to &quot;&quot;, or compare
+<CODE>length</CODE> to <CODE>0</CODE> to find out if a string is empty.
+<P>
+<H2>9.15 How can I sort strings in alphabetical order?</H2>
+
+<P>
+<P>If you want your strings to sort 'AAA', 'BBB', ..., 'ZZZ', 'aaa',
+'bbb', then the built-in comparison will work just fine.
+<P>If you want to sort ignoring case distinctions, compare downcased
+versions of the strings in the sort block:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+array = %w( z bB Bb BB bb Aa aA AA aa a )
+puts array.sort { |a,b|  a.downcase &lt;=&gt; b.downcase }
+
+Produces:
+
+a
+aa
+AA
+aA
+Aa
+bb
+BB
+bB
+Bb
+z
+</PRE></td></tr></table>
+<P>If you want to sort so that the 'A's and 'a's come together, but 'a'
+is considered greater than 'A' (so 'Aa' comes after 'AA' but
+before 'AB'), use:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+puts array.sort { |a,b|
+  (a.downcase &lt;=&gt; b.downcase).nonzero? || a &lt;=&gt; b
+}
+
+Produces:
+
+a
+AA
+Aa
+aA
+aa
+BB
+Bb
+bB
+bb
+z
+</PRE></td></tr></table>
+<P>
+<H2>9.16 What does <CODE>"abcd"[0]</CODE> return?</H2>
+
+<P>
+<P>It returns the character code for ``a'', 97(Fixnum).
+You can express a character code as an integer constant by prefixing
+the character with a question mark, so <CODE>?a</CODE> is also  97(Fixnum).
+<P>
+<H2><A NAME="tab-expansion"></A> 9.17 How can I expand tabs to spaces?</H2>
+
+<P>
+<P>If <CODE>a</CODE> holds the string to be expanded, you could use one of:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  1 while a.sub!(/(^[^\t]*)\t(\t*)/){$1+' '*(8-$1.size%8+8*$2.size)}
+#or
+  1 while a.sub!(/\t(\t*)/){' '*(8-$~.begin(0)%8+8*$1.size)}
+#or
+  a.gsub!(/([^\t]{8})|([^\t]*)\t/n){[$+].pack("A8")}
+</PRE></td></tr></table>
+<P>
+<H2>9.18 How can I escape a backslash in a regexp?</H2>
+
+<P>
+<P><CODE>Regexp.quote('\\')</CODE> escapes a backslash.
+<P>It gets trickier if you're using <CODE>sub</CODE> and <CODE>gsub</CODE>, Say you
+write <CODE>gsub(/\\/, '\\\\')</CODE>, hoping to replace each backslash
+with two. The second argument is converted to '\\' in syntax
+analysis. When the substitution occurs, the regular expression engine
+converts this to '\', so the net effect is to replace each single
+backslash with another single backslash.  You need to write
+<CODE>gsub(/\\/, '\\\\\\')</CODE>!
+<P>However, using the fact that \&amp; contains the matched string,
+you could also write <CODE>gsub(/\\/, '\&amp;\&amp;')</CODE>.
+<P>If you use the block form of <CODE>gsub</CODE>,
+i.e. <CODE>gsub(/\\/){'\\\\'}</CODE>, the string for substitution is
+analyzed only once (during the syntax pass) and the result is what you
+intended.
+<P>
+<H2>9.19 What is the difference between <CODE>sub</CODE> and <CODE>sub!</CODE>?</H2>
+
+<P>
+<P>In <CODE>sub</CODE>, a copy of the receiver is generated, substituted
+and returned.
+<P>In <CODE>sub!</CODE>, the receiver is altered and returned if any match was
+found.  Otherwise, <CODE>nil</CODE> is returned.
+<P>Methods like <CODE>sub!</CODE> are called
+<A HREF="#destructive">destructive methods</A>
+which alter the attribute of the receiver.  If there are two similar
+methods and one is destructive, the destructive one has a suffix !.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+def foo(str)
+    str = str.sub(/foo/, "baz")
+end
+
+obj = "foo"
+foo(obj)         # -&gt; "baz"
+obj              # -&gt; "foo"
+
+def foo(str)
+    str = str.sub!(/foo/, "baz")
+end
+
+foo(obj)         # -&gt; "baz"
+obj              # -&gt; "baz"
+</PRE></td></tr></table>
+<P>
+<H2>9.20 Where does \Z match?</H2>
+
+<P>
+<P>\Z matches just before the last \n if the string ends with a \n, otherwise
+it matches at the end of a string.
+<P>
+<H2>9.21 What is the difference between "<CODE>..</CODE>" and "<CODE>...</CODE>"?</H2>
+
+<P>
+<P><CODE>..</CODE> includes the right hand side in the range, <CODE>...</CODE> does not.
+<P>
+<H2>9.22 Does Ruby have function pointers?</H2>
+
+<P>
+<P>A Proc object generated by <CODE>Proc.new</CODE>, <CODE>proc</CODE>, or <CODE>lambda</CODE>
+can be referenced from a variable, so that variable could be said to
+be a function pointer. You can also get references to methods
+within a particular object instance using <CODE>Object.method</CODE>.
+<P>
+<H2>9.23 What is the difference between <CODE>thread</CODE> and <CODE>fork</CODE>?</H2>
+
+<P>
+<P>Ruby threads are implemented within the interpreter, while
+<CODE>fork</CODE> invokes the operating system to create a separately
+executing subprocess.
+<P><CODE>Thread</CODE> and <CODE>fork</CODE> have following characteristics:
+<P>
+<UL>
+<LI><CODE>fork</CODE> is slow, <CODE>thread</CODE> is not.</LI>
+<LI><CODE>fork</CODE> does not share the memory space.</LI>
+<LI><CODE>thread</CODE> does not cause thrashing.</LI>
+<LI><CODE>thread</CODE> works on DOS.</LI>
+<LI>when <CODE>thread</CODE> gets in a deadlock, the whole process
+stops.</LI>
+<LI><CODE>fork</CODE> can take advantage of pauses waiting for I/O to
+complete, <CODE>thread</CODE> does not (at least not without some help).</LI>
+</UL>
+<P>You probably shouldn't mix <CODE>fork</CODE> and <CODE>thread</CODE>.
+<P>
+<H2>9.24 How can I use Marshal?</H2>
+
+<P>
+<P>Marshal is used to store an object in a file or a string, and later
+reconstitute it.  Objects may be stored using:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+Marshal.dump obj [, io ] [, lev]
+</PRE></td></tr></table>
+<P><CODE>io</CODE> is a writable IO object, <CODE>lev</CODE> designates the level
+to which objects are dereferred and stored.  If <CODE>lev</CODE> levels of
+dereferring are done and object references still exist, then
+<CODE>dump</CODE> stores just the reference, not the object referenced.  This is
+not good, as these referenced objects cannot be subsequently
+reconstructed. 
+<P>If <CODE>io</CODE> is omitted, the marshaled objects are returned in a string.
+<P>You can load objects back using:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+   obj = Marshal.load io
+#or
+   obj = Marshal.load str
+</PRE></td></tr></table>
+<P>where <CODE>io</CODE> is a readable IO object, <CODE>str</CODE> is the dumped
+string.
+<P>
+<H2>9.25 Does Ruby have exception handling?</H2>
+
+<P>
+<P>Ruby supports a flexible exception handling scheme:
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+begin
+  statements which may raise exceptions.
+rescue [exception class names]
+  statements when an exception occurred.
+rescue [exception class names]
+  statements when an exception occurred.
+ensure
+  statements that will always run
+end
+</PRE></td></tr></table>
+<P>If an exception occurs in the <CODE>begin</CODE> clause, the
+<CODE>rescue</CODE> clause with the matching exception name
+is executed.  The <CODE>ensure</CODE> clause is executed whether an exception
+occurred or not.  <CODE>rescue</CODE> and <CODE>ensure</CODE> clauses may be omitted.
+<P>If no exception class is designated for <CODE>rescue</CODE> clause, 
+<CODE>StandardError</CODE> exception is implied, and exceptions which are
+in a is_a? relation to <CODE>StandardError</CODE> are captured.
+<P>This expression returns the value of the begin clause.
+<P>The latest exception is accessed by the global variable <CODE>$!</CODE> (and
+so its type can be determined using <CODE>$!.type</CODE>).
+<P>
+<H2>9.26 How can I use <CODE>trap</CODE>?</H2>
+
+<P>
+<P><CODE>trap</CODE> associates code blocks with external events (signals).
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+trap("PIPE") {raise "SIGPIPE"}
+</PRE></td></tr></table>
+<P>
+<H2><A NAME="s10">10. Extension library</A></H2>
+
+<P>
+<P>
+<H2><A NAME="irb"></A> 10.1 How can I use Ruby interactively?</H2>
+
+<P>
+<P>You can try using <CODE>irb</CODE>. The following is paraphrased from Goto 
+Kentaro (Gotoken), and originally appeared in ruby-talk:444.
+<P>
+<OL>
+<LI>Get the latest tarball of irb from
+<A HREF="ftp://ftp.netlab.co.jp/pub/lang/ruby/contrib/">the contrib directory</A> in the Ruby archive.
+</LI>
+<LI>Extract the <CODE>irb</CODE> directory tree.
+</LI>
+<LI>Add the location of the <CODE>irb/</CODE> directory to the $RUBYLIB
+environment variable
+</LI>
+<LI>Make a symbolic link from $RUBYLIB/irb/irb.rb to a file called
+<CODE>irb</CODE> somewhere in your path.
+</LI>
+<LI><CODE>chmod +x $RUBYLIB/irb/irb.rb</CODE>
+</LI>
+<LI>Possibly use <CODE>rehash</CODE> to tell your login shell about the
+new command.
+</LI>
+<LI>Type <CODE>irb</CODE></LI>
+</OL>
+<P>If the <CODE>readline</CODE> extension module works with your interpreter,
+it makes <CODE>irb</CODE> a lot more fun to use.
+<P>There is also a simple program, <CODE>eval</CODE>, in the samples/
+directory of the Ruby distribution. It lets you enter expressions and 
+view their values. You can copy <CODE>eval</CODE> into the
+<CODE>site_ruby</CODE> directory in the Ruby tree, and then invoke it
+using:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+ruby -r eval -e0
+</PRE></td></tr></table>
+<P>
+<P>
+<P>
+<H2>10.2 Is there a debugger for Ruby?</H2>
+
+<P>
+<P>There is a gdb-like debugger for Ruby.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+  ruby -r debug your_program
+</PRE></td></tr></table>
+<P>
+<H2>10.3 How can I use a library written in C from Ruby?</H2>
+
+<P>
+<P>Of all the scripting languages, Ruby is probably the easiest to
+extend. There are no problems with reference counting and variable
+types, and very few interfaces to learn. In fact, C code used to
+extend Ruby often ends up looking surprisingly like Ruby code itself.
+<P>First, get the Ruby source distribution and read README.EXT.
+This is a good document, not only if you're writing an extension
+library, but also if you want to understand Ruby more deeply.
+<P>Next, have a look at the source of the interpreter itself, and at the
+various supplied extensions in the <CODE>ext/</CODE> directory.
+You'll also find good examples under <CODE>contrib/</CODE> on the Ruby ftp sites.
+<P>
+<H2>10.4 Can I use Tcl/Tk interface in Ruby?</H2>
+
+<P>
+<P>There are two interfaces to Tcl/Tk included in the standard distribution.
+One is under <CODE>ext/tcltk/</CODE> and loaded with
+<CODE>require &quot;tcltk&quot;</CODE>.  The syntax is very close to that
+<CODE>Tcl</CODE>, which is passed to <CODE>Tcl</CODE> interpreter.
+Unfortunately, the description for this library is written in
+Japanese.
+<P>The other is under <CODE>ext/tk/</CODE> and loaded with <CODE>require
+&quot;tk&quot;</CODE>.  Its syntax closer to the style of the Tk
+interface provided by the Perl and Python interfaces.
+<P>
+<H2>10.5 Tk won't work.</H2>
+
+<P>
+<P>Your Tk version may be old, try a newer version.
+<P>
+<H2>10.6 Can I use <CODE>gtk+</CODE> or <CODE>xforms</CODE> interfaces in Ruby?</H2>
+
+<P>
+<P>You'll find <CODE>ruby-gtk-x.xx.tar.gz</CODE> and
+<CODE>ruby-forms-x.x.tar.gz</CODE> under <CODE>contrib/</CODE> in ftp sites.
+<P>
+<H2>10.7 How can I do date arithmetic?</H2>
+
+<P>
+<P>A Time object can express only the dates between Jan 1, 1970 and Jan 19,
+2038.
+<P>Two standard extension library modules are provided:
+<CODE>require &quot;date&quot;</CODE>, which is simple and uses the
+English calendar, and <CODE>require &quot;date2&quot;</CODE>, which is
+more general purpose.
+<P>Also see <CODE>sample/cal.rb</CODE>.
+<P>
+<H2><A NAME="s11">11. Other Features</A></H2>
+
+<P>
+<P>
+<H2>11.1 What does <CODE>a ? b : c</CODE> mean?</H2>
+
+<P>
+<P>It's the same as saying <CODE>if a then b else c end</CODE>.
+<P>
+<H2>11.2 How can I count the number of lines in a file?</H2>
+
+<P>
+<P>Assuming that the file ends in a linefeed, the following code may give the
+fastest result.
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+open("example").read.count("\n")  # -&gt; 3
+</PRE></td></tr></table>
+<P>
+<P>
+<H2>11.3 What do <CODE>begin</CODE> and <CODE>end</CODE> of MatchingData return? </H2>
+
+<P>
+<P>They act with $&nbsp;, and return the start index and the end index of
+the matched data ($0) in the original string.  See an example
+in 
+<A HREF="#tab-expansion">tab expansion</A>.
+<P>
+<H2>11.4 How can I sum the elements in an array?</H2>
+
+<P>
+<P>Rather than solve the specific problem, let's solve the general
+case. The first thing we'll do is produce a method that will iterate
+over an <CODE>Enumerable</CODE> object and collect a single
+result. Smalltalk calls that method <CODE>inject</CODE>, so we will too:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+module Enumerable
+
+  # inject(n) { |n, i| ...}
+  def inject(n)
+    each { |i|
+      n = yield(n, i)
+    }
+    n
+  end
+end
+</PRE></td></tr></table>
+<P>Notice how we've added the method to <CODE>Enumerable</CODE>. This means
+that anything that includes <CODE>Enumerable</CODE> can now use
+inject. But how do we use it? It takes a single argument `n' and a
+block. For each element in the thing being enumerated, it calls the
+block, passing in `n' and the element
+itself. The result of the block is assigned back to `n'. So, to define 
+<CODE>sum</CODE>, we could write:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+module Enumerable
+  def sum
+    inject(0) {|n, i|  n + i }
+  end
+end
+
+[1,3,5,7,9].sum  # -&gt; 25
+(1..100).sum     # -&gt; 5050
+</PRE></td></tr></table>
+<P>
+<H2>11.5 How can I use continuations?</H2>
+
+<P>Ruby's continuations allow you to create an object representing a
+place in a Ruby program, and then return to that place at any time
+(even if it has apparently gone out of scope). Continuations can be
+used to implement complex control structures, but are typically more
+useful as ways of confusing people.
+<P>In [ruby-talk:4482], Jim Weirich posted the following examples of
+continuations:
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+# --------------------------------------------------------------------
+# Simple Producer/Consumer
+# --------------------------------------------------------------------
+# Connect a simple counting task and a printing task together using
+# continuations.
+#
+# Usage:  count(limit)
+
+def count_task(count, consumer)
+  (1..count).each do
+    |i|
+    callcc {|cc| consumer.call cc, i }
+  end
+  nil
+end
+
+def print_task()
+  producer, i = callcc { |cc| return cc }
+  print "#{i} "
+  callcc { |cc| producer.call }
+end
+
+def count(limit)
+  count_task(limit, print_task())
+  print "\n"
+end
+</PRE></td></tr></table>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+# --------------------------------------------------------------------
+# Filtering Out Multiples of a Given Number
+# --------------------------------------------------------------------
+# Create a filter that is both a consumer and producer.  Insert it
+# between the counting task and the printing task.
+# 
+# Usage:  omit (2, limit)
+
+def filter_task(factor, consumer)
+  producer, i = callcc { |cc| return cc }
+  if (i%factor) != 0 then
+    callcc { |cc| consumer.call cc, i }
+  end
+  producer.call
+end
+
+def omit(factor, limit)
+  printer = print_task()
+  filter = filter_task(factor, printer)
+  count_task(limit, filter)
+  print "\n"
+end
+</PRE></td></tr></table>
+<P>
+<TABLE><tr><td bgcolor="gray">&nbsp;</td><td>&nbsp;</td><td><PRE>
+# --------------------------------------------------------------------
+# Prime Number Generator
+# --------------------------------------------------------------------
+# Create a prime number generator.  When a new prime number is
+# discovered, dynamically add a new multiple filter to the chain of
+# producers and consumers.
+#
+# Usage:  primes (limit)
+
+def prime_task(consumer)
+  producer, i = callcc { |cc| return cc }
+  if i &gt;= 2 then
+    callcc { |cc| consumer.call cc, i }
+    consumer = filter_task(i, consumer)
+  end
+  producer.call
+end
+
+def primes(limit)
+  printer = print_task()
+  primes = prime_task(printer)
+  count_task(limit, primes)
+  print "\n"
+end
+</PRE></td></tr></table>
+</BODY>
+</HTML>

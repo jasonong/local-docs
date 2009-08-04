@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Class constants</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="localvars.html">
+ <img border=0 src="a2l.gif" alt="Local variables"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="rescue.html">
+ <img border=0 src="a2r.gif" alt="Exception processing: rescue"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Class constants</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>A constant has a name starting with an uppercase character.  It should
+be assigned a value at most once. In the current implementation of
+ruby, reassignment of a constant generates a warning but not an error
+(the non-ANSI version of eval.rb does not report the warning):</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b>fluid=30</b></font>
+<font color="#50ffff"><b>   30</b></font>
+ruby&gt;<font color="#ffff00"><b>fluid=31</b></font>
+<font color="#50ffff"><b>   31</b></font>
+ruby&gt;<font color="#ffff00"><b>Solid=32</b></font>
+<font color="#50ffff"><b>   32</b></font>
+ruby&gt;<font color="#ffff00"><b>Solid=33</b></font>
+<font color="#50ffff"><b>   (eval):1: warning: already initialized constant Solid</b></font>
+<font color="#50ffff"><b>   33</b></font></font></pre></td></tr></table>
+<p>Constants may be defined within classes, but unlike instance
+variables, they are accessible outside the class.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class ConstClass</b></font>
+    |<font color="#ffff00"><b>   C1=101</b></font>
+    |<font color="#ffff00"><b>   C2=102</b></font>
+    |<font color="#ffff00"><b>   C3=103</b></font>
+    |<font color="#ffff00"><b>   def show</b></font>
+    |<font color="#ffff00"><b>     print C1," ",C2," ",C3,"\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> C1</b></font>
+<font color="#50ffff"><b>ERR: (eval):1: uninitialized constant C1</b></font>
+ruby&gt;<font color="#ffff00"><b> ConstClass::C1</b></font>
+<font color="#50ffff"><b>   101</b></font>
+ruby&gt;<font color="#ffff00"><b> ConstClass.new.show</b></font>
+101 102 103
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>Constants can also be defined in modules.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> module ConstModule</b></font>
+    |<font color="#ffff00"><b>   C1=101</b></font>
+    |<font color="#ffff00"><b>   C2=102</b></font>
+    |<font color="#ffff00"><b>   C3=103</b></font>
+    |<font color="#ffff00"><b>   def showConstants</b></font>
+    |<font color="#ffff00"><b>     print C1," ",C2," ",C3,"\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> C1</b></font>
+<font color="#50ffff"><b>ERR: (eval):1: uninitialized constant C1</b></font>
+ruby&gt;<font color="#ffff00"><b> include ConstModule</b></font>
+<font color="#50ffff"><b>   Object</b></font>
+ruby&gt;<font color="#ffff00"><b> C1</b></font>
+<font color="#50ffff"><b>   101</b></font>
+ruby&gt;<font color="#ffff00"><b> showConstants</b></font>
+101 102 103
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> C1=99  # not really a good idea</b></font>
+<font color="#50ffff"><b>   99</b></font>
+ruby&gt;<font color="#ffff00"><b> C1</b></font>
+<font color="#50ffff"><b>   99</b></font>
+ruby&gt;<font color="#ffff00"><b> ConstModule::C1  # the module's constant is undisturbed ...</b></font>
+<font color="#50ffff"><b>   101</b></font>
+ruby&gt;<font color="#ffff00"><b> ConstModule::C1=99 </b></font>
+<font color="#50ffff"><b>ERR: (eval):1: compile error</b></font>
+<font color="#50ffff"><b>(eval):1: parse error</b></font>
+<font color="#50ffff"><b>ConstModule::C1=99</b></font>
+<font color="#50ffff"><b>                ^</b></font>
+ruby&gt;<font color="#ffff00"><b> ConstModule::C1  # .. regardless of how we tamper with it.</b></font>
+<font color="#50ffff"><b>   101</b></font></font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="localvars.html">
+ <img border=0 src="a2l.gif" alt="Local variables"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="rescue.html">
+ <img border=0 src="a2r.gif" alt="Exception processing: rescue"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

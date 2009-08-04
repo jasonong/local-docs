@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<TITLE>Marshal</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Kernel.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="Math.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Marshal</H1>
+<dd> 
+<P>
+The module for reading and writing Ruby object in a binary format.
+This format is machine independent.  
+It can dump most of Ruby objects, there are several exceptional objects
+like <a href="IO.html"><code>IOs</code></a>.  Dumping such objects
+raises TypeError exception.
+</P>
+<dt> <h2>module functions:</h2>
+<dd> 
+<dl compact>
+<dt> 
+<a name="dump"><code>dump(<var>obj</var>[,<var>port</var>][,<var>limit</var>])</code></a>
+<dd> 
+<p>
+Dumps object recursively.  Dumping some kind of instances of the classes 
+like Class, Module, IO, Data, etc. will raises TypeError exception.
+</p>
+
+<p>
+<var>port</var>must be the instance of the <code>IO</code> or its
+subclass.  If <var>port</var> is ommited <code>dump</code> returns the 
+dumped image string.
+</p>
+
+<p>
+If the dumping object defines `<code>_dump</code>' method,
+<var>dump</var> calls that method to dump with the limit argument.  It 
+must return the dumped image string.  If `<code>_dump</code>'
+method is provided, the class must provide the reverse
+method named `<code>_load</code>' as its singleton method,
+which is called with dumped image string, and should return
+the retsored object.
+</p>
+
+<p>
+The <var>limit</var> argument specified the level of the recursive
+traverse. the default limit value is 100.  In case negative limit
+value is specified, no limit will checked for dumping.
+</p>
+
+<dt> 
+<a name="load"><code>load(<var>port</var>[, <var>proc</var>])</code></a>
+<dd> 
+<p>
+Creates new object from 
+<var>port</var>, which is either IO or String.  If optional second
+argument <var>proc</var> is specified,  the proc will called with every
+created object as an argument.  It can be used, for example, schema evolution.
+</p>
+</dl>
+</dl>
+
+<HR>
+<A HREF="Kernel.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="Math.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

@@ -1,0 +1,784 @@
+<HTML>
+<HEAD>
+<TITLE>Ruby Functions</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="syntax.html">prev</A>
+-
+<A HREF="variable.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+
+<H1>Built-in functions</H1>
+<hr>
+<ul>
+<li> <A HREF="#backquote"><code>`</code></A>
+<li> <A HREF="#Array"><code>Array</code></A>
+<li> <A HREF="#Float"><code>Float</code></A>
+<li> <A HREF="#Integer"><code>Integer</code></A>
+<li> <A HREF="#String"><code>String</code></A>
+<li> <A HREF="#at_exit"><code>at_exit</code></A>
+<li> <A HREF="#autoload"><code>autoload</code></A>
+<li> <A HREF="#binding"><code>binding</code></A>
+<li> <A HREF="#caller"><code>caller</code></A>
+<li> <A HREF="#catch"><code>catch</code></A>
+<li> <A HREF="#chop"><code>chop</code></A>
+<li> <A HREF="#chop_bang"><code>chop!</code></A>
+<li> <A HREF="#chomp"><code>chomp</code></A>
+<li> <A HREF="#chomp_bang"><code>chomp!</code></A>
+<li> <A HREF="#eval"><code>eval</code></A>
+<li> <A HREF="#exec"><code>exec</code></A>
+<li> <A HREF="#exit"><code>exit</code></A>
+<li> <A HREF="#exit_bang"><code>exit!</code></A>
+<li> <A HREF="#fail"><code>fail</code></A>
+<li> <A HREF="#fork"><code>fork</code></A>
+<li> <A HREF="#format"><code>format</code></A>
+<li> <A HREF="#gets"><code>gets</code></A>
+<li> <A HREF="#global_variables"><code>global_variables</code></A>
+<li> <A HREF="#gsub"><code>gsub</code></A>
+<li> <A HREF="#gsub_bang"><code>gsub!</code></A>
+<li> <A HREF="#iterator_p"><code>iterator?</code></A>
+<li> <A HREF="#lambda"><code>lambda</code></A>
+<li> <A HREF="#load"><code>load</code></A>
+<li> <A HREF="#local_variables"><code>local_variables</code></A>
+<li> <A HREF="#loop"><code>loop</code></A>
+<li> <A HREF="#open"><code>open</code></A>
+<li> <A HREF="#p"><code>p</code></A>
+<li> <A HREF="#print"><code>print</code></A>
+<li> <A HREF="#printf"><code>printf</code></A>
+<li> <A HREF="#proc"><code>proc</code></A>
+<li> <A HREF="#putc"><code>putc</code></A>
+<li> <A HREF="#puts"><code>puts</code></A>
+<li> <A HREF="#raise"><code>raise</code></A>
+<li> <A HREF="#rand"><code>rand</code></A>
+<li> <A HREF="#readline"><code>readline</code></A>
+<li> <A HREF="#readlines"><code>readlines</code></A>
+<li> <A HREF="#require"><code>require</code></A>
+<li> <A HREF="#select"><code>select</code></A>
+<li> <A HREF="#sleep"><code>sleep</code></A>
+<li> <A HREF="#split"><code>split</code></A>
+<li> <A HREF="#sprintf"><code>sprintf</code></A>
+<li> <A HREF="#srand"><code>srand</code></A>
+<li> <A HREF="#sub"><code>sub</code></A>
+<li> <A HREF="#sub_bang"><code>sub!</code></A>
+<li> <A HREF="#syscall"><code>syscall</code></A>
+<li> <A HREF="#system"><code>system</code></A>
+<li> <A HREF="#test"><code>test</code></A>
+<li> <A HREF="#trace_var"><code>trace_var</code></A>
+<li> <A HREF="#trap"><code>trap</code></A>
+<li> <A HREF="#untrace_var"><code>untrace_var</code></A>
+</ul>
+<hr>
+<h2>pre-defined functions</h2>
+<P>
+Some methods defined in the <code><a href="Kernel.html">Kernel</a></code>
+module can be called from everywhere, and are to be called like functions.
+You'd better think twice before redefining these methods.
+</P>
+
+<DL>
+
+<DT><A NAME="backquote"><CODE>` <VAR>str</VAR></CODE></A>
+<DD>
+<p>
+Performs <VAR>str</VAR> by a subshell.  The standard output
+from the commands are taken as the value.  This method is
+called by a syntax sugar form like <CODE>`str`</CODE>.
+</p>
+
+<dt> <a name="Array"><code>Array(<var>arg</var>)</code></a>
+<dd> 
+<p>
+Converts the argument to the array using <code>to_a</code>.
+</p>
+
+<dt> <a name="Float"><code>Float(<var>arg</var>)</code></a>
+<dd> 
+<p>
+Converts the argument to the float value.
+</p>
+
+<dt> <a name="Integer"><code>Integer(<var>arg</var>)</code></a>
+<dd> 
+<p>
+Converts the argument to the integer value.  If the argument is
+string, and happen to start with 0x, 0b, 0, interprets it as hex,
+binary, octal string respectively.
+</p>
+
+<dt> <a name="String">
+<code>String(<var>arg</var>)</code></a>
+<dd> 
+<p>
+Converts the argument to the string using
+<a href="Kernel.html#to_s"><code>Kernel#to_s</code></a>.
+</p>
+
+<dt> <a name="at_exit"><code>at_exit</code></a>
+<dd> 
+<p>
+Register the block for clean-up to execute at the interpreter
+termination.
+</p>
+
+<DT><A NAME="autoload"><CODE>autoload(<VAR>module</VAR>, <VAR>file</VAR>)</CODE></A>
+<DD>
+<p>
+Specifies <var>file </var> to be loaded using the method <CODE><a
+href="#require">require</a></CODE>, when <VAR>module</VAR> accessed for
+the first time. <VAR>module</VAR> must be a string or a symbol.
+</p>
+
+<DT><A NAME="binding">
+<code>binding</code></A>
+<DD>
+<p>
+Returns the data structure of the variable/method binding,
+which can be used for the second argument of the
+<A HREF="#eval"><code>eval</code></A>.
+</p>
+
+<DT><A NAME="caller"><CODE>caller([<VAR>level</VAR>])</CODE></A>
+<DD>
+<p>
+Returns the context information (the backtrace) of current call in the
+form used for the variable <CODE>$@</CODE>.  When <VAR>level</VAR>
+specified, <code>caller</code> goes up to calling frames
+<var>level</var> times and returns the context information.
+<code>caller</code> returns an empty array at toplevel.
+</p>
+
+<p>
+The lines below prints stack frame:
+<blockquote>
+<PRE>
+for c in caller(0)
+  print c, "\n"
+end
+</PRE>
+</blockquote>
+</p>
+
+<DT><A NAME="catch"><CODE>catch(<var>tag</var>){...}</CODE></A>
+<DD>
+<p>
+Executes the block, and if an non-local exit named <var>tag</var>
+submitted by the <a href="#throw"><var>throw</var></a>, it returns
+with the value given by the <code>throw</code>.
+</p>
+<p>
+For example, the code below returns the value 25, not 10, and the
+<var>some_process</var> never be called.
+
+<blockquote>
+<pre>
+def throw_exit
+  throw :exit, 25
+end
+
+catch(:exit) {
+   throw_exit
+   some_process;
+   10;
+}
+</pre>
+</blockquote>
+</p>
+
+<DT><A NAME="chop"><CODE>chop</CODE></A>
+<DD>
+<DT>
+<a name="chop_bang"><CODE>chop!</CODE></a>
+<DD>
+<p>
+Removes off the last character of the value of the variable
+<code>$_</code> (2 characters if the last characters are "\r\n").
+<code>chop!</code> modifies the string itself.  <code>chop</code>
+makes a copy to modify.
+</p>
+
+<DT><A NAME="chomp"><CODE>chomp([<var>rs</var>])</CODE></A>
+<DD>
+<DT>
+<a name="chomp_bang"><CODE>chomp!([<var>rs</var>])</CODE></a>
+<DD>
+<p>
+Removes off the line ending from the value of the variable
+<code>$_</code>.  See <a href="String.html#chomp">String#chomp</a>.
+</p>
+
+<DT><A NAME="eval"><CODE>eval(<VAR>expr</VAR>[, <var>binding</var>[, <var>filetag</var>[, <VAR>lineno</VAR>]]])</CODE></A>
+<DD>
+<p>
+Evaluate <VAR>expr</VAR> as a Ruby program.  If the
+<code>Proc</code> object or the <A HREF="#binding">binding</A> data from
+<code>binding</code> is given to the optional 
+second argument, the string is compiled and evaluated under
+its binding environment.
+</p>
+<P>
+When the <var>expr</var> contains nested methods, it is
+useful to have better traceback information than simply
+citing the <CODE>eval</CODE> and a line number.  The
+<VAR>filetag</VAR> provides this in two ways.  If it
+is left as the default 
+(which is <CODE>"(eval)"</CODE>) then there is no traceback into the
+nested methods.  If it is set to anything else then there is
+full traceback information, and also the tag in the error message
+is changed to this value.
+</P>
+<P>
+The <VAR>lineno</VAR> defaults to 1, and is used as the starting
+line number of <VAR>expr</VAR> when producing any error messages.
+</P>
+
+<DT><A NAME="exec"><CODE>exec(<VAR>command</VAR>...)</CODE></A>
+<DD>
+<p>
+Executes <VAR>command</VAR> as a subprocess, and <strong>never returns</strong>.
+</p>
+<p>
+If multiple arguments are given, <code>exec</code> invokes command
+directly, so that whitespaces and shell's meta-characters are not
+processed by the shell.
+</p>
+<p>
+If the first argument is an array that has two elements, the first
+element is the real path for the command, and the second element is
+for the argv[0] to <code>execl(2)</code>.
+</p>
+
+<DT><A NAME="exit"><CODE>exit([<VAR>status</VAR>])</CODE></A>
+<DD>
+<p>
+Exits immediately with <code>status</code>.  if <var>status</var> is
+omitted, exits with 0 status.
+</p>
+
+<p>
+<code>exit</code> raises <code>SystemExit</code> to terminate the
+program, which can be handled by the <code>rescue</code> clause of
+the <code>begin</code> statement.
+</p>
+
+<DT><A NAME="exit_bang"><CODE>exit!([<VAR>status</VAR>])</CODE></A>
+<DD>
+<p>
+Exits with status.  Unlike <code>exit</code>, it ignores any kind of
+exception handling (including <code>ensure</code>).  Used to terminate 
+sub-process after calling <a href="#fork">fork</a>.
+</p>
+
+<DT><A NAME="fork"><CODE>fork</CODE></A>
+<DD>
+<p>
+Does a <SAMP>fork(2)</SAMP> system call.  Returns the child pid to the
+parent process and <code>nil</code> to the child process.  When called
+with the block, it creates the child process and execute the block in
+the child process.
+</p>
+
+<DT><A NAME="gets"><CODE>gets([<var>rs</var>])</CODE></A>
+<DD>
+<DT>
+<CODE><A NAME="readline">readline([<var>rs</var>])</CODE></A>
+<DD>
+<p>
+Reads a string from the virtual concatenation of each file listed on
+the command line or standard input (in case no files specified).  If
+the end of file is reached, <code>nil</code> will be the result.  The
+line read is also set to the variable <code>$_</code>.  The line
+terminator is specified by the optional argument <var>rs</var>, which
+default value is defined by the variable <code>$/</code>.
+</p>
+<p>
+<code>readline</code> functions just like <code>gets</code>, except
+it raises an <code>EOFError</code> exception at the end of file.
+</p>
+
+<DT>
+<A NAME="global_variables"><CODE>global_variables</CODE></A>
+<DD>
+<p>
+Returns the list of the global variable names defined in the program.
+</p>
+
+<DT>
+<A NAME="gsub"><CODE>gsub(<VAR>pattern</VAR>[, <VAR>replace</VAR>])</CODE></A>
+<DD>
+<DT><A NAME="gsub_bang"><CODE>gsub!(<VAR>pattern</VAR>[, <VAR>replace</VAR>])</CODE></A>
+<DD>
+<p>
+Searches a string held in the variable <code>$_</code> for a
+<var>pattern</var>, and if found, replaces all the occurrence of the
+pattern with the <var>replace</var> and returns the replaced string.
+<code>gsub!</code> modifies the original string in place,
+<code>gsub</code> makes copy, and keeps the original unchanged.
+See also <a href="String.html#gsub">String#gsub</a>.
+</p>
+
+<DT><A NAME="iterator_p"><CODE>iterator?</CODE></A>
+<DD>
+<p>
+Returns true, if called from within the methods called with the block
+(the iterators), otherwise false.
+</p>
+
+<DT><A NAME="load"><CODE>load(<VAR>file</VAR>[, <var>priv</var>])</CODE></A>
+<DD>
+<p>
+Loads and evaluates the Ruby program in the <var>file</var>.  If
+<var>file</var> is not an absolute path, it searches file to be load
+from the search path in the variable <code>$:</code>.  The tilde
+(`<code>~</code>') at begenning of the path will be expanded into the
+user's home directory like some shells.
+</p>
+<p>
+If the optional argument <var>priv</var> is true, loading and evaluating
+is done under the unnamed module, to avoid global name space pollution.
+</p>
+
+<DT>
+<A NAME="local_variables"><CODE>local_variables</CODE></A>
+<DD>
+<p>
+Returns the list of the local variable names defined in the current scope.
+</p>
+
+<DT><A NAME="loop"><CODE>loop</CODE></A>
+<DD>
+<p>
+Loops forever (until terminated explicitly).
+</p>
+
+<DT><A NAME="open"><CODE>open(<VAR>file</VAR>[, <VAR>mode</VAR>])</CODE></A>
+<DD>
+<DT><CODE>open(<VAR>file</VAR>[, <VAR>mode</VAR>]){...}</CODE>
+<DD>
+<p>
+Opens the <var>file</var>, and returns a <a href="File.html">File</a>
+object associated with the file.  The <var>mode</var> argument
+specifies the mode for the opened file, which is either
+<code>"r"</code>, <code>"r+"</code>, <code>"w"</code>,
+<code>"w+"</code>, <code>"a"</code>, <code>"a+"</code>.  See
+<samp>fopen(3)</samp>.  If <var>mode</var> omitted, the default is
+<code>"r"</code>
+</p>
+
+<p>
+If the <var>file</var> begins with <code>"|"</code>, Ruby performs
+following string as a sub-process, and associates pipes to the
+standard input/output of the sub-process.
+</p>
+<p>
+<strong>Note for the converts from Perl</strong>: The command string
+<strong>starts</strong> with `<samp>|</samp>', not ends with
+`<samp>|</samp>'.
+</p>
+<p>
+If the command name described above is <code>"-"</code>, Ruby forks,
+and create pipe-line to the child process.
+</p>
+
+<p>
+When <code>open</code> is called with the block, it opens the file and
+evaluates the block, then after the evaluation, the file is closed for
+sure.  That is:
+</p>
+
+<blockquote>
+<pre>
+open(path, mode) do |f|
+  ...
+end
+
+# mostly same as above
+
+f = open(path, mode)
+begin
+  ...
+ensure
+  f.close
+end
+</pre>
+</blockquote>
+
+<DT><A NAME="p"><CODE>p(<var>obj</var>)</CODE></A>
+<DD>
+<p>
+Prints human-readable representation of the <var>obj</var> to the
+stdout.  It works just like:
+</p>
+<p>
+<blockquote>
+<pre>
+print obj.inspect, "\n"
+</pre>
+</blockquote>
+</p>
+
+<DT><A NAME="print"><CODE>print(<VAR>arg</VAR>1...)</CODE></A>
+<DD>
+<p>
+Prints arguments.  If no argument given, the value of the variable
+<code>$_</code> will be printed.  If an argument is not a string, it
+is converted into string using
+<code><a href="Kernel.html#to_s">Kernel#to_s</a></code>.
+</p>
+
+<p>
+If the value of <code>$;</code> is non-nil, its value printed between
+each argument.  If the value of <code>$\</code> is non-nil, its value
+printed at the end.
+</p>
+
+<DT><A NAME="printf"><CODE>printf([<VAR>port</VAR>, ]<VAR>format</VAR>, <VAR>arg</VAR>...)</CODE></A>
+<DD>
+
+<p>
+Prints arguments formatted according to the <var>format</var> like
+<code><a href="#sprintf">sprintf</a></code>.  If the first argument
+is the instance of the <a href="IO.html">IO</a> or its subclass, print 
+redirected to that object.  the default is the value of
+<code>$stdout</code>. 
+</p>
+
+<DT><A NAME="proc"><CODE>proc</CODE></A>
+<DD>
+<DT><A NAME="lambda"><CODE>lambda</CODE></A>
+<DD>
+<p>
+Returns newly created procedure object from the block. The procedure
+object is the instance of the class <a href="Proc.html">Proc</a>.
+</p>
+
+<DT>
+<A NAME="putc"><CODE>putc(<VAR>c</VAR>)</CODE></A>
+<DD>
+<p>
+Writes the character <VAR>c</VAR> to the default output ($&gt;).
+</p>
+
+<DT>
+<A NAME="puts"><CODE>putc(<VAR>obj</VAR>..)</CODE></A>
+<DD>
+<p>
+Writes an <var>obj</var> to the default output ($&gt;),
+then newline for each arguments.
+</p>
+
+<dt> <a name="raise"><code>raise([<var>error_type</var>,][<var>message</var>][,<var>traceback</var>])</code></a>
+<dd> 
+<dt> 
+<a name="fail"><code>fail([<var>error_type</var>,][<var>message</var>][,<var>traceback</var>])</code></a>
+<dd> 
+<P>
+Raises an exception.  In no argument given, re-raises last exception.
+With one arguments, raises the exception if the argument is the
+exception.  If the argument is the string, <code>raise</code> creates
+a new <code>RuntimeError</code> exception, and raises it.  If two
+arguments supplied, <code>raise</code> creates a new exception of type
+<var>error_type</var>, and raises it.
+</p>
+<p>
+If the optional third argument <var>traceback</var> is specified, it
+must be the traceback infomation for the raising exception in the
+format given by variable <a href="variable.html#at"><var>$@</var></a> or
+<a href="#caller"><code>caller</code></a> function.
+</p>
+<p>
+The exception is assigned to the variable <CODE>$!</CODE>, and
+the position in the source file is assigned to the <CODE>$@</CODE>.
+</P>
+<p>
+If the first argument is not an exception class or object, the
+exception actually raised is determined by calling it's
+<code>exception</code> method (baring the case when the argument is a
+string in the second form).  The <code>exception</code> method of that
+class or object must return it's representation as an exception.
+</p>
+<p>
+The <code>fail</code> is an alias of the <code>raise</code>.
+</p>
+<DT><A NAME="rand"><CODE>rand(<VAR>max</VAR>)</CODE></A>
+<DD>
+<p>
+Returns a random integer number greater than or equal to 0 and less
+than the value of <var>max</var>.  (<var>max</var> should be
+positive.)  
+Automatically calls <code><a href="#srand">srand</a></code> unless
+<code>srand()</code> has already been called.
+</p>
+<p>
+If <var>max</var> is 0, <code>rand</code> returns a random float
+number greater than or equal to 0 and less than 1.
+</p>
+
+<DT><A NAME="readlines">
+<CODE>readlines([<var>rs</var>])</CODE></A>
+<DD>
+<p>
+Reads entire lines from the virtual concatenation of each file listed
+on the command line or standard input (in case no files specified),
+and returns an array containing the lines read.
+</p>
+<p>
+Lines are separated by the value of the optional argument
+<var>rs</var>, which default value is defined by the variable
+<a href="variable.html#slash"><code>$/</code></a>.
+</p>
+
+<DT><A NAME="require"><CODE>require(<VAR>feature</VAR>)</CODE></A>
+<DD>
+<p>
+Demands a library file specified by the <var>feature</var>.  The
+<var>feature</var> is a string to specify the module to load.  If the
+extension in the <var>feature</var> is <samp>".so"</samp>, then Ruby
+interpreter tries to load dynamic-load file. If the extension is
+<samp>".rb"</samp>, then Ruby script will be loaded.  If no extension
+present, the interpreter searches for dynamic-load modules first, then
+tries to Ruby script.  On some system actual dynamic-load modules have
+extension name <samp>".o"</samp>, <samp>".dll"</samp> or something,
+though <code>require</code> always uses the extension
+<samp>".so"</samp> as a dynamic-load modules.
+<p>
+<code>require</code> returns true if modules actually loaded.
+Loaded module names are appended in <code>$"</code>.
+</p>
+
+<DT><A NAME="select"><CODE>select(<VAR>reads</VAR>[, <VAR>writes</VAR>[, <VAR>excepts</VAR>[, <VAR>timeout</VAR>]]])</CODE></A>
+<DD>
+<p>
+Calls <SAMP>select(2)</SAMP> system call.  <var>Reads</var>,
+<var>writes</var>, <var>excepts</var> are specified arrays containing
+instances of the IO class (or its subclass), or <code>nil</code>.
+</p>
+<p>
+The <var>timeout</var> must be either an integer,
+<code><a href="Float.html">Float</a></code>,
+<code><a href="Time.html">Time</a></code>, or <code>nil</code>.
+If the <var>timeout</var> is <code>nil</code>,
+<code>select</code> would not time out.
+<p>
+<code>select</code> returns <code>nil</code> in case of timeout,
+otherwise returns an array of 3 elements, which are subset of argument 
+arrays. 
+</p>
+<DT><A NAME="sleep"><CODE>sleep([<VAR>sec</VAR>])</CODE></A>
+<DD>
+<p>
+Causes the script to sleep for <var>sec</var> seconds, or forever if
+no argument given.  May be interrupted by sending the process a
+<samp>SIGALRM</samp> or <code>run</code> from other threads (if
+thread available).  Returns the number of seconds actually slept.
+<var>sec</var> may be a floating-point number.
+</p>
+
+<dt> <a name="split"><CODE>split([<VAR>sep</VAR>[, <VAR>limit</VAR>]])</CODE></a>
+<dd> 
+<p>
+Return an array containing the fields of the string, using the string
+<var>sep</var> as a separator.  The maximum number of the fields can
+be specified by <var>limit</var>.
+</p>
+
+<DT>
+<A NAME="format"><CODE>format(<VAR>format</VAR>...)</CODE></A>
+<DD>
+<DT><A NAME="sprintf"><CODE>sprintf(<VAR>format</VAR>...)</CODE></A>
+<DD>
+<p>
+Returns a string formatted according to a <var>format</var> like usual
+printf conventions of the C language.  See <samp>sprintf(3)</samp> or
+<samp>printf(3)</samp>.  In addition, <samp>sprintf</samp> accepts
+<samp>%b</samp> for binary.  Ruby does not have unsigned integers, so
+unsigned specifier, such as %b, %o, or %x, converts negative integers
+into 2's complement form like %<code>..f</code>.  supplying sign
+(<code>+</code>, <code>-</code>) or space option for the unsigned
+specifier changes its behavior to convert them in absolute value
+following <code>-</code> sign.
+</p>
+
+<DT><A NAME="srand"><CODE>srand([<VAR>seed</VAR>])</CODE></A>
+<DD>
+<p>
+Sets the random number seed for the <code><a href="#rand">rand</a></code>.  
+If <var>seed</var> is omitted, uses the current time etc. as a seed.
+</p>
+
+<DT>
+<A NAME="sub"><CODE>sub(<VAR>pattern</VAR>[, <VAR>replace</VAR>])</CODE></A>
+<DD>
+<DT>
+<A NAME="sub_bang"><CODE>sub!(<VAR>pattern</VAR>[, <VAR>replace</VAR>])</CODE></A>
+<DD>
+<p>
+Searches a string held in the variable <code>$_</code> for a
+<var>pattern</var>, and if found, replaces the first occurrence of the
+pattern with the <var>replace</var> and returns the replaced string.
+<code>sub!</code> modifies the original string in place,
+<code>sub</code> makes copy, and keeps the original unchanged.
+See also <a href="String.html#sub">String#sub</a>.
+</p>
+
+<DT><A NAME="syscall"><CODE>syscall(<VAR>num</VAR>, <VAR>arg</VAR>...)</CODE></A>
+<DD>
+<p>
+Calls the system call specified as the first arguments, passing
+remaining as arguments to the system call.  The arguments must be
+either a string or an integer.
+</p>
+
+<DT><A NAME="system"><CODE>system(<VAR>command</VAR>...)</CODE></A>
+<DD>
+<p>
+Perform <var>command</var> in the sub-process, wait for the
+sub-process to terminate, then return true if it successfully exits,
+otherwise false.  Actual exit status of the sub-process can be found
+in <code>$?</code>.
+</p>
+<p>
+If multiple arguments are given, <code>system</code> invokes command
+directly, so that whitespaces and shell's meta-characters are not
+processed by the shell.
+</p>
+<p>
+See <a href="#exec"><code>exec</code></a> for the execution detail.
+</p>
+
+<DT><A NAME="test"><CODE>test(<VAR>cmd</VAR>, <VAR>file</VAR> [, <VAR>file</VAR>])</CODE></A>
+<DD>
+<p>
+Does a file test. the <var>cmd</var> would be one of following:
+<ul>
+<li> commands which takes one operand:
+<p>
+<dl compact>
+  <dt> <code>?r</code>
+  <dd> File is readable by effective uid/gid.
+  <dt> <code>?w</code>
+  <dd> File is writable by effective uid/gid.
+  <dt> <code>?x</code>
+  <dd> File is executable by effective uid/gid.
+  <dt> <code>?o</code>
+  <dd> File is owned by effective uid.
+  <dt> <code>?R</code>
+  <dd> File is readable by real uid/gid.
+  <dt> <code>?W</code>
+  <dd> File is writable by real uid/gid.
+  <dt> <code>?X</code>
+  <dd> File is executable by real uid/gid.
+  <dt> <code>?O</code>
+  <dd> File is owned by real uid.
+  <dt> <code>?e</code>
+  <dd> File exists.
+  <dt> <code>?z</code>
+  <dd> File has zero size.
+  <dt> <code>?s</code>
+  <dd> File has non-zero size (returns size).
+  <dt> <code>?f</code>
+  <dd> File is a plain file.
+  <dt> <code>?d</code>
+  <dd> File is a directory.
+  <dt> <code>?l</code>
+  <dd> File is a symbolic link.
+  <dt> <code>?p</code>
+  <dd> File is a named pipe (FIFO).
+  <dt> <code>?S</code>
+  <dd> File is a socket.
+  <dt> <code>?b</code>
+  <dd> File is a block special file.
+  <dt> <code>?c</code>
+  <dd> File is a character special file.
+  <dt> <code>?u</code>
+  <dd> File has setuid bit set.
+  <dt> <code>?g</code>
+  <dd> File has setgid bit set.
+  <dt> <code>?k</code>
+  <dd> File has sticky bit set.
+  <dt> 
+  <dd> 
+  <dt> <code>?M</code>
+  <dd> File last modify time.
+  <dt> <code>?A</code>
+  <dd> File last access time
+  <dt> <code>?C</code>
+  <dd> File last status change time.
+</dl>
+<p>
+<li> commands which takes two operands:
+<p>
+<dl compact>
+  <dt> <code>?=</code>
+  <dd> Both files have same modify time.
+  <dt> <code>?&#62;</code>
+  <dd> File1 is newer than file2.
+  <dt> <code>?&#60;</code>
+  <dd> File1 is older than file2.
+  <dt> <code>?-</code>
+  <dd> File1 is a hard link to file2
+</dl>
+</ul>
+</p>
+
+<DT><A NAME="throw"><CODE>throw(<VAR>tag</VAR>[, <VAR>value</VAR>])</CODE></A>
+<DD>
+<p>
+Casts an non-local exit to the enclosing <a href="#catch"><code>catch</code></a>
+waiting for <var>tag</var>, or terminates the program if no such
+<code>catch</code> waiting.  The <var>tag</var> must be the name of the
+non-local exit, which is either a symbol or a string.  <code>catch</code> may
+not appear in the same method body.  the <var>value</var> will be the return
+value of the <code>catch</code>.  The default value is the <code>nil</code>.
+</p>
+<DT><A NAME="trace_var"><CODE>trace_var(<VAR>variable</VAR>, <VAR>command</VAR>)</CODE></A>
+<DD>
+<DT><CODE>trace_var(<VAR>variable</VAR>) {...}</CODE>
+<DD>
+<p>
+Sets the hook to the <var>variable</var>, which is called when the
+value of the variable changed.  the <var>variable</var> must be
+specified by the symbol.  the <var>command</var> is either a string or 
+a procedure object.  To remove hooks, specify <code>nil</code> as a
+<var>command</var> or use
+<code><a href="#untrace_var">untrace_var</a></code>. 
+</p>
+
+<DT><CODE>trap(<VAR>signal</VAR>, <VAR>command</VAR>)</CODE>
+<DD>
+<DT><A NAME="trap"><CODE>trap(<VAR>signal</VAR>) {...}</CODE></A>
+<DD>
+<p>
+Specifies the signal handler for the <var>signal</var>.  The handler
+<var>command</var> must be either a string or a procedure object.  If
+the <var>command</var> is a string <samp>"SIG_IGN"</samp> or
+<samp>"IGNORE"</samp>, then specified signal will be ignored (if
+possible).  If the <var>command</var> is a string
+<samp>"SIG_DFL"</samp> or <samp>"DEFAULT"</samp>, then system's
+default action will be took for the signal.
+
+<p>
+The special signal 0 or <samp>"EXIT"</samp> is for the termination of
+the script.  The signal handler for <code>EXIT</code> will be called
+just before the interpreter terminates.
+</p>
+
+<DT><A NAME="untrace_var"><CODE>untrace_var(<VAR>variable</VAR>[, <VAR>command</VAR>])</CODE></A>
+<DD>
+<p>
+Deletes the hook associated with the <var>variable</var>.  If the
+second argument omitted, all the hooks will be removed.
+<code>trace_var</code> returns an array containing removed hooks.
+</p>
+
+</DL>
+<hr>
+<A HREF="syntax.html">prev</A>
+-
+<A HREF="variable.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

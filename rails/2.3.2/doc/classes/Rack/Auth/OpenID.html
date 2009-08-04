@@ -1,0 +1,763 @@
+  <div id="C00000257">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />OpenID<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/auth/openid_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000257&name=Rack::Auth::OpenID">Rack::Auth::OpenID</a>
+provides a simple method for setting up an <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> Consumer. It requires
+the ruby-openid library from janrain to operate, as well as a rack method
+of session management.
+</p>
+<p>
+The ruby-openid home page is at <a
+href="http://openidenabled.com/ruby-openid"
+target="_blank">http://openidenabled.com/ruby-openid</a>/.
+</p>
+<p>
+The <a href="index.html?a=C00000257&name=OpenID">OpenID</a> specifications
+can be found at <a
+href="http://openid.net/specs/openid-authentication-1_1.html"
+target="_blank">http://openid.net/specs/openid-authentication-1_1.html</a>
+and <a href="http://openid.net/specs/openid-authentication-2_0.html"
+target="_blank">http://openid.net/specs/openid-authentication-2_0.html</a>.
+Documentation for published <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> extensions and related
+topics can be found at <a href="http://openid.net/developers/specs"
+target="_blank">http://openid.net/developers/specs</a>/.
+</p>
+<p>
+It is recommended to read through the <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> spec, as well as
+ruby-openid&#8217;s documentation, to understand what exactly goes on.
+However a setup as simple as the presented examples is enough to provide
+Consumer functionality.
+</p>
+<p>
+This library strongly intends to utilize the <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> 2.0 features of the
+ruby-openid library, which provides <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> 1.0 compatiblity.
+</p>
+<p>
+NOTE: Due to the amount of data that this library stores in the session, <a
+href="index.html?a=C00000243&name=Rack::Session::Cookie">Rack::Session::Cookie</a>
+may fault.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000889&name=access_denied" >access_denied</a></li>
+  <li><a href="index.html?a=M000881&name=add_extension" >add_extension</a></li>
+  <li><a href="index.html?a=M000887&name=bad_request" >bad_request</a></li>
+  <li><a href="index.html?a=M000878&name=call" >call</a></li>
+  <li><a href="index.html?a=M000879&name=check" >check</a></li>
+  <li><a href="index.html?a=M000885&name=confirm_post_params" >confirm_post_params</a></li>
+  <li><a href="index.html?a=M000880&name=finish" >finish</a></li>
+  <li><a href="index.html?a=M000890&name=foreign_server_failure" >foreign_server_failure</a></li>
+  <li><a href="index.html?a=M000884&name=include?" >include?</a></li>
+  <li><a href="index.html?a=M000877&name=new" >new</a></li>
+  <li><a href="index.html?a=M000886&name=redirect" >redirect</a></li>
+  <li><a href="index.html?a=M000888&name=unauthorized" >unauthorized</a></li>
+  <li><a href="index.html?a=M000882&name=valid_extension?" >valid_extension?</a></li>
+  <li><a href="index.html?a=M000883&name=within_realm?" >within_realm?</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/Rack/Auth/OpenID/BadExtension.html');" class="link">Rack::Auth::OpenID::BadExtension</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Auth/OpenID/NoSession.html');" class="link">Rack::Auth::OpenID::NoSession</a>"<br />
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">ValidStatus</td>
+    <td>=</td>
+    <td class="attr-value">[:success, :setup_needed, :cancel, :failure]</td>
+  </tr>
+  <tr valign='top'>
+    <td>&nbsp;</td>
+    <td colspan="2" class="attr-desc">
+Required for ruby-openid
+
+</td>
+  </tr>
+  </table>
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>extensions</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>immediate</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>openid_param</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>realm</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>return_to</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>session_key</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>store</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000877" class="method">
+  <div id="M000877_title" class="title">
+    <b>new</b>(realm, options={})
+  </div>
+  <div class="description">
+  <h1>Arguments</h1>
+<p>
+The first argument is the realm, identifying the site they are trusting
+with their identity. This is required, also treated as the trust_root in <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> 1.x exchanges.
+</p>
+<p>
+The optional second argument is a hash of options.
+</p>
+<h2>Options</h2>
+<p>
+<tt>:return_to</tt> defines the url to return to after the client
+authenticates with the openid service provider. This url should point to
+where <a
+href="index.html?a=C00000257&name=Rack::Auth::OpenID">Rack::Auth::OpenID</a>
+is mounted. If <tt>:return_to</tt> is not provided, return_to will be the
+current url which allows flexibility with caveats.
+</p>
+<p>
+<tt>:session_key</tt> defines the key to the session hash in the env. It
+defaults to &#8216;rack.session&#8217;.
+</p>
+<p>
+<tt>:openid_param</tt> defines at what key in the request parameters to
+find the identifier to resolve. As per the 2.0 spec, the default is
+&#8216;openid_identifier&#8217;.
+</p>
+<p>
+<tt>:store</tt> defined what <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> Store to use for
+persistant information. By default a Store::Memory will be used.
+</p>
+<p>
+<tt>:immediate</tt> as true will make initial requests to be of an
+immediate type. This is false by default. See <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> specification
+documentation.
+</p>
+<p>
+<tt>:extensions</tt> should be a hash of openid extension implementations.
+The key should be the extension main module, the value should be an array
+of arguments for extension::<a
+href="index.html?a=M001040&name=Request.new">Request.new</a>. The hash is
+iterated over and passed to <a
+href="index.html?a=M000881&name=add_extension">add_extension</a> for
+processing. Please see <a
+href="index.html?a=M000881&name=add_extension">add_extension</a> for
+further documentation.
+</p>
+<h2>Examples</h2>
+<pre>
+  simple_oid = OpenID.new('http://mysite.com/')
+
+  return_oid = OpenID.new('http://mysite.com/', {
+    :return_to =&gt; 'http://mysite.com/openid'
+  })
+
+  complex_oid = OpenID.new('http://mysite.com/',
+    :immediate =&gt; true,
+    :extensions =&gt; {
+      ::OpenID::SReg =&gt; [['email'],['nickname']]
+    }
+  )
+</pre>
+<h1>Advanced</h1>
+<p>
+Most of the functionality of this library is encapsulated such that
+expansion and overriding functions isn&#8217;t difficult nor tricky.
+Alternately, to avoid opening up singleton objects or subclassing, a
+wrapper rack middleware can be composed to act upon <a
+href="index.html?a=C00000257&name=Auth::OpenID">Auth::OpenID</a>&#8217;s
+responses. See <a href="index.html?a=M000879&name=check">check</a> and <a
+href="index.html?a=M000880&name=finish">finish</a> for locations of
+pertinent data.
+</p>
+<h2>Responses</h2>
+<p>
+To change the responses that <a
+href="index.html?a=C00000257&name=Auth::OpenID">Auth::OpenID</a> returns,
+override the methods <a
+href="index.html?a=M000886&name=redirect">redirect</a>, <a
+href="index.html?a=M000887&name=bad_request">bad_request</a>, <a
+href="index.html?a=M000888&name=unauthorized">unauthorized</a>, <a
+href="index.html?a=M000889&name=access_denied">access_denied</a>, and <a
+href="index.html?a=M000890&name=foreign_server_failure">foreign_server_failure</a>.
+</p>
+<p>
+Additionally <a
+href="index.html?a=M000885&name=confirm_post_params">confirm_post_params</a>
+is used when the URI would exceed length limits on a GET request when doing
+the initial verification request.
+</p>
+<h2>Processing</h2>
+<p>
+To change methods of processing completed transactions, override the
+methods success, setup_needed, cancel, and failure. Please ensure the
+returned object is a rack compatible response.
+</p>
+<p>
+The first argument is an <a
+href="index.html?a=C00000289&name=OpenID::Response">OpenID::Response</a>,
+the second is a <a
+href="index.html?a=C00000300&name=Rack::Request">Rack::Request</a> of the
+current request, the last is the hash used in ruby-openid handling, which
+can be found manually at <a href="http://'rack.session'"
+target="_blank">env</a>[:openid].
+</p>
+<p>
+This is useful if you wanted to expand the processing done, such as setting
+up user accounts.
+</p>
+<pre>
+  oid_app = Rack::Auth::OpenID.new realm, :return_to =&gt; return_to
+  def oid_app.success oid, request, session
+    user = Models::User[oid.identity_url]
+    user ||= Models::User.create_from_openid oid
+    request['rack.session'][:user] = user.id
+    redirect MyApp.site_home
+  end
+
+  site_map['/openid'] = oid_app
+  map = Rack::URLMap.new site_map
+  ...
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000877_source')" id="l_M000877_source">show source</a> ]</p>
+  <div id="M000877_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 151</span>
+151:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">options</span>={})
+152:         <span class="ruby-identifier">realm</span> = <span class="ruby-constant">URI</span>(<span class="ruby-identifier">realm</span>)
+153:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Invalid realm: #{realm}&quot;</span> \
+154:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">absolute?</span> \
+155:           <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">nil?</span> \
+156:           <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">scheme</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^https?$/</span> \
+157:           <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">host</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^(\*\.)?#{URI::REGEXP::PATTERN::URIC_NO_SLASH}+/</span>
+158:         <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">path</span> = <span class="ruby-value str">'/'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span>
+159:         <span class="ruby-ivar">@realm</span> = <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">to_s</span>
+160: 
+161:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ruri</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:return_to</span>]
+162:           <span class="ruby-identifier">ruri</span> = <span class="ruby-constant">URI</span>(<span class="ruby-identifier">ruri</span>)
+163:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Invalid return_to: #{ruri}&quot;</span> \
+164:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">ruri</span>.<span class="ruby-identifier">absolute?</span> \
+165:             <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">ruri</span>.<span class="ruby-identifier">scheme</span>  <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^https?$/</span> \
+166:             <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">ruri</span>.<span class="ruby-identifier">fragment</span>.<span class="ruby-identifier">nil?</span>
+167:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;return_to #{ruri} not within realm #{realm}&quot;</span> \
+168:             <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">within_realm?</span>(<span class="ruby-identifier">ruri</span>)
+169:           <span class="ruby-ivar">@return_to</span> = <span class="ruby-identifier">ruri</span>.<span class="ruby-identifier">to_s</span>
+170:         <span class="ruby-keyword kw">end</span>
+171: 
+172:         <span class="ruby-ivar">@session_key</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:session_key</span>]   <span class="ruby-operator">||</span> <span class="ruby-value str">'rack.session'</span>
+173:         <span class="ruby-ivar">@openid_param</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:openid_param</span>]  <span class="ruby-operator">||</span> <span class="ruby-value str">'openid_identifier'</span>
+174:         <span class="ruby-ivar">@store</span>        = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:store</span>]         <span class="ruby-operator">||</span> <span class="ruby-operator">::</span><span class="ruby-constant">OpenID</span><span class="ruby-operator">::</span><span class="ruby-constant">Store</span><span class="ruby-operator">::</span><span class="ruby-constant">Memory</span>.<span class="ruby-identifier">new</span>
+175:         <span class="ruby-ivar">@immediate</span>    = <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">options</span>[<span class="ruby-identifier">:immediate</span>]
+176: 
+177:         <span class="ruby-ivar">@extensions</span> = {}
+178:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extensions</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:extensions</span>)
+179:           <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span>, <span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
+180:             <span class="ruby-identifier">add_extension</span> <span class="ruby-identifier">ext</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+181:           <span class="ruby-keyword kw">end</span>
+182:         <span class="ruby-keyword kw">end</span>
+183: 
+184:         <span class="ruby-comment cmt"># Undocumented, semi-experimental</span>
+185:         <span class="ruby-ivar">@anonymous</span>    = <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">options</span>[<span class="ruby-identifier">:anonymous</span>]
+186:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000881" class="method">
+  <div id="M000881_title" class="title">
+    <b>add_extension</b>(ext, *args)
+  </div>
+  <div class="description">
+  <p>
+The first argument should be the main extension module. The extension
+module should contain the constants:
+</p>
+<pre>
+  * class Request, should have OpenID::Extension as an ancestor
+  * class Response, should have OpenID::Extension as an ancestor
+  * string NS_URI, which defining the namespace of the extension
+</pre>
+<p>
+All trailing arguments will be passed to extension::<a
+href="index.html?a=M001040&name=Request.new">Request.new</a> in <a
+href="index.html?a=M000879&name=check">check</a>. The openid response will
+be passed to extension::Response#from_success_response, get_extension_args
+will be called on the result to attain the gathered data.
+</p>
+<p>
+This method returns the key at which the response data will be found in the
+session, which is the namespace uri by default.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000881_source')" id="l_M000881_source">show source</a> ]</p>
+  <div id="M000881_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 312</span>
+312:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_extension</span>(<span class="ruby-identifier">ext</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+313:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">BadExtension</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">valid_extension?</span>(<span class="ruby-identifier">ext</span>)
+314:         <span class="ruby-identifier">extensions</span>[<span class="ruby-identifier">ext</span>] = <span class="ruby-identifier">args</span>
+315:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ext</span><span class="ruby-operator">::</span><span class="ruby-constant">NS_URI</span>
+316:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000878" class="method">
+  <div id="M000878_title" class="title">
+    <b>call</b>(env)
+  </div>
+  <div class="description">
+  <p>
+Sets up and uses session data at <tt>:openid</tt> within the session.
+Errors in this setup will raise a <a
+href="index.html?a=C00000258&name=NoSession">NoSession</a> exception.
+</p>
+<p>
+If the parameter &#8216;openid.mode&#8217; is set, which implies a followup
+from the openid server, processing is passed to <a
+href="index.html?a=M000880&name=finish">finish</a> and the result is
+returned. However, if there is no appropriate openid information in the
+session, a 400 error is returned.
+</p>
+<p>
+If the parameter specified by <tt>options[:openid_param]</tt> is present,
+processing is passed to <a href="index.html?a=M000879&name=check">check</a>
+and the result is returned.
+</p>
+<p>
+If neither of these conditions are met, <a
+href="index.html?a=M000888&name=unauthorized">unauthorized</a> is called.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000878_source')" id="l_M000878_source">show source</a> ]</p>
+  <div id="M000878_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 204</span>
+204:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+205:         <span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.auth.openid'</span>] = <span class="ruby-keyword kw">self</span>
+206:         <span class="ruby-identifier">env_session</span> = <span class="ruby-identifier">env</span>[<span class="ruby-ivar">@session_key</span>]
+207:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">env_session</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">env_session</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+208:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoSession</span>, <span class="ruby-value str">'No compatible session'</span>
+209:         <span class="ruby-keyword kw">end</span>
+210:         <span class="ruby-comment cmt"># let us work in our own namespace...</span>
+211:         <span class="ruby-identifier">session</span> = (<span class="ruby-identifier">env_session</span>[<span class="ruby-identifier">:openid</span>] <span class="ruby-operator">||=</span> {})
+212:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">session</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">session</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+213:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">NoSession</span>, <span class="ruby-value str">'Incompatible openid session'</span>
+214:         <span class="ruby-keyword kw">end</span>
+215: 
+216:         <span class="ruby-identifier">request</span> = <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
+217:         <span class="ruby-identifier">consumer</span> = <span class="ruby-operator">::</span><span class="ruby-constant">OpenID</span><span class="ruby-operator">::</span><span class="ruby-constant">Consumer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-ivar">@store</span>)
+218: 
+219:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">mode</span> = <span class="ruby-identifier">request</span>.<span class="ruby-constant">GET</span>[<span class="ruby-value str">'openid.mode'</span>]
+220:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">:openid_param</span>)
+221:             <span class="ruby-identifier">finish</span>(<span class="ruby-identifier">consumer</span>, <span class="ruby-identifier">session</span>, <span class="ruby-identifier">request</span>)
+222:           <span class="ruby-keyword kw">else</span>
+223:             <span class="ruby-identifier">bad_request</span>
+224:           <span class="ruby-keyword kw">end</span>
+225:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">request</span>.<span class="ruby-constant">GET</span>[<span class="ruby-ivar">@openid_param</span>]
+226:           <span class="ruby-identifier">check</span>(<span class="ruby-identifier">consumer</span>, <span class="ruby-identifier">session</span>, <span class="ruby-identifier">request</span>)
+227:         <span class="ruby-keyword kw">else</span>
+228:           <span class="ruby-identifier">unauthorized</span>
+229:         <span class="ruby-keyword kw">end</span>
+230:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000879" class="method">
+  <div id="M000879_title" class="title">
+    <b>check</b>(consumer, session, req)
+  </div>
+  <div class="description">
+  <p>
+As the first part of <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> consumer action, <a
+href="index.html?a=M000879&name=check">check</a> retrieves the data
+required for completion.
+</p>
+<p>
+If all parameters fit within the max length of a URI, a 303 redirect will
+be returned. Otherwise <a
+href="index.html?a=M000885&name=confirm_post_params">confirm_post_params</a>
+will be called.
+</p>
+<p>
+Any messages from <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a>&#8217;s request are
+logged to <a href="http://'rack.errors'" target="_blank">env</a>
+</p>
+<p>
+<tt><a href="http://'rack.auth.openid.request'"
+target="_blank">env</a></tt> is the openid checkid request instance.
+</p>
+<p>
+<tt>session[:openid_param]</tt> is set to the openid identifier provided by
+the user.
+</p>
+<p>
+<tt>session[:return_to]</tt> is set to the return_to uri given to the
+identity provider.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000879_source')" id="l_M000879_source">show source</a> ]</p>
+  <div id="M000879_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 249</span>
+249:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check</span>(<span class="ruby-identifier">consumer</span>, <span class="ruby-identifier">session</span>, <span class="ruby-identifier">req</span>)
+250:         <span class="ruby-identifier">oid</span> = <span class="ruby-identifier">consumer</span>.<span class="ruby-identifier">begin</span>(<span class="ruby-identifier">req</span>.<span class="ruby-constant">GET</span>[<span class="ruby-ivar">@openid_param</span>], <span class="ruby-ivar">@anonymous</span>)
+251:         <span class="ruby-identifier">req</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.auth.openid.request'</span>] = <span class="ruby-identifier">oid</span>
+252:         <span class="ruby-identifier">req</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.errors'</span>].<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">oid</span>.<span class="ruby-identifier">message</span>)
+253:         <span class="ruby-identifier">p</span> <span class="ruby-identifier">oid</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$DEBUG</span>
+254: 
+255:         <span class="ruby-comment cmt">## Extension support</span>
+256:         <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext</span>,<span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
+257:           <span class="ruby-identifier">oid</span>.<span class="ruby-identifier">add_extension</span>(<span class="ruby-identifier">ext</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>))
+258:         <span class="ruby-keyword kw">end</span>
+259: 
+260:         <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:openid_param</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-constant">GET</span>[<span class="ruby-identifier">openid_param</span>]
+261:         <span class="ruby-identifier">return_to_uri</span> = <span class="ruby-identifier">return_to</span> <span class="ruby-value">? </span><span class="ruby-identifier">return_to</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">url</span>
+262:         <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] = <span class="ruby-identifier">return_to_uri</span>
+263:         <span class="ruby-identifier">immediate</span> = <span class="ruby-identifier">session</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">:setup_needed</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword kw">false</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">immediate</span>
+264: 
+265:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">oid</span>.<span class="ruby-identifier">send_redirect?</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">return_to_uri</span>, <span class="ruby-identifier">immediate</span>)
+266:           <span class="ruby-identifier">uri</span> = <span class="ruby-identifier">oid</span>.<span class="ruby-identifier">redirect_url</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">return_to_uri</span>, <span class="ruby-identifier">immediate</span>)
+267:           <span class="ruby-identifier">redirect</span>(<span class="ruby-identifier">uri</span>)
+268:         <span class="ruby-keyword kw">else</span>
+269:           <span class="ruby-identifier">confirm_post_params</span>(<span class="ruby-identifier">oid</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-identifier">return_to_uri</span>, <span class="ruby-identifier">immediate</span>)
+270:         <span class="ruby-keyword kw">end</span>
+271:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-operator">::</span><span class="ruby-constant">OpenID</span><span class="ruby-operator">::</span><span class="ruby-constant">DiscoveryFailure</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+272:         <span class="ruby-comment cmt"># thrown from inside OpenID::Consumer#begin by yadis stuff</span>
+273:         <span class="ruby-identifier">req</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.errors'</span>].<span class="ruby-identifier">puts</span>([<span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">e</span>.<span class="ruby-identifier">backtrace</span>]<span class="ruby-operator">*</span><span class="ruby-value str">&quot;\n&quot;</span>)
+274:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">foreign_server_failure</span>
+275:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000880" class="method">
+  <div id="M000880_title" class="title">
+    <b>finish</b>(consumer, session, req)
+  </div>
+  <div class="description">
+  <p>
+This is the final portion of authentication. If successful, a redirect to
+the realm is be returned. Data gathered from extensions are stored in
+session[:openid] with the extension&#8217;s namespace uri as the key.
+</p>
+<p>
+Any messages from <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a>&#8217;s response are
+logged to <a href="http://'rack.errors'" target="_blank">env</a>
+</p>
+<p>
+<tt><a href="http://'rack.auth.openid.response'"
+target="_blank">env</a></tt> will contain the openid response.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000880_source')" id="l_M000880_source">show source</a> ]</p>
+  <div id="M000880_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 287</span>
+287:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">finish</span>(<span class="ruby-identifier">consumer</span>, <span class="ruby-identifier">session</span>, <span class="ruby-identifier">req</span>)
+288:         <span class="ruby-identifier">oid</span> = <span class="ruby-identifier">consumer</span>.<span class="ruby-identifier">complete</span>(<span class="ruby-identifier">req</span>.<span class="ruby-constant">GET</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">url</span>)
+289:         <span class="ruby-identifier">req</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.auth.openid.response'</span>] = <span class="ruby-identifier">oid</span>
+290:         <span class="ruby-identifier">req</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.errors'</span>].<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">oid</span>.<span class="ruby-identifier">message</span>)
+291:         <span class="ruby-identifier">p</span> <span class="ruby-identifier">oid</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$DEBUG</span>
+292: 
+293:         <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">ValidStatus</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">oid</span>.<span class="ruby-identifier">status</span>)
+294:         <span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">oid</span>.<span class="ruby-identifier">status</span>, <span class="ruby-identifier">oid</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">session</span>)
+295:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000884" class="method">
+  <div id="M000884_title" class="title">
+    <b>include?</b>(uri)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a
+href="index.html?a=M000883&name=within_realm?">within_realm?</a>
+</p>
+  </div>
+</div>
+<div id="M000882" class="method">
+  <div id="M000882_title" class="title">
+    <b>valid_extension?</b>(ext)
+  </div>
+  <div class="description">
+  <p>
+Checks the validitity, in the context of usage, of a submitted extension.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000882_source')" id="l_M000882_source">show source</a> ]</p>
+  <div id="M000882_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 321</span>
+321:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valid_extension?</span>(<span class="ruby-identifier">ext</span>)
+322:         <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-node">%w[NS_URI Request Response]</span>.<span class="ruby-identifier">all?</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-identifier">c</span>) }
+323:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Extension is missing constants.'</span>
+324:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">ext</span><span class="ruby-operator">::</span><span class="ruby-constant">Response</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:from_success_response</span>)
+325:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Response is missing required method.'</span>
+326:         <span class="ruby-keyword kw">end</span>
+327:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+328:       <span class="ruby-keyword kw">rescue</span>
+329:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span>
+330:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000883" class="method">
+  <div id="M000883_title" class="title">
+    <b>within_realm?</b>(uri)
+  </div>
+  <div class="description">
+  <p>
+Checks the provided uri to ensure it&#8217;d be considered within the
+realm. is currently not compatible with wildcard realms.
+</p>
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M000884&name=include?">include?</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000883_source')" id="l_M000883_source">show source</a> ]</p>
+  <div id="M000883_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 335</span>
+335:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">within_realm?</span> <span class="ruby-identifier">uri</span>
+336:         <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">uri</span>.<span class="ruby-identifier">to_s</span>)
+337:         <span class="ruby-identifier">realm</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">realm</span>)
+338:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">absolute?</span>
+339:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>, <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">size</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">path</span>
+340:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">host</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">realm</span>.<span class="ruby-identifier">host</span>[<span class="ruby-regexp re">/^\*\./</span>]
+341:         <span class="ruby-comment cmt"># for wildcard support, is awkward with URI limitations</span>
+342:         <span class="ruby-identifier">realm_match</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">realm</span>.<span class="ruby-identifier">host</span>).
+343:           <span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\*\./</span>,<span class="ruby-node">&quot;^#{URI::REGEXP::PATTERN::URIC_NO_SLASH}+.&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-value str">'$'</span>
+344:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">realm_match</span>)
+345:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+346:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Protected Instance methods</div>
+<div id="M000889" class="method">
+  <div id="M000889_title" class="title">
+    <b>access_denied</b>()
+  </div>
+  <div class="description">
+  <p>
+Returns a basic access denied 403 response.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000889_source')" id="l_M000889_source">show source</a> ]</p>
+  <div id="M000889_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 389</span>
+389:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">access_denied</span>
+390:         [ <span class="ruby-value">403</span>, {<span class="ruby-value str">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/plain'</span>, <span class="ruby-value str">'Content-Length'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'14'</span>},
+391:           [<span class="ruby-value str">'Access denied.'</span>] ]
+392:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000887" class="method">
+  <div id="M000887_title" class="title">
+    <b>bad_request</b>()
+  </div>
+  <div class="description">
+  <p>
+Returns an empty 400 response.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000887_source')" id="l_M000887_source">show source</a> ]</p>
+  <div id="M000887_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 375</span>
+375:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bad_request</span>
+376:         [ <span class="ruby-value">400</span>, {<span class="ruby-value str">'Content-Type'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">'text/plain'</span>, <span class="ruby-value str">'Content-Length'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">'0'</span>},
+377:           [<span class="ruby-value str">''</span>] ]
+378:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000885" class="method">
+  <div id="M000885_title" class="title">
+    <b>confirm_post_params</b>(oid, realm, return_to, immediate)
+  </div>
+  <div class="description">
+  <p>
+Returns an html form page for posting to an Identity Provider if the GET
+request would exceed the upper URI length limit.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000885_source')" id="l_M000885_source">show source</a> ]</p>
+  <div id="M000885_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 356</span>
+356:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">confirm_post_params</span>(<span class="ruby-identifier">oid</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-identifier">return_to</span>, <span class="ruby-identifier">immediate</span>)
+357:         <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Response</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">finish</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
+358:           <span class="ruby-identifier">r</span>.<span class="ruby-identifier">write</span> <span class="ruby-value str">'&lt;html&gt;&lt;head&gt;&lt;title&gt;Confirm...&lt;/title&gt;&lt;/head&gt;&lt;body&gt;'</span>
+359:           <span class="ruby-identifier">r</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">oid</span>.<span class="ruby-identifier">form_markup</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">return_to</span>, <span class="ruby-identifier">immediate</span>)
+360:           <span class="ruby-identifier">r</span>.<span class="ruby-identifier">write</span> <span class="ruby-value str">'&lt;/body&gt;&lt;/html&gt;'</span>
+361:         <span class="ruby-keyword kw">end</span>
+362:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000890" class="method">
+  <div id="M000890_title" class="title">
+    <b>foreign_server_failure</b>()
+  </div>
+  <div class="description">
+  <p>
+Returns a 503 response to be used if communication with the remote <a
+href="index.html?a=C00000257&name=OpenID">OpenID</a> server fails.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000890_source')" id="l_M000890_source">show source</a> ]</p>
+  <div id="M000890_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 397</span>
+397:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">foreign_server_failure</span>
+398:         [ <span class="ruby-value">503</span>, {<span class="ruby-value str">'Content-Type'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">'text/plain'</span>, <span class="ruby-value str">'Content-Length'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'23'</span>},
+399:           [<span class="ruby-value str">'Foreign server failure.'</span>] ]
+400:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000886" class="method">
+  <div id="M000886_title" class="title">
+    <b>redirect</b>(uri)
+  </div>
+  <div class="description">
+  <p>
+Returns a 303 redirect with the destination of that provided by the
+argument.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000886_source')" id="l_M000886_source">show source</a> ]</p>
+  <div id="M000886_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 367</span>
+367:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect</span>(<span class="ruby-identifier">uri</span>)
+368:         [ <span class="ruby-value">303</span>, {<span class="ruby-value str">'Content-Length'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">'0'</span>, <span class="ruby-value str">'Content-Type'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">'text/plain'</span>,
+369:           <span class="ruby-value str">'Location'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">uri</span>},
+370:           [] ]
+371:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000888" class="method">
+  <div id="M000888_title" class="title">
+    <b>unauthorized</b>()
+  </div>
+  <div class="description">
+  <p>
+Returns a basic unauthorized 401 response.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000888_source')" id="l_M000888_source">show source</a> ]</p>
+  <div id="M000888_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/openid.rb, line 382</span>
+382:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unauthorized</span>
+383:         [ <span class="ruby-value">401</span>, {<span class="ruby-value str">'Content-Type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/plain'</span>, <span class="ruby-value str">'Content-Length'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'13'</span>},
+384:           [<span class="ruby-value str">'Unauthorized.'</span>] ]
+385:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

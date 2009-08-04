@@ -1,0 +1,39 @@
+  <div id="fileHeader">
+    <h1>compressed_mem_cache_store.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/cache/compressed_mem_cache_store.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport
+  module Cache
+    class CompressedMemCacheStore &lt; MemCacheStore
+      def read(name, options = nil)
+        if value = super(name, (options || {}).merge(:raw =&gt; true))
+          if raw?(options)
+            value
+          else
+            Marshal.load(ActiveSupport::Gzip.decompress(value))
+          end
+        end
+      end
+
+      def write(name, value, options = nil)
+        value = ActiveSupport::Gzip.compress(Marshal.dump(value)) unless raw?(options)
+        super(name, value, (options || {}).merge(:raw =&gt; true))
+      end
+    end
+  end
+end
+</pre>
+    </div>

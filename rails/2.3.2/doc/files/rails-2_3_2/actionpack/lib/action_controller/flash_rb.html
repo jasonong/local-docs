@@ -1,0 +1,182 @@
+  <div id="fileHeader">
+    <h1>flash.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/flash.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController #:nodoc:
+  # The flash provides a way to pass temporary objects between actions. Anything you place in the flash will be exposed
+  # to the very next action and then cleared out. This is a great way of doing notices and alerts, such as a create
+  # action that sets &lt;tt&gt;flash[:notice] = &quot;Successfully created&quot;&lt;/tt&gt; before redirecting to a display action that can
+  # then expose the flash to its template. Actually, that exposure is automatically done. Example:
+  #
+  #   class PostsController &lt; ActionController::Base
+  #     def create
+  #       # save post
+  #       flash[:notice] = &quot;Successfully created post&quot;
+  #       redirect_to posts_path(@post)
+  #     end
+  #
+  #     def show
+  #       # doesn't need to assign the flash notice to the template, that's done automatically
+  #     end
+  #   end
+  #
+  #   show.html.erb
+  #     &lt;% if flash[:notice] %&gt;
+  #       &lt;div class=&quot;notice&quot;&gt;&lt;%= flash[:notice] %&gt;&lt;/div&gt;
+  #     &lt;% end %&gt;
+  #
+  # This example just places a string in the flash, but you can put any object in there. And of course, you can put as
+  # many as you like at a time too. Just remember: They'll be gone by the time the next action has been performed.
+  #
+  # See docs on the FlashHash class for more details about the flash.
+  module Flash
+    def self.included(base)
+      base.class_eval do
+        include InstanceMethods
+        alias_method_chain :perform_action, :flash
+        alias_method_chain :reset_session,  :flash
+      end
+    end
+
+    class FlashNow #:nodoc:
+      def initialize(flash)
+        @flash = flash
+      end
+
+      def []=(k, v)
+        @flash[k] = v
+        @flash.discard(k)
+        v
+      end
+
+      def [](k)
+        @flash[k]
+      end
+    end
+
+    class FlashHash &lt; Hash
+      def initialize #:nodoc:
+        super
+        @used = {}
+      end
+
+      def []=(k, v) #:nodoc:
+        keep(k)
+        super
+      end
+
+      def update(h) #:nodoc:
+        h.keys.each { |k| keep(k) }
+        super
+      end
+
+      alias :merge! :update
+
+      def replace(h) #:nodoc:
+        @used = {}
+        super
+      end
+
+      # Sets a flash that will not be available to the next action, only to the current.
+      #
+      #     flash.now[:message] = &quot;Hello current action&quot;
+      #
+      # This method enables you to use the flash as a central messaging system in your app.
+      # When you need to pass an object to the next action, you use the standard flash assign (&lt;tt&gt;[]=&lt;/tt&gt;).
+      # When you need to pass an object to the current action, you use &lt;tt&gt;now&lt;/tt&gt;, and your object will
+      # vanish when the current action is done.
+      #
+      # Entries set via &lt;tt&gt;now&lt;/tt&gt; are accessed the same way as standard entries: &lt;tt&gt;flash['my-key']&lt;/tt&gt;.
+      def now
+        FlashNow.new(self)
+      end
+
+      # Keeps either the entire current flash or a specific flash entry available for the next action:
+      #
+      #    flash.keep            # keeps the entire flash
+      #    flash.keep(:notice)   # keeps only the &quot;notice&quot; entry, the rest of the flash is discarded
+      def keep(k = nil)
+        use(k, false)
+      end
+
+      # Marks the entire flash or a single flash entry to be discarded by the end of the current action:
+      #
+      #     flash.discard              # discard the entire flash at the end of the current action
+      #     flash.discard(:warning)    # discard only the &quot;warning&quot; entry at the end of the current action
+      def discard(k = nil)
+        use(k)
+      end
+
+      # Mark for removal entries that were kept, and delete unkept ones.
+      #
+      # This method is called automatically by filters, so you generally don't need to care about it.
+      def sweep #:nodoc:
+        keys.each do |k|
+          unless @used[k]
+            use(k)
+          else
+            delete(k)
+            @used.delete(k)
+          end
+        end
+
+        # clean up after keys that could have been left over by calling reject! or shift on the flash
+        (@used.keys - keys).each{ |k| @used.delete(k) }
+      end
+
+      private
+        # Used internally by the &lt;tt&gt;keep&lt;/tt&gt; and &lt;tt&gt;discard&lt;/tt&gt; methods
+        #     use()               # marks the entire flash as used
+        #     use('msg')          # marks the &quot;msg&quot; entry as used
+        #     use(nil, false)     # marks the entire flash as unused (keeps it around for one more action)
+        #     use('msg', false)   # marks the &quot;msg&quot; entry as unused (keeps it around for one more action)
+        def use(k=nil, v=true)
+          unless k.nil?
+            @used[k] = v
+          else
+            keys.each{ |key| use(key, v) }
+          end
+        end
+    end
+
+    module InstanceMethods #:nodoc:
+      protected
+        def perform_action_with_flash
+          perform_action_without_flash
+          remove_instance_variable(:@_flash) if defined? @_flash
+        end
+
+        def reset_session_with_flash
+          reset_session_without_flash
+          remove_instance_variable(:@_flash) if defined? @_flash
+        end
+
+        # Access the contents of the flash. Use &lt;tt&gt;flash[&quot;notice&quot;]&lt;/tt&gt; to
+        # read a notice you put there or &lt;tt&gt;flash[&quot;notice&quot;] = &quot;hello&quot;&lt;/tt&gt;
+        # to put a new one.
+        def flash #:doc:
+          unless defined? @_flash
+            @_flash = session[&quot;flash&quot;] ||= FlashHash.new
+            @_flash.sweep
+          end
+
+          @_flash
+        end
+    end
+  end
+end
+</pre>
+    </div>

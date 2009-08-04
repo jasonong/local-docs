@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Inheritance</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="classes.html">
+ <img border=0 src="a2l.gif" alt="Classes"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="redefinemethods.html">
+ <img border=0 src="a2r.gif" alt="Redefinition of methods"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Inheritance</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Our classification of objects in everyday life is naturally
+hierarchical.  We know that <em>all cats are mammals</em>, and
+<em>all mammals are animals</em>.  Smaller classes <em>inherit</em>
+characteristics from the larger classes to which they belong.  If
+all mammals breathe, then all cats breathe. </p>
+<p>We can express this concept in ruby: </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Mammal</b></font>
+    |<font color="#ffff00"><b>   def breathe</b></font>
+    |<font color="#ffff00"><b>     print "inhale and exhale\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> class Cat&lt;Mammal</b></font>
+    |<font color="#ffff00"><b>   def speak</b></font>
+    |<font color="#ffff00"><b>     print "Meow\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>Though we didn't specify how a <code>Cat</code> should breathe, every
+cat will inherit that behavior from the <code>Mammal</code> class since
+<code>Cat</code> was defined as a subclass of <code>Mammal</code>.  (In
+OO terminology, the smaller class is a <em>subclass</em> and the larger
+class is a <em>superclass</em>.) Hence from a programmer's
+standpoint, cats get the ability to breathe for free; after we add a
+<code>speak</code> method, our cats can both breathe and speak.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> tama = Cat.new</b></font>
+<font color="#50ffff"><b>   #&lt;Cat:0xbd80e8&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> tama.breathe</b></font>
+inhale and exhale
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> tama.speak</b></font>
+Meow
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>There will be situations where certain properties of the superclass
+should not be inherited by a particular subclass.  Though birds
+generally know how to fly, penguins are a flightless subclass of
+birds.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Bird</b></font>
+    |<font color="#ffff00"><b>   def preen</b></font>
+    |<font color="#ffff00"><b>     print "I am cleaning my feathers."</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b>   def fly</b></font>
+    |<font color="#ffff00"><b>     print "I am flying."</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> class Penguin&lt;Bird</b></font>
+    |<font color="#ffff00"><b>   def fly</b></font>
+    |<font color="#ffff00"><b>     fail "Sorry. I'd rather swim."</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>Rather than exhaustively define every characteristic of every
+new class, we need only to append or to redefine the differences
+between each subclass and its superclass.  This use of
+inheritance is sometimes called <em>differential programming</em>.  
+It is one of the benefits of object-oriented programming. </p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="classes.html">
+ <img border=0 src="a2l.gif" alt="Classes"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="redefinemethods.html">
+ <img border=0 src="a2r.gif" alt="Redefinition of methods"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

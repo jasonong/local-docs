@@ -1,0 +1,261 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <title>Introduction to Ruby</title>
+  <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+
+    <p>
+      <a href="http://validator.w3.org/check/referer">  
+        <img style="border:0;width:88px;height:31px"
+             src="http://www.w3.org/Icons/valid-xhtml10"
+             alt="Valid XHTML 1.0!" height="31" width="88" /> 
+      </a>
+      <a href="http://jigsaw.w3.org/css-validator/">
+        <img style="border:0;width:88px;height:31px"
+             src="http://jigsaw.w3.org/css-validator/images/vcss"
+             alt="Valid CSS!" />
+      </a>
+    </p>
+    
+<h1>Conditionals</h1>
+
+<p><b>if</b> statements allow you to take different actions depending
+on which conditions are met.  For example:</p>
+
+<pre class="code">
+if city == "Toronto"
+   drinking_age = 19
+else
+   drinking_age = 21
+end
+</pre>
+
+<p>This says: </p>
+<ol>
+<li><b>if</b> the <b>city</b> is equal to (<b>==</b>) <b>"Toronto"</b>,
+    then set <b>drinking_age</b> to 19.
+</li>
+<li>Otherwise (<b>else</b>) set <b>drinking_age</b> to 21.</p></li>
+</ol>
+
+<h2><a name="TF"><b>true</b> and <b>false</b></a></h2>
+
+<p>Ruby has a notion of true and false.  This is best illustrated through
+some example.  Start <b>irb</b> and type the following:</p>
+
+<img src="conditionals/01.gif" />
+
+<p>The <b>if</b> statements evaluates whether the expression (e.g.
+'<b>city == "Toronto"</b>) is <b>true</b> or <b>false</b> and acts accordingly.
+</p>
+
+<p>
+<table cellspacing="0">
+<tr class="warning">
+<td>
+<strong>Warning:</strong> 
+Notice the difference between '<b>=</b>' and '<b>==</b>'.<br />
+'<b>=</b>' is an <em>assignment</em> operator.<br />
+'<b>==</b>' is a <em>comparison</em> operator.
+</td>
+</tr>
+</table>
+</p>
+
+
+<h2><a name="cond">Most common conditionals</a></h2>
+
+<p>Here is a list of some of the most common conditionals:</p>
+
+<table>
+<tr><td class="padding">==   </td>
+    <td class="padding">equal                   </td>
+</tr>
+<tr><td class="padding">!=   </td>
+    <td class="padding"><em>not</em> equal to   </td>
+</tr>
+<tr><td class="padding">&gt; </td>
+    <td class="padding">greater than            </td>
+</tr>
+<tr><td class="padding">&lt; </td>
+    <td class="padding">less than               </td>
+</tr>
+<tr><td class="padding">&gt;=</td>
+    <td class="padding">greater than or equal to</td>
+</tr>
+<tr><td class="padding">&lt;=</td>
+    <td class="padding">less than or equal to   </td>
+</tr>
+</table>
+
+<h2><a name="str">String comparisons</a></h2>
+
+<p>How do these operators behave with strings? Well, <b>==</b> is string 
+equality and <b>&gt;</b> and friends are determined by ASCIIbetical order.
+</p>
+
+<p>What is ASCIIbetical order?  The ASCII character table contains all the
+characters in the keyboard.  It lists them in this order:</p>
+
+<pre>
+...012...789...ABC...XYZ...abc...xyz...
+</pre>
+
+<p>Start <b>irb</b> and type these in:</p>
+
+<img src="conditionals/02.gif" />
+
+<p>
+<table cellspacing="0">
+<tr class="note">
+<td>
+<strong>Note:</strong> 
+Notice how <b>irb</b> can help make things clear.  You should make
+a habit of trying things out in <b>irb</b> first.  <b>irb</b> is a
+great tool, so use it!
+</td>
+</tr>
+</table>
+</p>
+
+
+
+<h2><a name="example"><b>elsif</b></a></h2>
+
+<p><b>elsif</b> allows you to add more than one condition.  Take this for
+example:</p>
+
+<pre class="code">
+if age >= 60
+    puts "Senior fare"
+elsif age >= 14
+    puts "Adult fare"
+elsif age > 2
+    puts "Child fare"
+else
+    puts "Free"
+end
+</pre>
+
+<p>Let's go through this:</p>
+<ol>
+<li>If <b>age</b> is 60 or more, we give a senior fare.</li>
+<li>If that's not true, but <b>age</b> is 14 or more, we give the
+    adult fare.</li>
+<li>If that's not true, but <b>age</b> is more than 2 we give the child fare.
+    </li>
+<li>Otherwise we ride free.</li>
+</ol>
+
+<p>Ruby goes through this sequence of conditions one by one.  The 
+<em>first</em> condition to hold gets executed.  You can put as many
+<b>elsif</b>'s as you like.</p>
+
+<h2><a name="fare">Example - fare_finder.rb</a></h2>
+
+<p>To make things more clear, let's put this in a program.  The program
+asks for your age and gives you the corresponding fare.</p>
+
+<img src="conditionals/03.gif" />
+
+<p>Type this in and run it.  It should behave like this:</p>
+
+<img src="conditionals/04.gif" />
+
+<p>
+<table cellspacing="0">
+<tr class="warning">
+<td>
+<strong>Warning:</strong> 
+Be mindful of the order in which you put <b>elsif</b>'s.  Only the 
+<em>first</em> condition that is true gets executed.  This example
+demonstrates the danger:
+</td>
+</tr>
+</table>
+</p>
+
+<pre class="code">
+age = 21
+
+if age > 5
+   puts "Older than 5"
+elsif age > 10
+   puts "Older than 10"
+elsif age > 20
+   puts "Older than 20"
+elsif age > 30
+   puts "Older than 30"
+end
+</pre>
+
+<p>This will output:</p>
+<pre class="shell">
+$ ./example.rb
+Older than 5
+$
+</pre>
+
+<p>Here <b>age</b> is both greater than 10 and greater than 20.  Only the
+<em>first</em> statement that holds true gets executed.</p>
+
+<p>The correct way to write this would be:</p>
+
+<pre class="code">
+if age > 30
+   puts "Older than 30"
+elsif age > 20
+   puts "Older than 20"
+elsif age > 10
+   puts "Older than 10"
+elsif age > 5
+   puts "Older than 5"
+end
+</pre>
+
+
+<h2><a name="ex"></a>Exercises</h2>
+
+<ol>
+   <li><p>Re-arrange these characters in ASCIIbetical order:</p> 
+<pre>
+ 2, u, A, 4, w, f, R, y
+</pre>
+   </li>
+   <li><p>The ASCII table contains all the characters in the keyboard.
+       Use <b>irb</b> to find out wheter the characters "?" lies:</p>
+     <ol>
+     <li>Before 0.</li>
+     <li>After 9 but before A.</li>
+     <li>After Z but before a.</li>
+     <li>After z.
+     </ol>
+   </li>
+   <li><p>Using your experience the previous question, make a program
+       that accepts a character input and tells you if the character
+       lines:</p>
+     <ol>
+     <li>Before 0.</li>
+     <li>After 9 but before A.</li>
+     <li>After Z but before a.</li>
+     <li>After z.
+     </ol>
+     <p>Then try the program with the following characters:</p>
+<pre>
+    $, +, ?, &lt;, -, ~, :, %, ^, {, [
+</pre>
+     <p>Sample answers:</p>
+     <ul>
+     <li>$ lies before 0</li>
+     <li>&lt; lies between 9 and A</li>
+     <li>- lies between Z and a</li>
+     <li>~ lies after z</li>
+     </ul>
+</ol>
+
+</body>
+</html>

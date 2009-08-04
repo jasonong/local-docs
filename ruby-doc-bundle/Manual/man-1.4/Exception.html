@@ -1,0 +1,396 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=iso-2022-jp">
+    <link rev="made" href="mailto:matz@netlab.co.jp">
+    <link rel="prev" href="Dir.html">
+    <link rel="next" href="Hash.html">
+    <link rel="up" href="classes.html#Exception">
+    <link rel="inex" href="index.html">
+    <title>Exception</title>
+  </head>
+
+  <body text="#000000" bgcolor="#FFFFFF">
+    <A HREF="Dir.html">prev</A>
+    -
+    <A HREF="classes.html#Exception">up</A>
+    -
+    <A HREF="Hash.html">next</A>
+    -
+    <A HREF="index.html">index</A>
+    <HR>
+    <dl>
+      <dt><h1><a name="Exception">Exception</a></h1>
+      <dd>
+        <p>The ancester of the all exceptions.</p>
+      </dd>
+      <dt><h2>SuperClass:</h2>
+      <dd><A HREF="Object.html"><code>Object</code></A>
+      <dt><h2>Class Methods:</h2>
+      <dd>
+      <dl compact>
+	<dt><a name="class_exception"><code>exception([<var>error_message</var> = &quot;&quot;])</code></a></dt>
+	<dt><a name="new"><code>new([<var>error_message</var> = &quot;&quot;])</code></a></dt>
+	<dd>
+	  <p>Creates a new exception object.  The error_message string can be supplied
+	     as the optional argument.  The default exception handler at top leve,
+	     will show this error_message.
+	  </p>
+	  <p><code>exception</code> is used internally by <a href="function.html#raise"><code>
+		raise</code></a>.
+	  </p>
+	</dd>
+      </dl>
+      <dt><h2>Methods:</h2>
+      <dd>
+	<dl compact>
+	  <dt><a name="backtrace"><code>backtrace</code></a></dt>
+	  <dd>
+	    <p>Returns backtrace information as the array of the strings
+	        in the following format.</p>
+	      <dl>
+		<dt><code>"#{sourcefile}:#{sourceline}:in `#{method}'"</code>
+		<dd>(within methods)
+		<dt><code>"#{sourcefile}:#{sourceline}"</code>
+		<dd>(at top level)
+	      </dl>
+	  </dd>
+	  <dt><a name="exception"><code>exception</code></a></dt>
+	  <dd>
+	    <p>Return self.  This method is used internally by <a
+	      href="function.html#raise"> <code>raise</code></a>.
+	    </p>
+	  </dd>
+	  <dt><a name="message"><code>message</code></a></dt>
+	  <dt><a name="to_s"><code>to_s</code></a></dt>
+	  <dt><a name="to_str"><code>to_str</code></a></dt>
+	  <dd>
+	    <p>Returns the error message string.</p>
+	  </dd>
+	  <dt><a name="set_backtrace"><code>set_backtrace(<var>errinfo</var>)</code></a></dt>
+	  <dd>
+	    <p>Sets the backtrace information of the exception.
+	      <var>errinfo</var> must be the array of the strings.
+	    </p>
+	  </dd>
+	</dl>
+      </dd>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="Interrupt">Interrupt</a></h1>
+      <dd>
+	<p>The exception for the untrapped <code>SIGINT</code>.
+        </p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><a href="#Exception"><code>Exception</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="NotImplementError">NotImplementError</a></h1>
+      <dd>
+	<p>The exception raised when unimplemented feature was invoked.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><a href="#Exception"><code>Exception</code></a>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="SignalException">SignalException</a></h1>
+      <dd>
+	<p>The exception raised by the signals (except SIGINT).</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#Exception"><code>Exception</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="StandardError">StandardError</a></h1>
+      <dd>
+	<p>The <code>rescue</code> class without class specifified will catch
+	the subclasses of this exception class.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#Exception"><code>Exception</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="SystemExit">SystemExit</a></h1>
+      <dd>
+	<p>Raised by <code>exit</code> to terminate the interpreter.</p>
+      </dd>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+        <dl>
+	  <dt><A HREF="#Exception"><code>Exception</code></A>
+      </dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="fatal">fatal</a></h1>
+      <dd>
+ 	<p>The fatal error, which can not be caught nor handled.<br>
+       	  e.g.:
+	  <ul>
+ 	    <li>No more memory available
+	    <li>Thread dead-lock happened
+	    <li>Could not move to the directory specified by options <var>-x</var>
+	        and <var>-X</var>.
+	    <li>Could not perform inplace edit by some reasons
+	  </ul>
+	</p>
+
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#Exception"><code>Exception</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="ArgumentError">ArgumentError</a></h1>
+      <dd>
+	<p>The exception raised when some problem found with methods arguments. E.g.
+	  <blockquote>
+	  <code>Math.sqrt(-1)</code>
+	  </blockquote>
+        </p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="FloatDomainError">FloatDomainError</a></h1>
+      <dd>
+	<p>Raised by the floating point number operation with infinite number or NaN.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="IndexError">IndexError</a></h1>
+      <dd>
+	<p>Raised when index out of range.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="IOError">IOError</a></h1>
+      <dd>
+	<p>Raised when I/O error happened.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><a href="#StandardError"><code>StandardError</code></a>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="LoadError">LoadError</a></h1>
+      <dd>
+	<p>Raised when <code>load</code> or <code>require</code> failed.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="LocalJumpError">LocalJumpError</a></h1>
+      <dd>
+	<p>raised by local jumps (<code>return</code>, <code>break</code>, <code>next</code>, <code>redo</code>,
+	<code>retry</code>) from a <a href="Proc.html"><code>Proc</code></a> object
+	which is brought out of its original scope.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd>
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="NameError">NameError</a></h1>
+      <dd>
+	<p>Raised by accessing an undefined identifier.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="RuntimeError">RuntimeError</a></h1>
+      <dd>
+	<p>The default exception caused by
+	<a href="function.html#raise"><code>raise</code></a> without specifying an exception.
+	</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="SecurityError">SecurityError</a></h1>
+      <dd>
+	<p>Raised by security problem with tainted data.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="SyntaxError">SyntaxError</a></h1>
+      <dd>
+	<p>Raised by a syntax error.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd>
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="SystemCallError">SystemCallError</a></h1>
+      <dd>
+	<p>
+	  The exceptions for system call failures.<br>
+	  This is the abstract super class for the actual system call exception classes,
+	  which are defined under the <a href="Errno.html"><code>Errno</code> module</a>.
+        </p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><a href="#StandardError"><code>StandardError</code></a>
+	</dl>
+      <dt><h2>Methods:</h2>
+      <dd>
+	<dl compact>
+	  <dt><a name="errno"><code>errno</code></a>
+	  <dd>
+	    <p>Returns the <code>errno</code> passed from the OS.</p>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="SystemStackError">SystemStackError</a></h1>
+      <dd>
+	<p>Raised when stack level becomes too deep.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="TypeError">TypeError</a></h1>
+      <dd>
+	<p>Raised by the type problem.  Mostly caused by C extensions.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="ThreadError">ThreadError</a></h1>
+      <dd>
+	<p>Raised by the follwing <a href="thread.html"><code>Thread</code></a>errors:
+	  <ul>
+	    <li>try to <code>join</code> the current thread.
+	    <li><code>join</code> causes dead lock.
+	    <li>try to <code>wakeup</code> the dead thread.
+	    <li>try to <code>stop</code> a sole thread.
+	    <li>try to create a thread without the block.
+	    <li>global jump out of thread by <a href="function.html#throw"><code>throw</code></a> happened.
+	    <li>exit from the thread block by <code>return</code>.
+	  </ul>
+        </p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="ZeroDivisionError">ZeroDivisionError</a></h1>
+      <dd>
+	<p>Raised by a division by zero.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><A HREF="#StandardError"><code>StandardError</code></A>
+	</dl>
+    </dl>
+
+    <HR>
+    <dl>
+      <dt><h1><a name="EOFError">EOFError</a></h1>
+      <dd>
+	<p>Raised when EOF is reached.</p>
+      <dt><h2>SuperClass:</h2>
+      <dd> 
+	<dl>
+	  <dt><a href="#IOError"><code>IOError</code></a>
+	</dl>
+    </dl>
+
+    <HR>
+    <A HREF="Time.html">prev</A>
+    -
+    <A HREF="classes.html#Exception">up</A>
+    -
+    <A HREF="NilClass.html">next</A>
+    -
+    <A HREF="index.html">index</A>
+    <P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+  </body>
+</html>

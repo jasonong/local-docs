@@ -1,0 +1,368 @@
+  <div id="fileHeader">
+    <h1>showexceptions.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showexceptions.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'ostruct'
+require 'erb'
+require 'rack/request'
+require 'rack/utils'
+
+module Rack
+  # Rack::ShowExceptions catches all exceptions raised from the app it
+  # wraps.  It shows a useful backtrace with the sourcefile and
+  # clickable context, the whole Rack environment and the request
+  # data.
+  #
+  # Be careful when you use this on public-facing sites as it could
+  # reveal information helpful to attackers.
+
+  class ShowExceptions
+    CONTEXT = 7
+
+    def initialize(app)
+      @app = app
+      @template = ERB.new(TEMPLATE)
+    end
+
+    def call(env)
+      @app.call(env)
+    rescue StandardError, LoadError, SyntaxError =&gt; e
+      backtrace = pretty(env, e)
+      [500,
+       {&quot;Content-Type&quot; =&gt; &quot;text/html&quot;,
+        &quot;Content-Length&quot; =&gt; backtrace.join.size.to_s},
+       backtrace]
+    end
+
+    def pretty(env, exception)
+      req = Rack::Request.new(env)
+      path = (req.script_name + req.path_info).squeeze(&quot;/&quot;)
+
+      frames = exception.backtrace.map { |line|
+        frame = OpenStruct.new
+        if line =~ /(.*?):(\d+)(:in `(.*)')?/
+          frame.filename = $1
+          frame.lineno = $2.to_i
+          frame.function = $4
+
+          begin
+            lineno = frame.lineno-1
+            lines = ::File.readlines(frame.filename)
+            frame.pre_context_lineno = [lineno-CONTEXT, 0].max
+            frame.pre_context = lines[frame.pre_context_lineno...lineno]
+            frame.context_line = lines[lineno].chomp
+            frame.post_context_lineno = [lineno+CONTEXT, lines.size].min
+            frame.post_context = lines[lineno+1..frame.post_context_lineno]
+          rescue
+          end
+
+          frame
+        else
+          nil
+        end
+      }.compact
+
+      env[&quot;rack.errors&quot;].puts &quot;#{exception.class}: #{exception.message}&quot;
+      env[&quot;rack.errors&quot;].puts exception.backtrace.map { |l| &quot;\t&quot; + l }
+      env[&quot;rack.errors&quot;].flush
+
+      [@template.result(binding)]
+    end
+
+    def h(obj)                  # :nodoc:
+      case obj
+      when String
+        Utils.escape_html(obj)
+      else
+        Utils.escape_html(obj.inspect)
+      end
+    end
+
+    # :stopdoc:
+
+# adapted from Django &lt;djangoproject.com&gt;
+# Copyright (c) 2005, the Lawrence Journal-World
+# Used under the modified BSD license:
+# http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5
+TEMPLATE = &lt;&lt;'HTML'
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+  &lt;meta name=&quot;robots&quot; content=&quot;NONE,NOARCHIVE&quot; /&gt;
+  &lt;title&gt;&lt;%=h exception.class %&gt; at &lt;%=h path %&gt;&lt;/title&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    html * { padding:0; margin:0; }
+    body * { padding:10px 20px; }
+    body * * { padding:0; }
+    body { font:small sans-serif; }
+    body&gt;div { border-bottom:1px solid #ddd; }
+    h1 { font-weight:normal; }
+    h2 { margin-bottom:.8em; }
+    h2 span { font-size:80%; color:#666; font-weight:normal; }
+    h3 { margin:1em 0 .5em 0; }
+    h4 { margin:0 0 .5em 0; font-weight: normal; }
+    table {
+        border:1px solid #ccc; border-collapse: collapse; background:white; }
+    tbody td, tbody th { vertical-align:top; padding:2px 3px; }
+    thead th {
+        padding:1px 6px 1px 3px; background:#fefefe; text-align:left;
+        font-weight:normal; font-size:11px; border:1px solid #ddd; }
+    tbody th { text-align:right; color:#666; padding-right:.5em; }
+    table.vars { margin:5px 0 2px 40px; }
+    table.vars td, table.req td { font-family:monospace; }
+    table td.code { width:100%;}
+    table td.code div { overflow:hidden; }
+    table.source th { color:#666; }
+    table.source td {
+        font-family:monospace; white-space:pre; border-bottom:1px solid #eee; }
+    ul.traceback { list-style-type:none; }
+    ul.traceback li.frame { margin-bottom:1em; }
+    div.context { margin: 10px 0; }
+    div.context ol {
+        padding-left:30px; margin:0 10px; list-style-position: inside; }
+    div.context ol li {
+        font-family:monospace; white-space:pre; color:#666; cursor:pointer; }
+    div.context ol.context-line li { color:black; background-color:#ccc; }
+    div.context ol.context-line li span { float: right; }
+    div.commands { margin-left: 40px; }
+    div.commands a { color:black; text-decoration:none; }
+    #summary { background: #ffc; }
+    #summary h2 { font-weight: normal; color: #666; }
+    #summary ul#quicklinks { list-style-type: none; margin-bottom: 2em; }
+    #summary ul#quicklinks li { float: left; padding: 0 1em; }
+    #summary ul#quicklinks&gt;li+li { border-left: 1px #666 solid; }
+    #explanation { background:#eee; }
+    #template, #template-not-exist { background:#f6f6f6; }
+    #template-not-exist ul { margin: 0 0 0 20px; }
+    #traceback { background:#eee; }
+    #requestinfo { background:#f6f6f6; padding-left:120px; }
+    #summary table { border:none; background:transparent; }
+    #requestinfo h2, #requestinfo h3 { position:relative; margin-left:-100px; }
+    #requestinfo h3 { margin-bottom:-1em; }
+    .error { background: #ffc; }
+    .specific { color:#cc3300; font-weight:bold; }
+  &lt;/style&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+  //&lt;!--
+    function getElementsByClassName(oElm, strTagName, strClassName){
+        // Written by Jonathan Snook, http://www.snook.ca/jon;
+        // Add-ons by Robert Nyman, http://www.robertnyman.com
+        var arrElements = (strTagName == &quot;*&quot; &amp;&amp; document.all)? document.all :
+        oElm.getElementsByTagName(strTagName);
+        var arrReturnElements = new Array();
+        strClassName = strClassName.replace(/\-/g, &quot;\\-&quot;);
+        var oRegExp = new RegExp(&quot;(^|\\s)&quot; + strClassName + &quot;(\\s|$$)&quot;);
+        var oElement;
+        for(var i=0; i&lt;arrElements.length; i++){
+            oElement = arrElements[i];
+            if(oRegExp.test(oElement.className)){
+                arrReturnElements.push(oElement);
+            }
+        }
+        return (arrReturnElements)
+    }
+    function hideAll(elems) {
+      for (var e = 0; e &lt; elems.length; e++) {
+        elems[e].style.display = 'none';
+      }
+    }
+    window.onload = function() {
+      hideAll(getElementsByClassName(document, 'table', 'vars'));
+      hideAll(getElementsByClassName(document, 'ol', 'pre-context'));
+      hideAll(getElementsByClassName(document, 'ol', 'post-context'));
+    }
+    function toggle() {
+      for (var i = 0; i &lt; arguments.length; i++) {
+        var e = document.getElementById(arguments[i]);
+        if (e) {
+          e.style.display = e.style.display == 'none' ? 'block' : 'none';
+        }
+      }
+      return false;
+    }
+    function varToggle(link, id) {
+      toggle('v' + id);
+      var s = link.getElementsByTagName('span')[0];
+      var uarr = String.fromCharCode(0x25b6);
+      var darr = String.fromCharCode(0x25bc);
+      s.innerHTML = s.innerHTML == uarr ? darr : uarr;
+      return false;
+    }
+    //--&gt;
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id=&quot;summary&quot;&gt;
+  &lt;h1&gt;&lt;%=h exception.class %&gt; at &lt;%=h path %&gt;&lt;/h1&gt;
+  &lt;h2&gt;&lt;%=h exception.message %&gt;&lt;/h2&gt;
+  &lt;table&gt;&lt;tr&gt;
+    &lt;th&gt;Ruby&lt;/th&gt;
+    &lt;td&gt;&lt;code&gt;&lt;%=h frames.first.filename %&gt;&lt;/code&gt;: in &lt;code&gt;&lt;%=h frames.first.function %&gt;&lt;/code&gt;, line &lt;%=h frames.first.lineno %&gt;&lt;/td&gt;
+  &lt;/tr&gt;&lt;tr&gt;
+    &lt;th&gt;Web&lt;/th&gt;
+    &lt;td&gt;&lt;code&gt;&lt;%=h req.request_method %&gt; &lt;%=h(req.host + path)%&gt;&lt;/code&gt;&lt;/td&gt;
+  &lt;/tr&gt;&lt;/table&gt;
+
+  &lt;h3&gt;Jump to:&lt;/h3&gt;
+  &lt;ul id=&quot;quicklinks&quot;&gt;
+    &lt;li&gt;&lt;a href=&quot;#get-info&quot;&gt;GET&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#post-info&quot;&gt;POST&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#cookie-info&quot;&gt;Cookies&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#env-info&quot;&gt;ENV&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;traceback&quot;&gt;
+  &lt;h2&gt;Traceback &lt;span&gt;(innermost first)&lt;/span&gt;&lt;/h2&gt;
+  &lt;ul class=&quot;traceback&quot;&gt;
+&lt;% frames.each { |frame| %&gt;
+      &lt;li class=&quot;frame&quot;&gt;
+        &lt;code&gt;&lt;%=h frame.filename %&gt;&lt;/code&gt;: in &lt;code&gt;&lt;%=h frame.function %&gt;&lt;/code&gt;
+
+          &lt;% if frame.context_line %&gt;
+          &lt;div class=&quot;context&quot; id=&quot;c&lt;%=h frame.object_id %&gt;&quot;&gt;
+              &lt;% if frame.pre_context %&gt;
+              &lt;ol start=&quot;&lt;%=h frame.pre_context_lineno+1 %&gt;&quot; class=&quot;pre-context&quot; id=&quot;pre&lt;%=h frame.object_id %&gt;&quot;&gt;
+                &lt;% frame.pre_context.each { |line| %&gt;
+                &lt;li onclick=&quot;toggle('pre&lt;%=h frame.object_id %&gt;', 'post&lt;%=h frame.object_id %&gt;')&quot;&gt;&lt;%=h line %&gt;&lt;/li&gt;
+                &lt;% } %&gt;
+              &lt;/ol&gt;
+              &lt;% end %&gt;
+
+            &lt;ol start=&quot;&lt;%=h frame.lineno %&gt;&quot; class=&quot;context-line&quot;&gt;
+              &lt;li onclick=&quot;toggle('pre&lt;%=h frame.object_id %&gt;', 'post&lt;%=h frame.object_id %&gt;')&quot;&gt;&lt;%=h frame.context_line %&gt;&lt;span&gt;...&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;
+
+              &lt;% if frame.post_context %&gt;
+              &lt;ol start='&lt;%=h frame.lineno+1 %&gt;' class=&quot;post-context&quot; id=&quot;post&lt;%=h frame.object_id %&gt;&quot;&gt;
+                &lt;% frame.post_context.each { |line| %&gt;
+                &lt;li onclick=&quot;toggle('pre&lt;%=h frame.object_id %&gt;', 'post&lt;%=h frame.object_id %&gt;')&quot;&gt;&lt;%=h line %&gt;&lt;/li&gt;
+                &lt;% } %&gt;
+              &lt;/ol&gt;
+              &lt;% end %&gt;
+          &lt;/div&gt;
+          &lt;% end %&gt;
+      &lt;/li&gt;
+&lt;% } %&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;requestinfo&quot;&gt;
+  &lt;h2&gt;Request information&lt;/h2&gt;
+
+  &lt;h3 id=&quot;get-info&quot;&gt;GET&lt;/h3&gt;
+  &lt;% unless req.GET.empty? %&gt;
+    &lt;table class=&quot;req&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Variable&lt;/th&gt;
+          &lt;th&gt;Value&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+          &lt;% req.GET.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+            &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;% } %&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;% else %&gt;
+    &lt;p&gt;No GET data.&lt;/p&gt;
+  &lt;% end %&gt;
+
+  &lt;h3 id=&quot;post-info&quot;&gt;POST&lt;/h3&gt;
+  &lt;% unless req.POST.empty? %&gt;
+    &lt;table class=&quot;req&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Variable&lt;/th&gt;
+          &lt;th&gt;Value&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+          &lt;% req.POST.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+            &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;% } %&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;% else %&gt;
+    &lt;p&gt;No POST data.&lt;/p&gt;
+  &lt;% end %&gt;
+
+
+  &lt;h3 id=&quot;cookie-info&quot;&gt;COOKIES&lt;/h3&gt;
+  &lt;% unless req.cookies.empty? %&gt;
+    &lt;table class=&quot;req&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Variable&lt;/th&gt;
+          &lt;th&gt;Value&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;% req.cookies.each { |key, val| %&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+            &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val.inspect %&gt;&lt;/div&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;% } %&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;% else %&gt;
+    &lt;p&gt;No cookie data.&lt;/p&gt;
+  &lt;% end %&gt;
+
+  &lt;h3 id=&quot;env-info&quot;&gt;Rack ENV&lt;/h3&gt;
+    &lt;table class=&quot;req&quot;&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Variable&lt;/th&gt;
+          &lt;th&gt;Value&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+          &lt;% env.sort_by { |k, v| k.to_s }.each { |key, val| %&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;%=h key %&gt;&lt;/td&gt;
+            &lt;td class=&quot;code&quot;&gt;&lt;div&gt;&lt;%=h val %&gt;&lt;/div&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;% } %&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+&lt;/div&gt;
+
+&lt;div id=&quot;explanation&quot;&gt;
+  &lt;p&gt;
+    You're seeing this error because you use &lt;code&gt;Rack::ShowExceptions&lt;/code&gt;.
+  &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+HTML
+
+    # :startdoc:
+  end
+end
+</pre>
+    </div>

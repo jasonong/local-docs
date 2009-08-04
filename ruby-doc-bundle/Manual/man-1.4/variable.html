@@ -1,0 +1,423 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Pre-defined variables and constants</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="function.html">prev</A>
+-
+<A HREF="classes.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+
+<H1><A NAME="variables">Pre-defined variables</A></H1>
+<hr>
+<ul>
+<li> <A HREF="#bang"><code>$!</code></A>
+<li> <A HREF="#at"><code>$@</code></A>
+<li> <A HREF="#anper"><code>$&#38;</code></A>
+<li> <A HREF="#bquote"><code>$`</code></A>
+<li> <A HREF="#squote"><code>$'</code></A>
+<li> <A HREF="#plus"><code>$+</code></A>
+<li> <A HREF="#number"><code>$1, $2..</code></A>
+<li> <A HREF="#tilde"><code>$~</code></A>
+<li> <A HREF="#equal"><code>$=</code></A>
+<li> <A HREF="#slash"><code>$/</code></A>
+<li> <A HREF="#bslash"><code>$\</code></A>
+<li> <A HREF="#comma"><code>$,</code></A>
+<li> <A HREF="#semicolon"><code>$;</code></A>
+<li> <A HREF="#dot"><code>$.</code></A>
+<li> <A HREF="#lt"><code>$&#60;</code></A>
+<li> <A HREF="#gt"><code>$&#62;</code></A>
+<li> <A HREF="#uscore"><code>$_</code></A>
+<li> <A HREF="#zero"><code>$0</code></A>
+<li> <A HREF="#star"><code>$*</code></A>
+<li> <A HREF="#dollar"><code>$$</code></A>
+<li> <A HREF="#question"><code>$?</code></A>
+<li> <A HREF="#colon"><code>$:</code></A>
+<li> <A HREF="#dquote"><code>$&quot;</code></A>
+<li> <A HREF="#debug"><code>$DEBUG</code></A>
+<li> <A HREF="#fname"><code>$FILENAME</code></A>
+<li> <A HREF="#load_path"><code>$LOAD_PATH</code></A>
+<li> <A HREF="#stdin"><code>$stdin</code></A>
+<li> <A HREF="#stdout"><code>$stdout</code></A>
+<li> <A HREF="#stderr"><code>$stderr</code></A>
+<li> <A HREF="#verbose"><code>$VERBOSE</code></A>
+<li> <A HREF="#options"><code>option variables</code></A>
+<ul>
+<li> <A HREF="#opt_0"><code>$-0</code></A>
+<li> <A HREF="#opt_a"><code>$-a</code></A>
+<li> <A HREF="#opt_d"><code>$-d</code></A>
+<li> <A HREF="#opt_F"><code>$-F</code></A>
+<li> <A HREF="#opt_i"><code>$-i</code></A>
+<li> <A HREF="#opt_I"><code>$-I</code></A>
+<li> <A HREF="#opt_l"><code>$-l</code></A>
+<li> <A HREF="#opt_p"><code>$-p</code></A>
+<li> <A HREF="#opt_v"><code>$-v</code></A>
+</ul>
+</ul>
+<hr>
+<DL COMPACT>
+
+<DT><A NAME="bang"><code>$!</code></A>
+<DD>
+<p>
+The exception information message.  
+<a href="function.html#raise"><code>raise</code></a> sets this variable.
+</p>
+
+<DT><A NAME="at"><code>$@</code></A>
+<DD>
+<p>
+The backtrace of the last exception, which is the array of
+the 
+string that indicates the point where methods invoked from.  The
+elements in the format like:
+</p>
+
+<blockquote>
+<pre>
+"filename:line"
+</pre>
+</blockquote>
+
+or
+
+<blockquote>
+<pre>
+"filename:line:in `methodname'"
+</pre>
+</blockquote>
+
+<p>(Mnemonic: where exception occurred <strong>at</strong>.)</p>
+
+<DT><A NAME="anper"><code>$&#38;</code></A>
+<DD>
+<p>
+The string matched by the last successful pattern match in
+this scope, or <code>nil</code> if the last pattern match failed. 
+(Mnemonic: like &amp; in some editors.)
+This variable is read-only.
+</p>
+
+<DT><A NAME="bquote"><code>$`</code></A>
+<DD>
+<p>The string preceding whatever was matched by the last successful
+pattern match in the current scope, or <code>nil</code> if the last
+pattern match failed.  (Mnemonic: ` often precedes a quoted string.)
+This variable is read-only.</p>
+
+<DT><A NAME="squote"><code>$'</code></A>
+<DD>
+<p>The string following whatever was matched by the last successful
+pattern match in the current scope, or <code>nil</code> if the last
+pattern match failed.
+(Mnemonic: ' often follows a quoted string.)</p>
+
+<DT><A NAME="plus"><code>$+</code></A>
+<DD>
+<p>The last bracket matched by the last successful search pattern, or
+<code>nil</code> if the last pattern match failed.  This is useful if
+you don't know which of a set of alternative patterns matched.
+(Mnemonic: be positive and forward looking.)</p>
+
+<DT><A NAME="number"><code>$1, $2...</code></A>
+<DD>
+<p>Contains the subpattern from the corresponding set of parentheses
+in the last successful pattern matched, not counting patterns matched
+in nested blocks that have been exited already, or <code>nil</code> if
+the last pattern match failed.  (Mnemonic: like \digit.)  These
+variables are all read-only.</p>
+
+<DT><A NAME="tilde"><code>$~</code></A>
+<DD>
+<p>The information about the last match in the current scope.  Setting
+this variables affects the match variables like <CODE>$&#38;</CODE>,
+<code>$+</code>, <code>$1</code>, <code>$2</code>.. etc.  
+The nth subexpression can be retrieved by <code>$~[nth]</code>.
+(Mnemonic: ~ is for match.)
+This variable is locally scoped.</p>
+
+<DT><A NAME="equal"><code>$=</code></A>
+<DD>
+<p>The flag for case insensitive,  <code>nil</code> by default.
+(Mnemonic: = is for comparison.)</p>
+
+<DT><A NAME="slash"><code>$/</code></A>
+<DD>
+<p>The input record separator, newline by default.  Works like
+<samp>awk</samp>'s RS variable.  If it is set to <code>nil</code>,
+whole file will be read at once.  (Mnemonic: / is used to delimit line
+boundaries when quoting poetry.)</p>
+
+<DT><A NAME="bslash"><code>$\</code></A>
+<DD>
+<p>The output record separator for the
+<code><a href="function.html#print">print</a></code> and
+<code><a href="IO.html#write">IO#write</a></code>.
+The default is <code>nil</code>.  (Mnemonic: It's just like
+/, but it's what you get "back" from Ruby.)</p>
+
+<DT><A NAME="comma"><code>$,</code></A>
+<DD>
+<p>The output field separator for the
+<code><a href="function.html#print">print</a></code>.
+Also, it is the default separator for
+<code><a href="Array.html#join">Array#join</a></code>.
+(Mnemonic: what is printed when there is a , in your
+print statement.)</p>
+
+<DT><A NAME="semicolon"><code>$;</code></A>
+<DD>
+<p>The default separator for <CODE>
+<a href="String.html#split">String#split</a></CODE>.</p>
+
+<DT><A NAME="dot"><code>$.</code></A>
+<DD>
+<p>The current input line number of the last file that
+was read.</p>
+
+<DT><A NAME="lt"><code>$&#60;</code></A>
+<DD>
+<p>The virtual concatenation file of the files given by command line
+arguments, or stdin (in case no argument file supplied).
+<code>$&#60;.file</code> returns the current filename.
+(Mnemonic: $&#60; is a shell input source.)</p>
+
+<DT><A NAME="gt"><code>$&#62;</code></A>
+<DD>
+<p>The default output for <code><a href="function.html#print">print</a></code>,
+<code><a href="function.html#printf">printf</a></code>.
+<code>$stdout</code> by default.
+(Mnemonic: $&#62; is for shell output.)</p>
+
+<DT><A NAME="uscore"><code>$_</code></A>
+<DD>
+<p>The last input line of string by <code>gets</code> or <code>readline</code>.
+It is set to <code>nil</code> if <code>gets</code>/<code>readline</code> 
+meet <code>EOF</code>.
+This variable is locally scoped.  (Mnemonic: partly same as Perl.)</p>
+
+<DT><A NAME="zero"><code>$0</code></A>
+<DD>
+<p>Contains the name of the file containing the Ruby script being
+executed.  On some operating systems assigning to <code>$0</code>
+modifies the argument area that the <samp>ps(1)</samp> program sees.
+This is more useful as a way of indicating the current program state
+than it is for hiding the program you're running.  (Mnemonic: same as
+sh and ksh.)</p>
+
+<DT><A NAME="star"><code>$*</code></A>
+<DD>
+<p>Command line arguments given for the
+script.  The options for Ruby interpreter are already removed.
+(Mnemonic: same as sh and ksh.)</p>
+
+<DT><A NAME="dollar"><code>$$</code></A>
+<DD>
+<p>
+The process number of the Ruby running this script.  (Mnemonic: same
+as shells.)</p>
+
+<DT><A NAME="question"><code>$?</code></A>
+<DD>
+<p>The status of the last executed child process.</p>
+
+<DT><A NAME="colon"><code>$:</code></A>
+<DD>
+<p>The array contains the list of places to look for Ruby scripts and
+binary modules by <code><a href="function.html#load">load</a></code>
+or <code><a href="function.html#require">require</a></code>.  It
+initially consists of the arguments to any
+<samp><a href="options.html#include">-I</a></samp> command line
+switches, followed by the default Ruby library, probabl
+"/usr/local/lib/ruby", followed by ".", to represent the current
+directory.  (Mnemonic: colon is the separators for PATH environment
+variable.)</p>
+
+<DT><A NAME="dquote"><code>$"</code></A>
+<DD>
+<p>The array contains the module names loaded by <code><a
+href="function.html#require">require</a></code>.  Used for prevent
+<code><a href="function.html#require">require</a></code> from load
+modules twice.  (Mnemonic: prevent files to be doubly quoted(loaded).)</p>
+
+<DT><A NAME="debug"><code>$DEBUG</code></A>
+<DD>
+<p>The status of the <samp><a href="options.html#debug">-d</a></samp>
+switch.</p>
+
+<DT><A NAME="fname"><code>$FILENAME</code></A>
+<DD>
+<p>Same as <CODE>$&#60;.filename</CODE>.</p>
+
+<DT><A NAME="load_path"><code>$LOAD_PATH</code></A>
+<DD>
+<p>The alias to the <CODE><a href="#colon">$:</a></CODE>.</p>
+
+<DT><A NAME="stdin"><code>$stdin</code></A>
+<DD>
+<p>The current standard input.</p>
+
+<DT><A NAME="stdout"><code>$stdout</code></A>
+<DD>
+<p>The current standard output.</p>
+
+<DT><A NAME="stderr"><code>$stderr</code></A>
+<DD>
+<p>The current standard error output.</p>
+
+<DT><A NAME="verbose"><code>$VERBOSE</code></A>
+<DD>
+<p>The verbose flag, which is set by the 
+<samp><a href="options.html#verbose">-v</a></samp> switch to the Ruby
+interpreter.</p>
+<dt> <a name="options">option variables</a>
+<dd> 
+<p>
+The variables which names are in the form of <code>$-?</code>, where ?
+is the option character, are called option variables and contains the
+information about interpreter command line options.
+</p>
+
+<dl> 
+<dt> <a name="opt_0"><code>$-0</code></a>
+<dd> 
+<p>
+The alias to the <code><a href="#slash">$/</a></code>.
+</p>
+<dt> <a name="opt_a"><code>$-a</code></a>
+<dd> 
+<p>
+True if option <code>-a</code> is set.  Read-only variable.
+</p>
+<dt> <a name="opt_d"><code>$-d</code></a>
+<dd> 
+<p>
+The alias to the <code><a href="#debug">$DEBUG</a></code>.
+</p>
+<dt> <a name="opt_F"><code>$-F</code></a>
+<dd> 
+<p>
+The alias to the <code><a href="#semicolon">$;</a></code>.
+</p>
+<dt> <a name="opt_i"><code>$-i</code></a>
+<dd> 
+<p>
+In in-place-edit mode, this variable holds the extention, otherwise
+<code>nil</code>.  Can be assigned to enable (or disable)
+in-place-edit mode.
+</p>
+<dt> <a name="opt_I"><code>$-I</code></a>
+<dd> 
+<p>
+The alias to the <code><a href="#colon">$:</a></code>.
+</p>
+<dt> <a name="opt_l"><code>$-l</code></a>
+<dd> 
+<p>
+True if option <code>-l</code>is set.  Read-only variable.
+</p>
+<dt> <a name="opt_p"><code>$-p</code></a>
+<dd> 
+<p>
+True if option <code>-p</code>is set.  Read-only variable.
+</p>
+<dt> <a name="opt_v"><code>$-v</code></a>
+<dd> 
+<p>
+The alias to the <code><a href="#verbose">$VERBOSE</a></code>.
+</p>
+</dl>
+</DL>
+<hr>
+<H1><A NAME="constants">Pre-defined global constants</A></H1>
+<hr>
+<ul>
+<li> <A HREF="#true"><code>TRUE</code></A>
+<li> <A HREF="#false"><code>FALSE</code></A>
+<li> <A HREF="#nil"><code>NIL</code></A>
+<li> <A HREF="#CSTDIN"><code>STDIN</code></A>
+<li> <A HREF="#CSTDOUT"><code>STDOUT</code></A>
+<li> <A HREF="#CSTDERR"><code>STDERR</code></A>
+<li> <A HREF="#ENV"><code>ENV</code></A>
+<li> <A HREF="#argf"><code>ARGF</code></A>
+<li> <A HREF="#argv"><code>ARGV</code></A>
+<li> <A HREF="#data"><code>DATA</code></A>
+<li> <A HREF="#version"><code>RUBY_VERSION</code></A>
+<li> <A HREF="#release_date"><code>RUBY_RELEASE_DATE</code></A>
+<li> <A HREF="#platform"><code>RUBY_PLATFORM</code></A>
+</ul>
+<hr>
+<DL COMPACT>
+<DT><A NAME="true"><code>TRUE</code></A>
+<DD>
+<p>The typcal true value.  All non-false values (everything except
+<code>nil</code> and <code>false</code>) is true in Ruby.
+</p>
+
+<DT><A NAME="false"><code>FALSE</code></A>
+<DD>
+<p>The false itself.</p>
+
+<DT><A NAME="nil"><code>NIL</code></A>
+<DD>
+<p>The nil itself.</p>
+
+<DT><A NAME="CSTDIN"><code>STDIN</code></A>
+<DD>
+<p>The standard input.  The default value for
+<code><a href="#stdin">$stdin</a></code>.</p>
+
+<DT><A NAME="CSTDOUT"><code>STDOUT</code></A>
+<DD>
+<p>The standard output.  The default value for
+<code><a href="#stdout">$stdout</a></code>.</p>
+
+<DT><A NAME="CSTDERR"><code>STDERR</code></A>
+<DD>
+<p>The standard error output.  The default value for
+<code><a href="#stderr">$stderr</a></code>.</p>
+
+<DT><A NAME="ENV"><code>ENV</code></A>
+<DD>
+<p>The <a href="ENV.html">hash-like object</a> contains current
+environment variables.  Setting a value in <code>ENV</code> changes
+the environment for child processes.</p>
+
+<DT><A NAME="argf"><code>ARGF</code></A>
+<DD>
+<p>The alias to the <CODE><a href="#lt">$&#60;</a></CODE>.</p>
+
+<DT><A NAME="argv"><code>ARGV</code></A>
+<DD>
+<p>The alias to the <CODE><a href="#star">$*</a></CODE>.</p>
+
+<DT><A NAME="data"><code>DATA</code></A>
+<DD>
+<p>The file object of the script, pointing just after the
+<code>__END__</code>.  Not defined unless the script is not read from
+the file.
+</p>
+
+<DT><A NAME="version"><code>VERSION</code></A>
+<DD>
+<p>The Ruby version string.</p>
+<DT><A NAME="release_date"><code>RUBY_RELEASE_DATE</code></A>
+<DD>
+<p>The relase date string.</p>
+<DT><A NAME="platform"><code>RUBY_PLATFORM</code></A>
+<DD>
+<p>The platform identifier.</p>
+</DL>
+
+<HR>
+<A HREF="function.html">prev</A>
+-
+<A HREF="classes.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

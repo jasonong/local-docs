@@ -1,0 +1,425 @@
+<HTML>
+<HEAD>
+<TITLE>Module</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Match.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Class.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Module</H1>
+<dd> 
+<P>
+The class of the modules.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT><A NAME="lt"><CODE>self &#60; <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="le"><CODE>self &#60;= <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="gt"><CODE>self &#62; <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="ge"><CODE>self &#62;= <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Comparison operators.  <code>self</code> &#62; <var>other</var> returns
+<code>true</code>, if <code>self</code> is the superclass or included
+modules of the <var>other</var>.
+</p>
+
+<DT>
+<A NAME="eqq"><CODE>self === <VAR>obj</VAR></CODE></A>
+<DD>
+<p>
+Returns <code>true</code>, if <var>obj</var> is the instance of the
+<code>self</code>, or its descendants.  That means 
+<code><a href="syntax.html#case">case</a></code>
+can be used for type check for for classes or modules.
+</p>
+
+<dt> <a name="alias_method"><code>alias_method(<var>new</var>,<var>old</var>)</code></a>
+<dd> 
+<p>
+Gives alias to methods.  Differences between this method and 
+<a href="syntax.html#alias"><code>alias</code></a> are:
+</p>
+<p>
+<ul>
+<li> specifies method by String or ID (Integer).
+<li> no global variable aliasing by this method.
+</ul>
+</p>
+
+<dt> <a name="append_features"><code>append_features(<var>module_or_class</var>)</code></a>
+<dd> 
+<p>
+Append features (mothods and constants) to the receiver.
+<a href="Module.html#include"><code>Module#include</code></a> is defined 
+using this method.
+</p>
+
+<DT>
+<A NAME="attr">
+<CODE>attr(<VAR>name</VAR>[, <VAR>assignable</VAR>])</CODE></A>
+<DD>
+<p>
+Defines new attribute and its access method to read, which are named
+`<var>name</var>' to the module.  The access method definition is like
+this:
+</p>
+
+<blockquote>
+<PRE>
+def attr; @attr; end
+</PRE>
+</blockquote>
+
+<p>
+The optional second argument <var>assignable</var> is given, and its value 
+is true, then the write method to the attribute is also defined.  The
+write access method definition is like this:
+</p>
+
+<blockquote>
+<PRE>
+def attr=(val); @attr = val; end
+</PRE>
+</blockquote>
+
+<p>
+By re-defining the access method, accessing attribute can be altered.
+For example, defining the write access method like below, the assigned
+value can be printed.
+</p>
+
+<blockquote>
+<PRE>
+attr("test", true)
+def test=(val)
+  print("test was ", @test, "\n")
+  print("and now is ", @test = val, "\n")
+end
+</PRE>
+</blockquote>
+<p>
+
+<dt> <a name="attr_reader"><code>attr_reader(<var>name</var>, ...)</code></a>
+<dd> 
+<p>
+Defines the reader method for the specified attribute(s).
+</p>
+
+<dt> <a name="attr_writer"><code>attr_writer(<var>name</var>, ...)</code></a>
+<dd> 
+<p>
+Defines the writer method for the specified attribute(s).
+</p>
+
+<dt> <a name="attr_accessor"><code>attr_accessor(<var>name</var>, ...)</code></a>
+<dd> 
+<p>
+Defines both reader and writer methods for the specified attribute(s).
+</p>
+
+<dt> <a name="ancestors"><code>ancestors</code></a>
+<dd> 
+<p>
+Returns the list of the modules include in the receiver.
+</p>
+
+<dt> <a name="class_eval"><code>class_eval(<var>src</var>)</code></a>
+<dd> 
+<dt> <code>class_eval{...}</code>
+<dd> 
+<p>
+The aliass to the <a href="#module_eval">module_eval</a>.
+</p>
+
+<dt> <a name="constants"><code>constants</code></a>
+<dd> 
+<p>
+Returns an array that holds names of the constants defined in the
+receiver.
+</p>
+
+<dt> <a name="const_get"><code>const_get(<var>name</var>)</code></a>
+<dd> 
+<p>
+Returns the value of the specified constant.  When specified constant
+is not defined, the <code>NameError</code> exception be raised.
+</p>
+
+<dt> <a name="const_set"><code>const_set(<var>name</var>, <var>value</var>)</code></a>
+<dd> 
+<p>
+Defines the specified constant in the module.  If the specified
+constant is already defined, the <code>NameError</code> exception is
+raised.
+</p>
+
+<dt> <a name="extend_object"><code>extend_object(<var>object</var>)</code></a>
+<dd> 
+<p>
+Append features (mothods and constants) to the specified object.
+<code><a href="Object.html#extend">Object#extend</a></code> is defined 
+using this method, so that redefining this method overrides extention
+behavior for the module.
+</p>
+
+<DT> <A NAME="include"><CODE>include(<VAR>module</VAR>...)</CODE></A>
+<DD>
+<p>
+Includes the modules specified to add methods and constants to the
+receiver module or class.  <code>include</code> is for the Mix-in,
+which is disciplined multiple inheritance.
+</p>
+
+<DT> <A NAME="included_modules"><CODE>included_modules</CODE></A>
+<DD>
+<p>
+Returns the list of the modules include in the receiver.
+</p>
+
+<DT>
+<A NAME="instance_methods"><CODE>instance_methods</CODE></A>
+<DD>
+<p>
+Returns the names of the public methods defined in the receiver.
+</p>
+
+<DT><A NAME="method_added"><CODE>method_added(<var>id</var>)</CODE></A>
+<DD>
+<p>
+Will be called when a method defined for the receiver.
+</p>
+
+<DT>
+<A NAME="method_defined_p">
+<CODE>method_defined?(<VAR>id</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true, if the instance of the Module has the method specified
+by the <var>id</var>.
+</p>
+
+<dt> <a name="module_eval"><code>module_eval(<var>expr</var>)</code></a>
+<dd> 
+<dt> <code>module_eval{...}</code>
+<dd> 
+<p>
+Evaluates the <var>expr</var> string in the module's context.  If
+block supplied for the method, the block is evaluated under the
+module's context.
+</p>
+
+<p>
+In <var>module_eval()</var>'s context:
+
+<ul>
+<li> <var>self</var>
+<li> instance variables
+<li> constants
+<li> method definitions
+</ul>
+
+are treated as if it appears in the module's definition body.  But
+local variables are shared with <var>eval()</var>'s outer scope.
+</p>
+
+<DT>
+<A NAME="module_function">
+<CODE>module_function(<VAR>name</VAR>...)</CODE></A>
+<DD>
+<p>
+Makes the methods specified by <var>name</var>s into `<samp>module
+function</samp>'s.  the <samp>module function</samp>s are the method
+which is also the singleton method of a module (or a class).  For
+example, methods defined in the <code><a href="Math.html">Math</a></code>
+module are the <samp>module function</samp>s.
+</p>
+
+<DT>
+<A NAME="name"><CODE>name()</CODE></A>
+<DD>
+<p>
+Returns the module's name.
+</p>
+
+<DT>
+<A NAME="private">
+<CODE>private(<VAR>name</VAR>...)</CODE></A>
+<DD>
+<p>
+If no argument is supplied, changes the default visibility in the
+class/method definition as private.
+</p>
+
+<p>
+Examples:
+</p>
+<blockquote>
+<PRE>
+module Foo
+  def foo1() 1 end	# the default is the public
+  private		# the default changed to private
+  def foo2() 2 end	# foo2 is the private method
+end
+
+foo = Foo.new
+foo.foo1
+       =&gt; 1
+foo.foo2
+       error--&gt; private method `foo2' called #&lt;Foo:0x4011ad8c&gt;(Foo)
+</PRE>
+</blockquote>
+<p>
+
+<p>
+With the arguments, it makes the specified methods to be private.
+</p>
+
+<DT>
+<A NAME="private_instance_methods"><CODE>private_instance_methods</CODE></A>
+<DD>
+<p>
+Returns the names of the private methods defined in the receiver.
+</p>
+
+<DT>
+<A NAME="protected"><CODE>protected(<VAR>name</VAR>...)</CODE></A>
+<DD>
+
+<p>
+If no argument is supplied, changes the default visibility in the
+class/method definition as public,  where `protected' means the method 
+can only be called from the method defined in the same class or its
+subclass.  The check will be done in run-time, not compile-time.
+</p>
+
+<p>
+With the arguments, it makes the specified methods to be protected.
+</p>
+
+<DT>
+<A NAME="public">
+<CODE>public [<VAR>name</VAR>...]</CODE></A>
+<DD>
+<p>
+If no argument is supplied, changes the default visibility in the
+class/method definition as public.
+</p>
+
+<p>
+With the arguments, it makes the specified methods to be private.
+</p>
+
+<p>
+Exapmles:
+</p>
+<blockquote>
+<PRE>
+def foo() 1 end
+foo
+       =&gt; 1
+self.foo	# the toplevel default is private
+       error--&gt; private method `foo' called for "main"(Object)
+
+def bar() 2 end
+public :bar	# visibility changed (all access allowed)
+bar
+       =&gt; 2
+self.bar
+       =&gt; 2
+</PRE>
+</blockquote>
+<p>
+
+<DT>
+<A NAME="private_class_method"><CODE>private_class_method(<var>name</var>, ...)</CODE></A>
+<DD>
+<DT>
+<A NAME="public_class_method"><CODE>public_class_method(<var>name</var>, ...)</CODE></A>
+<DD>
+
+<p>
+Changes visibility of the class methods (class's singleton methods).
+</p>
+
+<DT>
+<A NAME="remove_const"><CODE>remove_const(<var>name</var>)</CODE></A>
+<DD>
+
+<p>
+Removes definition of the named constant.  Raises <code>NameError</code>,
+if specified constant is not defined in the module.  Some constants
+defined in the <code>Object</code> class, like predefined classes are not
+allowed to be removed, so removing these constants raises
+<code>NameError</code> also.
+</p>
+
+<DT>
+<A NAME="remove_method"><CODE>remove_method(<var>name</var>)</CODE></A>
+<DD>
+
+<p>
+Removes the named method from the module.  Raises <code>NameError</code>,
+if specified method is not defined in the module.
+</p>
+
+<DT>
+<A NAME="undef_method"><CODE>undef_method(<var>name</var>)</CODE></A>
+<DD>
+
+<p>
+Cancels the method definition specified by <var>name</var>, which is
+the string or ID (Integer).
+</p>
+
+</DL>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="Module.nesting"><CODE>nesting</CODE></A>
+<DD>
+<p>
+Returns the nesting of the class/module definitions at the calling
+point.
+</p>
+
+<dt>
+<a name="Module.new"><code>new</code></a>
+<dd> 
+<p>
+Creates an anonymous module.
+</p>
+
+</dl>
+
+</dl>
+
+<HR>
+<A HREF="Match.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Class.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

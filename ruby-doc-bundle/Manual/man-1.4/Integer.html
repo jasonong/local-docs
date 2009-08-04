@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+<TITLE>Integer</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Numeric.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Bignum.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Integer</H1>
+<dd> 
+<P>
+The abstract class for integers, which has two subclasses
+<code><a href="Fixnum.html"></a>Fixnum</code> and
+<code><a href="Bignum.html"></a>Bignum</code>. In Ruby,
+both kinds of integers are mixable, and converted
+automatically according to the value.  Integers can be
+treated as infinite bit strings for bit operations.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Numeric.html"><code>Numeric</code></A>
+</dl>
+
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Prec.html"><code>Precision</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<dt>
+<A NAME="Integer.induced_from"><CODE>induced_from(<VAR>num</VAR>)</CODE></A>
+<dd> 
+<p>
+Converts <var>num</var> into <code>Integer</code>.
+</p>
+</DL>
+
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="aref">
+<CODE>self[<VAR>nth</VAR>]</CODE></A>
+<DD>
+<p>
+Returns 1 if <var>nth</var> bit of the integer set, otherwise 0.
+</p>
+
+<DT>
+<A NAME="chr">
+<CODE>chr</CODE></A>
+<DD>
+<p>
+Returns the string contains a character represented by that number in
+the character set.  For example, <code>65.chr</code> returns the
+string <code>"A"</code>.
+</p>
+
+<p>
+The number must be within 0 to 255.
+</p>
+
+<DT>
+<A NAME="downto">
+<CODE>downto(<VAR>min</VAR>) {...}</CODE></A>
+<DD>
+<p>
+Iterates from <code>self</code> to <var>min</var>, decrementing by 1.
+</p>
+
+<DT>
+<A NAME="integer_p">
+<CODE>integer?</CODE></A>
+<DD>
+<p>
+Returns true.
+</p>
+
+<DT>
+<A NAME="size">
+<CODE>size</CODE></A>
+<DD>
+<p>
+Returns the approximate size of the integer in byte.
+</p>
+
+<DT>
+<A NAME="step">
+<CODE>step(<VAR>max</VAR>, <VAR>step</VAR>) {...}</CODE></A>
+<DD>
+<p>
+Iterates from <code>self</code> to <var>max</var>, adding
+<var>step</var> each time.
+</p>
+
+<DT>
+<A NAME="succ">
+<CODE>succ</CODE></A>
+<DD>
+<p>
+Returns the ``next'' value of the integer.
+</p>
+
+<DT>
+<A NAME="times">
+<CODE>times {...}</CODE></A>
+<DD>
+<p>
+Iterates <code>self</code> times. <code>Self</code> may be
+rounded into integer.
+</p>
+
+<DT>
+<A NAME="to_i">
+<CODE>to_i</CODE></A>
+<DD>
+<p>
+Returns the receiver, since Integers do not need any conversion.
+</p>
+
+<DT>
+<A NAME="upto">
+<CODE>upto(<VAR>max</VAR>) {...}</CODE></A>
+<DD>
+<p>
+Iterates from <code>self</code> to <var>max</var>, incrementing by 1.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Numeric.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Bignum.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

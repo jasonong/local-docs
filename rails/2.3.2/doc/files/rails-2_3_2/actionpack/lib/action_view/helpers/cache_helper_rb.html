@@ -1,0 +1,58 @@
+  <div id="fileHeader">
+    <h1>cache_helper.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/helpers/cache_helper.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionView
+  module Helpers
+    # This helper to exposes a method for caching of view fragments.
+    # See ActionController::Caching::Fragments for usage instructions.
+    module CacheHelper
+      # A method for caching fragments of a view rather than an entire
+      # action or page.  This technique is useful caching pieces like
+      # menus, lists of news topics, static HTML fragments, and so on.
+      # This method takes a block that contains the content you wish
+      # to cache.  See ActionController::Caching::Fragments for more
+      # information.
+      #
+      # ==== Examples
+      # If you wanted to cache a navigation menu, you could do the
+      # following.
+      #
+      #   &lt;% cache do %&gt;
+      #     &lt;%= render :partial =&gt; &quot;menu&quot; %&gt;
+      #   &lt;% end %&gt;
+      #
+      # You can also cache static content...
+      #
+      #   &lt;% cache do %&gt;
+      #      &lt;p&gt;Hello users!  Welcome to our website!&lt;/p&gt;
+      #   &lt;% end %&gt;
+      #
+      # ...and static content mixed with RHTML content.
+      #
+      #    &lt;% cache do %&gt;
+      #      Topics:
+      #      &lt;%= render :partial =&gt; &quot;topics&quot;, :collection =&gt; @topic_list %&gt;
+      #      &lt;i&gt;Topics listed alphabetically&lt;/i&gt;
+      #    &lt;% end %&gt;
+      def cache(name = {}, options = nil, &amp;block)
+        @controller.fragment_for(output_buffer, name, options, &amp;block)
+      end
+    end
+  end
+end
+</pre>
+    </div>

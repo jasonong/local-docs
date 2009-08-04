@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Exception processing: ensure</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="rescue.html">
+ <img border=0 src="a2l.gif" alt="Exception processing: rescue"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accessors.html">
+ <img border=0 src="a2r.gif" alt="Accessors"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Exception processing: ensure</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>There may be cleanup work that is necessary when a method finishes
+its work.  Perhaps an open file should be closed, buffered data
+should be flushed, etc.  If there were always only one exit point
+for each method, we could confidently put our cleanup code in one
+place and know that it would be executed; however, a method might
+return from several places, or our intended cleanup code might be
+unexpectedly skipped because of an exception.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">begin
+  file = open("/tmp/some_file", "w")
+  # ... write to the file ...
+  file.close
+end</font></pre></td></tr></table>
+<p>In the above, if an exception occurred during the section of code
+where we were writing to the file, the file would be left open.
+And we don't want to resort to this kind of redundancy:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">begin
+  file = open("/tmp/some_file", "w")
+  # ... write to the file ...
+  file.close
+rescue
+  file.close
+  fail # raise an exception
+end</font></pre></td></tr></table>
+<p>It's clumsy, and gets out of hand when the code gets more
+complicated because we have to deal with every <code>return</code> and
+<code>break</code>.</p>
+<p>For this reason we add another keyword to the
+"<code>begin...rescue...end</code>" scheme, which is
+<code>ensure</code>.  The <code>ensure</code> code block executes
+regardless of the success or failure of the <code>begin</code> block.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">begin
+  file = open("/tmp/some_file", "w")
+  # ... write to the file ...
+rescue
+  # ... handle the exceptions ...
+ensure
+  file.close   # ... and this always happens.
+end</font></pre></td></tr></table>
+<p>It is possible to use <code>ensure</code> without
+<code>rescue</code>, or vice versa, but if they are used together in
+the same<code> begin...end </code>block, the <code>rescue</code> must
+precede the <code>ensure</code>.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="rescue.html">
+ <img border=0 src="a2l.gif" alt="Exception processing: rescue"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accessors.html">
+ <img border=0 src="a2r.gif" alt="Accessors"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

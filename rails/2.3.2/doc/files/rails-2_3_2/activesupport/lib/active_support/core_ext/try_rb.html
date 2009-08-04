@@ -1,0 +1,55 @@
+  <div id="fileHeader">
+    <h1>try.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/try.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Object
+  # Invokes the method identified by the symbol +method+, passing it any arguments 
+  # and/or the block specified, just like the regular Ruby &lt;tt&gt;Object#send&lt;/tt&gt; does.
+  #
+  # *Unlike* that method however, a +NoMethodError+ exception will *not* be raised 
+  # and +nil+ will be returned instead, if the receiving object is a +nil+ object or NilClass.
+  #
+  # ==== Examples
+  #
+  # Without try
+  #   @person &amp;&amp; @person.name
+  # or
+  #   @person ? @person.name : nil
+  #
+  # With try
+  #   @person.try(:name)
+  #
+  # +try+ also accepts arguments and/or a block, for the method it is trying
+  #   Person.try(:find, 1)
+  #   @people.try(:collect) {|p| p.name}
+  #--
+  # This method definition below is for rdoc purposes only. The alias_method call 
+  # below overrides it as an optimization since +try+ behaves like +Object#send+,
+  # unless called on +NilClass+.
+  def try(method, *args, &amp;block)
+    send(method, *args, &amp;block)
+  end
+  remove_method :try
+  alias_method :try, :__send__
+end
+
+class NilClass
+  def try(*args)
+    nil
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,42 @@
+  <div id="fileHeader">
+    <h1>option_merger.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/option_merger.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport
+  class OptionMerger #:nodoc:
+    instance_methods.each do |method|
+      undef_method(method) if method !~ /^(__|instance_eval|class|object_id)/
+    end
+
+    def initialize(context, options)
+      @context, @options = context, options
+    end
+
+    private
+      def method_missing(method, *arguments, &amp;block)
+        if arguments.last.is_a?(Proc)
+          proc = arguments.pop
+          arguments &lt;&lt; lambda { |*args| @options.deep_merge(proc.call(*args)) }
+        else
+          arguments &lt;&lt; (arguments.last.respond_to?(:to_hash) ? @options.deep_merge(arguments.pop) : @options.dup)
+        end
+
+        @context.__send__(method, *arguments, &amp;block)
+      end
+  end
+end
+</pre>
+    </div>

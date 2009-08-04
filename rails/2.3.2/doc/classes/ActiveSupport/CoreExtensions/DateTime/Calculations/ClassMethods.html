@@ -1,0 +1,68 @@
+  <div id="C00000571">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />ClassMethods<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/date_time/calculations_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/date_time/calculations.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001549&name=current" >current</a></li>
+  <li><a href="index.html?a=M001548&name=local_offset" >local_offset</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001549" class="method">
+  <div id="M001549_title" class="title">
+    <b>current</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001549_source')" id="l_M001549_source">show source</a> ]</p>
+  <div id="M001549_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/date_time/calculations.rb, line 23</span>
+23:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current</span>
+24:             <span class="ruby-operator">::</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone_default</span> <span class="ruby-value">? </span><span class="ruby-operator">::</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">zone</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_datetime</span> <span class="ruby-operator">:</span> <span class="ruby-operator">::</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_datetime</span>
+25:           <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001548" class="method">
+  <div id="M001548_title" class="title">
+    <b>local_offset</b>()
+  </div>
+  <div class="description">
+  <p>
+DateTimes aren&#8217;t aware of DST rules, so use a consistent non-DST
+offset when creating a DateTime with an offset in the local zone
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001548_source')" id="l_M001548_source">show source</a> ]</p>
+  <div id="M001548_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/date_time/calculations.rb, line 19</span>
+19:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">local_offset</span>
+20:             <span class="ruby-operator">::</span><span class="ruby-constant">Time</span>.<span class="ruby-identifier">local</span>(<span class="ruby-value">2007</span>).<span class="ruby-identifier">utc_offset</span>.<span class="ruby-identifier">to_r</span> <span class="ruby-operator">/</span> <span class="ruby-value">86400</span>
+21:           <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

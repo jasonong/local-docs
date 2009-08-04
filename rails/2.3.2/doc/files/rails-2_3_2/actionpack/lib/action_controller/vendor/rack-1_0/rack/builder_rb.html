@@ -1,0 +1,82 @@
+  <div id="fileHeader">
+    <h1>builder.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  # Rack::Builder implements a small DSL to iteratively construct Rack
+  # applications.
+  #
+  # Example:
+  #
+  #  app = Rack::Builder.new {
+  #    use Rack::CommonLogger
+  #    use Rack::ShowExceptions
+  #    map &quot;/lobster&quot; do
+  #      use Rack::Lint
+  #      run Rack::Lobster.new
+  #    end
+  #  }
+  #
+  # Or
+  #
+  #  app = Rack::Builder.app do
+  #    use Rack::CommonLogger
+  #    lambda { |env| [200, {'Content-Type' =&gt; 'text/plain'}, 'OK'] }
+  #  end
+  #
+  # +use+ adds a middleware to the stack, +run+ dispatches to an application.
+  # You can use +map+ to construct a Rack::URLMap in a convenient way.
+
+  class Builder
+    def initialize(&amp;block)
+      @ins = []
+      instance_eval(&amp;block) if block_given?
+    end
+
+    def self.app(&amp;block)
+      self.new(&amp;block).to_app
+    end
+
+    def use(middleware, *args, &amp;block)
+      @ins &lt;&lt; lambda { |app| middleware.new(app, *args, &amp;block) }
+    end
+
+    def run(app)
+      @ins &lt;&lt; app #lambda { |nothing| app }
+    end
+
+    def map(path, &amp;block)
+      if @ins.last.kind_of? Hash
+        @ins.last[path] = self.class.new(&amp;block).to_app
+      else
+        @ins &lt;&lt; {}
+        map(path, &amp;block)
+      end
+    end
+
+    def to_app
+      @ins[-1] = Rack::URLMap.new(@ins.last)  if Hash === @ins.last
+      inner_app = @ins.last
+      @ins[0...-1].reverse.inject(inner_app) { |a, e| e.call(a) }
+    end
+
+    def call(env)
+      to_app.call(env)
+    end
+  end
+end
+</pre>
+    </div>

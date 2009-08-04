@@ -1,0 +1,231 @@
+  <div id="C00000291">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />MockRequest<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/mock_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000291&name=Rack::MockRequest">Rack::MockRequest</a>
+helps testing your <a href="index.html?a=C00000238&name=Rack">Rack</a>
+application without actually using HTTP.
+</p>
+<p>
+After performing a request on a URL with get/post/put/delete, it returns a
+<a href="index.html?a=C00000277&name=MockResponse">MockResponse</a> with
+useful helper methods for effective testing.
+</p>
+<p>
+You can pass a hash with additional configuration to the
+get/post/put/delete.
+</p>
+<table>
+<tr><td valign="top"><tt>:input</tt>:</td><td>A String or IO-like to be used as rack.input.
+
+</td></tr>
+<tr><td valign="top"><tt>:fatal</tt>:</td><td>Raise a <a href="index.html?a=C00000293&name=FatalWarning">FatalWarning</a>
+if the app writes to rack.errors.
+
+</td></tr>
+<tr><td valign="top"><tt>:lint</tt>:</td><td>If true, wrap the application in a <a
+href="index.html?a=C00000286&name=Rack::Lint">Rack::Lint</a>.
+
+</td></tr>
+</table>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001002&name=delete" >delete</a></li>
+  <li><a href="index.html?a=M001004&name=env_for" >env_for</a></li>
+  <li><a href="index.html?a=M000999&name=get" >get</a></li>
+  <li><a href="index.html?a=M000998&name=new" >new</a></li>
+  <li><a href="index.html?a=M001000&name=post" >post</a></li>
+  <li><a href="index.html?a=M001001&name=put" >put</a></li>
+  <li><a href="index.html?a=M001003&name=request" >request</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/Rack/MockRequest/FatalWarner.html');" class="link">Rack::MockRequest::FatalWarner</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/MockRequest/FatalWarning.html');" class="link">Rack::MockRequest::FatalWarning</a>"<br />
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">DEFAULT_ENV</td>
+    <td>=</td>
+    <td class="attr-value">{       &quot;rack.version&quot; =&gt; [0,1],       &quot;rack.input&quot; =&gt; StringIO.new,       &quot;rack.errors&quot; =&gt; StringIO.new,       &quot;rack.multithread&quot; =&gt; true,       &quot;rack.multiprocess&quot; =&gt; true,       &quot;rack.run_once&quot; =&gt; false,     }</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001004" class="method">
+  <div id="M001004_title" class="title">
+    <b>env_for</b>(uri=&quot;&quot;, opts={})
+  </div>
+  <div class="description">
+  <p>
+Return the <a href="index.html?a=C00000238&name=Rack">Rack</a> environment
+used for a request to <tt>uri</tt>.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001004_source')" id="l_M001004_source">show source</a> ]</p>
+  <div id="M001004_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb, line 74</span>
+ 74:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">env_for</span>(<span class="ruby-identifier">uri</span>=<span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">opts</span>={})
+ 75:       <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>(<span class="ruby-identifier">uri</span>)
+ 76:       <span class="ruby-identifier">env</span> = <span class="ruby-constant">DEFAULT_ENV</span>.<span class="ruby-identifier">dup</span>
+ 77: 
+ 78:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;REQUEST_METHOD&quot;</span>] = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:method</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;GET&quot;</span>
+ 79:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;SERVER_NAME&quot;</span>] = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">host</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;example.org&quot;</span>
+ 80:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;SERVER_PORT&quot;</span>] = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span> <span class="ruby-value">? </span><span class="ruby-identifier">uri</span>.<span class="ruby-identifier">port</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;80&quot;</span>
+ 81:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;QUERY_STRING&quot;</span>] = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">query</span>.<span class="ruby-identifier">to_s</span>
+ 82:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;PATH_INFO&quot;</span>] = (<span class="ruby-operator">!</span><span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">&quot;/&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span>
+ 83:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.url_scheme&quot;</span>] = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">scheme</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;http&quot;</span>
+ 84: 
+ 85:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span>] = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:script_name</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+ 86: 
+ 87:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:fatal</span>]
+ 88:         <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.errors&quot;</span>] = <span class="ruby-constant">FatalWarner</span>.<span class="ruby-identifier">new</span>
+ 89:       <span class="ruby-keyword kw">else</span>
+ 90:         <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.errors&quot;</span>] = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>
+ 91:       <span class="ruby-keyword kw">end</span>
+ 92: 
+ 93:       <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:input</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;&quot;</span>
+ 94:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:input</span>]
+ 95:         <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.input&quot;</span>] = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:input</span>])
+ 96:       <span class="ruby-keyword kw">else</span>
+ 97:         <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.input&quot;</span>] = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:input</span>]
+ 98:       <span class="ruby-keyword kw">end</span>
+ 99: 
+100:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;CONTENT_LENGTH&quot;</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.input&quot;</span>].<span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_s</span>
+101: 
+102:       <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+103:         <span class="ruby-identifier">env</span>[<span class="ruby-identifier">field</span>] = <span class="ruby-identifier">value</span>  <span class="ruby-keyword kw">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">field</span>
+104:       }
+105: 
+106:       <span class="ruby-identifier">env</span>
+107:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000998" class="method">
+  <div id="M000998_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000998_source')" id="l_M000998_source">show source</a> ]</p>
+  <div id="M000998_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb, line 51</span>
+51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+52:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+53:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001002" class="method">
+  <div id="M001002_title" class="title">
+    <b>delete</b>(uri, opts={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001002_source')" id="l_M001002_source">show source</a> ]</p>
+  <div id="M001002_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb, line 58</span>
+58:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>={}) <span class="ruby-identifier">request</span>(<span class="ruby-value str">&quot;DELETE&quot;</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>) <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000999" class="method">
+  <div id="M000999_title" class="title">
+    <b>get</b>(uri, opts={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000999_source')" id="l_M000999_source">show source</a> ]</p>
+  <div id="M000999_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb, line 55</span>
+55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>={})    <span class="ruby-identifier">request</span>(<span class="ruby-value str">&quot;GET&quot;</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>)    <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001000" class="method">
+  <div id="M001000_title" class="title">
+    <b>post</b>(uri, opts={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001000_source')" id="l_M001000_source">show source</a> ]</p>
+  <div id="M001000_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb, line 56</span>
+56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">post</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>={})   <span class="ruby-identifier">request</span>(<span class="ruby-value str">&quot;POST&quot;</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>)   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001001" class="method">
+  <div id="M001001_title" class="title">
+    <b>put</b>(uri, opts={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001001_source')" id="l_M001001_source">show source</a> ]</p>
+  <div id="M001001_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb, line 57</span>
+57:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">put</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>={})    <span class="ruby-identifier">request</span>(<span class="ruby-value str">&quot;PUT&quot;</span>, <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>)    <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001003" class="method">
+  <div id="M001003_title" class="title">
+    <b>request</b>(method=&quot;GET&quot;, uri=&quot;&quot;, opts={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001003_source')" id="l_M001003_source">show source</a> ]</p>
+  <div id="M001003_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/mock.rb, line 60</span>
+60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request</span>(<span class="ruby-identifier">method</span>=<span class="ruby-value str">&quot;GET&quot;</span>, <span class="ruby-identifier">uri</span>=<span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">opts</span>={})
+61:       <span class="ruby-identifier">env</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">env_for</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">method</span>))
+62: 
+63:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:lint</span>]
+64:         <span class="ruby-identifier">app</span> = <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Lint</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@app</span>)
+65:       <span class="ruby-keyword kw">else</span>
+66:         <span class="ruby-identifier">app</span> = <span class="ruby-ivar">@app</span>
+67:       <span class="ruby-keyword kw">end</span>
+68: 
+69:       <span class="ruby-identifier">errors</span> = <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.errors&quot;</span>]
+70:       <span class="ruby-constant">MockResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span>(<span class="ruby-identifier">app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>) <span class="ruby-operator">+</span> [<span class="ruby-identifier">errors</span>]))
+71:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

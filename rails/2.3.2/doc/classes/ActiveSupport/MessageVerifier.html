@@ -1,0 +1,119 @@
+  <div id="C00000590">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />MessageVerifier<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/message_verifier_rb.html');">rails-2.3.2/activesupport/lib/active_support/message_verifier.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000590&name=MessageVerifier">MessageVerifier</a>
+makes it easy to generate and verify messages which are signed to prevent
+tampering.
+</p>
+<p>
+This is useful for cases like remember-me tokens and auto-unsubscribe links
+where the session store isn&#8217;t suitable or available.
+</p>
+<p>
+Remember Me:
+</p>
+<pre>
+  cookies[:remember_me] = @verifier.generate([@user.id, 2.weeks.from_now])
+</pre>
+<p>
+In the authentication filter:
+</p>
+<pre>
+  id, time = @verifier.verify(cookies[:remember_me])
+  if time &lt; Time.now
+    self.current_user = User.find(id)
+  end
+</pre>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001588&name=generate" >generate</a></li>
+  <li><a href="index.html?a=M001586&name=new" >new</a></li>
+  <li><a href="index.html?a=M001587&name=verify" >verify</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/ActiveSupport/MessageVerifier/InvalidSignature.html');" class="link">ActiveSupport::MessageVerifier::InvalidSignature</a>"<br />
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001586" class="method">
+  <div id="M001586_title" class="title">
+    <b>new</b>(secret, digest = 'SHA1')
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001586_source')" id="l_M001586_source">show source</a> ]</p>
+  <div id="M001586_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/message_verifier.rb, line 21</span>
+21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">secret</span>, <span class="ruby-identifier">digest</span> = <span class="ruby-value str">'SHA1'</span>)
+22:       <span class="ruby-ivar">@secret</span> = <span class="ruby-identifier">secret</span>
+23:       <span class="ruby-ivar">@digest</span> = <span class="ruby-identifier">digest</span>
+24:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001588" class="method">
+  <div id="M001588_title" class="title">
+    <b>generate</b>(value)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001588_source')" id="l_M001588_source">show source</a> ]</p>
+  <div id="M001588_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/message_verifier.rb, line 35</span>
+35:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate</span>(<span class="ruby-identifier">value</span>)
+36:       <span class="ruby-identifier">data</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64s</span>(<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-identifier">value</span>))
+37:       <span class="ruby-node">&quot;#{data}--#{generate_digest(data)}&quot;</span>
+38:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001587" class="method">
+  <div id="M001587_title" class="title">
+    <b>verify</b>(signed_message)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001587_source')" id="l_M001587_source">show source</a> ]</p>
+  <div id="M001587_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/message_verifier.rb, line 26</span>
+26:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">verify</span>(<span class="ruby-identifier">signed_message</span>)
+27:       <span class="ruby-identifier">data</span>, <span class="ruby-identifier">digest</span> = <span class="ruby-identifier">signed_message</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;--&quot;</span>)
+28:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">digest</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">generate_digest</span>(<span class="ruby-identifier">data</span>)
+29:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidSignature</span>
+30:       <span class="ruby-keyword kw">else</span>
+31:         <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Base64</span>.<span class="ruby-identifier">decode64</span>(<span class="ruby-identifier">data</span>))
+32:       <span class="ruby-keyword kw">end</span>
+33:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

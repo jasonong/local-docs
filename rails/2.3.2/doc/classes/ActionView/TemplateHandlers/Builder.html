@@ -1,0 +1,57 @@
+  <div id="C00000848">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Builder<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_view/template_handlers/builder_rb.html');">rails-2.3.2/actionpack/lib/action_view/template_handlers/builder.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActionView/TemplateHandler.html');">
+TemplateHandler
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002590&name=compile" >compile</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="#" onclick="jsHref('classes/ActionView/TemplateHandlers/Compilable.html');">Compilable</a></li>
+</ul>
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002590" class="method">
+  <div id="M002590_title" class="title">
+    <b>compile</b>(template)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002590_source')" id="l_M002590_source">show source</a> ]</p>
+  <div id="M002590_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/template_handlers/builder.rb, line 8</span>
+ 8:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">compile</span>(<span class="ruby-identifier">template</span>)
+ 9:         <span class="ruby-value str">&quot;_set_controller_content_type(Mime::XML);&quot;</span> <span class="ruby-operator">+</span>
+10:           <span class="ruby-value str">&quot;xml = ::Builder::XmlMarkup.new(:indent =&gt; 2);&quot;</span> <span class="ruby-operator">+</span>
+11:           <span class="ruby-value str">&quot;self.output_buffer = xml.target!;&quot;</span> <span class="ruby-operator">+</span>
+12:           <span class="ruby-identifier">template</span>.<span class="ruby-identifier">source</span> <span class="ruby-operator">+</span>
+13:           <span class="ruby-value str">&quot;;xml.target!;&quot;</span>
+14:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

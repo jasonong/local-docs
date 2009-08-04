@@ -1,0 +1,125 @@
+  <div id="fileHeader">
+    <h1>showstatus.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/showstatus.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'erb'
+require 'rack/request'
+require 'rack/utils'
+
+module Rack
+  # Rack::ShowStatus catches all empty responses the app it wraps and
+  # replaces them with a site explaining the error.
+  #
+  # Additional details can be put into &lt;tt&gt;rack.showstatus.detail&lt;/tt&gt;
+  # and will be shown as HTML.  If such details exist, the error page
+  # is always rendered, even if the reply was not empty.
+
+  class ShowStatus
+    def initialize(app)
+      @app = app
+      @template = ERB.new(TEMPLATE)
+    end
+
+    def call(env)
+      status, headers, body = @app.call(env)
+      headers = Utils::HeaderHash.new(headers)
+      empty = headers['Content-Length'].to_i &lt;= 0
+
+      # client or server error, or explicit message
+      if (status.to_i &gt;= 400 &amp;&amp; empty) || env[&quot;rack.showstatus.detail&quot;]
+        req = Rack::Request.new(env)
+        message = Rack::Utils::HTTP_STATUS_CODES[status.to_i] || status.to_s
+        detail = env[&quot;rack.showstatus.detail&quot;] || message
+        body = @template.result(binding)
+        size = Rack::Utils.bytesize(body)
+        [status, headers.merge(&quot;Content-Type&quot; =&gt; &quot;text/html&quot;, &quot;Content-Length&quot; =&gt; size.to_s), [body]]
+      else
+        [status, headers, body]
+      end
+    end
+
+    def h(obj)                  # :nodoc:
+      case obj
+      when String
+        Utils.escape_html(obj)
+      else
+        Utils.escape_html(obj.inspect)
+      end
+    end
+
+    # :stopdoc:
+
+# adapted from Django &lt;djangoproject.com&gt;
+# Copyright (c) 2005, the Lawrence Journal-World
+# Used under the modified BSD license:
+# http://www.xfree86.org/3.3.6/COPYRIGHT2.html#5
+TEMPLATE = &lt;&lt;'HTML'
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+  &lt;title&gt;&lt;%=h message %&gt; at &lt;%=h req.script_name + req.path_info %&gt;&lt;/title&gt;
+  &lt;meta name=&quot;robots&quot; content=&quot;NONE,NOARCHIVE&quot; /&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+    html * { padding:0; margin:0; }
+    body * { padding:10px 20px; }
+    body * * { padding:0; }
+    body { font:small sans-serif; background:#eee; }
+    body&gt;div { border-bottom:1px solid #ddd; }
+    h1 { font-weight:normal; margin-bottom:.4em; }
+    h1 span { font-size:60%; color:#666; font-weight:normal; }
+    table { border:none; border-collapse: collapse; width:100%; }
+    td, th { vertical-align:top; padding:2px 3px; }
+    th { width:12em; text-align:right; color:#666; padding-right:.5em; }
+    #info { background:#f6f6f6; }
+    #info ol { margin: 0.5em 4em; }
+    #info ol li { font-family: monospace; }
+    #summary { background: #ffc; }
+    #explanation { background:#eee; border-bottom: 0px none; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;summary&quot;&gt;
+    &lt;h1&gt;&lt;%=h message %&gt; &lt;span&gt;(&lt;%= status.to_i %&gt;)&lt;/span&gt;&lt;/h1&gt;
+    &lt;table class=&quot;meta&quot;&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Request Method:&lt;/th&gt;
+        &lt;td&gt;&lt;%=h req.request_method %&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Request URL:&lt;/th&gt;
+      &lt;td&gt;&lt;%=h req.url %&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;info&quot;&gt;
+    &lt;p&gt;&lt;%= detail %&gt;&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;explanation&quot;&gt;
+    &lt;p&gt;
+    You're seeing this error because you use &lt;code&gt;Rack::ShowStatus&lt;/code&gt;.
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+HTML
+
+    # :startdoc:
+  end
+end
+</pre>
+    </div>

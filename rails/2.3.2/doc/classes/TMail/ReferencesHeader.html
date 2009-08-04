@@ -1,0 +1,125 @@
+  <div id="C00000237">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ReferencesHeader<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionmailer/lib/action_mailer/vendor/tmail-1_2_3/tmail/header_rb.html');">rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/header.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/TMail/StructuredHeader.html');">
+StructuredHeader
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000821&name=each_id" >each_id</a></li>
+  <li><a href="index.html?a=M000823&name=each_phrase" >each_phrase</a></li>
+  <li><a href="index.html?a=M000822&name=ids" >ids</a></li>
+  <li><a href="index.html?a=M000824&name=phrases" >phrases</a></li>
+  <li><a href="index.html?a=M000820&name=refs" >refs</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000821" class="method">
+  <div id="M000821_title" class="title">
+    <b>each_id</b>() {|i if MESSAGE_ID === i| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000821_source')" id="l_M000821_source">show source</a> ]</p>
+  <div id="M000821_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/header.rb, line 433</span>
+433:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_id</span>
+434:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">refs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+435:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">MESSAGE_ID</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">i</span>
+436:       <span class="ruby-keyword kw">end</span>
+437:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000823" class="method">
+  <div id="M000823_title" class="title">
+    <b>each_phrase</b>() {|i unless MESSAGE_ID === i| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000823_source')" id="l_M000823_source">show source</a> ]</p>
+  <div id="M000823_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/header.rb, line 444</span>
+444:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_phrase</span>
+445:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">refs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+446:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">MESSAGE_ID</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">i</span>
+447:       <span class="ruby-keyword kw">end</span>
+448:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000822" class="method">
+  <div id="M000822_title" class="title">
+    <b>ids</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000822_source')" id="l_M000822_source">show source</a> ]</p>
+  <div id="M000822_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/header.rb, line 439</span>
+439:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ids</span>
+440:       <span class="ruby-identifier">ensure_parsed</span>
+441:       <span class="ruby-ivar">@ids</span>
+442:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000824" class="method">
+  <div id="M000824_title" class="title">
+    <b>phrases</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000824_source')" id="l_M000824_source">show source</a> ]</p>
+  <div id="M000824_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/header.rb, line 450</span>
+450:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">phrases</span>
+451:       <span class="ruby-identifier">ret</span> = []
+452:       <span class="ruby-identifier">each_phrase</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">i</span> }
+453:       <span class="ruby-identifier">ret</span>
+454:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000820" class="method">
+  <div id="M000820_title" class="title">
+    <b>refs</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000820_source')" id="l_M000820_source">show source</a> ]</p>
+  <div id="M000820_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionmailer/lib/action_mailer/vendor/tmail-1.2.3/tmail/header.rb, line 428</span>
+428:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">refs</span>
+429:       <span class="ruby-identifier">ensure_parsed</span>
+430:       <span class="ruby-ivar">@refs</span>
+431:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

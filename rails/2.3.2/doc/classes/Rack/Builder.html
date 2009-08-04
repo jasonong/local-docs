@@ -1,0 +1,194 @@
+  <div id="C00000294">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Builder<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/builder_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a href="index.html?a=C00000294&name=Rack::Builder">Rack::Builder</a>
+implements a small DSL to iteratively construct <a
+href="index.html?a=C00000238&name=Rack">Rack</a> applications.
+</p>
+<p>
+Example:
+</p>
+<pre>
+ app = Rack::Builder.new {
+   use Rack::CommonLogger
+   use Rack::ShowExceptions
+   map &quot;/lobster&quot; do
+     use Rack::Lint
+     run Rack::Lobster.new
+   end
+ }
+</pre>
+<p>
+Or
+</p>
+<pre>
+ app = Rack::Builder.app do
+   use Rack::CommonLogger
+   lambda { |env| [200, {'Content-Type' =&gt; 'text/plain'}, 'OK'] }
+ end
+</pre>
+<p>
+<tt>use</tt> adds a middleware to the stack, <tt>run</tt> dispatches to an
+application. You can use <tt>map</tt> to construct a <a
+href="index.html?a=C00000282&name=Rack::URLMap">Rack::URLMap</a> in a
+convenient way.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001010&name=app" >app</a></li>
+  <li><a href="index.html?a=M001015&name=call" >call</a></li>
+  <li><a href="index.html?a=M001013&name=map" >map</a></li>
+  <li><a href="index.html?a=M001009&name=new" >new</a></li>
+  <li><a href="index.html?a=M001012&name=run" >run</a></li>
+  <li><a href="index.html?a=M001014&name=to_app" >to_app</a></li>
+  <li><a href="index.html?a=M001011&name=use" >use</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001010" class="method">
+  <div id="M001010_title" class="title">
+    <b>app</b>(&amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001010_source')" id="l_M001010_source">show source</a> ]</p>
+  <div id="M001010_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">app</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+33:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>).<span class="ruby-identifier">to_app</span>
+34:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001009" class="method">
+  <div id="M001009_title" class="title">
+    <b>new</b>(&amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001009_source')" id="l_M001009_source">show source</a> ]</p>
+  <div id="M001009_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb, line 27</span>
+27:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+28:       <span class="ruby-ivar">@ins</span> = []
+29:       <span class="ruby-identifier">instance_eval</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+30:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001015" class="method">
+  <div id="M001015_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001015_source')" id="l_M001015_source">show source</a> ]</p>
+  <div id="M001015_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb, line 59</span>
+59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+60:       <span class="ruby-identifier">to_app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+61:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001013" class="method">
+  <div id="M001013_title" class="title">
+    <b>map</b>(path, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001013_source')" id="l_M001013_source">show source</a> ]</p>
+  <div id="M001013_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb, line 44</span>
+44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">map</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+45:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@ins</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Hash</span>
+46:         <span class="ruby-ivar">@ins</span>.<span class="ruby-identifier">last</span>[<span class="ruby-identifier">path</span>] = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>).<span class="ruby-identifier">to_app</span>
+47:       <span class="ruby-keyword kw">else</span>
+48:         <span class="ruby-ivar">@ins</span> <span class="ruby-operator">&lt;&lt;</span> {}
+49:         <span class="ruby-identifier">map</span>(<span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+50:       <span class="ruby-keyword kw">end</span>
+51:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001012" class="method">
+  <div id="M001012_title" class="title">
+    <b>run</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001012_source')" id="l_M001012_source">show source</a> ]</p>
+  <div id="M001012_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb, line 40</span>
+40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">app</span>)
+41:       <span class="ruby-ivar">@ins</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">app</span> <span class="ruby-comment cmt">#lambda { |nothing| app }</span>
+42:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001014" class="method">
+  <div id="M001014_title" class="title">
+    <b>to_app</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001014_source')" id="l_M001014_source">show source</a> ]</p>
+  <div id="M001014_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb, line 53</span>
+53:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_app</span>
+54:       <span class="ruby-ivar">@ins</span>[<span class="ruby-value">-1</span>] = <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">URLMap</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@ins</span>.<span class="ruby-identifier">last</span>)  <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-ivar">@ins</span>.<span class="ruby-identifier">last</span>
+55:       <span class="ruby-identifier">inner_app</span> = <span class="ruby-ivar">@ins</span>.<span class="ruby-identifier">last</span>
+56:       <span class="ruby-ivar">@ins</span>[<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-value">-1</span>].<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">inner_app</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">a</span>) }
+57:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001011" class="method">
+  <div id="M001011_title" class="title">
+    <b>use</b>(middleware, *args, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001011_source')" id="l_M001011_source">show source</a> ]</p>
+  <div id="M001011_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/builder.rb, line 36</span>
+36:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">use</span>(<span class="ruby-identifier">middleware</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+37:       <span class="ruby-ivar">@ins</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">app</span><span class="ruby-operator">|</span> <span class="ruby-identifier">middleware</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">app</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) }
+38:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

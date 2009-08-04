@@ -1,0 +1,62 @@
+  <div id="fileHeader">
+    <h1>duplicable.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/duplicable.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Object
+  # Can you safely .dup this object?
+  # False for nil, false, true, symbols, and numbers; true otherwise.
+  def duplicable?
+    true
+  end
+end
+
+class NilClass #:nodoc:
+  def duplicable?
+    false
+  end
+end
+
+class FalseClass #:nodoc:
+  def duplicable?
+    false
+  end
+end
+
+class TrueClass #:nodoc:
+  def duplicable?
+    false
+  end
+end
+
+class Symbol #:nodoc:
+  def duplicable?
+    false
+  end
+end
+
+class Numeric #:nodoc:
+  def duplicable?
+    false
+  end
+end
+
+class Class #:nodoc:
+  def duplicable?
+    false
+  end
+end
+</pre>
+    </div>

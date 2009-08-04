@@ -1,0 +1,391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Things That Newcomers to Ruby Should Know</title>
+</head>
+<body>
+
+<h1>Things That Newcomers to Ruby Should Know</h1>
+
+<h3>Table of Contents</h3>
+<ul>
+<li><a href="#resources">Resources</a></li>
+</ul>
+<ol>
+<li><a href="#warnings">Using warnings</a></li>
+<li><a href="#interactive">Interactive shell</a></li>
+<li><a href="#doc">On-screen documentation</a></li>
+<li><a href="#notation">Class#method notation</a></li>
+<li><a href="#characters">Getting characters from a String</a></li>
+<li><a href="#default">Array and Hash default values</a></li>
+<li><a href="#mutable">Mutable Hash keys</a></li>
+<li><a href="#numerals">Reading numerals from a file</a></li>
+<li><a href="#operators">Pre/Post Increment/Decrement Operators</a></li>
+<li><a href="#blocks">Lexical scoping in blocks</a></li>
+<li><a href="#logical">Two sets of logical operators</a></li>
+<li><a href="#case">The === operator and case statements</a></li>
+<li><a href="#space">White space</a></li>
+<li><a href="#dot">The "dot" method call operator</a></li>
+<li><a href="#range">Range objects</a></li>
+<li><a href="#boolean">Boolean values</a></li>
+<li><a href="#objects">Variables, references, and objects</a></li>
+<li><a href="#copy">Deep copy</a></li>
+<li><a href="#classvars">Class variables</a></li>
+<li><a href="#backslashes">Substituting Backslashes</a></li>
+</ol>
+<ul>
+<li><a href="#TTAGTK">Things That Are Good to Know :-)</a></li>
+</ul>
+
+<hr>
+
+<ul>
+<a name="resources"></a>
+<li><em>Resources</em>:
+<ul>
+<li><code>HOME PAGE</code>: <a href="http://www.ruby-lang.org/en/">http://www.ruby-lang.org/en/</a></li>
+<li><code>FAQ</code>: <a href="http://www.rubycentral.com/faq/">http://www.rubycentral.com/faq/</a> (original) or <a href="http://www.rubygarden.org/iowa/faqtotum">http://www.rubygarden.org/iowa/faqtotum</a> (latest)</li>
+<li><code>PITFALL</code>: <a href="http://rwiki.jin.gr.jp/cgi-bin/rw-cgi.rb?cmd=view;name=pitfall">http://rwiki.jin.gr.jp/cgi-bin/rw-cgi.rb?cmd=view;name=pitfall</a></li>
+<li><code>ONLINE TUTORIAL/DOC/BOOK</code>: <a href="http://www.rubycentral.com/book/">http://www.rubycentral.com/book/</a></li>
+<li><code>VERY USEFUL HINTS</code>:
+<ul>
+<li>"Programming Ruby" book by David Thomas and Andrew Hunt, "When Trouble Strikes" Chapter, "But It Doesn't Work" Section</li>
+<li>"The Ruby Way" book by Hal Fulton, Chapter 1: "Ruby In Review"</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<ol>
+
+<p><a name="warnings"></a>
+<li>Use "<code>ruby -w</code>" instead of simply "<code>ruby</code>" to get helpful warnings.  If not invoking "<code>ruby</code>" directly, you can set the environment variable <code>RUBYOPT</code> to 'w':
+<ul>
+<li>win32:
+<pre>
+            C:\> set RUBYOPT=w
+                or
+            pressing F5 (to execute) in the Scite editor will give you warnings
+            (and F4 will position at problematic line).
+</pre>
+</li>
+<li>unix:
+<pre>
+            sh# export RUBYOPT="w"
+                or
+            csh# setenv RUBYOPT "w"
+</pre>
+</li>
+</ul>
+</li></p><!--=============================================================================================================-->
+
+<p><a name="interactive"></a>
+<li>Ruby has an interactive shell; try to invoke the command "<code>irb</code>" instead of "<code>ruby</code>".  "irb" is best used for experimenting with the language and classes; you may try things out in this environment before putting them in your programs.
+</li></p><!--=============================================================================================================-->
+
+<p><a name="doc"></a>
+<li>For convenient on-screen Ruby documentation, consider to use (and install, if necessary) "ri" (<a href="http://www.pragmaticprogrammer.com/ruby/downloads/ri.html">http://www.pragmaticprogrammer.com/ruby/downloads/ri.html</a>).<br>
+<br>
+For example, too see the methods of the <code>File</code> class, run "<code>ri File</code>".  To read about its <code>open</code> method, type "<code>ri File.open</code>".
+</li></p><!--=============================================================================================================-->
+
+<p><a name="notation"></a>
+<li>The notation "<code>Klass#method</code>" in documentation is used only to represent an "instance method" of an object of class <code>Klass</code>; it is not a Ruby syntax at all.  A "class method" in documentation, on the other hand, is usually represented as "<code>Klass.method</code>" (which is a valid Ruby syntax).
+</li></p><!--=============================================================================================================-->
+
+<p><a name="characters"></a>
+<li>The <code>String#[Fixnum]</code> method does not return the "character" (which is a string of length one) at the <code>Fixnum</code> position, but instead the ASCII character code at the position (however, this may change in the future).  Currently, to get the character itself, use <code>String#[Fixnum,1]</code> instead.<br>
+<br>
+Furthermore, there are additional ASCII conversion methods such as
+<ul>
+<li><code>Integer#chr</code> to convert from the ASCII code to the character
+<pre>            65.chr    # -> "A"</pre>
+</li>
+<li><code>?chr</code> to convert from the character to the ASCII code
+<pre>            ?A        # -> 65</pre>
+</li>
+</ul>
+Using these properties, for example, some ways to get the last character in a string is by writing "<code>aString[-1, 1]</code>" or "<code>aString[-1].chr</code>".
+</li></p><!--=============================================================================================================-->
+
+<p><a name="default"></a>
+<li><code>Array.new(2, Hash.new)    # -> [{}, {}]</code><br>
+but the two array elements are <em>identical</em> objects, not independent hashes.  To create an array of (independent) hashes, use the "<code>map</code>" or "<code>collect</code>" method:<br>
+<pre>
+            arr = (1..2).map {Hash.new}
+</pre>
+Similarly, when creating a hash of arrays, probably the following is not the original intention:
+<pre>
+            hsh = Hash.new([])
+            while line = gets
+              if line =~ /(\S+)\s+(\S+)/
+                hsh[$1] << $2
+              end
+            end
+            puts hsh.length    # -> 0
+</pre>
+One correct and concise way is to write "<code>(hash[key] ||= []) << value</code>", such as
+<pre>
+            hsh = Hash.new
+            while line = gets
+              if line =~ /(\S+)\s+(\S+)/
+                (hsh[$1] ||= []) << $2
+              end
+            end
+</pre>
+</li></p><!--=============================================================================================================-->
+
+<p><a name="mutable"></a>
+<li>Be careful when using "mutable" objects as hash keys.  To get the expected result, call <code>Hash#rehash</code> before accessing the hash elements.  Example:
+<pre>
+            s = "mutable"
+            arr = [s]
+            hsh = { arr => "object" }
+            s.upcase!
+            p hsh[arr]    # -> nil (maybe not what was expected)
+            hsh.rehash
+            p hsh[arr]    # -> "object"
+</pre>
+</li></p><!--=============================================================================================================-->
+
+<p><a name="numerals"></a>
+<li>After reading data from a file and putting them into variables, the data type is really <code>String</code>.  To convert them into numbers, use the "<code>to_i</code>" or "<code>to_f</code>" methods.  If, for example, you use the "<code>+</code>" operator to add the "numbers" without calling the conversion methods, you will simply concatenate the strings.<br>
+<br>
+An alternative is to use "scanf" (<a href="http://www.rubyhacker.com/code/scanf">http://www.rubyhacker.com/code/scanf</a>).
+</li></p><!--=============================================================================================================-->
+
+<p><a name="operators"></a>
+<li>Ruby has no pre/post increment/decrement operator.  For instance, <code>x++</code> or <code>x--</code> will fail to parse.  More importantly, <code>++x</code> or <code>--x</code> will <em>do nothing</em>!  In fact, they behave as multiple unary prefix operators: <code>-x == ---x == -----x == .....</code>.  To increment a number, simply write <code>x += 1</code>.<br>
+<br>
+(An explanation for this language design by the author of Ruby can be found at <a href="http://www.ruby-talk.org/2710">http://www.ruby-talk.org/2710</a>.)
+</li></p><!--=============================================================================================================-->
+
+<p><a name="blocks"></a>
+<li>Beware of the lexical scoping interaction between local variables and block local variables.  If a local variable is already defined before the block, then the block will use (and quite possibly modify) the local variable; in this case the block does not introduce a new scope.  Example:
+<pre>
+            (0..2).each do |i|
+              puts "inside block: i = #{i}"
+            end
+            puts "outside block: i = #{i}"    # -> undefined `i'
+</pre>
+On the other hand,
+<pre>
+            i = 0
+            (0..2).each do |i|
+              puts "inside block: i = #{i}"
+            end
+            puts "outside block: i = #{i}"    # -> 'outside block: i = 2'
+</pre>
+and
+<pre>
+            j = 0
+            (0..2).each do |i|
+              j = i
+            end
+            puts "outside block: j = #{j}"    # -> 'outside block: j = 2'
+</pre>
+</li></p><!--=============================================================================================================-->
+
+<p><a name="logical"></a>
+<li>In Ruby, there are two sets of logical operators: <code>[!, &&, ||]</code> and <code>[not, and, or]</code>.  <code>[!, &&, ||]</code>'s precedence is higher than the assignments (=, %=, ~=, /=, etc.) while <code>[not, and, or]</code>'s precedence is lower.  Also note that while <code>&&</code>'s precedence is higher than <code>||</code>'s, the <code>and</code>'s precedence is <em>the same</em> as the <code>or</code>'s.  An example:
+<pre>
+            a = 'test'
+            b = nil
+            both = a && b       # both == nil
+            both = a and b      # both == 'test'
+            both = (a and b)    # both == nil
+</pre>
+(The reason for this language design and some more examples can be found at <a href="http://www.rubygarden.org/iowa/faqtotum/abN18mrYFE49E/c/1.13.3.3.5">http://www.rubygarden.org/iowa/faqtotum/abN18mrYFE49E/c/1.13.3.3.5</a>.)
+</li></p><!--=============================================================================================================-->
+
+<p><a name="case"></a>
+<li>In the case statement
+<pre>
+            case obj
+            when obj_1
+              ....
+            when obj_k
+              ....
+</pre>
+it is the "<code>===</code>" method which is invoked, not the "<code>==</code>" method.  Also, the order is "<code>obj_k === obj</code>" and not "<code>obj === obj_k</code>".<br>
+<br>
+The reason for this order is so that the case statement can "match" <code>obj</code> in more flexible ways.  Three interesting cases are when <code>obj_k</code> is either a <code>Module/Class</code>, a <code>Regexp</code>, or a <code>Range</code>:
+<ul>
+<li>The <code>Module/Class</code> class defines the "<code>===</code>" method as a test whether <code>obj</code> is an instance of the module/class or its descendants ("<code>obj#kind_of? obj_k</code>").</li>
+<li>The <code>Regexp</code> class defines the "<code>===</code>" method as a test whether <code>obj</code> matches the pattern ("<code>obj =~ obj_k</code>").</li>
+<li>The <code>Range</code> class defines the "<code>===</code>" method as a test whether <code>obj</code> is an element of the range ("<code>obj_k.include? obj</code>").</li>
+</ul>
+</li></p><!--=============================================================================================================-->
+
+<p><a name="space"></a>
+<li>It is advisable not to write some white space before the opening '<code>(</code>' in a method call; else, Ruby with <code>$VERBOSE</code> set to true may give you a warning.
+</li></p><!--=============================================================================================================-->
+
+<p><a name="dot"></a>
+<li>The "dot" for method call is the strongest operator.  So for example, while in some other languages the number after the dot in a floating point number is optional, it is not in Ruby.  For example, "<code>1.e6</code>" will try to call the method "<code>e6</code>" of the object <code>1</code> (which is a <code>Fixnum</code>).  You have to write "<code>1.0e6</code>".<br>
+<br>
+However, notice that although the dot is the strongest operator, its precedence with respect to method name may be different with different Ruby versions.  At least in Ruby 1.6.7, "<code>puts (1..3).length</code>" will give you a syntax error; you should write "<code>puts((1..3).length)</code>" instead.
+</li></p><!--=============================================================================================================-->
+
+<p><a name="range"></a>
+<li>"<code>0..k</code>" represents a <code>Range</code> object, while "<code>[0..k]</code>" represents an array with a single element of type <code>Range</code>.  For example, if
+<pre>
+            [0..2].each do |i|
+              puts "i = #{i}"
+            end
+</pre>
+does not give what you expect, probably you should have written
+<pre>
+            (0..2).each do |i|
+              puts "i = #{i}"
+            end
+</pre>
+or
+<pre>
+            0.upto(2) do |i|
+              puts "i = #{i}"
+            end
+</pre>
+instead.  Notice also that Ruby does not have objects of type "<code>Tuple</code>" (which are immutable arrays) and parentheses are usually put around a <code>Range</code> object for the purpose of precedence grouping (as the "dot" is stronger than the "dot dot" in the above example).
+</li></p><!--=============================================================================================================-->
+
+<p><a name="boolean"></a>
+<li>In Ruby, only <code>false</code> and <code>nil</code> are considered as <em>false</em> in a Boolean expression.  In particular, <code>0</code> (zero), <code>""</code> or <code>''</code> (empty string), <code>[]</code> (empty array), and <code>{}</code> (empty hash) are all considered as <em>true</em>.
+</li></p><!--=============================================================================================================-->
+
+<p><a name="objects"></a>
+<li>Ruby variables hold references to objects and the <code>=</code> operator copies the references.  Also, a self assignment such as <code>a += b</code> is actually translated to <code>a = a + b</code>.  Therefore it may be advisable to be aware whether in a certain operation you are actually creating a new object or modifying an existing one.<br>
+<br>
+For example, <code>string << "another"</code> is faster than <code>string += "another"</code> (no extra object creation), so you would be better off using any class-defined update-method (if that is really your intention), if it exists.  However, notice also the "side effects" on all other variables that refer to the same object:
+<pre>
+            a = 'aString'
+            c = a
+            a += ' modified using +='
+            puts c    # -> "aString"
+
+            a = 'aString'
+            c = a
+            a << ' modified using <<'
+            puts c    # -> "aString modified using <<"
+</pre>
+</li></p><!--=============================================================================================================-->
+
+<p><a name="copy"></a>
+<li>There is no standard, built-in deep copy in Ruby.  One way to achieve a similar effect is by serialization/marshalling.  Because in Ruby everything is a reference, be careful when you want to "copy" objects (such as by using the <code>dup</code> or <code>clone</code> method), especially for objects that contain other objects (such as arrays and hashes) and when the containment is more than one level deep.
+</li></p><!--=============================================================================================================-->
+
+<p><a name="classvars"></a>
+<li>  A class variable is in general per-hierarchy, not per-class (i.e., a class variable is "shared" by a parent and all of its descendants, in addition to being shared by all instances of that class).  One subtle exception is if a child class creates a class variable before its parent does.  For example, when a parent creates a class variable first:
+<pre>
+            class Base
+              def initialize;     @@var = 'base'; end
+              def base_set_var;   @@var = 'base'; end
+              def base_print_var; puts @@var;     end
+            end
+
+            class Derived < Base
+              def initialize;        super; @@var = 'derived'; end # notice
+              def derived_set_var;   @@var = 'derived';        end
+              def derived_print_var; puts @@var;               end
+            end
+
+            d = Derived.new
+            d.base_set_var;    d.derived_print_var    # -> 'base'
+                               d.base_print_var       # -> 'base'
+            d.derived_set_var; d.derived_print_var    # -> 'derived'
+                               d.base_print_var       # -> 'derived'
+</pre>
+In the above code, the class variable <code>@@var</code> is indeed "shared" by the <code>Base</code> and <code>Derived</code> classes.  However, now see what happens when a child class creates the variable first:
+<pre>
+            class Base
+              def initialize;     @@var = 'base'; end
+              def base_set_var;   @@var = 'base'; end
+              def base_print_var; puts @@var;     end
+            end
+
+            class Derived < Base
+              def initialize;        @@var = 'derived'; super; end # changed
+              def derived_set_var;   @@var = 'derived';        end
+              def derived_print_var; puts @@var;               end
+            end
+
+            d = Derived.new
+            d.base_set_var;    d.derived_print_var    # -> 'derived'
+                               d.base_print_var       # -> 'base'
+            d.derived_set_var; d.derived_print_var    # -> 'derived'
+                               d.base_print_var       # -> 'base'
+</pre>
+In this case, the parent and child classes have two <em>independent</em> class variables with <em>identical</em> names.
+</li></p><!--=============================================================================================================-->
+
+<p><a name="backslashes"></a>
+<li>Substituting backslashes may be tricky.  Example:
+<pre>
+            str = 'a\b\c'                     # -> a\b\c
+            puts str.gsub(/\\/,'\\\\')        # -> a\b\c
+            puts str.gsub(/\\/,'\\\\\\')      # -> a\\b\\c
+            puts str.gsub(/\\/,'\\\\\\\\')    # -> a\\b\\c
+            puts str.gsub(/\\/) { '\\\\' }    # -> a\\b\\c
+            puts str.gsub(/\\/, '\&\&')       # -> a\\b\\c
+</pre>
+</li></p><!--=============================================================================================================-->
+
+</ol>
+<br>
+
+<a name="TTAGTK"></a>
+<h2>Things That Are Good to Know :-)</h2>
+<ol type="a">
+<p><li>In Ruby the "self assignment operator" goes beyond "<code>+=, -=, *=, /=, %=</code>".  In particular, operators such as "<code>||=</code>" also exist (but currently not for a class variable if it is not yet defined; this may change in the future).  Please see Table 18.4 in the "Programming Ruby" book for the complete list.
+</li></p>
+
+<p><li>For a "cookbook" with many algorithm and code examples, consider "PLEAC-Ruby" (<a href="http://pleac.sourceforge.net/pleac_ruby/t1.html">http://pleac.sourceforge.net/pleac_ruby/t1.html</a>).
+</li></p>
+
+<p><li>For extensive numerical computations, consider "Numerical Ruby" (<a href="http://www.ir.isas.ac.jp/~masa/ruby/index-e.html">http://www.ir.isas.ac.jp/~masa/ruby/index-e.html</a>).
+</li></p>
+
+<p><li>For (numerical) arrays which consume a large amount of memory and/or CPU time, consider "NArray" which is part of the Numerical Ruby (<a href="http://www.ir.isas.ac.jp/~masa/ruby/na/SPEC.en">http://www.ir.isas.ac.jp/~masa/ruby/na/SPEC.en</a>).
+</li></p>
+
+<p><li>For speeding up some parts of your Ruby code by writing them in C, consider "Inline" (<a href="http://sourceforge.net/projects/rubyinline/">http://sourceforge.net/projects/rubyinline/</a>).
+</li></p>
+
+<p><li>For Ruby to C translation, consider "rb2c" (<a href="http://easter.kuee.kyoto-u.ac.jp/~hiwada/ruby/rb2c/">http://easter.kuee.kyoto-u.ac.jp/~hiwada/ruby/rb2c/</a>).
+</li></p>
+
+<p><li>For Ruby and C/C++ integration, consider "SWIG" (<a href="http://www.swig.org/">http://www.swig.org/</a>).
+</li></p>
+
+<p><li>For Ruby and Java integration, consider "JRuby" (<a href="http://jruby.sourceforge.net/">http://jruby.sourceforge.net/</a>).
+</li></p>
+
+<p><li>For Ruby and Delphi integration, consider "Apollo" (<a href="http://www.users.yun.co.jp/~moriq/apollo/index-en.html">http://www.users.yun.co.jp/~moriq/apollo/index-en.html</a>).
+</li></p>
+
+<p><li>For embedding Python in Ruby, consider "Ruby/Python" (<a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FPython">http://www.ruby-lang.org/en/raa-list.rhtml?name=Ruby%2FPython</a>).
+</li></p>
+
+<p><li>For embedding Lua in Ruby, consider "Ruby-Lua" (<a href="http://ruby-lua.unolotiene.com/ruby-lua.whtm">http://ruby-lua.unolotiene.com/ruby-lua.whtm</a>).
+</li></p>
+
+<p><li>For creating a stand-alone (Windows) executable, consider "exerb" (<a href="http://exerb.sourceforge.jp/index.en.html">http://exerb.sourceforge.jp/index.en.html</a>).
+</li></p>
+
+<p><li>For manipulating raw bits, instead of using Fixnums, consider "BitVector" (<a href="http://www.ce.chalmers.se/~feldt/ruby/extensions/bitvector/">http://www.ce.chalmers.se/~feldt/ruby/extensions/bitvector/</a>).
+</li></p>
+</ol>
+
+<ul>
+<li>For comments on this list, you may e-mail me directly at <a href="mailto:billtj@glue.umd.edu">billtj@glue.umd.edu</a>.</li>
+</ul>
+
+<hr>
+Last updated: Nov 25, 2002.<br>
+This list itself is available at <a href="http://www.glue.umd.edu/~billtj/ruby.html">http://www.glue.umd.edu/~billtj/ruby.html.</a><br>
+The plain text format is produced from the HTML format with "<code>lynx -dump -nolist</code>" (and some minor editing).
+<hr>
+<body>
+</html>

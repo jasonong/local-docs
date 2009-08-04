@@ -1,0 +1,71 @@
+  <div id="C00000718">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Version<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activerecord/lib/active_record/connection_adapters/sqlite_adapter_rb.html');">rails-2.3.2/activerecord/lib/active_record/connection_adapters/sqlite_adapter.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002079&name=&lt;=&gt;" >&lt;=&gt;</a></li>
+  <li><a href="index.html?a=M002078&name=new" >new</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="#" onclick="jsHref('');">Comparable</a></li>
+</ul>
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002078" class="method">
+  <div id="M002078_title" class="title">
+    <b>new</b>(version_string)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002078_source')" id="l_M002078_source">show source</a> ]</p>
+  <div id="M002078_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/sqlite_adapter.rb, line 78</span>
+78:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">version_string</span>)
+79:           <span class="ruby-ivar">@version</span> = <span class="ruby-identifier">version_string</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_i</span>)
+80:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002079" class="method">
+  <div id="M002079_title" class="title">
+    <b>&lt;=&gt;</b>(version_string)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002079_source')" id="l_M002079_source">show source</a> ]</p>
+  <div id="M002079_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/sqlite_adapter.rb, line 82</span>
+82:         <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;=&gt;</span>(<span class="ruby-identifier">version_string</span>)
+83:           <span class="ruby-ivar">@version</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">version_string</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_i</span>)
+84:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

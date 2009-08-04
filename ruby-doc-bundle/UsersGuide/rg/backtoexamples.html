@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Back to the simple examples</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="arrays.html">
+ <img border=0 src="a2l.gif" alt="Arrays"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="control.html">
+ <img border=0 src="a2r.gif" alt="Control structures"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Back to the simple examples</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Now let's take apart the code of some of our previous example
+programs.</p>
+<p>The following appeared in the <a href="examples.html">simple examples</a> chapter.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">def fact(n)
+  if n == 0
+    1
+  else
+    n * fact(n-1)
+  end
+end
+print fact(ARGV[0].to_i), "\n"</font></pre></td></tr></table>
+<p>Because this is the first explanation, we examine each line
+individually.</p>
+<h3><a name="label:0" id="label:0">Factorials</a></h3><!-- RDLabel: "Factorials" -->
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">def fact(n)</font></pre></td></tr></table>
+<p>In the first line, <code>def</code> is a statement to define a function
+(or, more precisely, a <em>method</em>; we'll talk more about what a
+method is in a <a href="methods.html">later chapter</a>).  Here, it
+specifies that the function <code>fact</code> takes a single argument,
+referred to as <code>n</code>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">if n == 0</font></pre></td></tr></table>
+<p>The <code>if</code> is for checking a condition. When the condition
+holds, the next bit of code is evaluated; otherwise whatever follows the
+<code>else</code> is evaluated. </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">1</font></pre></td></tr></table>
+<p>The value of <code>if</code> is 1 if the condition holds. </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">else</font></pre></td></tr></table>
+<p>If the condition does not hold, the code from here to <code>end</code> is 
+evaluated. </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">n * fact(n-1)</font></pre></td></tr></table>
+<p>If the condition is not satisfied, the value of <code>if</code> is
+the result of <code>n</code> times <code>fact(n-1)</code>. </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">end</font></pre></td></tr></table>
+<p>The first <code>end</code> closes the <code>if</code> statement.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">end</font></pre></td></tr></table>
+<p>The second <code>end</code> closes the <code>def</code> statement.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">print fact(ARGV[0].to_i), "\n"</font></pre></td></tr></table>
+<p>This invokes our <code>fact()</code> function using a value specified
+from the command line, and prints the result. </p>
+<p><code>ARGV</code> is an array which contains command line arguments.
+The members of <code>ARGV</code> are strings, so we must convert this into a
+integral number by <code>to_i</code>.  Ruby does not convert strings into
+integers automatically like perl does. </p>
+<p>Hmmm...  what would happen if we fed this program a negative
+number? Do you see the problem? Can you fix it?</p>
+<h3><a name="label:1" id="label:1">Strings</a></h3><!-- RDLabel: "Strings" -->
+<p>Next we examine the puzzle program from the chapter
+on <a href="strings.html">strings</a>.  As this is somewhat longer,
+we number the lines for reference.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">01 words = ['foobar', 'baz', 'quux']
+02 secret = words[rand(3)]
+03
+04 print "guess? "
+05 while guess = STDIN.gets
+06   guess.chop!
+07   if guess == secret
+08     print "you win\n"
+09     break
+10   else
+11     print "you lose.\n"
+12   end
+13   print "guess? "
+14 end
+15 print "the word is ", secret, ".\n"</font></pre></td></tr></table>
+<p>In this program, a new control structure, <code>while</code>, is
+used.  The code between <code>while</code> and its corresponding
+<code>end</code> will execute repeatedly as long as some specified
+condition remains true.</p>
+<p><code>rand(3)</code> in line 2 returns a random number
+in the range 0 to 2.  This random number is used to extract one
+of the members of the array <code>words</code>.</p>
+<p>In line 5 we read one line from standard input by the method
+<code>STDIN.gets</code>.  If <em>EOF</em> (end of file) occurs
+while getting the line, <code>gets</code> returns
+<code>nil</code>.  So the code associated with this
+<code>while</code> will repeat until it sees <em>^D</em> (or
+<em>^Z</em> under DOS), signifying the end of input.</p>
+<p><code>guess.chop!</code> in line 6 removes the last character from
+<code>guess</code>; in this case it will always be a <em>newline</em>
+character.</p>
+<p>In line 15 we print the secret word.  We have written this as
+a print statement with three arguments (which are printed one after
+the other), but it would have been equally effective to do it with a
+single argument, writing <code>secret</code> as <code>#{secret}</code>
+to make it clear that it is a variable to be evaluated, not a literal
+word to be printed:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">print "the word is #{secret}.\n" </font></pre></td></tr></table>
+<h3><a name="label:2" id="label:2">Regular expressions</a></h3><!-- RDLabel: "Regular expressions" -->
+<p>Finally we examine this program from the chapter on <a href="regexp.html">regular
+expressions</a>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">01 st = "\033[7m"
+02 en = "\033[m"
+03
+04 while TRUE
+05   print "str&gt; "
+06   STDOUT.flush
+07   str = gets
+08   break if not str
+09   str.chop!
+10   print "pat&gt; "
+11   STDOUT.flush
+12   re = gets
+13   break if not re
+14   re.chop!
+15   str.gsub! re, "#{st}\\&amp;#{en}"
+16   print str, "\n"
+17 end
+18 print "\n"</font></pre></td></tr></table>
+<p>In line 4, the condition for <code>while</code> is hardwired to
+<code>true</code>, so it forms what looks like an infinite loop.
+However we put <code>break</code> statements in the 8th and 13th lines to
+escape the loop.  These two <code>break</code>s are also an example
+of <code>if</code> modifiers.  An "<code>if</code> modifier" executes the
+statement on its left hand side if and only if the specified
+condition is satisfied.</p>
+<p>There is more to say about <code>chop!</code> (see lines 9 and
+14).  In ruby, we conventionally attach '<code>!</code>' or
+'<code>?</code>' to the end of certain method names.  The
+exclamation point (<code>!</code>, sometimes pronounced aloud as
+"bang!") indicates something potentially destructive, that is to say,
+something that can change the value of what it touches.
+<code>chop!</code> affects a string directly, but <code>chop</code>
+with no exclamation point works on a copy.  Here is an
+illustration of the difference.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> s1 = "forth"</b></font>
+  "forth"
+ruby&gt;<font color="#ffff00"><b> s1.chop!       # This changes s1.</b></font>
+  "fort"
+ruby&gt;<font color="#ffff00"><b> s2 = s1.chop   # This puts a changed copy in s2,</b></font>
+  "for"
+ruby&gt;<font color="#ffff00"><b> s1             # ... without disturbing s1.</b></font>
+  "fort"</font></pre></td></tr></table>
+<p>You will later come across method names that end in a question mark
+(<code>?</code>, sometimes pronounced aloud as "huh?"); this indicates
+a "predicate" method, one that can return either <code>true</code> or
+<code>false</code>.</p>
+<p>Line 15 deserves some careful attention.  First, notice that
+<code>gsub!</code> is another so-called destructive method.  It
+changes <code>str</code> by replacing everything matching the pattern
+<code>re</code> (<code>sub</code> means substitute, and the
+leading <code>g</code> means global, i.e., replace <em>all</em>
+matching parts in the string, not just the first one found).  So
+far, so good; but what are we replacing the matched parts of the text
+with?  <code>st</code> and <code>en</code> were defined in lines 1-2
+as the ANSI sequences that make text color-inverted and normal,
+respectively.  In line 15 they are enclosed in <code>#{}</code>
+to ensure that they are actually interpreted as such (and we do not
+see the variable <em>names</em> printed instead).  Between these
+we see "<code>\\&amp;</code>".  This is a little tricky.
+Since the replacement string is in double quotes, the pair of
+backslashes will be interpreted as a single backslash; what
+<code>gsub!</code> actually sees will be "<code>\&amp;</code>", and
+that happens to be a special code that refers to whatever matched the
+pattern in the first place.  So the new string, when printed,
+looks just like the old one, except that the parts that matched the
+given pattern are highlighted in inverse video.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="arrays.html">
+ <img border=0 src="a2l.gif" alt="Arrays"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="control.html">
+ <img border=0 src="a2r.gif" alt="Control structures"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

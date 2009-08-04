@@ -1,0 +1,137 @@
+  <div id="C00000504">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />CallbackChain<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/callbacks_rb.html');">rails-2.3.2/activesupport/lib/active_support/callbacks.rb</a>
+
+Parent:&nbsp;
+Array
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001299&name=build" >build</a></li>
+  <li><a href="index.html?a=M001303&name=delete" >delete</a></li>
+  <li><a href="index.html?a=M001302&name=find" >find</a></li>
+  <li><a href="index.html?a=M001301&name=replace_or_append!" >replace_or_append!</a></li>
+  <li><a href="index.html?a=M001300&name=run" >run</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001299" class="method">
+  <div id="M001299_title" class="title">
+    <b>build</b>(kind, *methods, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001299_source')" id="l_M001299_source">show source</a> ]</p>
+  <div id="M001299_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/callbacks.rb, line 80</span>
+80:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">kind</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">methods</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+81:         <span class="ruby-identifier">methods</span>, <span class="ruby-identifier">options</span> = <span class="ruby-identifier">extract_options</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">methods</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+82:         <span class="ruby-identifier">methods</span>.<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">method</span><span class="ruby-operator">|</span> <span class="ruby-constant">Callback</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">kind</span>, <span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span>) }
+83:         <span class="ruby-identifier">new</span>(<span class="ruby-identifier">methods</span>)
+84:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001303" class="method">
+  <div id="M001303_title" class="title">
+    <b>delete</b>(callback)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001303_source')" id="l_M001303_source">show source</a> ]</p>
+  <div id="M001303_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/callbacks.rb, line 113</span>
+113:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">callback</span>)
+114:         <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">callback</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Callback</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">callback</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">find</span>(<span class="ruby-identifier">callback</span>))
+115:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001302" class="method">
+  <div id="M001302_title" class="title">
+    <b>find</b>(callback) {|c| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001302_source')" id="l_M001302_source">show source</a> ]</p>
+  <div id="M001302_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/callbacks.rb, line 109</span>
+109:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-identifier">callback</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+110:         <span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">callback</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">block_given?</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">c</span>)) }.<span class="ruby-identifier">first</span>
+111:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001301" class="method">
+  <div id="M001301_title" class="title">
+    <b>replace_or_append!</b>(chain)
+  </div>
+  <div class="description">
+  <p>
+TODO: Decompose into more Array like behavior
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001301_source')" id="l_M001301_source">show source</a> ]</p>
+  <div id="M001301_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/callbacks.rb, line 100</span>
+100:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replace_or_append!</span>(<span class="ruby-identifier">chain</span>)
+101:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index</span> = <span class="ruby-identifier">index</span>(<span class="ruby-identifier">chain</span>)
+102:           <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">index</span>] = <span class="ruby-identifier">chain</span>
+103:         <span class="ruby-keyword kw">else</span>
+104:           <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">chain</span>
+105:         <span class="ruby-keyword kw">end</span>
+106:         <span class="ruby-keyword kw">self</span>
+107:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001300" class="method">
+  <div id="M001300_title" class="title">
+    <b>run</b>(object, options = {}, &amp;terminator)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001300_source')" id="l_M001300_source">show source</a> ]</p>
+  <div id="M001300_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/callbacks.rb, line 86</span>
+86:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">terminator</span>)
+87:         <span class="ruby-identifier">enumerator</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:enumerator</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">:each</span>
+88: 
+89:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
+90:           <span class="ruby-identifier">send</span>(<span class="ruby-identifier">enumerator</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">callback</span><span class="ruby-operator">|</span> <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">object</span>) }
+91:         <span class="ruby-keyword kw">else</span>
+92:           <span class="ruby-identifier">send</span>(<span class="ruby-identifier">enumerator</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">callback</span><span class="ruby-operator">|</span>
+93:             <span class="ruby-identifier">result</span> = <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">object</span>)
+94:             <span class="ruby-keyword kw">break</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">terminator</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">result</span>, <span class="ruby-identifier">object</span>)
+95:           <span class="ruby-keyword kw">end</span>
+96:         <span class="ruby-keyword kw">end</span>
+97:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

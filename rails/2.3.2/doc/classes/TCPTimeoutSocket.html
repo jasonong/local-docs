@@ -1,0 +1,182 @@
+  <div id="C00000032">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />TCPTimeoutSocket<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/vendor/memcache-client-1_6_5/memcache_rb.html');">rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+TCPSocket facade class which implements timeouts.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000064&name=_socket" >_socket</a></li>
+  <li><a href="index.html?a=M000067&name=close" >close</a></li>
+  <li><a href="index.html?a=M000066&name=closed?" >closed?</a></li>
+  <li><a href="index.html?a=M000062&name=gets" >gets</a></li>
+  <li><a href="index.html?a=M000065&name=method_missing" >method_missing</a></li>
+  <li><a href="index.html?a=M000060&name=new" >new</a></li>
+  <li><a href="index.html?a=M000063&name=read" >read</a></li>
+  <li><a href="index.html?a=M000061&name=write" >write</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000060" class="method">
+  <div id="M000060_title" class="title">
+    <b>new</b>(host, port, timeout)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000060_source')" id="l_M000060_source">show source</a> ]</p>
+  <div id="M000060_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 857</span>
+857:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>, <span class="ruby-identifier">timeout</span>)
+858:     <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-constant">MemCache</span><span class="ruby-operator">::</span><span class="ruby-constant">Server</span><span class="ruby-operator">::</span><span class="ruby-constant">CONNECT_TIMEOUT</span>, <span class="ruby-constant">SocketError</span>) <span class="ruby-keyword kw">do</span>
+859:       <span class="ruby-ivar">@sock</span> = <span class="ruby-constant">TCPSocket</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span>)
+860:       <span class="ruby-ivar">@len</span> = <span class="ruby-identifier">timeout</span>
+861:     <span class="ruby-keyword kw">end</span>
+862:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000064" class="method">
+  <div id="M000064_title" class="title">
+    <b>_socket</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000064_source')" id="l_M000064_source">show source</a> ]</p>
+  <div id="M000064_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 882</span>
+882:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">_socket</span>
+883:     <span class="ruby-ivar">@sock</span>
+884:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000067" class="method">
+  <div id="M000067_title" class="title">
+    <b>close</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000067_source')" id="l_M000067_source">show source</a> ]</p>
+  <div id="M000067_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 894</span>
+894:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+895:     <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">close</span>
+896:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000066" class="method">
+  <div id="M000066_title" class="title">
+    <b>closed?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000066_source')" id="l_M000066_source">show source</a> ]</p>
+  <div id="M000066_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 890</span>
+890:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">closed?</span>
+891:     <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">closed?</span>
+892:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000062" class="method">
+  <div id="M000062_title" class="title">
+    <b>gets</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000062_source')" id="l_M000062_source">show source</a> ]</p>
+  <div id="M000062_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 870</span>
+870:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gets</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+871:     <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-ivar">@len</span>, <span class="ruby-constant">SocketError</span>) <span class="ruby-keyword kw">do</span>
+872:       <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">gets</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+873:     <span class="ruby-keyword kw">end</span>
+874:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000065" class="method">
+  <div id="M000065_title" class="title">
+    <b>method_missing</b>(meth, *args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000065_source')" id="l_M000065_source">show source</a> ]</p>
+  <div id="M000065_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 886</span>
+886:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+887:     <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+888:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000063" class="method">
+  <div id="M000063_title" class="title">
+    <b>read</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000063_source')" id="l_M000063_source">show source</a> ]</p>
+  <div id="M000063_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 876</span>
+876:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+877:     <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-ivar">@len</span>, <span class="ruby-constant">SocketError</span>) <span class="ruby-keyword kw">do</span>
+878:       <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">read</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+879:     <span class="ruby-keyword kw">end</span>
+880:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000061" class="method">
+  <div id="M000061_title" class="title">
+    <b>write</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000061_source')" id="l_M000061_source">show source</a> ]</p>
+  <div id="M000061_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/vendor/memcache-client-1.6.5/memcache.rb, line 864</span>
+864:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+865:     <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-identifier">timeout</span>(<span class="ruby-ivar">@len</span>, <span class="ruby-constant">SocketError</span>) <span class="ruby-keyword kw">do</span>
+866:       <span class="ruby-ivar">@sock</span>.<span class="ruby-identifier">write</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+867:     <span class="ruby-keyword kw">end</span>
+868:   <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,34 @@
+  <div id="fileHeader">
+    <h1>array.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/array.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'active_support/core_ext/array/access'
+require 'active_support/core_ext/array/conversions'
+require 'active_support/core_ext/array/extract_options'
+require 'active_support/core_ext/array/grouping'
+require 'active_support/core_ext/array/random_access'
+require 'active_support/core_ext/array/wrapper'
+
+class Array #:nodoc:
+  include ActiveSupport::CoreExtensions::Array::Access
+  include ActiveSupport::CoreExtensions::Array::Conversions
+  include ActiveSupport::CoreExtensions::Array::ExtractOptions
+  include ActiveSupport::CoreExtensions::Array::Grouping
+  include ActiveSupport::CoreExtensions::Array::RandomAccess
+  extend ActiveSupport::CoreExtensions::Array::Wrapper
+end
+</pre>
+    </div>

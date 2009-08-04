@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Getting Started</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="whatisruby.html">
+ <img border=0 src="a2l.gif" alt="What is ruby?"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="examples.html">
+ <img border=0 src="a2r.gif" alt="Simple examples"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Getting Started</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>First, you'll want to check whether ruby is installed.  From
+the shell prompt (denoted here by "<code>%</code>", so don't type the
+<code>%</code>), type</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">% ruby -v</font></pre></td></tr></table>
+<p>(<code>-v</code> tells the interpreter to print the version of ruby),
+then press the <em>Enter</em> key.  If ruby is installed, you will
+see a message something like the following:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">% ruby -v
+ruby 1.6.6 (2001-12-26) [i586-linux]</font></pre></td></tr></table>
+<p>If ruby is not installed, you can ask your administrator to install
+it, or you can <a href="http://www.cs.iastate.edu/~slagell/ruby/install.shtml">do it
+yourself</a>
+, since ruby is free software with no restrictions on its
+installation or use.</p>
+<p>Now, let's play with ruby.  You can place a ruby program
+directly on the command line using the <code>-e</code> option: </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">% ruby -e 'print "hello world\n"'
+hello world</font></pre></td></tr></table>
+<p>More conventionally, a ruby program can be stored in a file.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">% cat &gt; test.rb
+print "hello world\n"
+^D
+% cat test.rb
+print "hello world\n"
+% ruby test.rb
+hello world</font></pre></td></tr></table>
+<p><code>^D</code> is <em>control-D</em>.  The above is just for UNIX.  If you're using
+DOS, try this:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">C:\ruby&gt; copy con: test.rb
+print "hello world\n"
+^Z
+C:\ruby&gt; type test.rb
+print "hello world\n"
+C:\ruby&gt; ruby test.rb
+hello world</font></pre></td></tr></table>
+<p>When writing more substantial code than this, you will want to use
+a real text editor!</p>
+<p>Some surprisingly complex and useful things can be done with
+miniature programs that fit in a command line.  For example, this
+one replaces <code>foo</code> with <code>bar</code> in all C source
+and header files in the current working directory, backing up the
+original files with ".bak" appended:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">% ruby -i.bak -pe 'sub "foo", "bar"' *.[ch]</font></pre></td></tr></table>
+<p>This program works like the UNIX <code>cat</code> command (but works
+slower than <code>cat</code>):</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">% ruby -pe 0 file</font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="whatisruby.html">
+ <img border=0 src="a2l.gif" alt="What is ruby?"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="examples.html">
+ <img border=0 src="a2r.gif" alt="Simple examples"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

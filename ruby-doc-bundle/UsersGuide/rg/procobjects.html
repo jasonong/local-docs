@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Procedure objects</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="modules.html">
+ <img border=0 src="a2l.gif" alt="Modules"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="variables.html">
+ <img border=0 src="a2r.gif" alt="Variables"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Procedure objects</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>It is often desirable to be able to specify responses to unexpected
+events.  As it turns out, this is most easily done if we can pass
+blocks of code as arguments to other methods, which means we want to
+be able to treat code as if it were data.</p>
+<p>A new <em>procedure object</em> is formed using <code>proc</code>:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> quux = proc {</b></font>
+    |<font color="#ffff00"><b>   print "QUUXQUUXQUUX!!!\n"</b></font>
+    |<font color="#ffff00"><b> }</b></font>
+<font color="#50ffff"><b>   #&lt;Proc:0x4017357c&gt;</b></font></font></pre></td></tr></table>
+<p>Now what <code>quux</code> refers to is an object, and like most
+objects, it has behavior that can be evoked.  Specifically, we
+can ask it to execute, via its <code>call</code> method:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> quux.call</b></font>
+QUUXQUUXQUUX!!!
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>So, after all that, can <code>quux</code> be used as a method
+argument? Sure.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> def run( p )</b></font>
+    |<font color="#ffff00"><b>   print "About to call a procedure...\n"</b></font>
+    |<font color="#ffff00"><b>   p.call</b></font>
+    |<font color="#ffff00"><b>   print "There: finished.\n"</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> run quux</b></font>
+About to call a procedure...
+QUUXQUUXQUUX!!!
+There: finished.
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>The <code>trap</code> method lets us assign the response of our choice
+to any system signal.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> inthandler = proc{ print "^C was pressed.\n" }</b></font>
+<font color="#50ffff"><b>   #&lt;Proc:0x401730a4&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> trap "SIGINT", inthandler</b></font>
+<font color="#50ffff"><b>   #&lt;Proc:0x401735e0&gt;</b></font></font></pre></td></tr></table>
+<p>Normally pressing <em>^C</em> makes the interpreter quit.  Now a
+message is printed and the interpreter continues running, so you don't
+lose the work you were doing.  (You're not trapped in the
+interpreter forever; you can still exit by typing <code>exit</code> or
+pressing <em>^D</em>.)</p>
+<p>A final note before we move on to other topics: it's not strictly
+necessary to give a procedure object a name before binding it to a
+signal.  An equivalent <em>anonymous</em> procedure object would
+look like</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> trap "SIGINT", proc{ print "^C was pressed.\n" }</b></font>
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>or more compactly still,</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> trap "SIGINT", 'print "^C was pressed.\n"'</b></font>
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>This abbreviated form provides some convenience and readability
+when you write small anonymous procedures.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="modules.html">
+ <img border=0 src="a2l.gif" alt="Modules"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="variables.html">
+ <img border=0 src="a2r.gif" alt="Variables"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

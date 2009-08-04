@@ -1,0 +1,73 @@
+  <div id="fileHeader">
+    <h1>session_management.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/session_management.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController #:nodoc:
+  module SessionManagement #:nodoc:
+    def self.included(base)
+      base.class_eval do
+        extend ClassMethods
+      end
+    end
+
+    module ClassMethods
+      # Set the session store to be used for keeping the session data between requests.
+      # By default, sessions are stored in browser cookies (&lt;tt&gt;:cookie_store&lt;/tt&gt;),
+      # but you can also specify one of the other included stores (&lt;tt&gt;:active_record_store&lt;/tt&gt;,
+      # &lt;tt&gt;:mem_cache_store&lt;/tt&gt;, or your own custom class.
+      def session_store=(store)
+        if store == :active_record_store
+          self.session_store = ActiveRecord::SessionStore
+        else
+          @@session_store = store.is_a?(Symbol) ?
+            Session.const_get(store.to_s.camelize) :
+            store
+        end
+      end
+
+      # Returns the session store class currently used.
+      def session_store
+        if defined? @@session_store
+          @@session_store
+        else
+          Session::CookieStore
+        end
+      end
+
+      def session=(options = {})
+        self.session_store = nil if options.delete(:disabled)
+        session_options.merge!(options)
+      end
+
+      # Returns the hash used to configure the session. Example use:
+      #
+      #   ActionController::Base.session_options[:secure] = true # session only available over HTTPS
+      def session_options
+        @session_options ||= {}
+      end
+
+      def session(*args)
+        ActiveSupport::Deprecation.warn(
+          &quot;Disabling sessions for a single controller has been deprecated. &quot; +
+          &quot;Sessions are now lazy loaded. So if you don't access them, &quot; +
+          &quot;consider them off. You can still modify the session cookie &quot; +
+          &quot;options with request.session_options.&quot;, caller)
+      end
+    end
+  end
+end
+</pre>
+    </div>

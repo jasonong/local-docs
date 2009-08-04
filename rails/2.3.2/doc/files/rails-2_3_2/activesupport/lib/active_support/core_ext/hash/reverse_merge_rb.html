@@ -1,0 +1,54 @@
+  <div id="fileHeader">
+    <h1>reverse_merge.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/hash/reverse_merge.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module Hash #:nodoc:
+      # Allows for reverse merging two hashes where the keys in the calling hash take precedence over those
+      # in the &lt;tt&gt;other_hash&lt;/tt&gt;. This is particularly useful for initializing an option hash with default values:
+      #
+      #   def setup(options = {})
+      #     options.reverse_merge! :size =&gt; 25, :velocity =&gt; 10
+      #   end
+      #
+      # Using &lt;tt&gt;merge&lt;/tt&gt;, the above example would look as follows:
+      #
+      #   def setup(options = {})
+      #     { :size =&gt; 25, :velocity =&gt; 10 }.merge(options)
+      #   end
+      #
+      # The default &lt;tt&gt;:size&lt;/tt&gt; and &lt;tt&gt;:velocity&lt;/tt&gt; are only set if the +options+ hash passed in doesn't already
+      # have the respective key.
+      module ReverseMerge
+        # Performs the opposite of &lt;tt&gt;merge&lt;/tt&gt;, with the keys and values from the first hash taking precedence over the second.
+        def reverse_merge(other_hash)
+          other_hash.merge(self)
+        end
+
+        # Performs the opposite of &lt;tt&gt;merge&lt;/tt&gt;, with the keys and values from the first hash taking precedence over the second.
+        # Modifies the receiver in place.
+        def reverse_merge!(other_hash)
+          replace(reverse_merge(other_hash))
+        end
+
+        alias_method :reverse_update, :reverse_merge!
+      end
+    end
+  end
+end
+</pre>
+    </div>

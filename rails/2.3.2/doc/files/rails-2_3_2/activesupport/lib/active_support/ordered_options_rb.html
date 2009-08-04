@@ -1,0 +1,38 @@
+  <div id="fileHeader">
+    <h1>ordered_options.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/ordered_options.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport #:nodoc:
+  class OrderedOptions &lt; OrderedHash #:nodoc:
+    def []=(key, value)
+      super(key.to_sym, value)
+    end
+
+    def [](key)
+      super(key.to_sym)
+    end
+
+    def method_missing(name, *args)
+      if name.to_s =~ /(.*)=$/
+        self[$1.to_sym] = args.first
+      else
+        self[name]
+      end
+    end
+  end
+end
+</pre>
+    </div>

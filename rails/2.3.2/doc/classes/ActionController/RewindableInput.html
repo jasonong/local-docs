@@ -1,0 +1,71 @@
+  <div id="C00000181">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />RewindableInput<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/rewindable_input_rb.html');">rails-2.3.2/actionpack/lib/action_controller/rewindable_input.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000355&name=call" >call</a></li>
+  <li><a href="index.html?a=M000354&name=new" >new</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/ActionController/RewindableInput/RewindableIO.html');" class="link">ActionController::RewindableInput::RewindableIO</a>"<br />
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000354" class="method">
+  <div id="M000354_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000354_source')" id="l_M000354_source">show source</a> ]</p>
+  <div id="M000354_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/rewindable_input.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+20:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+21:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000355" class="method">
+  <div id="M000355_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000355_source')" id="l_M000355_source">show source</a> ]</p>
+  <div id="M000355_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/rewindable_input.rb, line 23</span>
+23:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+24:       <span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.input'</span>] = <span class="ruby-constant">RewindableIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.input'</span>])
+25:       <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+26:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

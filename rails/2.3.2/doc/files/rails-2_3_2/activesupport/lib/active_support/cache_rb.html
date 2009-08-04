@@ -1,0 +1,247 @@
+  <div id="fileHeader">
+    <h1>cache.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/cache.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'benchmark'
+
+module ActiveSupport
+  # See ActiveSupport::Cache::Store for documentation.
+  module Cache
+    autoload :FileStore, 'active_support/cache/file_store'
+    autoload :MemoryStore, 'active_support/cache/memory_store'
+    autoload :SynchronizedMemoryStore, 'active_support/cache/synchronized_memory_store'
+    autoload :DRbStore, 'active_support/cache/drb_store'
+    autoload :MemCacheStore, 'active_support/cache/mem_cache_store'
+    autoload :CompressedMemCacheStore, 'active_support/cache/compressed_mem_cache_store'
+
+    module Strategy
+      autoload :LocalCache, 'active_support/cache/strategy/local_cache'
+    end
+
+    # Creates a new CacheStore object according to the given options.
+    #
+    # If no arguments are passed to this method, then a new
+    # ActiveSupport::Cache::MemoryStore object will be returned.
+    #
+    # If you pass a Symbol as the first argument, then a corresponding cache
+    # store class under the ActiveSupport::Cache namespace will be created.
+    # For example:
+    #
+    #   ActiveSupport::Cache.lookup_store(:memory_store)
+    #   # =&gt; returns a new ActiveSupport::Cache::MemoryStore object
+    #   
+    #   ActiveSupport::Cache.lookup_store(:drb_store)
+    #   # =&gt; returns a new ActiveSupport::Cache::DRbStore object
+    #
+    # Any additional arguments will be passed to the corresponding cache store
+    # class's constructor:
+    #
+    #   ActiveSupport::Cache.lookup_store(:file_store, &quot;/tmp/cache&quot;)
+    #   # =&gt; same as: ActiveSupport::Cache::FileStore.new(&quot;/tmp/cache&quot;)
+    #
+    # If the first argument is not a Symbol, then it will simply be returned:
+    #
+    #   ActiveSupport::Cache.lookup_store(MyOwnCacheStore.new)
+    #   # =&gt; returns MyOwnCacheStore.new
+    def self.lookup_store(*store_option)
+      store, *parameters = *([ store_option ].flatten)
+
+      case store
+      when Symbol
+        store_class_name = (store == :drb_store ? &quot;DRbStore&quot; : store.to_s.camelize)
+        store_class = ActiveSupport::Cache.const_get(store_class_name)
+        store_class.new(*parameters)
+      when nil
+        ActiveSupport::Cache::MemoryStore.new
+      else
+        store
+      end
+    end
+
+    def self.expand_cache_key(key, namespace = nil)
+      expanded_cache_key = namespace ? &quot;#{namespace}/&quot; : &quot;&quot;
+
+      if ENV[&quot;RAILS_CACHE_ID&quot;] || ENV[&quot;RAILS_APP_VERSION&quot;]
+        expanded_cache_key &lt;&lt; &quot;#{ENV[&quot;RAILS_CACHE_ID&quot;] || ENV[&quot;RAILS_APP_VERSION&quot;]}/&quot;
+      end
+
+      expanded_cache_key &lt;&lt; case
+        when key.respond_to?(:cache_key)
+          key.cache_key
+        when key.is_a?(Array)
+          key.collect { |element| expand_cache_key(element) }.to_param
+        when key
+          key.to_param
+        end.to_s
+
+      expanded_cache_key
+    end
+
+    # An abstract cache store class. There are multiple cache store
+    # implementations, each having its own additional features. See the classes
+    # under the ActiveSupport::Cache module, e.g.
+    # ActiveSupport::Cache::MemCacheStore. MemCacheStore is currently the most
+    # popular cache store for large production websites.
+    #
+    # ActiveSupport::Cache::Store is meant for caching strings. Some cache
+    # store implementations, like MemoryStore, are able to cache arbitrary
+    # Ruby objects, but don't count on every cache store to be able to do that.
+    #
+    #   cache = ActiveSupport::Cache::MemoryStore.new
+    #   
+    #   cache.read(&quot;city&quot;)   # =&gt; nil
+    #   cache.write(&quot;city&quot;, &quot;Duckburgh&quot;)
+    #   cache.read(&quot;city&quot;)   # =&gt; &quot;Duckburgh&quot;
+    class Store
+      cattr_accessor :logger
+
+      def silence!
+        @silence = true
+        self
+      end
+
+      # Fetches data from the cache, using the given key. If there is data in
+      # the cache with the given key, then that data is returned.
+      #
+      # If there is no such data in the cache (a cache miss occurred), then
+      # then nil will be returned. However, if a block has been passed, then
+      # that block will be run in the event of a cache miss. The return value
+      # of the block will be written to the cache under the given cache key,
+      # and that return value will be returned.
+      #
+      #   cache.write(&quot;today&quot;, &quot;Monday&quot;)
+      #   cache.fetch(&quot;today&quot;)  # =&gt; &quot;Monday&quot;
+      #   
+      #   cache.fetch(&quot;city&quot;)   # =&gt; nil
+      #   cache.fetch(&quot;city&quot;) do
+      #     &quot;Duckburgh&quot;
+      #   end
+      #   cache.fetch(&quot;city&quot;)   # =&gt; &quot;Duckburgh&quot;
+      #
+      # You may also specify additional options via the +options+ argument.
+      # Setting &lt;tt&gt;:force =&gt; true&lt;/tt&gt; will force a cache miss:
+      #
+      #   cache.write(&quot;today&quot;, &quot;Monday&quot;)
+      #   cache.fetch(&quot;today&quot;, :force =&gt; true)  # =&gt; nil
+      #
+      # Other options will be handled by the specific cache store implementation.
+      # Internally, #fetch calls #read, and calls #write on a cache miss.
+      # +options+ will be passed to the #read and #write calls.
+      #
+      # For example, MemCacheStore's #write method supports the +:expires_in+
+      # option, which tells the memcached server to automatically expire the
+      # cache item after a certain period. We can use this option with #fetch
+      # too:
+      #
+      #   cache = ActiveSupport::Cache::MemCacheStore.new
+      #   cache.fetch(&quot;foo&quot;, :force =&gt; true, :expires_in =&gt; 5.seconds) do
+      #     &quot;bar&quot;
+      #   end
+      #   cache.fetch(&quot;foo&quot;)  # =&gt; &quot;bar&quot;
+      #   sleep(6)
+      #   cache.fetch(&quot;foo&quot;)  # =&gt; nil
+      def fetch(key, options = {})
+        @logger_off = true
+        if !options[:force] &amp;&amp; value = read(key, options)
+          @logger_off = false
+          log(&quot;hit&quot;, key, options)
+          value
+        elsif block_given?
+          @logger_off = false
+          log(&quot;miss&quot;, key, options)
+
+          value = nil
+          ms = Benchmark.ms { value = yield }
+
+          @logger_off = true
+          write(key, value, options)
+          @logger_off = false
+
+          log('write (will save %.2fms)' % ms, key, nil)
+
+          value
+        end
+      end
+
+      # Fetches data from the cache, using the given key. If there is data in
+      # the cache with the given key, then that data is returned. Otherwise,
+      # nil is returned.
+      #
+      # You may also specify additional options via the +options+ argument.
+      # The specific cache store implementation will decide what to do with
+      # +options+.
+      def read(key, options = nil)
+        log(&quot;read&quot;, key, options)
+      end
+
+      # Writes the given value to the cache, with the given key.
+      #
+      # You may also specify additional options via the +options+ argument.
+      # The specific cache store implementation will decide what to do with
+      # +options+.
+      # 
+      # For example, MemCacheStore supports the +:expires_in+ option, which
+      # tells the memcached server to automatically expire the cache item after
+      # a certain period:
+      #
+      #   cache = ActiveSupport::Cache::MemCacheStore.new
+      #   cache.write(&quot;foo&quot;, &quot;bar&quot;, :expires_in =&gt; 5.seconds)
+      #   cache.read(&quot;foo&quot;)  # =&gt; &quot;bar&quot;
+      #   sleep(6)
+      #   cache.read(&quot;foo&quot;)  # =&gt; nil
+      def write(key, value, options = nil)
+        log(&quot;write&quot;, key, options)
+      end
+
+      def delete(key, options = nil)
+        log(&quot;delete&quot;, key, options)
+      end
+
+      def delete_matched(matcher, options = nil)
+        log(&quot;delete matched&quot;, matcher.inspect, options)
+      end
+
+      def exist?(key, options = nil)
+        log(&quot;exist?&quot;, key, options)
+      end
+
+      def increment(key, amount = 1)
+        log(&quot;incrementing&quot;, key, amount)
+        if num = read(key)
+          write(key, num + amount)
+        else
+          nil
+        end
+      end
+
+      def decrement(key, amount = 1)
+        log(&quot;decrementing&quot;, key, amount)
+        if num = read(key)
+          write(key, num - amount)
+        else
+          nil
+        end
+      end
+
+      private
+        def log(operation, key, options)
+          logger.debug(&quot;Cache #{operation}: #{key}#{options ? &quot; (#{options.inspect})&quot; : &quot;&quot;}&quot;) if logger &amp;&amp; !@silence &amp;&amp; !@logger_off
+        end
+    end
+  end
+end
+</pre>
+    </div>

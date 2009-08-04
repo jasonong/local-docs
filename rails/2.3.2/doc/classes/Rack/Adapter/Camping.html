@@ -1,0 +1,76 @@
+  <div id="C00000246">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Camping<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/adapter/camping_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/adapter/camping.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000842&name=call" >call</a></li>
+  <li><a href="index.html?a=M000841&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000841" class="method">
+  <div id="M000841_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000841_source')" id="l_M000841_source">show source</a> ]</p>
+  <div id="M000841_source" class="dyn-source">
+<pre>
+   <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/adapter/camping.rb, line 4</span>
+4:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+5:         <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+6:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000842" class="method">
+  <div id="M000842_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000842_source')" id="l_M000842_source">show source</a> ]</p>
+  <div id="M000842_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/adapter/camping.rb, line 8</span>
+ 8:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+ 9:         <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;PATH_INFO&quot;</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;&quot;</span>
+10:         <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;SCRIPT_NAME&quot;</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;&quot;</span>
+11:         <span class="ruby-identifier">controller</span> = <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.input'</span>], <span class="ruby-identifier">env</span>)
+12:         <span class="ruby-identifier">h</span> = <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">headers</span>
+13:         <span class="ruby-identifier">h</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+14:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">URI</span>
+15:             <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_s</span>
+16:           <span class="ruby-keyword kw">end</span>
+17:         <span class="ruby-keyword kw">end</span>
+18:         [<span class="ruby-identifier">controller</span>.<span class="ruby-identifier">status</span>, <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">headers</span>, [<span class="ruby-identifier">controller</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_s</span>]]
+19:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,66 @@
+  <div id="fileHeader">
+    <h1>renderable_partial.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/renderable_partial.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionView
+  # NOTE: The template that this mixin is being included into is frozen
+  # so you cannot set or modify any instance variables
+  module RenderablePartial #:nodoc:
+    extend ActiveSupport::Memoizable
+
+    def variable_name
+      name.sub(/\A_/, '').to_sym
+    end
+    memoize :variable_name
+
+    def counter_name
+      &quot;#{variable_name}_counter&quot;.to_sym
+    end
+    memoize :counter_name
+
+    def render(view, local_assigns = {})
+      if defined? ActionController
+        ActionController::Base.benchmark(&quot;Rendered #{path_without_format_and_extension}&quot;, Logger::DEBUG, false) do
+          super
+        end
+      else
+        super
+      end
+    end
+
+    def render_partial(view, object = nil, local_assigns = {}, as = nil)
+      object ||= local_assigns[:object] || local_assigns[variable_name]
+
+      if object.nil? &amp;&amp; view.respond_to?(:controller)
+        ivar = :&quot;@#{variable_name}&quot;
+        object =
+          if view.controller.instance_variable_defined?(ivar)
+            ActiveSupport::Deprecation::DeprecatedObjectProxy.new(
+              view.controller.instance_variable_get(ivar),
+              &quot;#{ivar} will no longer be implicitly assigned to #{variable_name}&quot;)
+          end
+      end
+
+      # Ensure correct object is reassigned to other accessors
+      local_assigns[:object] = local_assigns[variable_name] = object
+      local_assigns[as] = object if as
+
+      render_template(view, local_assigns)
+    end
+  end
+end
+</pre>
+    </div>

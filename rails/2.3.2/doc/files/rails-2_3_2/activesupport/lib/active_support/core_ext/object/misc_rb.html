@@ -1,0 +1,109 @@
+  <div id="fileHeader">
+    <h1>misc.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/object/misc.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Object
+  # Returns +value+ after yielding +value+ to the block. This simplifies the
+  # process of constructing an object, performing work on the object, and then
+  # returning the object from a method. It is a Ruby-ized realization of the K
+  # combinator, courtesy of Mikael Brockman.
+  #
+  # ==== Examples
+  #
+  #  # Without returning
+  #  def foo
+  #    values = []
+  #    values &lt;&lt; &quot;bar&quot;
+  #    values &lt;&lt; &quot;baz&quot;
+  #    return values
+  #  end
+  #
+  #  foo # =&gt; ['bar', 'baz']
+  #
+  #  # returning with a local variable
+  #  def foo
+  #    returning values = [] do
+  #      values &lt;&lt; 'bar'
+  #      values &lt;&lt; 'baz'
+  #    end
+  #  end
+  #
+  #  foo # =&gt; ['bar', 'baz']
+  #  
+  #  # returning with a block argument
+  #  def foo
+  #    returning [] do |values|
+  #      values &lt;&lt; 'bar'
+  #      values &lt;&lt; 'baz'
+  #    end
+  #  end
+  #  
+  #  foo # =&gt; ['bar', 'baz']
+  def returning(value)
+    yield(value)
+    value
+  end
+
+  # Yields &lt;code&gt;x&lt;/code&gt; to the block, and then returns &lt;code&gt;x&lt;/code&gt;.
+  # The primary purpose of this method is to &quot;tap into&quot; a method chain,
+  # in order to perform operations on intermediate results within the chain.
+  #
+  #   (1..10).tap { |x| puts &quot;original: #{x.inspect}&quot; }.to_a.
+  #     tap    { |x| puts &quot;array: #{x.inspect}&quot; }.
+  #     select { |x| x%2 == 0 }.
+  #     tap    { |x| puts &quot;evens: #{x.inspect}&quot; }.
+  #     map    { |x| x*x }.
+  #     tap    { |x| puts &quot;squares: #{x.inspect}&quot; }
+  def tap
+    yield self
+    self
+  end unless Object.respond_to?(:tap)
+
+  # An elegant way to factor duplication out of options passed to a series of
+  # method calls. Each method called in the block, with the block variable as
+  # the receiver, will have its options merged with the default +options+ hash
+  # provided. Each method called on the block variable must take an options
+  # hash as its final argument.
+  # 
+  #   with_options :order =&gt; 'created_at', :class_name =&gt; 'Comment' do |post|
+  #     post.has_many :comments, :conditions =&gt; ['approved = ?', true], :dependent =&gt; :delete_all
+  #     post.has_many :unapproved_comments, :conditions =&gt; ['approved = ?', false]
+  #     post.has_many :all_comments
+  #   end
+  #
+  # Can also be used with an explicit receiver:
+  #
+  #   map.with_options :controller =&gt; &quot;people&quot; do |people|
+  #     people.connect &quot;/people&quot;,     :action =&gt; &quot;index&quot;
+  #     people.connect &quot;/people/:id&quot;, :action =&gt; &quot;show&quot;
+  #   end
+  #
+  def with_options(options)
+    yield ActiveSupport::OptionMerger.new(self, options)
+  end
+  
+  # A duck-type assistant method. For example, Active Support extends Date
+  # to define an acts_like_date? method, and extends Time to define
+  # acts_like_time?. As a result, we can do &quot;x.acts_like?(:time)&quot; and
+  # &quot;x.acts_like?(:date)&quot; to do duck-type-safe comparisons, since classes that
+  # we want to act like Time simply need to define an acts_like_time? method.
+  def acts_like?(duck)
+    respond_to? &quot;acts_like_#{duck}?&quot;
+  end
+
+end
+</pre>
+    </div>

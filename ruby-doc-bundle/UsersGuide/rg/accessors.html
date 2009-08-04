@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Accessors</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="ensure.html">
+ <img border=0 src="a2l.gif" alt="Exception processing: ensure"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="objinitialization.html">
+ <img border=0 src="a2r.gif" alt="Object initialization"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Accessors</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<h3><a name="label:0" id="label:0">What is an accessor?</a></h3><!-- RDLabel: "What is an accessor?" -->
+<p>We briefly discussed instance variables in an earlier chapter, but
+haven't done much with them yet.  An object's instance variables are
+its attributes, the things that generally distinguish it from other
+objects of the same class.  It is important to be able to write and
+read these attributes; doing so requires writing methods called
+<em>attribute accessors</em>.  We'll see in a moment that we don't
+always have to write accessor methods explicitly, but let's go through
+all the motions for now.  The two kinds of accessors are
+<em>writers</em> and <em>readers</em>.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   def set_kind(k)  # a writer</b></font>
+    |<font color="#ffff00"><b>     @kind = k</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b>   def get_kind     # a reader</b></font>
+    |<font color="#ffff00"><b>     @kind</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f1 = Fruit.new</b></font>
+<font color="#50ffff"><b>   #&lt;Fruit:0xfd7e7c8c&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> f1.set_kind("peach")  # use the writer</b></font>
+<font color="#50ffff"><b>   "peach"</b></font>
+ruby&gt;<font color="#ffff00"><b> f1.get_kind           # use the reader</b></font>
+<font color="#50ffff"><b>   "peach"</b></font>
+ruby&gt;<font color="#ffff00"><b> f1                    # inspect the object</b></font>
+<font color="#50ffff"><b>   #&lt;Fruit:0xfd7e7c8c @kind="peach"&gt;</b></font></font></pre></td></tr></table>
+<p>Simple enough; we can store and retrieve information about
+what kind of fruit we're looking at.  But our method names are a
+little wordy.  The following is more concise, and more
+conventional:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   def kind=(k)</b></font>
+    |<font color="#ffff00"><b>     @kind = k</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b>   def kind</b></font>
+    |<font color="#ffff00"><b>     @kind</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f2 = Fruit.new</b></font>
+<font color="#50ffff"><b>   #&lt;Fruit:0xfd7e7c8c&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> f2.kind = "banana"</b></font>
+<font color="#50ffff"><b>   "banana"</b></font>
+ruby&gt;<font color="#ffff00"><b> f2.kind</b></font>
+<font color="#50ffff"><b>   "banana"</b></font></font></pre></td></tr></table>
+<h3><a name="label:1" id="label:1">The <code>inspect</code> method</a></h3><!-- RDLabel: "The inspect method" -->
+<p>A short digression is in order.  You've noticed by now that when we 
+try to look at an object directly, we are shown something cryptic like
+<code>#&lt;anObject:0x83678&gt;</code>.  This is just a default
+behavior, and we are free to change it.  All we need to do is add
+a method named <code>inspect</code>.  It should return a string
+that describes the object in some sensible way, including the
+states of some or all of its instance variables.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   def inspect</b></font>
+    |<font color="#ffff00"><b>     "a fruit of the " + @kind + " variety"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f2</b></font>
+<font color="#50ffff"><b>   "a fruit of the banana variety"</b></font></font></pre></td></tr></table>
+<p>A related method is <code>to_s</code> (convert to string), which is
+used when printing an object.  In general, you can think of
+<code>inspect</code> as a tool for when you are writing and debugging
+programs, and <code>to_s</code> as a way of refining program output.
+<code>eval.rb</code> uses <code>inspect</code> whenever it displays
+results.  You can use the <code>p</code> method to easily get
+debugging output from programs.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black"># These two lines are equivalent:
+p anObject
+print anObject.inspect, "\n"</font></pre></td></tr></table>
+<h3><a name="label:2" id="label:2">Making accessors the easy way</a></h3><!-- RDLabel: "Making accessors the easy way" -->
+<p>Since many instance variables need accessor methods, Ruby provides
+convenient shortcuts for the standard forms.</p>
+<p><table border="1"><tr><td><em> Shortcut </em> </td><td> <em> Effect </em> </td></tr>
+<tr><td>
+<code> attr_reader :v </code> </td><td> <code> def v; @v; end </code> </td></tr>
+<tr><td>
+<code> attr_writer :v </code> </td><td> <code> def v=(value); @v=value; end </code> </td></tr>
+<tr><td>
+<code> attr_accessor :v </code> </td><td> <code> attr_reader :v; attr_writer :v </code> </td></tr>
+<tr><td>
+<code> attr_accessor :v, :w </code> </td><td> <code> attr_accessor :v; attr_accessor :w </code></td></tr></table>
+<p>Let's take advantage of this and add freshness information.  First
+we ask for an automatically generated reader and writer, and then we
+incorporate the new information into <code>inspect</code>:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   attr_accessor :condition</b></font>
+    |<font color="#ffff00"><b>   def inspect</b></font>
+    |<font color="#ffff00"><b>     "a " + @condition + @kind"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f2.condition = "ripe"</b></font>
+<font color="#50ffff"><b>   "ripe"</b></font>
+ruby&gt;<font color="#ffff00"><b> f2</b></font>
+<font color="#50ffff"><b>   "a ripe banana"</b></font></font></pre></td></tr></table>
+<h3><a name="label:3" id="label:3">More fun with fruit</a></h3><!-- RDLabel: "More fun with fruit" -->
+<p>If nobody eats our ripe fruit, perhaps we should let time take its
+toll.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Fruit</b></font>
+    |<font color="#ffff00"><b>   def time_passes</b></font>
+    |<font color="#ffff00"><b>     @condition = "rotting"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> f2</b></font>
+<font color="#50ffff"><b>   "a ripe banana"</b></font>
+ruby&gt;<font color="#ffff00"><b> f2.time_passes</b></font>
+<font color="#50ffff"><b>   "rotting"</b></font>
+ruby&gt;<font color="#ffff00"><b> f2</b></font>
+<font color="#50ffff"><b>   "a rotting banana"</b></font></font></pre></td></tr></table>
+<p>But while playing around here, we have introduced a small problem.
+What happens if we try to create a third piece of fruit now?  Remember
+that instance variables don't exist until values are assigned to
+them.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> f3 = Fruit.new</b></font>
+<font color="#50ffff"><b>ERR: failed to convert nil into String</b></font></font></pre></td></tr></table>
+<p>It is the <code>inspect</code> method that is complaining here, and
+with good reason.  We have asked it to report on the kind and
+condition of a piece of fruit, but as yet <code>f3</code> has not been
+assigned either attribute.  If we wanted to, we could rewrite the
+<code>inspect</code> method so it tests instance variables using
+the<code> defined? </code>method and then only reports on them if they
+exist, but maybe that's not very useful; since every piece of fruit
+has a kind and condition, it seems we should make sure those always
+get defined somehow.  That is the topic of the next chapter.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="ensure.html">
+ <img border=0 src="a2l.gif" alt="Exception processing: ensure"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="objinitialization.html">
+ <img border=0 src="a2r.gif" alt="Object initialization"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

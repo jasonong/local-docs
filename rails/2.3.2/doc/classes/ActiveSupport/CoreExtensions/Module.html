@@ -1,0 +1,170 @@
+  <div id="C00000547">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Module<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/module/aliasing_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/module/aliasing.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/module/model_naming_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/module/model_naming.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/module_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/module.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+Various extensions for the Ruby core <a
+href="index.html?a=C00000547&name=Module">Module</a> class.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001427&name=alias_attribute" >alias_attribute</a></li>
+  <li><a href="index.html?a=M001426&name=alias_method_chain" >alias_method_chain</a></li>
+  <li><a href="index.html?a=M001428&name=model_name" >model_name</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001427" class="method">
+  <div id="M001427_title" class="title">
+    <b>alias_attribute</b>(new_name, old_name)
+  </div>
+  <div class="description">
+  <p>
+Allows you to make aliases for attributes, which includes getter, setter,
+and query methods.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  class Content &lt; ActiveRecord::Base
+    # has a title attribute
+  end
+
+  class Email &lt; Content
+    alias_attribute :subject, :title
+  end
+
+  e = Email.find(1)
+  e.title    # =&gt; &quot;Superstars&quot;
+  e.subject  # =&gt; &quot;Superstars&quot;
+  e.subject? # =&gt; true
+  e.subject = &quot;Megastars&quot;
+  e.title    # =&gt; &quot;Megastars&quot;
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001427_source')" id="l_M001427_source">show source</a> ]</p>
+  <div id="M001427_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/module/aliasing.rb, line 65</span>
+65:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alias_attribute</span>(<span class="ruby-identifier">new_name</span>, <span class="ruby-identifier">old_name</span>)
+66:         <span class="ruby-identifier">module_eval</span> <span class="ruby-value str">&quot;def \#{new_name}; self.\#{old_name}; end          # def subject; self.title; end\ndef \#{new_name}?; self.\#{old_name}?; end        # def subject?; self.title?; end\ndef \#{new_name}=(v); self.\#{old_name} = v; end  # def subject=(v); self.title = v; end\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+67:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001426" class="method">
+  <div id="M001426_title" class="title">
+    <b>alias_method_chain</b>(target, feature) {|aliased_target, punctuation| ...}
+  </div>
+  <div class="description">
+  <p>
+Encapsulates the common pattern of:
+</p>
+<pre>
+  alias_method :foo_without_feature, :foo
+  alias_method :foo, :foo_with_feature
+</pre>
+<p>
+With this, you simply do:
+</p>
+<pre>
+  alias_method_chain :foo, :feature
+</pre>
+<p>
+And both aliases are set up for you.
+</p>
+<p>
+Query and bang methods (foo?, foo!) keep the same punctuation:
+</p>
+<pre>
+  alias_method_chain :foo?, :feature
+</pre>
+<p>
+is equivalent to
+</p>
+<pre>
+  alias_method :foo_without_feature?, :foo?
+  alias_method :foo?, :foo_with_feature?
+</pre>
+<p>
+so you can safely chain foo, foo?, and foo! with the same feature.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001426_source')" id="l_M001426_source">show source</a> ]</p>
+  <div id="M001426_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/module/aliasing.rb, line 25</span>
+25:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alias_method_chain</span>(<span class="ruby-identifier">target</span>, <span class="ruby-identifier">feature</span>)
+26:         <span class="ruby-comment cmt"># Strip out punctuation on predicates or bang methods since</span>
+27:         <span class="ruby-comment cmt"># e.g. target?_without_feature is not a valid method name.</span>
+28:         <span class="ruby-identifier">aliased_target</span>, <span class="ruby-identifier">punctuation</span> = <span class="ruby-identifier">target</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/([?!=])$/</span>, <span class="ruby-value str">''</span>), <span class="ruby-identifier">$1</span>
+29:         <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">aliased_target</span>, <span class="ruby-identifier">punctuation</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+30: 
+31:         <span class="ruby-identifier">with_method</span>, <span class="ruby-identifier">without_method</span> = <span class="ruby-node">&quot;#{aliased_target}_with_#{feature}#{punctuation}&quot;</span>, <span class="ruby-node">&quot;#{aliased_target}_without_#{feature}#{punctuation}&quot;</span>
+32: 
+33:         <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">without_method</span>, <span class="ruby-identifier">target</span>
+34:         <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">target</span>, <span class="ruby-identifier">with_method</span>
+35: 
+36:         <span class="ruby-keyword kw">case</span>
+37:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">public_method_defined?</span>(<span class="ruby-identifier">without_method</span>)
+38:             <span class="ruby-identifier">public</span> <span class="ruby-identifier">target</span>
+39:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">protected_method_defined?</span>(<span class="ruby-identifier">without_method</span>)
+40:             <span class="ruby-identifier">protected</span> <span class="ruby-identifier">target</span>
+41:           <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">private_method_defined?</span>(<span class="ruby-identifier">without_method</span>)
+42:             <span class="ruby-identifier">private</span> <span class="ruby-identifier">target</span>
+43:         <span class="ruby-keyword kw">end</span>
+44:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001428" class="method">
+  <div id="M001428_title" class="title">
+    <b>model_name</b>()
+  </div>
+  <div class="description">
+  <p>
+Returns an <a
+href="index.html?a=C00000595&name=ActiveSupport::ModelName">ActiveSupport::ModelName</a>
+object for module. It can be used to retrieve all kinds of naming-related
+information.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001428_source')" id="l_M001428_source">show source</a> ]</p>
+  <div id="M001428_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/module/model_naming.rb, line 18</span>
+18:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">model_name</span>
+19:         <span class="ruby-ivar">@model_name</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">ModelName</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>)
+20:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

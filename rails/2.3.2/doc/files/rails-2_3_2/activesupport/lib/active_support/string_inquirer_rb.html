@@ -1,0 +1,40 @@
+  <div id="fileHeader">
+    <h1>string_inquirer.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/string_inquirer.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport
+  # Wrapping a string in this class gives you a prettier way to test
+  # for equality. The value returned by &lt;tt&gt;Rails.env&lt;/tt&gt; is wrapped
+  # in a StringInquirer object so instead of calling this:
+  #
+  #   Rails.env == &quot;production&quot;
+  #
+  # you can call this:
+  #
+  #   Rails.env.production?
+  #
+  class StringInquirer &lt; String
+    def method_missing(method_name, *arguments)
+      if method_name.to_s[-1,1] == &quot;?&quot;
+        self == method_name.to_s[0..-2]
+      else
+        super
+      end
+    end
+  end
+end
+</pre>
+    </div>

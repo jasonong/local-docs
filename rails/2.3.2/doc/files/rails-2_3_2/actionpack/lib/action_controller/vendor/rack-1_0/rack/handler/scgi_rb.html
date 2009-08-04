@@ -1,0 +1,78 @@
+  <div id="fileHeader">
+    <h1>scgi.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/scgi.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'scgi'
+require 'stringio'
+require 'rack/content_length'
+require 'rack/chunked'
+
+module Rack
+  module Handler
+    class SCGI &lt; ::SCGI::Processor
+      attr_accessor :app
+      
+      def self.run(app, options=nil)
+        new(options.merge(:app=&gt;app,
+                          :host=&gt;options[:Host],
+                          :port=&gt;options[:Port],
+                          :socket=&gt;options[:Socket])).listen
+      end
+      
+      def initialize(settings = {})
+        @app = Rack::Chunked.new(Rack::ContentLength.new(settings[:app]))
+        @log = Object.new
+        def @log.info(*args); end
+        def @log.error(*args); end
+        super(settings)
+      end
+        
+      def process_request(request, input_body, socket)
+        env = {}.replace(request)
+        env.delete &quot;HTTP_CONTENT_TYPE&quot;
+        env.delete &quot;HTTP_CONTENT_LENGTH&quot;
+        env[&quot;REQUEST_PATH&quot;], env[&quot;QUERY_STRING&quot;] = env[&quot;REQUEST_URI&quot;].split('?', 2)
+        env[&quot;HTTP_VERSION&quot;] ||= env[&quot;SERVER_PROTOCOL&quot;]
+        env[&quot;PATH_INFO&quot;] = env[&quot;REQUEST_PATH&quot;]
+        env[&quot;QUERY_STRING&quot;] ||= &quot;&quot;
+        env[&quot;SCRIPT_NAME&quot;] = &quot;&quot;
+        env.update({&quot;rack.version&quot; =&gt; [0,1],
+                     &quot;rack.input&quot; =&gt; StringIO.new(input_body),
+                     &quot;rack.errors&quot; =&gt; $stderr,
+
+                     &quot;rack.multithread&quot; =&gt; true,
+                     &quot;rack.multiprocess&quot; =&gt; true,
+                     &quot;rack.run_once&quot; =&gt; false,
+
+                     &quot;rack.url_scheme&quot; =&gt; [&quot;yes&quot;, &quot;on&quot;, &quot;1&quot;].include?(env[&quot;HTTPS&quot;]) ? &quot;https&quot; : &quot;http&quot;
+                   })
+        status, headers, body = app.call(env)
+        begin
+          socket.write(&quot;Status: #{status}\r\n&quot;)
+          headers.each do |k, vs|
+            vs.split(&quot;\n&quot;).each { |v| socket.write(&quot;#{k}: #{v}\r\n&quot;)}
+          end
+          socket.write(&quot;\r\n&quot;)
+          body.each {|s| socket.write(s)}
+        ensure
+          body.close if body.respond_to? :close
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

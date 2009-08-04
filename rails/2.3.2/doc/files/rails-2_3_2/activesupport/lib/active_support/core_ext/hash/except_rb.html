@@ -1,0 +1,44 @@
+  <div id="fileHeader">
+    <h1>except.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/hash/except.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'set'
+
+module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module Hash #:nodoc:
+      # Return a hash that includes everything but the given keys. This is useful for
+      # limiting a set of parameters to everything but a few known toggles:
+      #
+      #   @person.update_attributes(params[:person].except(:admin))
+      module Except
+        # Returns a new hash without the given keys.
+        def except(*keys)
+          dup.except!(*keys)
+        end
+
+        # Replaces the hash without the given keys.
+        def except!(*keys)
+          keys.map! { |key| convert_key(key) } if respond_to?(:convert_key)
+          keys.each { |key| delete(key) }
+          self
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

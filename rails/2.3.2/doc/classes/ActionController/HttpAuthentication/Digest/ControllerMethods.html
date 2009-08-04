@@ -1,0 +1,91 @@
+  <div id="C00000081">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />ControllerMethods<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/http_authentication_rb.html');">rails-2.3.2/actionpack/lib/action_controller/http_authentication.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000184&name=authenticate_or_request_with_http_digest" >authenticate_or_request_with_http_digest</a></li>
+  <li><a href="index.html?a=M000185&name=authenticate_with_http_digest" >authenticate_with_http_digest</a></li>
+  <li><a href="index.html?a=M000186&name=request_http_digest_authentication" >request_http_digest_authentication</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000184" class="method">
+  <div id="M000184_title" class="title">
+    <b>authenticate_or_request_with_http_digest</b>(realm = &quot;Application&quot;, &amp;password_procedure)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000184_source')" id="l_M000184_source">show source</a> ]</p>
+  <div id="M000184_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/http_authentication.rb, line 159</span>
+159:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authenticate_or_request_with_http_digest</span>(<span class="ruby-identifier">realm</span> = <span class="ruby-value str">&quot;Application&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">password_procedure</span>)
+160:           <span class="ruby-identifier">authenticate_with_http_digest</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">password_procedure</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">request_http_digest_authentication</span>(<span class="ruby-identifier">realm</span>)
+161:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000185" class="method">
+  <div id="M000185_title" class="title">
+    <b>authenticate_with_http_digest</b>(realm = &quot;Application&quot;, &amp;password_procedure)
+  </div>
+  <div class="description">
+  <p>
+Authenticate with HTTP <a
+href="index.html?a=C00000080&name=Digest">Digest</a>, returns true or false
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000185_source')" id="l_M000185_source">show source</a> ]</p>
+  <div id="M000185_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/http_authentication.rb, line 164</span>
+164:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authenticate_with_http_digest</span>(<span class="ruby-identifier">realm</span> = <span class="ruby-value str">&quot;Application&quot;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">password_procedure</span>)
+165:           <span class="ruby-constant">HttpAuthentication</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">password_procedure</span>)
+166:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000186" class="method">
+  <div id="M000186_title" class="title">
+    <b>request_http_digest_authentication</b>(realm = &quot;Application&quot;, message = nil)
+  </div>
+  <div class="description">
+  <p>
+Render output including the HTTP <a
+href="index.html?a=C00000080&name=Digest">Digest</a> authentication header
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000186_source')" id="l_M000186_source">show source</a> ]</p>
+  <div id="M000186_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/http_authentication.rb, line 169</span>
+169:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request_http_digest_authentication</span>(<span class="ruby-identifier">realm</span> = <span class="ruby-value str">&quot;Application&quot;</span>, <span class="ruby-identifier">message</span> = <span class="ruby-keyword kw">nil</span>)
+170:           <span class="ruby-constant">HttpAuthentication</span><span class="ruby-operator">::</span><span class="ruby-constant">Digest</span>.<span class="ruby-identifier">authentication_request</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-identifier">message</span>)
+171:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

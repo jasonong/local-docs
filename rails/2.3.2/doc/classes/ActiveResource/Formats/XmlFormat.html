@@ -1,0 +1,96 @@
+  <div id="C00000612">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />XmlFormat<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activeresource/lib/active_resource/formats/xml_format_rb.html');">rails-2.3.2/activeresource/lib/active_resource/formats/xml_format.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001710&name=decode" >decode</a></li>
+  <li><a href="index.html?a=M001709&name=encode" >encode</a></li>
+  <li><a href="index.html?a=M001707&name=extension" >extension</a></li>
+  <li><a href="index.html?a=M001708&name=mime_type" >mime_type</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001710" class="method">
+  <div id="M001710_title" class="title">
+    <b>decode</b>(xml)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001710_source')" id="l_M001710_source">show source</a> ]</p>
+  <div id="M001710_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/xml_format.rb, line 18</span>
+18:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decode</span>(<span class="ruby-identifier">xml</span>)
+19:         <span class="ruby-identifier">from_xml_data</span>(<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">from_xml</span>(<span class="ruby-identifier">xml</span>))
+20:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001709" class="method">
+  <div id="M001709_title" class="title">
+    <b>encode</b>(hash, options={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001709_source')" id="l_M001709_source">show source</a> ]</p>
+  <div id="M001709_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/xml_format.rb, line 14</span>
+14:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encode</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">options</span>={})
+15:         <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">to_xml</span>(<span class="ruby-identifier">options</span>)
+16:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001707" class="method">
+  <div id="M001707_title" class="title">
+    <b>extension</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001707_source')" id="l_M001707_source">show source</a> ]</p>
+  <div id="M001707_source" class="dyn-source">
+<pre>
+   <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/xml_format.rb, line 6</span>
+6:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extension</span>
+7:         <span class="ruby-value str">&quot;xml&quot;</span>
+8:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001708" class="method">
+  <div id="M001708_title" class="title">
+    <b>mime_type</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001708_source')" id="l_M001708_source">show source</a> ]</p>
+  <div id="M001708_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/formats/xml_format.rb, line 10</span>
+10:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mime_type</span>
+11:         <span class="ruby-value str">&quot;application/xml&quot;</span>
+12:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

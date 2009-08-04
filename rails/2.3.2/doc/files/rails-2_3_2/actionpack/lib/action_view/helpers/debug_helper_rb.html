@@ -1,0 +1,57 @@
+  <div id="fileHeader">
+    <h1>debug_helper.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/helpers/debug_helper.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionView
+  module Helpers
+    # Provides a set of methods for making it easier to debug Rails objects.
+    module DebugHelper
+      # Returns a YAML representation of +object+ wrapped with &lt;pre&gt; and &lt;/pre&gt;.
+      # If the object cannot be converted to YAML using +to_yaml+, +inspect+ will be called instead.
+      # Useful for inspecting an object at the time of rendering.
+      #
+      # ==== Example
+      #
+      #   @user = User.new({ :username =&gt; 'testing', :password =&gt; 'xyz', :age =&gt; 42}) %&gt;
+      #   debug(@user)
+      #   # =&gt;
+      #   &lt;pre class='debug_dump'&gt;--- !ruby/object:User
+      #   attributes:
+      #   &amp;nbsp; updated_at:
+      #   &amp;nbsp; username: testing
+      #
+      #   &amp;nbsp; age: 42
+      #   &amp;nbsp; password: xyz
+      #   &amp;nbsp; created_at:
+      #   attributes_cache: {}
+      #
+      #   new_record: true
+      #   &lt;/pre&gt;
+
+      def debug(object)
+        begin
+          Marshal::dump(object)
+          &quot;&lt;pre class='debug_dump'&gt;#{h(object.to_yaml).gsub(&quot;  &quot;, &quot;&amp;nbsp; &quot;)}&lt;/pre&gt;&quot;
+        rescue Exception =&gt; e  # errors from Marshal or YAML
+          # Object couldn't be dumped, perhaps because of singleton methods -- this is the fallback
+          &quot;&lt;code class='debug_dump'&gt;#{h(object.inspect)}&lt;/code&gt;&quot;
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

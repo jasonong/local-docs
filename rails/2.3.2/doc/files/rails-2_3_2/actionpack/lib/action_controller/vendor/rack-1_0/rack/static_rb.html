@@ -1,0 +1,57 @@
+  <div id="fileHeader">
+    <h1>static.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/static.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+
+  # The Rack::Static middleware intercepts requests for static files
+  # (javascript files, images, stylesheets, etc) based on the url prefixes
+  # passed in the options, and serves them using a Rack::File object. This
+  # allows a Rack stack to serve both static and dynamic content.
+  #
+  # Examples:
+  #     use Rack::Static, :urls =&gt; [&quot;/media&quot;]
+  #     will serve all requests beginning with /media from the &quot;media&quot; folder
+  #     located in the current directory (ie media/*).
+  #
+  #     use Rack::Static, :urls =&gt; [&quot;/css&quot;, &quot;/images&quot;], :root =&gt; &quot;public&quot;
+  #     will serve all requests beginning with /css or /images from the folder
+  #     &quot;public&quot; in the current directory (ie public/css/* and public/images/*)
+
+  class Static
+
+    def initialize(app, options={})
+      @app = app
+      @urls = options[:urls] || [&quot;/favicon.ico&quot;]
+      root = options[:root] || Dir.pwd
+      @file_server = Rack::File.new(root)
+    end
+
+    def call(env)
+      path = env[&quot;PATH_INFO&quot;]
+      can_serve = @urls.any? { |url| path.index(url) == 0 }
+
+      if can_serve
+        @file_server.call(env)
+      else
+        @app.call(env)
+      end
+    end
+
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,52 @@
+  <div id="fileHeader">
+    <h1>headers.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/headers.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'active_support/memoizable'
+
+module ActionController
+  module Http
+    class Headers &lt; ::Hash
+      extend ActiveSupport::Memoizable
+
+      def initialize(*args)
+         if args.size == 1 &amp;&amp; args[0].is_a?(Hash)
+           super()
+           update(args[0])
+         else
+           super
+         end
+       end
+
+      def [](header_name)
+        if include?(header_name)
+          super
+        else
+          super(env_name(header_name))
+        end
+      end
+
+      private
+        # Converts a HTTP header name to an environment variable name.
+        def env_name(header_name)
+          &quot;HTTP_#{header_name.upcase.gsub(/-/, '_')}&quot;
+        end
+        memoize :env_name
+    end
+  end
+end
+</pre>
+    </div>

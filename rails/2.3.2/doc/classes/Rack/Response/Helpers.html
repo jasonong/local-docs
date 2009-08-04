@@ -1,0 +1,285 @@
+  <div id="C00000290">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Helpers<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/response_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000987&name=client_error?" >client_error?</a></li>
+  <li><a href="index.html?a=M000996&name=content_length" >content_length</a></li>
+  <li><a href="index.html?a=M000995&name=content_type" >content_type</a></li>
+  <li><a href="index.html?a=M000993&name=empty?" >empty?</a></li>
+  <li><a href="index.html?a=M000990&name=forbidden?" >forbidden?</a></li>
+  <li><a href="index.html?a=M000994&name=include?" >include?</a></li>
+  <li><a href="index.html?a=M000984&name=informational?" >informational?</a></li>
+  <li><a href="index.html?a=M000983&name=invalid?" >invalid?</a></li>
+  <li><a href="index.html?a=M000997&name=location" >location</a></li>
+  <li><a href="index.html?a=M000991&name=not_found?" >not_found?</a></li>
+  <li><a href="index.html?a=M000989&name=ok?" >ok?</a></li>
+  <li><a href="index.html?a=M000992&name=redirect?" >redirect?</a></li>
+  <li><a href="index.html?a=M000986&name=redirection?" >redirection?</a></li>
+  <li><a href="index.html?a=M000988&name=server_error?" >server_error?</a></li>
+  <li><a href="index.html?a=M000985&name=successful?" >successful?</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>headers</td>
+    <td class='attr-desc'>
+Headers
+
+</td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>original_headers</td>
+    <td class='attr-desc'>
+Headers
+
+</td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000987" class="method">
+  <div id="M000987_title" class="title">
+    <b>client_error?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000987_source')" id="l_M000987_source">show source</a> ]</p>
+  <div id="M000987_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 146</span>
+146:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">client_error?</span>;  <span class="ruby-ivar">@status</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">400</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">500</span>;       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000996" class="method">
+  <div id="M000996_title" class="title">
+    <b>content_length</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000996_source')" id="l_M000996_source">show source</a> ]</p>
+  <div id="M000996_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 167</span>
+167:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_length</span>
+168:         <span class="ruby-identifier">cl</span> = <span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;Content-Length&quot;</span>]
+169:         <span class="ruby-identifier">cl</span> <span class="ruby-value">? </span><span class="ruby-identifier">cl</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">cl</span>
+170:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000995" class="method">
+  <div id="M000995_title" class="title">
+    <b>content_type</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000995_source')" id="l_M000995_source">show source</a> ]</p>
+  <div id="M000995_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 163</span>
+163:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_type</span>
+164:         <span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;Content-Type&quot;</span>]
+165:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000993" class="method">
+  <div id="M000993_title" class="title">
+    <b>empty?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000993_source')" id="l_M000993_source">show source</a> ]</p>
+  <div id="M000993_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 154</span>
+154:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty?</span>;         [<span class="ruby-value">201</span>, <span class="ruby-value">204</span>, <span class="ruby-value">304</span>].<span class="ruby-identifier">include?</span>      <span class="ruby-ivar">@status</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000990" class="method">
+  <div id="M000990_title" class="title">
+    <b>forbidden?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000990_source')" id="l_M000990_source">show source</a> ]</p>
+  <div id="M000990_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 150</span>
+150:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">forbidden?</span>;     <span class="ruby-ivar">@status</span> <span class="ruby-operator">==</span> <span class="ruby-value">403</span>;                        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000994" class="method">
+  <div id="M000994_title" class="title">
+    <b>include?</b>(header)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000994_source')" id="l_M000994_source">show source</a> ]</p>
+  <div id="M000994_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 159</span>
+159:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">include?</span>(<span class="ruby-identifier">header</span>)
+160:         <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">headers</span>[<span class="ruby-identifier">header</span>]
+161:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000984" class="method">
+  <div id="M000984_title" class="title">
+    <b>informational?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000984_source')" id="l_M000984_source">show source</a> ]</p>
+  <div id="M000984_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 143</span>
+143:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">informational?</span>; <span class="ruby-ivar">@status</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">100</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">200</span>;       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000983" class="method">
+  <div id="M000983_title" class="title">
+    <b>invalid?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000983_source')" id="l_M000983_source">show source</a> ]</p>
+  <div id="M000983_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 141</span>
+141:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">invalid?</span>;       <span class="ruby-ivar">@status</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">100</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">600</span>;       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000997" class="method">
+  <div id="M000997_title" class="title">
+    <b>location</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000997_source')" id="l_M000997_source">show source</a> ]</p>
+  <div id="M000997_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 172</span>
+172:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">location</span>
+173:         <span class="ruby-identifier">headers</span>[<span class="ruby-value str">&quot;Location&quot;</span>]
+174:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000991" class="method">
+  <div id="M000991_title" class="title">
+    <b>not_found?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000991_source')" id="l_M000991_source">show source</a> ]</p>
+  <div id="M000991_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 151</span>
+151:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">not_found?</span>;     <span class="ruby-ivar">@status</span> <span class="ruby-operator">==</span> <span class="ruby-value">404</span>;                        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000989" class="method">
+  <div id="M000989_title" class="title">
+    <b>ok?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000989_source')" id="l_M000989_source">show source</a> ]</p>
+  <div id="M000989_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 149</span>
+149:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ok?</span>;            <span class="ruby-ivar">@status</span> <span class="ruby-operator">==</span> <span class="ruby-value">200</span>;                        <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000992" class="method">
+  <div id="M000992_title" class="title">
+    <b>redirect?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000992_source')" id="l_M000992_source">show source</a> ]</p>
+  <div id="M000992_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 153</span>
+153:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect?</span>;      [<span class="ruby-value">301</span>, <span class="ruby-value">302</span>, <span class="ruby-value">303</span>, <span class="ruby-value">307</span>].<span class="ruby-identifier">include?</span> <span class="ruby-ivar">@status</span>; <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000986" class="method">
+  <div id="M000986_title" class="title">
+    <b>redirection?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000986_source')" id="l_M000986_source">show source</a> ]</p>
+  <div id="M000986_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 145</span>
+145:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirection?</span>;   <span class="ruby-ivar">@status</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">300</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">400</span>;       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000988" class="method">
+  <div id="M000988_title" class="title">
+    <b>server_error?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000988_source')" id="l_M000988_source">show source</a> ]</p>
+  <div id="M000988_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 147</span>
+147:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">server_error?</span>;  <span class="ruby-ivar">@status</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">500</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">600</span>;       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000985" class="method">
+  <div id="M000985_title" class="title">
+    <b>successful?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000985_source')" id="l_M000985_source">show source</a> ]</p>
+  <div id="M000985_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/response.rb, line 144</span>
+144:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">successful?</span>;    <span class="ruby-ivar">@status</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">200</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@status</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">300</span>;       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

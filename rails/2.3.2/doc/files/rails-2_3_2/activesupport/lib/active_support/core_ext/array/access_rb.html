@@ -1,0 +1,72 @@
+  <div id="fileHeader">
+    <h1>access.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/array/access.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module Array #:nodoc:
+      # Makes it easier to access parts of an array.
+      module Access
+        # Returns the tail of the array from +position+.
+        #
+        #   %w( a b c d ).from(0)  # =&gt; %w( a b c d )
+        #   %w( a b c d ).from(2)  # =&gt; %w( c d )
+        #   %w( a b c d ).from(10) # =&gt; nil
+        #   %w().from(0)           # =&gt; nil
+        def from(position)
+          self[position..-1]
+        end
+        
+        # Returns the beginning of the array up to +position+.
+        #
+        #   %w( a b c d ).to(0)  # =&gt; %w( a )
+        #   %w( a b c d ).to(2)  # =&gt; %w( a b c )
+        #   %w( a b c d ).to(10) # =&gt; %w( a b c d )
+        #   %w().to(0)           # =&gt; %w()
+        def to(position)
+          self[0..position]
+        end
+
+        # Equal to &lt;tt&gt;self[1]&lt;/tt&gt;.
+        def second
+          self[1]
+        end
+
+        # Equal to &lt;tt&gt;self[2]&lt;/tt&gt;.
+        def third
+          self[2]
+        end
+
+        # Equal to &lt;tt&gt;self[3]&lt;/tt&gt;.
+        def fourth
+          self[3]
+        end
+
+        # Equal to &lt;tt&gt;self[4]&lt;/tt&gt;.
+        def fifth
+          self[4]
+        end
+
+        # Equal to &lt;tt&gt;self[41]&lt;/tt&gt;. Also known as accessing &quot;the reddit&quot;.
+        def forty_two
+          self[41]
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

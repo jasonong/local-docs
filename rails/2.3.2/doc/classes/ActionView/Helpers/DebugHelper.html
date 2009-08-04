@@ -1,0 +1,81 @@
+  <div id="C00000824">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />DebugHelper<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_view/helpers/debug_helper_rb.html');">rails-2.3.2/actionpack/lib/action_view/helpers/debug_helper.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+Provides a set of methods for making it easier to debug Rails objects.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002511&name=debug" >debug</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002511" class="method">
+  <div id="M002511_title" class="title">
+    <b>debug</b>(object)
+  </div>
+  <div class="description">
+  <p>
+Returns a YAML representation of <tt>object</tt> wrapped with &lt;pre&gt;
+and &lt;/pre&gt;. If the object cannot be converted to YAML using
+<tt>to_yaml</tt>, <tt>inspect</tt> will be called instead. Useful for
+inspecting an object at the time of rendering.
+</p>
+<h4>Example</h4>
+<pre>
+  @user = User.new({ :username =&gt; 'testing', :password =&gt; 'xyz', :age =&gt; 42}) %&gt;
+  debug(@user)
+  # =&gt;
+  &lt;pre class='debug_dump'&gt;--- !ruby/object:User
+  attributes:
+  &amp;nbsp; updated_at:
+  &amp;nbsp; username: testing
+
+  &amp;nbsp; age: 42
+  &amp;nbsp; password: xyz
+  &amp;nbsp; created_at:
+  attributes_cache: {}
+
+  new_record: true
+  &lt;/pre&gt;
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002511_source')" id="l_M002511_source">show source</a> ]</p>
+  <div id="M002511_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/helpers/debug_helper.rb, line 27</span>
+27:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug</span>(<span class="ruby-identifier">object</span>)
+28:         <span class="ruby-keyword kw">begin</span>
+29:           <span class="ruby-constant">Marshal</span><span class="ruby-operator">::</span><span class="ruby-identifier">dump</span>(<span class="ruby-identifier">object</span>)
+30:           <span class="ruby-node">&quot;&lt;pre class='debug_dump'&gt;#{h(object.to_yaml).gsub(&quot;  &quot;, &quot;&amp;nbsp; &quot;)}&lt;/pre&gt;&quot;</span>
+31:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>  <span class="ruby-comment cmt"># errors from Marshal or YAML</span>
+32:           <span class="ruby-comment cmt"># Object couldn't be dumped, perhaps because of singleton methods -- this is the fallback</span>
+33:           <span class="ruby-node">&quot;&lt;code class='debug_dump'&gt;#{h(object.inspect)}&lt;/code&gt;&quot;</span>
+34:         <span class="ruby-keyword kw">end</span>
+35:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

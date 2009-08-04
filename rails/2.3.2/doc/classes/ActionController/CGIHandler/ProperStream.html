@@ -1,0 +1,68 @@
+  <div id="C00000200">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />ProperStream<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/cgi_process_rb.html');">rails-2.3.2/actionpack/lib/action_controller/cgi_process.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000499&name=each" >each</a></li>
+  <li><a href="index.html?a=M000500&name=read" >read</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000499" class="method">
+  <div id="M000499_title" class="title">
+    <b>each</b>() {|line| ...}
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000499_source')" id="l_M000499_source">show source</a> ]</p>
+  <div id="M000499_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/cgi_process.rb, line 6</span>
+ 6:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>
+ 7:         <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-identifier">gets</span>
+ 8:           <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">line</span>
+ 9:         <span class="ruby-keyword kw">end</span>
+10:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000500" class="method">
+  <div id="M000500_title" class="title">
+    <b>read</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000500_source')" id="l_M000500_source">show source</a> ]</p>
+  <div id="M000500_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/cgi_process.rb, line 12</span>
+12:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+13:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+14:           <span class="ruby-keyword kw">super</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
+15:         <span class="ruby-keyword kw">else</span>
+16:           <span class="ruby-keyword kw">super</span>
+17:         <span class="ruby-keyword kw">end</span>
+18:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>Precision</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="ObSpace.html">prec</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="Process.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<h1>Precision</h1>
+<P>
+<CODE>Precision</CODE> is a <CODE>Mix-in</CODE> for concrete numerical classes 
+with precision. 
+Here, `precision' means the fineness of approximation of a real number, 
+so, this module should not be included into non-subset of real, 
+e.g. abstract numerical, complex, matrix. 
+</P>
+
+<h2>Class Methods:</h2>
+
+<DL COMPACT>
+<DT>
+<A name="induced_from">
+<CODE>induced_from(<VAR>number</VAR>)</CODE>
+</A>
+<DD>
+<P>
+Creates an ojbect which is converted from <CODE><VAR>number</VAR></CODE>. 
+Since it raise TypeError in default, redefine before uses. 
+Note that a use of <CODE><A href="#prec">prec</A></CODE> in a redefinition
+may causes an infinite loop. 
+</P>
+</DL>
+
+<h2>Method:</h2>
+
+<DL COMPACT>
+<DT>
+<A NAME="prec">
+<CODE>prec(<VAR>klass</VAR>)</CODE></A>
+<DD>
+<P>
+Converts <CODE>self</CODE> into a object of <VAR>klass</VAR>. 
+In default, <CODE>prec</CODE> invokes
+<CODE><VAR>klass</VAR>.<A href="#induced_from">induced_from</A>(self)</CODE> 
+and returns its value. So, if <CODE><VAR>klass</VAR>.induced_from</CODE> 
+doesn't correspond to the class of self, it is neccessary to redefine
+this <CODE>prec</CODE>. 
+</P>
+
+<DT>
+<A NAME="prec_i">
+<CODE>prec_i</CODE></A>
+<DD>
+<P>
+Returns an integer converted from <CODE>self</CODE>. 
+It is equivalent to 
+<CODE><A href="#prec">prec</A>(<VAR>Integer</VAR>)</CODE>. 
+</P>
+
+<DT>
+<A NAME="prec_f">
+<CODE>prec_f</CODE></A>
+<DD>
+<P>
+Returns a floating-point number converted from <CODE>self</CODE>. 
+It is equivalent to 
+<CODE><A href="#prec">prec</A>(<VAR>Float</VAR>)</CODE>.
+</P>
+</DL>
+
+<HR>
+<A HREF="ObSpace.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="Process.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

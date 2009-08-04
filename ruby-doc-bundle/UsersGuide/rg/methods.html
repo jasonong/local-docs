@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Methods</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="oothinking.html">
+ <img border=0 src="a2l.gif" alt="Object-oriented thinking"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="classes.html">
+ <img border=0 src="a2r.gif" alt="Classes"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Methods</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>What is a method? In OO programming, we don't think of
+operating on data directly from outside an object; rather, objects
+have some understanding of how to operate on themselves (when asked
+nicely to do so). You might say we pass messages to an object,
+and those messages will generally elicit some kind of an action or
+meaningful reply. This ought to happen without our necessarily
+knowing or caring how the object really works inside. The tasks
+we are allowed to ask an object to perform (or equivalently, the
+messages it understands) are that object's <em>methods</em>.</p>
+<p>In ruby, we invoke a method of an object with dot notation (just as
+in C++ or Java). The object being talked to is named to the left
+of the dot.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "abcdef".length</b></font>
+<font color="#50ffff"><b>   6</b></font></font></pre></td></tr></table>
+<p>Intuitively, <em>this string object is being asked how long it
+is</em>.  Technically, we are invoking the <code>length</code> method
+of the object <code>"abcdef"</code>.</p>
+<p>Other objects may have a slightly different interpretation of
+<code>length</code>, or none at all.  Decisions about how to respond
+to a message are made on the fly, during program execution, and the
+action taken may change depending on what a variable refers to.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> foo = "abc"</b></font>
+<font color="#50ffff"><b>   "abc"</b></font>
+ruby&gt;<font color="#ffff00"><b> foo.length</b></font>
+<font color="#50ffff"><b>   3</b></font>
+ruby&gt;<font color="#ffff00"><b> foo = ["abcde", "fghij"]</b></font>
+<font color="#50ffff"><b>   ["abcde", "fghij"]</b></font>
+ruby&gt;<font color="#ffff00"><b> foo.length</b></font>
+<font color="#50ffff"><b>   2</b></font></font></pre></td></tr></table>
+<p>What we mean by <em>length</em> can vary depending on what object
+we are talking about.  The first time we ask<code> foo </code>for its
+length in the above example, it refers to a simple string, and there
+can only be one sensible answer.  The second time,<code> foo
+</code>refers to an array, and we might reasonably think of its length
+as either 2, 5, or 10; but the most generally applicable answer is of
+course 2 (the other kinds of length can be figured out if wished).</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> foo[0].length</b></font>
+<font color="#50ffff"><b>   5</b></font>
+ruby&gt;<font color="#ffff00"><b> foo[0].length + foo[1].length</b></font>
+<font color="#50ffff"><b>   10</b></font></font></pre></td></tr></table>
+<p>The thing to notice here is that an array <em>knows something about
+what it means to be an array</em>.  Pieces of data in ruby carry such
+knowledge with them, so that the demands made on them can
+automatically be satisfied in the various appropriate ways.  This
+relieves the programmer from the burden of memorizing a great many
+specific function names, because a relatively small number of method
+names, corresponding to concepts that we know how to express in
+natural language, can be applied to different kinds of data and the
+results will be what we expect.  This feature of OO programming
+languages (which, IMHO, Java has done a poor job of exploiting) is
+called <em>polymorphism</em>.</p>
+<p>When an object receives a message that it does not understand, an
+error is "raised":</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> foo = 5</b></font>
+<font color="#50ffff"><b>   5</b></font>
+ruby&gt;<font color="#ffff00"><b> foo.length</b></font>
+<font color="#50ffff"><b>ERR: (eval):1: undefined method `length' for 5(Fixnum)</b></font></font></pre></td></tr></table>
+<p>So it is necessary to know what methods are acceptable to an object,
+though we need not know how the methods are processed.</p>
+<p>If arguments are given to a method, they are generally surrounded by
+parentheses,</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">object.method(arg1, arg2)</font></pre></td></tr></table>
+<p>but they can be omitted if doing so does not cause ambiguity.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">object.method arg1, arg2</font></pre></td></tr></table>
+<p>There is a special variable <code>self</code> in ruby; it refers to
+whatever object calls a method.  This happens so often that for
+convenience the "<code>self.</code>" may be omitted from method calls from
+an object to itself:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">self.method_name(args...)</font></pre></td></tr></table>
+<p>is the same as</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">method_name(args...)</font></pre></td></tr></table>
+<p>What we would think of traditionally as a <em>function call</em> is
+just this abbreviated way of writing method invocations by
+<code>self</code>.  This makes ruby what is called a pure object
+oriented language.  Still, functional methods behave quite
+similarly to the functions in other programming languages for the
+benefit of those who do not grok how function calls are really object
+methods in ruby.  We can speak of <em>functions</em> as if they
+were not really object methods if we want to.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="oothinking.html">
+ <img border=0 src="a2l.gif" alt="Object-oriented thinking"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="classes.html">
+ <img border=0 src="a2r.gif" alt="Classes"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

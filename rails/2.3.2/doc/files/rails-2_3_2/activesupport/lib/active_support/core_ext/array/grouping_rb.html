@@ -1,0 +1,125 @@
+  <div id="fileHeader">
+    <h1>grouping.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/array/grouping.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'enumerator'
+
+module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module Array #:nodoc:
+      module Grouping
+        # Splits or iterates over the array in groups of size +number+,
+        # padding any remaining slots with +fill_with+ unless it is +false+.
+        # 
+        #   %w(1 2 3 4 5 6 7).in_groups_of(3) {|group| p group}
+        #   [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]
+        #   [&quot;4&quot;, &quot;5&quot;, &quot;6&quot;]
+        #   [&quot;7&quot;, nil, nil]
+        #
+        #   %w(1 2 3).in_groups_of(2, '&amp;nbsp;') {|group| p group}
+        #   [&quot;1&quot;, &quot;2&quot;]
+        #   [&quot;3&quot;, &quot;&amp;nbsp;&quot;]
+        #
+        #   %w(1 2 3).in_groups_of(2, false) {|group| p group}
+        #   [&quot;1&quot;, &quot;2&quot;]
+        #   [&quot;3&quot;]
+        def in_groups_of(number, fill_with = nil)
+          if fill_with == false
+            collection = self
+          else
+            # size % number gives how many extra we have;
+            # subtracting from number gives how many to add;
+            # modulo number ensures we don't add group of just fill.
+            padding = (number - size % number) % number
+            collection = dup.concat([fill_with] * padding)
+          end
+
+          if block_given?
+            collection.each_slice(number) { |slice| yield(slice) }
+          else
+            returning [] do |groups|
+              collection.each_slice(number) { |group| groups &lt;&lt; group }
+            end
+          end
+        end
+
+        # Splits or iterates over the array in +number+ of groups, padding any
+        # remaining slots with +fill_with+ unless it is +false+.
+        #
+        #   %w(1 2 3 4 5 6 7 8 9 10).in_groups(3) {|group| p group}
+        #   [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;]
+        #   [&quot;5&quot;, &quot;6&quot;, &quot;7&quot;, nil]
+        #   [&quot;8&quot;, &quot;9&quot;, &quot;10&quot;, nil]
+        #
+        #   %w(1 2 3 4 5 6 7).in_groups(3, '&amp;nbsp;') {|group| p group}
+        #   [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]
+        #   [&quot;4&quot;, &quot;5&quot;, &quot;&amp;nbsp;&quot;]
+        #   [&quot;6&quot;, &quot;7&quot;, &quot;&amp;nbsp;&quot;]
+        #
+        #   %w(1 2 3 4 5 6 7).in_groups(3, false) {|group| p group}
+        #   [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]
+        #   [&quot;4&quot;, &quot;5&quot;]
+        #   [&quot;6&quot;, &quot;7&quot;]
+        def in_groups(number, fill_with = nil)
+          # size / number gives minor group size;
+          # size % number gives how many objects need extra accomodation;
+          # each group hold either division or division + 1 items.
+          division = size / number
+          modulo = size % number
+
+          # create a new array avoiding dup
+          groups = []
+          start = 0
+
+          number.times do |index|
+            length = division + (modulo &gt; 0 &amp;&amp; modulo &gt; index ? 1 : 0)
+            padding = fill_with != false &amp;&amp;
+              modulo &gt; 0 &amp;&amp; length == division ? 1 : 0
+            groups &lt;&lt; slice(start, length).concat([fill_with] * padding)
+            start += length
+          end
+
+          if block_given?
+            groups.each{|g| yield(g) }
+          else
+            groups
+          end
+        end
+
+        # Divides the array into one or more subarrays based on a delimiting +value+
+        # or the result of an optional block.
+        #
+        #   [1, 2, 3, 4, 5].split(3)                # =&gt; [[1, 2], [4, 5]]
+        #   (1..10).to_a.split { |i| i % 3 == 0 }   # =&gt; [[1, 2], [4, 5], [7, 8], [10]]
+        def split(value = nil)
+          using_block = block_given?
+
+          inject([[]]) do |results, element|
+            if (using_block &amp;&amp; yield(element)) || (value == element)
+              results &lt;&lt; []
+            else
+              results.last &lt;&lt; element
+            end
+
+            results
+          end
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

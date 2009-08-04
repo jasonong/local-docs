@@ -1,0 +1,42 @@
+  <div id="fileHeader">
+    <h1>module.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/module.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'active_support/core_ext/module/inclusion'
+require 'active_support/core_ext/module/attribute_accessors'
+require 'active_support/core_ext/module/attr_internal'
+require 'active_support/core_ext/module/attr_accessor_with_default'
+require 'active_support/core_ext/module/delegation'
+require 'active_support/core_ext/module/introspection'
+require 'active_support/core_ext/module/loading'
+require 'active_support/core_ext/module/aliasing'
+require 'active_support/core_ext/module/model_naming'
+require 'active_support/core_ext/module/synchronization'
+
+module ActiveSupport
+  module CoreExtensions
+    # Various extensions for the Ruby core Module class.
+    module Module
+      # Nothing here. Only defined for API documentation purposes.
+    end
+  end
+end
+
+class Module
+  include ActiveSupport::CoreExtensions::Module
+end
+</pre>
+    </div>

@@ -1,0 +1,60 @@
+  <div id="C00000170">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />ModelAssertions<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/assertions/model_assertions_rb.html');">rails-2.3.2/actionpack/lib/action_controller/assertions/model_assertions.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000351&name=assert_valid" >assert_valid</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000351" class="method">
+  <div id="M000351_title" class="title">
+    <b>assert_valid</b>(record)
+  </div>
+  <div class="description">
+  <p>
+Ensures that the passed record is valid by Active Record standards and
+returns any error messages if it is not.
+</p>
+<h4>Examples</h4>
+<pre>
+  # assert that a newly created record is valid
+  model = Model.new
+  assert_valid(model)
+</pre>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000351_source')" id="l_M000351_source">show source</a> ]</p>
+  <div id="M000351_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/assertions/model_assertions.rb, line 13</span>
+13:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assert_valid</span>(<span class="ruby-identifier">record</span>)
+14:         <span class="ruby-operator">::</span><span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Deprecation</span>.<span class="ruby-identifier">warn</span>(<span class="ruby-value str">&quot;assert_valid is deprecated. Use assert record.valid? instead&quot;</span>, <span class="ruby-identifier">caller</span>)
+15:         <span class="ruby-identifier">clean_backtrace</span> <span class="ruby-keyword kw">do</span>
+16:           <span class="ruby-identifier">assert</span> <span class="ruby-identifier">record</span>.<span class="ruby-identifier">valid?</span>, <span class="ruby-identifier">record</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">full_messages</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n&quot;</span>)
+17:         <span class="ruby-keyword kw">end</span>
+18:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

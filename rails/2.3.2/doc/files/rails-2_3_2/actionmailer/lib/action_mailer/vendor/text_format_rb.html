@@ -1,0 +1,29 @@
+  <div id="fileHeader">
+    <h1>text_format.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionmailer/lib/action_mailer/vendor/text_format.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre># Prefer gems to the bundled libs.
+require 'rubygems'
+
+begin
+  gem 'text-format', '&gt;= 0.6.3'
+rescue Gem::LoadError
+  $:.unshift &quot;#{File.dirname(__FILE__)}/text-format-0.6.3&quot;
+end
+
+require 'text/format'
+</pre>
+    </div>

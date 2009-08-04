@@ -1,0 +1,174 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <title>Introduction to Ruby</title>
+  <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+<body>
+
+    <p>
+      <a href="http://validator.w3.org/check/referer">  
+        <img style="border:0;width:88px;height:31px"
+             src="http://www.w3.org/Icons/valid-xhtml10"
+             alt="Valid XHTML 1.0!" height="31" width="88" /> 
+      </a>
+      <a href="http://jigsaw.w3.org/css-validator/">
+        <img style="border:0;width:88px;height:31px"
+             src="http://jigsaw.w3.org/css-validator/images/vcss"
+             alt="Valid CSS!" />
+      </a>
+    </p>
+
+<h1>Variables</h1>
+<h2><a name="var">What is a variable?</a></h2>
+
+<p>A <b>variable</b> is a name that Ruby associates with a particular
+<b>object</b>.  For example:</p>
+
+<pre class="code">
+city = "Toronto"                                                            
+</pre>
+
+<p>Here Ruby associates the string "Toronto" with the name (variable) 
+<b>city</b>.</p>
+
+<p>Think of it as Ruby making two tables. One with objects and another
+with names for them.  Then think of Ruby drawing an arrow from
+<b>city</b> to "Toronto".</p>
+
+<p>Whenever Ruby encounters <b>city</b>, it will follow the arrow and 
+arrive at the string "Toronto".</p>
+
+<p>
+<table>
+<tr class="warning">
+<td>
+<strong>Warning:</strong>
+Variable names must begin with a <em>lowercase</em> letter.
+</td>
+</tr>
+</table>
+</p>
+
+<h2><a name="work">Working with variables</a></h2>
+
+<p>You can manipulate variables in <strong>exactly</strong> the same
+way that you would manipulate the objects that they represent.</p>
+
+<img src="variables/01.gif" />
+
+<p>The good thing about variables is that you can keep track of 
+information more easily. Suppose that you were given these 
+instructions:</p>
+
+<p>
+<ol>
+<li>Add 2, 4 , 6 and 8 together.</li>
+<li>Take that result, and divide it by 5</li>
+<li>Take the product of 2, 3 and 4.</li>
+<li>Take your answer from line 2 and subtract it from what you got 
+    in line 3.</li>
+</ol>
+</p>
+
+<p>Sure, you could write out a long expression to do this.  It is much
+easier to write:</p>
+
+<img src="variables/02.gif" />
+
+<h2><a name="short">Shortcuts</a></h2>
+
+<p>In the example above, you saw the expressions:</p>
+<pre class="code">
+num1 = num1 / 5
+num2 = num2 - num1
+</pre>
+
+<p>These kinds of expressions are very common, so Ruby offers you some 
+shortcuts:</p>
+
+<table border="0">
+<tr><th class="padding">Example </th>
+    <th class="padding">Shortcut</th>
+    <th class="padding">Meaning </th>
+</tr>
+<tr><td class="padding">var = var + 2</td>
+    <td class="padding">var += 2                  </td>
+    <td class="padding">Add 2 to <b>var</b>       </td>
+</tr>
+<tr><td class="padding">var = var - 3</td>
+    <td class="padding">var -= 3                  </td>
+    <td class="padding">Subtract 3 from <b>var</b></td>
+</tr>
+<tr><td class="padding">var = var * 6</td>
+    <td class="padding">var *= 6                  </td>
+    <td class="padding">Multiply <b>var</b> by 6  </td>
+</tr>
+<tr><td class="padding">var = var / 2</td>
+    <td class="padding">var /= 2                  </td>
+    <td class="padding">Divide   <b>var</b> by 2  </td>
+</tr>
+<tr><td class="padding">var = var** 3</td>
+    <td class="padding">var **=3                  </td>
+    <td class="padding">Cube     <b>var</b>       </td>
+</tr>
+<tr><td class="padding">var = var % 4</td>
+    <td class="padding">var %= 4                  </td>
+    <td class="padding"><b>var</b> modulo 4       </td>
+</tr>
+</table>
+
+<p>So the above example could be written as</p>
+
+<img src="variables/03.gif" />
+
+<h2><a name="const">Constants vs Variables</a></h2>
+
+<p>Constants are like variables.  Except that you are tellig Ruby
+that their value is supposed to remain fixed.  If you try to
+change the value of a constant, Ruby will give you a warning.</p>
+
+<p>You define constants just like variables, except that the first
+letter is upperscase.</p>
+
+<img src="variables/04.gif" />
+
+<p>
+<table>
+<tr class="note">
+<td>
+<strong>Note:</strong>
+Though <b>City</b> is a "constant", its value still changed.  Being
+a constant only means that Ruby will warn you if you change its
+value.  See below.
+</td>
+</tr>
+</table>
+</p>
+
+<img src="variables/05.gif" />
+
+<h2><a name="ex">Exercises</a></h2>
+<ol>
+   <li><p>Do you think that shortcuts work for strings too?  Try 
+       this:</p>
+<pre class="code">
+var = "hello "
+var = var + "world"
+
+var += "world"
+</pre>
+   </li>
+   <li><p>What do you think this will do?</p>
+<pre class="code">
+string = "hi"
+string *= 3
+</pre>
+       <p>Try it.  How would you explain this result to a younger sibbling?</p>
+   </li>
+</ol>
+
+</body>
+</html>

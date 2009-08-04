@@ -1,0 +1,66 @@
+  <div id="fileHeader">
+    <h1>delegating_attributes.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/class/delegating_attributes.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre># These class attributes behave something like the class
+# inheritable accessors.  But instead of copying the hash over at
+# the time the subclass is first defined,  the accessors simply
+# delegate to their superclass unless they have been given a 
+# specific value.  This stops the strange situation where values 
+# set after class definition don't get applied to subclasses.
+class Class
+  def superclass_delegating_reader(*names)
+    class_name_to_stop_searching_on = self.superclass.name.blank? ? &quot;Object&quot; : self.superclass.name
+    names.each do |name|
+      class_eval &lt;&lt;-EOS
+      def self.#{name}                                            # def self.only_reader
+        if defined?(@#{name})                                     #   if defined?(@only_reader)
+          @#{name}                                                #     @only_reader
+        elsif superclass &lt; #{class_name_to_stop_searching_on} &amp;&amp;  #   elsif superclass &lt; Object &amp;&amp;
+              superclass.respond_to?(:#{name})                    #         superclass.respond_to?(:only_reader)
+          superclass.#{name}                                      #     superclass.only_reader
+        end                                                       #   end
+      end                                                         # end
+      def #{name}                                                 # def only_reader
+        self.class.#{name}                                        #   self.class.only_reader
+      end                                                         # end
+      def self.#{name}?                                           # def self.only_reader?
+        !!#{name}                                                 #   !!only_reader
+      end                                                         # end
+      def #{name}?                                                # def only_reader?
+        !!#{name}                                                 #   !!only_reader
+      end                                                         # end
+      EOS
+    end
+  end
+
+  def superclass_delegating_writer(*names)
+    names.each do |name|
+      class_eval &lt;&lt;-EOS
+        def self.#{name}=(value)  # def self.only_writer=(value)
+          @#{name} = value        #   @only_writer = value
+        end                       # end
+      EOS
+    end
+  end
+
+  def superclass_delegating_accessor(*names)
+    superclass_delegating_reader(*names)
+    superclass_delegating_writer(*names)
+  end
+end
+</pre>
+    </div>

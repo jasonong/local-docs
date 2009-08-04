@@ -1,0 +1,134 @@
+<HTML>
+<HEAD>
+<TITLE>Struct</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="String.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Time.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Struct</H1>
+<dd> 
+<P>
+The structure class.  <code>Struct.new</code> creates the new subclass
+of the <code>Struct</code> class and returns it.  Each subclass has
+access methods for the structure attributes.
+</P>
+
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Enum.html"><code>Enumerable</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+<DT>
+<A NAME="Struct.new">
+<CODE>new(<VAR>name</VAR>, <VAR>member</VAR>...)</CODE></A>
+<DD>
+<p>
+Creates the new subclass of the <code>Struct</code> class, which is
+named <var>name</var> and returns it.  Each subclass has access
+methods for the structure attributes.  For example:
+<blockquote>
+<pre>
+dog = Struct.new("Dog", :name, :age)
+fred = dog.new("fred", 5)
+fred.age=6
+printf "name:%s age:%d", fred.name, fred.age
+</pre>
+</blockquote>
+prints <samp>"name:fred age:6"</samp>.
+</p>
+<p>
+The structure <var>name</var> should start with captal letter, since
+it is class constant name under the <code>Struct</code> class.
+</p>
+</DL>
+
+<dt> <h2>Class Methods for each structure:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="structure.new"><CODE>new(<VAR>value</VAR>...)</CODE></A>
+<DD>
+<DT>
+<A NAME="structure.aref"><CODE>[<VAR>value</VAR>...]</CODE></A>
+<DD>
+<p>
+Creates a structure.  The arguments are initial value of the
+structure.  The number of arguments must be same to the number of
+attributes of the structure.
+</p>
+
+<dt> <a name="structure.members"></a>
+<code>members</code>
+<dd>
+<p>
+Returns an array of the struct member names.
+</p>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="aref">
+<CODE>self[<VAR>nth</VAR>]</CODE></A>
+<DD>
+<p>
+Returns the value of the <var>nth</var> attribute.
+If <var>nth</var> is string, returns the value of the named attribute.
+</p>
+
+<dt> <a name="each"><code>each</code></a>
+<dd> 
+<p>
+Iterates over each value of the struct member.
+</p>
+
+<dt> <a name="members"></a>
+<code>members</code>
+<dd>
+<p>
+Returns an array of the struct member names.
+</p>
+<DT>
+<A NAME="values"><CODE>values</CODE></A>
+<DD>
+<DT><A NAME="to_a"><CODE>to_a</CODE></A>
+<DD>
+<p>
+Returns the attributes of the structure as an array.  For example, the
+following code prints your passwd entry.
+<blockquote>
+<PRE>
+print Etc.getpwuid.values.join(":"), "\n"
+</PRE>
+</blockquote>
+</p>
+</DL>
+</dl>
+<HR>
+<A HREF="String.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Time.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

@@ -1,0 +1,174 @@
+  <div id="C00000183">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />MiddlewareStack<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/middleware_stack_rb.html');">rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb</a>
+
+Parent:&nbsp;
+Array
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000364&name=active" >active</a></li>
+  <li><a href="index.html?a=M000365&name=build" >build</a></li>
+  <li><a href="index.html?a=M000359&name=insert" >insert</a></li>
+  <li><a href="index.html?a=M000361&name=insert_after" >insert_after</a></li>
+  <li><a href="index.html?a=M000360&name=insert_before" >insert_before</a></li>
+  <li><a href="index.html?a=M000358&name=new" >new</a></li>
+  <li><a href="index.html?a=M000362&name=swap" >swap</a></li>
+  <li><a href="index.html?a=M000363&name=use" >use</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/ActionController/MiddlewareStack/Middleware.html');" class="link">ActionController::MiddlewareStack::Middleware</a>"<br />
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000358" class="method">
+  <div id="M000358_title" class="title">
+    <b>new</b>(*args, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000358_source')" id="l_M000358_source">show source</a> ]</p>
+  <div id="M000358_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb, line 83</span>
+83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+84:       <span class="ruby-keyword kw">super</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+85:       <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+86:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000364" class="method">
+  <div id="M000364_title" class="title">
+    <b>active</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000364_source')" id="l_M000364_source">show source</a> ]</p>
+  <div id="M000364_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb, line 111</span>
+111:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">active</span>
+112:       <span class="ruby-identifier">find_all</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">middleware</span><span class="ruby-operator">|</span> <span class="ruby-identifier">middleware</span>.<span class="ruby-identifier">active?</span> }
+113:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000365" class="method">
+  <div id="M000365_title" class="title">
+    <b>build</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000365_source')" id="l_M000365_source">show source</a> ]</p>
+  <div id="M000365_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb, line 115</span>
+115:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build</span>(<span class="ruby-identifier">app</span>)
+116:       <span class="ruby-identifier">active</span>.<span class="ruby-identifier">reverse</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-identifier">app</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span>, <span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">a</span>) }
+117:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000359" class="method">
+  <div id="M000359_title" class="title">
+    <b>insert</b>(index, *args, &amp;block)
+  </div>
+<div class="aka">
+  This method is also aliased as
+  <a href="index.html?a=M000360&name=insert_before">insert_before</a>
+</div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000359_source')" id="l_M000359_source">show source</a> ]</p>
+  <div id="M000359_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb, line 88</span>
+88:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert</span>(<span class="ruby-identifier">index</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+89:       <span class="ruby-identifier">index</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">index</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>)
+90:       <span class="ruby-identifier">middleware</span> = <span class="ruby-constant">Middleware</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+91:       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">index</span>, <span class="ruby-identifier">middleware</span>)
+92:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000361" class="method">
+  <div id="M000361_title" class="title">
+    <b>insert_after</b>(index, *args, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000361_source')" id="l_M000361_source">show source</a> ]</p>
+  <div id="M000361_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb, line 96</span>
+96:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert_after</span>(<span class="ruby-identifier">index</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+97:       <span class="ruby-identifier">index</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">index</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Integer</span>)
+98:       <span class="ruby-identifier">insert</span>(<span class="ruby-identifier">index</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+99:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000360" class="method">
+  <div id="M000360_title" class="title">
+    <b>insert_before</b>(index, *args, &amp;block)
+  </div>
+  <div class="description">
+  <p>
+Alias for <a href="index.html?a=M000359&name=insert">insert</a>
+</p>
+  </div>
+</div>
+<div id="M000362" class="method">
+  <div id="M000362_title" class="title">
+    <b>swap</b>(target, *args, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000362_source')" id="l_M000362_source">show source</a> ]</p>
+  <div id="M000362_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb, line 101</span>
+101:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">swap</span>(<span class="ruby-identifier">target</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+102:       <span class="ruby-identifier">insert_before</span>(<span class="ruby-identifier">target</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+103:       <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">target</span>)
+104:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000363" class="method">
+  <div id="M000363_title" class="title">
+    <b>use</b>(*args, &amp;block)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000363_source')" id="l_M000363_source">show source</a> ]</p>
+  <div id="M000363_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb, line 106</span>
+106:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">use</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+107:       <span class="ruby-identifier">middleware</span> = <span class="ruby-constant">Middleware</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+108:       <span class="ruby-identifier">push</span>(<span class="ruby-identifier">middleware</span>)
+109:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

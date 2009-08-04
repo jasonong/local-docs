@@ -1,0 +1,96 @@
+  <div id="C00000283">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />MethodOverride<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/methodoverride_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000963&name=call" >call</a></li>
+  <li><a href="index.html?a=M000962&name=new" >new</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">HTTP_METHODS</td>
+    <td>=</td>
+    <td class="attr-value">%w(GET HEAD PUT POST DELETE OPTIONS)</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">METHOD_OVERRIDE_PARAM_KEY</td>
+    <td>=</td>
+    <td class="attr-value">&quot;_method&quot;.freeze</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">HTTP_METHOD_OVERRIDE_HEADER</td>
+    <td>=</td>
+    <td class="attr-value">&quot;HTTP_X_HTTP_METHOD_OVERRIDE&quot;.freeze</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000962" class="method">
+  <div id="M000962_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000962_source')" id="l_M000962_source">show source</a> ]</p>
+  <div id="M000962_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb, line 8</span>
+ 8:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+ 9:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+10:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000963" class="method">
+  <div id="M000963_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000963_source')" id="l_M000963_source">show source</a> ]</p>
+  <div id="M000963_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/methodoverride.rb, line 12</span>
+12:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+13:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;REQUEST_METHOD&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;POST&quot;</span>
+14:         <span class="ruby-identifier">req</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
+15:         <span class="ruby-identifier">method</span> = <span class="ruby-identifier">req</span>.<span class="ruby-constant">POST</span>[<span class="ruby-constant">METHOD_OVERRIDE_PARAM_KEY</span>] <span class="ruby-operator">||</span>
+16:           <span class="ruby-identifier">env</span>[<span class="ruby-constant">HTTP_METHOD_OVERRIDE_HEADER</span>]
+17:         <span class="ruby-identifier">method</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">upcase</span>
+18:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">HTTP_METHODS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">method</span>)
+19:           <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;rack.methodoverride.original_method&quot;</span>] = <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;REQUEST_METHOD&quot;</span>]
+20:           <span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;REQUEST_METHOD&quot;</span>] = <span class="ruby-identifier">method</span>
+21:         <span class="ruby-keyword kw">end</span>
+22:       <span class="ruby-keyword kw">end</span>
+23: 
+24:       <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+25:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

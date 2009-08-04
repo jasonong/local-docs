@@ -1,0 +1,93 @@
+  <div id="C00000301">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ConditionalGet<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/conditionalget_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/conditionalget.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+Middleware that enables conditional GET using If-None-Match and
+If-Modified-Since. The application should set either or both of the
+Last-Modified or Etag response headers according to RFC 2616. When either
+of the conditions is met, the response body is set to be zero length and
+the response status is set to 304 Not Modified.
+</p>
+<p>
+Applications that defer response body generation until the body&#8217;s
+each message is received will avoid response body generation completely
+when a conditional GET matches.
+</p>
+<p>
+Adapted from Michael Klishin&#8217;s Merb implementation: <a
+href="http://github.com/wycats/merb-core/tree/master/lib/merb-core/rack/middleware/conditional_get.rb"
+target="_blank">http://github.com/wycats/merb-core/tree/master/lib/merb-core/rack/middleware/conditional_get.rb</a>
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001078&name=call" >call</a></li>
+  <li><a href="index.html?a=M001077&name=new" >new</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001077" class="method">
+  <div id="M001077_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001077_source')" id="l_M001077_source">show source</a> ]</p>
+  <div id="M001077_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/conditionalget.rb, line 18</span>
+18:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+19:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+20:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001078" class="method">
+  <div id="M001078_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001078_source')" id="l_M001078_source">show source</a> ]</p>
+  <div id="M001078_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/conditionalget.rb, line 22</span>
+22:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+23:       <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-node">%w[GET HEAD]</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">env</span>[<span class="ruby-value str">'REQUEST_METHOD'</span>])
+24: 
+25:       <span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span> = <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+26:       <span class="ruby-identifier">headers</span> = <span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">HeaderHash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">headers</span>)
+27:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">etag_matches?</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">headers</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">modified_since?</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">headers</span>)
+28:         <span class="ruby-identifier">status</span> = <span class="ruby-value">304</span>
+29:         <span class="ruby-identifier">body</span> = []
+30:       <span class="ruby-keyword kw">end</span>
+31:       [<span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span>]
+32:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

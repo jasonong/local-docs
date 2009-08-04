@@ -1,0 +1,36 @@
+  <div id="fileHeader">
+    <h1>builder.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/template_handlers/builder.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'builder'
+
+module ActionView
+  module TemplateHandlers
+    class Builder &lt; TemplateHandler
+      include Compilable
+
+      def compile(template)
+        &quot;_set_controller_content_type(Mime::XML);&quot; +
+          &quot;xml = ::Builder::XmlMarkup.new(:indent =&gt; 2);&quot; +
+          &quot;self.output_buffer = xml.target!;&quot; +
+          template.source +
+          &quot;;xml.target!;&quot;
+      end
+    end
+  end
+end
+</pre>
+    </div>

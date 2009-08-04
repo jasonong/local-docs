@@ -1,0 +1,334 @@
+  <div id="C00000631">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Connection<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activeresource/lib/active_resource/connection_rb.html');">rails-2.3.2/activeresource/lib/active_resource/connection.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/activeresource/lib/active_resource/http_mock_rb.html');">rails-2.3.2/activeresource/lib/active_resource/http_mock.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+Class to handle connections to remote web services. This class is used by
+<a
+href="index.html?a=C00000626&name=ActiveResource::Base">ActiveResource::Base</a>
+to interface with REST services.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001801&name=delete" >delete</a></li>
+  <li><a href="index.html?a=M001800&name=get" >get</a></li>
+  <li><a href="index.html?a=M001804&name=head" >head</a></li>
+  <li><a href="index.html?a=M001795&name=new" >new</a></li>
+  <li><a href="index.html?a=M001798&name=password=" >password=</a></li>
+  <li><a href="index.html?a=M001803&name=post" >post</a></li>
+  <li><a href="index.html?a=M001802&name=put" >put</a></li>
+  <li><a href="index.html?a=M001794&name=requests" >requests</a></li>
+  <li><a href="index.html?a=M001796&name=site=" >site=</a></li>
+  <li><a href="index.html?a=M001799&name=timeout=" >timeout=</a></li>
+  <li><a href="index.html?a=M001797&name=user=" >user=</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">HTTP_FORMAT_HEADER_NAMES</td>
+    <td>=</td>
+    <td class="attr-value">{  :get =&gt; 'Accept',       :put =&gt; 'Content-Type',       :post =&gt; 'Content-Type',       :delete =&gt; 'Accept'</td>
+  </tr>
+  </table>
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>format</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>password</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>site</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>timeout</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>user</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001795" class="method">
+  <div id="M001795_title" class="title">
+    <b>new</b>(site, format = ActiveResource::Formats[:xml])
+  </div>
+  <div class="description">
+  <p>
+The <tt>site</tt> parameter is required and will set the <tt>site</tt>
+attribute to the URI for the remote resource service.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001795_source')" id="l_M001795_source">show source</a> ]</p>
+  <div id="M001795_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 84</span>
+84:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">site</span>, <span class="ruby-identifier">format</span> = <span class="ruby-constant">ActiveResource</span><span class="ruby-operator">::</span><span class="ruby-constant">Formats</span>[<span class="ruby-identifier">:xml</span>])
+85:       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">'Missing site URI'</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">site</span>
+86:       <span class="ruby-ivar">@user</span> = <span class="ruby-ivar">@password</span> = <span class="ruby-keyword kw">nil</span>
+87:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">site</span> = <span class="ruby-identifier">site</span>
+88:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">format</span> = <span class="ruby-identifier">format</span>
+89:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001794" class="method">
+  <div id="M001794_title" class="title">
+    <b>requests</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001794_source')" id="l_M001794_source">show source</a> ]</p>
+  <div id="M001794_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 77</span>
+77:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">requests</span>
+78:         <span class="ruby-ivar">@@requests</span> <span class="ruby-operator">||=</span> []
+79:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001801" class="method">
+  <div id="M001801_title" class="title">
+    <b>delete</b>(path, headers = {})
+  </div>
+  <div class="description">
+  <p>
+Execute a DELETE request (see HTTP protocol documentation if unfamiliar).
+Used to delete resources.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001801_source')" id="l_M001801_source">show source</a> ]</p>
+  <div id="M001801_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 121</span>
+121:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">headers</span> = {})
+122:       <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:delete</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">build_request_headers</span>(<span class="ruby-identifier">headers</span>, <span class="ruby-identifier">:delete</span>))
+123:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001800" class="method">
+  <div id="M001800_title" class="title">
+    <b>get</b>(path, headers = {})
+  </div>
+  <div class="description">
+  <p>
+Execute a GET request. Used to get (find) resources.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001800_source')" id="l_M001800_source">show source</a> ]</p>
+  <div id="M001800_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 115</span>
+115:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">headers</span> = {})
+116:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">request</span>(<span class="ruby-identifier">:get</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">build_request_headers</span>(<span class="ruby-identifier">headers</span>, <span class="ruby-identifier">:get</span>)).<span class="ruby-identifier">body</span>)
+117:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001804" class="method">
+  <div id="M001804_title" class="title">
+    <b>head</b>(path, headers = {})
+  </div>
+  <div class="description">
+  <p>
+Execute a HEAD request. Used to obtain meta-information about resources,
+such as whether they exist and their size (via response headers).
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001804_source')" id="l_M001804_source">show source</a> ]</p>
+  <div id="M001804_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 139</span>
+139:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">head</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">headers</span> = {})
+140:       <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:head</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">build_request_headers</span>(<span class="ruby-identifier">headers</span>))
+141:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001798" class="method">
+  <div id="M001798_title" class="title">
+    <b>password=</b>(password)
+  </div>
+  <div class="description">
+  <p>
+Set password for remote service.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001798_source')" id="l_M001798_source">show source</a> ]</p>
+  <div id="M001798_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 104</span>
+104:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">password=</span>(<span class="ruby-identifier">password</span>)
+105:       <span class="ruby-ivar">@password</span> = <span class="ruby-identifier">password</span>
+106:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001803" class="method">
+  <div id="M001803_title" class="title">
+    <b>post</b>(path, body = '', headers = {})
+  </div>
+  <div class="description">
+  <p>
+Execute a POST request. Used to create new resources.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001803_source')" id="l_M001803_source">show source</a> ]</p>
+  <div id="M001803_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 133</span>
+133:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">post</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">body</span> = <span class="ruby-value str">''</span>, <span class="ruby-identifier">headers</span> = {})
+134:       <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:post</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">build_request_headers</span>(<span class="ruby-identifier">headers</span>, <span class="ruby-identifier">:post</span>))
+135:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001802" class="method">
+  <div id="M001802_title" class="title">
+    <b>put</b>(path, body = '', headers = {})
+  </div>
+  <div class="description">
+  <p>
+Execute a PUT request (see HTTP protocol documentation if unfamiliar). Used
+to update resources.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001802_source')" id="l_M001802_source">show source</a> ]</p>
+  <div id="M001802_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 127</span>
+127:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">put</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">body</span> = <span class="ruby-value str">''</span>, <span class="ruby-identifier">headers</span> = {})
+128:       <span class="ruby-identifier">request</span>(<span class="ruby-identifier">:put</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">build_request_headers</span>(<span class="ruby-identifier">headers</span>, <span class="ruby-identifier">:put</span>))
+129:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001796" class="method">
+  <div id="M001796_title" class="title">
+    <b>site=</b>(site)
+  </div>
+  <div class="description">
+  <p>
+Set URI for remote service.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001796_source')" id="l_M001796_source">show source</a> ]</p>
+  <div id="M001796_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 92</span>
+92:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">site=</span>(<span class="ruby-identifier">site</span>)
+93:       <span class="ruby-ivar">@site</span> = <span class="ruby-identifier">site</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">URI</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">site</span> <span class="ruby-operator">:</span> <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">site</span>)
+94:       <span class="ruby-ivar">@user</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-ivar">@site</span>.<span class="ruby-identifier">user</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@site</span>.<span class="ruby-identifier">user</span>
+95:       <span class="ruby-ivar">@password</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-ivar">@site</span>.<span class="ruby-identifier">password</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@site</span>.<span class="ruby-identifier">password</span>
+96:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001799" class="method">
+  <div id="M001799_title" class="title">
+    <b>timeout=</b>(timeout)
+  </div>
+  <div class="description">
+  <p>
+Set the number of seconds after which HTTP requests to the remote service
+should time out.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001799_source')" id="l_M001799_source">show source</a> ]</p>
+  <div id="M001799_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 109</span>
+109:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">timeout=</span>(<span class="ruby-identifier">timeout</span>)
+110:       <span class="ruby-ivar">@timeout</span> = <span class="ruby-identifier">timeout</span>
+111:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001797" class="method">
+  <div id="M001797_title" class="title">
+    <b>user=</b>(user)
+  </div>
+  <div class="description">
+  <p>
+Set user for remote service.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001797_source')" id="l_M001797_source">show source</a> ]</p>
+  <div id="M001797_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activeresource/lib/active_resource/connection.rb, line 99</span>
+ 99:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">user=</span>(<span class="ruby-identifier">user</span>)
+100:       <span class="ruby-ivar">@user</span> = <span class="ruby-identifier">user</span>
+101:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

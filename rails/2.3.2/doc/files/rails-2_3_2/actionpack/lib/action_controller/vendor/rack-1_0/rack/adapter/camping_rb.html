@@ -1,0 +1,41 @@
+  <div id="fileHeader">
+    <h1>camping.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/adapter/camping.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  module Adapter
+    class Camping
+      def initialize(app)
+        @app = app
+      end
+
+      def call(env)
+        env[&quot;PATH_INFO&quot;] ||= &quot;&quot;
+        env[&quot;SCRIPT_NAME&quot;] ||= &quot;&quot;
+        controller = @app.run(env['rack.input'], env)
+        h = controller.headers
+        h.each_pair do |k,v|
+          if v.kind_of? URI
+            h[k] = v.to_s
+          end
+        end
+        [controller.status, controller.headers, [controller.body.to_s]]
+      end
+    end
+  end
+end
+</pre>
+    </div>

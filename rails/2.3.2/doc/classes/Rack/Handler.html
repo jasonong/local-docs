@@ -1,0 +1,109 @@
+  <div id="C00000266">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Handler<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/cgi_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/cgi.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/evented_mongrel_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/evented_mongrel.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/fastcgi_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/fastcgi.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/lsws_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/lsws.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/mongrel_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/mongrel.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/scgi_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/scgi.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/swiftiplied_mongrel_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/swiftiplied_mongrel.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/thin_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/thin.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler/webrick_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/webrick.rb</a>
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/handler_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<b>Handlers</b> connect web servers with <a
+href="index.html?a=C00000238&name=Rack">Rack</a>.
+</p>
+<p>
+<a href="index.html?a=C00000238&name=Rack">Rack</a> includes Handlers for
+<a href="index.html?a=C00000275&name=Mongrel">Mongrel</a>, <a
+href="index.html?a=C00000273&name=WEBrick">WEBrick</a>, <a
+href="index.html?a=C00000267&name=FastCGI">FastCGI</a>, <a
+href="index.html?a=C00000270&name=CGI">CGI</a>, <a
+href="index.html?a=C00000271&name=SCGI">SCGI</a> and LiteSpeed.
+</p>
+<p>
+Handlers usually are activated by calling <tt>MyHandler.run(myapp)</tt>. A
+second optional hash can be passed to include server-specific
+configuration.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000920&name=get" >get</a></li>
+  <li><a href="index.html?a=M000921&name=register" >register</a></li>
+  </ul>
+
+
+
+  <div class="sectiontitle">Classes and Modules</div>
+  Class "<a href="#" onclick="jsHref('classes/Rack/Handler/CGI.html');" class="link">Rack::Handler::CGI</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/EventedMongrel.html');" class="link">Rack::Handler::EventedMongrel</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/FastCGI.html');" class="link">Rack::Handler::FastCGI</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/LSWS.html');" class="link">Rack::Handler::LSWS</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/Mongrel.html');" class="link">Rack::Handler::Mongrel</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/SCGI.html');" class="link">Rack::Handler::SCGI</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/SwiftipliedMongrel.html');" class="link">Rack::Handler::SwiftipliedMongrel</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/Thin.html');" class="link">Rack::Handler::Thin</a>"<br />
+Class "<a href="#" onclick="jsHref('classes/Rack/Handler/WEBrick.html');" class="link">Rack::Handler::WEBrick</a>"<br />
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000920" class="method">
+  <div id="M000920_title" class="title">
+    <b>get</b>(server)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000920_source')" id="l_M000920_source">show source</a> ]</p>
+  <div id="M000920_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler.rb, line 11</span>
+11:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get</span>(<span class="ruby-identifier">server</span>)
+12:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">server</span>
+13: 
+14:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klass</span> = <span class="ruby-ivar">@handlers</span>[<span class="ruby-identifier">server</span>]
+15:         <span class="ruby-identifier">obj</span> = <span class="ruby-constant">Object</span>
+16:         <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;::&quot;</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">x</span>) }
+17:         <span class="ruby-identifier">obj</span>
+18:       <span class="ruby-keyword kw">else</span>
+19:         <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">Handler</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">server</span>.<span class="ruby-identifier">capitalize</span>)
+20:       <span class="ruby-keyword kw">end</span>
+21:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000921" class="method">
+  <div id="M000921_title" class="title">
+    <b>register</b>(server, klass)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000921_source')" id="l_M000921_source">show source</a> ]</p>
+  <div id="M000921_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler.rb, line 23</span>
+23:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">register</span>(<span class="ruby-identifier">server</span>, <span class="ruby-identifier">klass</span>)
+24:       <span class="ruby-ivar">@handlers</span> <span class="ruby-operator">||=</span> {}
+25:       <span class="ruby-ivar">@handlers</span>[<span class="ruby-identifier">server</span>] = <span class="ruby-identifier">klass</span>
+26:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

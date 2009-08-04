@@ -1,0 +1,55 @@
+  <div id="C00000847">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />RJS<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_view/template_handlers/rjs_rb.html');">rails-2.3.2/actionpack/lib/action_view/template_handlers/rjs.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActionView/TemplateHandler.html');">
+TemplateHandler
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002589&name=compile" >compile</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="#" onclick="jsHref('classes/ActionView/TemplateHandlers/Compilable.html');">Compilable</a></li>
+</ul>
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002589" class="method">
+  <div id="M002589_title" class="title">
+    <b>compile</b>(template)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002589_source')" id="l_M002589_source">show source</a> ]</p>
+  <div id="M002589_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_view/template_handlers/rjs.rb, line 6</span>
+ 6:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">compile</span>(<span class="ruby-identifier">template</span>)
+ 7:         <span class="ruby-value str">&quot;@template_format = :html;&quot;</span> <span class="ruby-operator">+</span>
+ 8:         <span class="ruby-value str">&quot;controller.response.content_type ||= Mime::JS;&quot;</span> <span class="ruby-operator">+</span>
+ 9:           <span class="ruby-node">&quot;update_page do |page|;#{template.source}\nend&quot;</span>
+10:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

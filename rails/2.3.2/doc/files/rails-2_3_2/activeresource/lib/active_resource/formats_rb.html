@@ -1,0 +1,32 @@
+  <div id="fileHeader">
+    <h1>formats.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activeresource/lib/active_resource/formats.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:38 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveResource
+  module Formats
+    # Lookup the format class from a mime type reference symbol. Example:
+    #
+    #   ActiveResource::Formats[:xml]  # =&gt; ActiveResource::Formats::XmlFormat
+    #   ActiveResource::Formats[:json] # =&gt; ActiveResource::Formats::JsonFormat
+    def self.[](mime_type_reference)
+      ActiveResource::Formats.const_get(mime_type_reference.to_s.camelize + &quot;Format&quot;)
+    end
+  end
+end
+
+require 'active_resource/formats/xml_format'
+require 'active_resource/formats/json_format'</pre>
+    </div>

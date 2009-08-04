@@ -1,0 +1,88 @@
+  <div id="C00000285">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ContentLength<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/content_length_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/content_length.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+Sets the Content-Length header on responses with fixed-length bodies.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000965&name=call" >call</a></li>
+  <li><a href="index.html?a=M000964&name=new" >new</a></li>
+  </ul>
+
+<div class="sectiontitle">Included Modules</div>
+<ul>
+  <li><a href="#" onclick="jsHref('classes/Rack/Utils.html');">Rack::Utils</a></li>
+</ul>
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000964" class="method">
+  <div id="M000964_title" class="title">
+    <b>new</b>(app)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000964_source')" id="l_M000964_source">show source</a> ]</p>
+  <div id="M000964_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/content_length.rb, line 8</span>
+ 8:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>)
+ 9:       <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+10:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000965" class="method">
+  <div id="M000965_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000965_source')" id="l_M000965_source">show source</a> ]</p>
+  <div id="M000965_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/content_length.rb, line 12</span>
+12:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+13:       <span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span> = <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+14:       <span class="ruby-identifier">headers</span> = <span class="ruby-constant">HeaderHash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">headers</span>)
+15: 
+16:       <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">STATUS_WITH_NO_ENTITY_BODY</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">status</span>) <span class="ruby-operator">&amp;&amp;</span>
+17:          <span class="ruby-operator">!</span><span class="ruby-identifier">headers</span>[<span class="ruby-value str">'Content-Length'</span>] <span class="ruby-operator">&amp;&amp;</span>
+18:          <span class="ruby-operator">!</span><span class="ruby-identifier">headers</span>[<span class="ruby-value str">'Transfer-Encoding'</span>] <span class="ruby-operator">&amp;&amp;</span>
+19:          (<span class="ruby-identifier">body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:to_ary</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:to_str</span>))
+20: 
+21:         <span class="ruby-identifier">body</span> = [<span class="ruby-identifier">body</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:to_str</span>) <span class="ruby-comment cmt"># rack 0.4 compat</span>
+22:         <span class="ruby-identifier">length</span> = <span class="ruby-identifier">body</span>.<span class="ruby-identifier">to_ary</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">len</span>, <span class="ruby-identifier">part</span><span class="ruby-operator">|</span> <span class="ruby-identifier">len</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">bytesize</span>(<span class="ruby-identifier">part</span>) }
+23:         <span class="ruby-identifier">headers</span>[<span class="ruby-value str">'Content-Length'</span>] = <span class="ruby-identifier">length</span>.<span class="ruby-identifier">to_s</span>
+24:       <span class="ruby-keyword kw">end</span>
+25: 
+26:       [<span class="ruby-identifier">status</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">body</span>]
+27:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,255 @@
+  <div id="C00000723">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />ConnectionHandler<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool_rb.html');">rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000723&name=ConnectionHandler">ConnectionHandler</a>
+is a collection of <a
+href="index.html?a=C00000720&name=ConnectionPool">ConnectionPool</a>
+objects. It is used for keeping separate connection pools for ActiveRecord
+models that connect to different databases.
+</p>
+<p>
+For example, suppose that you have 5 models, with the following hierarchy:
+</p>
+<pre>
+ |
+ +-- Book
+ |    |
+ |    +-- ScaryBook
+ |    +-- GoodBook
+ +-- Author
+ +-- BankAccount
+</pre>
+<p>
+Suppose that Book is to connect to a separate database (i.e. one other than
+the default database). Then Book, ScaryBook and GoodBook will all use the
+same connection pool. Likewise, Author and BankAccount will use the same
+connection pool. However, the connection pool used by Author/BankAccount is
+not the same as the one used by Book/ScaryBook/GoodBook.
+</p>
+<p>
+Normally there is only a single <a
+href="index.html?a=C00000723&name=ConnectionHandler">ConnectionHandler</a>
+instance, accessible via ActiveRecord::Base.connection_handler.
+ActiveRecord models use this to determine that connection pool that they
+should use.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002150&name=clear_active_connections!" >clear_active_connections!</a></li>
+  <li><a href="index.html?a=M002152&name=clear_all_connections!" >clear_all_connections!</a></li>
+  <li><a href="index.html?a=M002151&name=clear_reloadable_connections!" >clear_reloadable_connections!</a></li>
+  <li><a href="index.html?a=M002153&name=connected?" >connected?</a></li>
+  <li><a href="index.html?a=M002148&name=connection_pools" >connection_pools</a></li>
+  <li><a href="index.html?a=M002149&name=establish_connection" >establish_connection</a></li>
+  <li><a href="index.html?a=M002147&name=new" >new</a></li>
+  <li><a href="index.html?a=M002154&name=remove_connection" >remove_connection</a></li>
+  <li><a href="index.html?a=M002155&name=retrieve_connection_pool" >retrieve_connection_pool</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002147" class="method">
+  <div id="M002147_title" class="title">
+    <b>new</b>(pools = {})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002147_source')" id="l_M002147_source">show source</a> ]</p>
+  <div id="M002147_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 287</span>
+287:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">pools</span> = {})
+288:         <span class="ruby-ivar">@connection_pools</span> = <span class="ruby-identifier">pools</span>
+289:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002150" class="method">
+  <div id="M002150_title" class="title">
+    <b>clear_active_connections!</b>()
+  </div>
+  <div class="description">
+  <p>
+Returns any connections in use by the current thread back to the pool, and
+also returns connections to the pool cached by threads that are no longer
+alive.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002150_source')" id="l_M002150_source">show source</a> ]</p>
+  <div id="M002150_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 302</span>
+302:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_active_connections!</span>
+303:         <span class="ruby-ivar">@connection_pools</span>.<span class="ruby-identifier">each_value</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">pool</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">release_connection</span> }
+304:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002152" class="method">
+  <div id="M002152_title" class="title">
+    <b>clear_all_connections!</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002152_source')" id="l_M002152_source">show source</a> ]</p>
+  <div id="M002152_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 311</span>
+311:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_all_connections!</span>
+312:         <span class="ruby-ivar">@connection_pools</span>.<span class="ruby-identifier">each_value</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">pool</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">disconnect!</span> }
+313:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002151" class="method">
+  <div id="M002151_title" class="title">
+    <b>clear_reloadable_connections!</b>()
+  </div>
+  <div class="description">
+  <p>
+Clears the cache which maps classes
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002151_source')" id="l_M002151_source">show source</a> ]</p>
+  <div id="M002151_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 307</span>
+307:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_reloadable_connections!</span>
+308:         <span class="ruby-ivar">@connection_pools</span>.<span class="ruby-identifier">each_value</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">pool</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">clear_reloadable_connections!</span> }
+309:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002153" class="method">
+  <div id="M002153_title" class="title">
+    <b>connected?</b>(klass)
+  </div>
+  <div class="description">
+  <p>
+Returns true if a connection that&#8217;s accessible to this class has
+already been opened.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002153_source')" id="l_M002153_source">show source</a> ]</p>
+  <div id="M002153_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 331</span>
+331:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected?</span>(<span class="ruby-identifier">klass</span>)
+332:         <span class="ruby-identifier">conn</span> = <span class="ruby-identifier">retrieve_connection_pool</span>(<span class="ruby-identifier">klass</span>)
+333:         <span class="ruby-identifier">conn</span> <span class="ruby-value">? </span><span class="ruby-identifier">conn</span>.<span class="ruby-identifier">connected?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+334:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002148" class="method">
+  <div id="M002148_title" class="title">
+    <b>connection_pools</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002148_source')" id="l_M002148_source">show source</a> ]</p>
+  <div id="M002148_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 291</span>
+291:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connection_pools</span>
+292:         <span class="ruby-ivar">@connection_pools</span> <span class="ruby-operator">||=</span> {}
+293:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002149" class="method">
+  <div id="M002149_title" class="title">
+    <b>establish_connection</b>(name, spec)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002149_source')" id="l_M002149_source">show source</a> ]</p>
+  <div id="M002149_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 295</span>
+295:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">establish_connection</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">spec</span>)
+296:         <span class="ruby-ivar">@connection_pools</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-constant">ConnectionAdapters</span><span class="ruby-operator">::</span><span class="ruby-constant">ConnectionPool</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">spec</span>)
+297:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002154" class="method">
+  <div id="M002154_title" class="title">
+    <b>remove_connection</b>(klass)
+  </div>
+  <div class="description">
+  <p>
+Remove the connection for this class. This will close the active connection
+and the defined connection (if they exist). The result can be used as an
+argument for <a
+href="index.html?a=M002149&name=establish_connection">establish_connection</a>,
+for easily re-establishing the connection.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002154_source')" id="l_M002154_source">show source</a> ]</p>
+  <div id="M002154_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 340</span>
+340:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_connection</span>(<span class="ruby-identifier">klass</span>)
+341:         <span class="ruby-identifier">pool</span> = <span class="ruby-ivar">@connection_pools</span>[<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">name</span>]
+342:         <span class="ruby-ivar">@connection_pools</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">pool</span> }
+343:         <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">disconnect!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pool</span>
+344:         <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">config</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pool</span>
+345:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002155" class="method">
+  <div id="M002155_title" class="title">
+    <b>retrieve_connection_pool</b>(klass)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002155_source')" id="l_M002155_source">show source</a> ]</p>
+  <div id="M002155_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/connection_adapters/abstract/connection_pool.rb, line 347</span>
+347:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">retrieve_connection_pool</span>(<span class="ruby-identifier">klass</span>)
+348:         <span class="ruby-identifier">pool</span> = <span class="ruby-ivar">@connection_pools</span>[<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">name</span>]
+349:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">pool</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pool</span>
+350:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">klass</span>
+351:         <span class="ruby-identifier">retrieve_connection_pool</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">superclass</span>
+352:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

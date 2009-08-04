@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Arrays</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="regexp.html">
+ <img border=0 src="a2l.gif" alt="Regular expressions"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="backtoexamples.html">
+ <img border=0 src="a2r.gif" alt="Back to the simple examples"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Arrays</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>You can create an <em>array</em> by listing some items within
+square brackets (<code>[]</code>) and separating them with
+commas. Ruby's arrays can accomodate diverse object types.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> ary = [1, 2, "3"]</b></font>
+<font color="#50ffff"><b>   [1, 2, "3"]</b></font></font></pre></td></tr></table>
+<p>Arrays can be concatenated or repeated just as strings can.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> ary + ["foo", "bar"]</b></font>
+<font color="#50ffff"><b>   [1, 2, "3", "foo", "bar"]</b></font>
+ruby&gt;<font color="#ffff00"><b> ary * 2</b></font>
+<font color="#50ffff"><b>   [1, 2, "3", 1, 2, "3"]</b></font></font></pre></td></tr></table>
+<p>We can use index numbers to refer to any part of a array.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> ary[0]</b></font>
+<font color="#50ffff"><b>   1</b></font>
+ruby&gt;<font color="#ffff00"><b> ary[0,2]</b></font>
+<font color="#50ffff"><b>   [1, 2]</b></font>
+ruby&gt;<font color="#ffff00"><b> ary[0..1]</b></font>
+<font color="#50ffff"><b>   [1, 2]</b></font>
+ruby&gt;<font color="#ffff00"><b> ary[-2]</b></font>
+<font color="#50ffff"><b>   2</b></font>
+ruby&gt;<font color="#ffff00"><b> ary[-2,2]</b></font>
+<font color="#50ffff"><b>   [2, "3"]</b></font>
+ruby&gt;<font color="#ffff00"><b> ary[-2..-1]</b></font>
+<font color="#50ffff"><b>   [2, "3"]</b></font></font></pre></td></tr></table>
+<p>(Negative indices mean offsets from the end of an array, rather than
+the beginning.)</p>
+<p>Arrays can be converted to and from strings, using <code>join</code>
+and <code>split</code> respecitvely:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> str = ary.join(":")</b></font>
+<font color="#50ffff"><b>   "1:2:3"</b></font>
+ruby&gt;<font color="#ffff00"><b> str.split(":")</b></font>
+<font color="#50ffff"><b>   ["1", "2", "3"]</b></font></font></pre></td></tr></table>
+<h2><a name="label:0" id="label:0">Hashes</a></h2><!-- RDLabel: "Hashes" -->
+<p>An associative array has elements that are accessed not by
+sequential index numbers, but by <em>keys</em> which can have any sort
+of value.  Such an array is sometimes called a <em>hash</em> or
+<em>dictionary</em>; in the ruby world, we prefer the term
+<em>hash</em>.  A hash can be constructed by quoting pairs of items
+within curly braces (<code>{}</code>).  You use a key to find
+something in a hash, much as you use an index to find something in an
+array.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> h = {1 =&gt; 2, "2" =&gt; "4"}</b></font>
+<font color="#50ffff"><b>   {1=&gt;2, "2"=&gt;"4"}</b></font>
+ruby&gt;<font color="#ffff00"><b> h[1]</b></font>
+<font color="#50ffff"><b>   2</b></font>
+ruby&gt;<font color="#ffff00"><b> h["2"]</b></font>
+<font color="#50ffff"><b>   "4"</b></font>
+ruby&gt;<font color="#ffff00"><b> h[5]</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> h[5] = 10     # appending value</b></font>
+<font color="#50ffff"><b>   10</b></font>
+ruby&gt;<font color="#ffff00"><b> h</b></font>
+<font color="#50ffff"><b>   {5=&gt;10, 1=&gt;2, "2"=&gt;"4"}</b></font>
+ruby&gt;<font color="#ffff00"><b> h.delete 1   # deleting value</b></font>
+<font color="#50ffff"><b>   2</b></font>
+ruby&gt;<font color="#ffff00"><b> h[1]</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> h</b></font>
+<font color="#50ffff"><b>   {5=&gt;10, "2"=&gt;"4"}</b></font></font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="regexp.html">
+ <img border=0 src="a2l.gif" alt="Regular expressions"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="backtoexamples.html">
+ <img border=0 src="a2r.gif" alt="Back to the simple examples"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

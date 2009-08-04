@@ -1,0 +1,180 @@
+  <div id="C00000244">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Pool<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/session/pool_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/pool.rb</a>
+
+Parent:&nbsp;
+Abstract::ID
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000244&name=Rack::Session::Pool">Rack::Session::Pool</a>
+provides simple cookie based session management. <a
+href="index.html?a=C00000239&name=Session">Session</a> data is stored in a
+hash held by @pool. In the context of a multithreaded environment, sessions
+being committed to the pool is done in a merging manner.
+</p>
+<p>
+The :drop option is available in rack.session.options if you with to
+explicitly remove the session from the session cache.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  myapp = MyRackApp.new
+  sessioned = Rack::Session::Pool.new(myapp,
+    :domain =&gt; 'foo.com',
+    :expire_after =&gt; 2592000
+  )
+  Rack::Handler::WEBrick.run sessioned
+</pre>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000838&name=generate_sid" >generate_sid</a></li>
+  <li><a href="index.html?a=M000839&name=get_session" >get_session</a></li>
+  <li><a href="index.html?a=M000837&name=new" >new</a></li>
+  <li><a href="index.html?a=M000840&name=set_session" >set_session</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">DEFAULT_OPTIONS</td>
+    <td>=</td>
+    <td class="attr-value">Abstract::ID::DEFAULT_OPTIONS.merge :drop =&gt; false</td>
+  </tr>
+  </table>
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>mutex</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>pool</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000837" class="method">
+  <div id="M000837_title" class="title">
+    <b>new</b>(app, options={})
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000837_source')" id="l_M000837_source">show source</a> ]</p>
+  <div id="M000837_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/pool.rb, line 31</span>
+31:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app</span>, <span class="ruby-identifier">options</span>={})
+32:         <span class="ruby-keyword kw">super</span>
+33:         <span class="ruby-ivar">@pool</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+34:         <span class="ruby-ivar">@mutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+35:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000838" class="method">
+  <div id="M000838_title" class="title">
+    <b>generate_sid</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000838_source')" id="l_M000838_source">show source</a> ]</p>
+  <div id="M000838_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/pool.rb, line 37</span>
+37:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate_sid</span>
+38:         <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+39:           <span class="ruby-identifier">sid</span> = <span class="ruby-keyword kw">super</span>
+40:           <span class="ruby-keyword kw">break</span> <span class="ruby-identifier">sid</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@pool</span>.<span class="ruby-identifier">key?</span> <span class="ruby-identifier">sid</span>
+41:         <span class="ruby-keyword kw">end</span>
+42:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000839" class="method">
+  <div id="M000839_title" class="title">
+    <b>get_session</b>(env, sid)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000839_source')" id="l_M000839_source">show source</a> ]</p>
+  <div id="M000839_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/pool.rb, line 44</span>
+44:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_session</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">sid</span>)
+45:         <span class="ruby-identifier">session</span> = <span class="ruby-ivar">@pool</span>[<span class="ruby-identifier">sid</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sid</span>
+46:         <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">lock</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.multithread'</span>]
+47:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sid</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">session</span>
+48:           <span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.errors'</span>].<span class="ruby-identifier">puts</span>(<span class="ruby-node">&quot;Session '#{sid.inspect}' not found, initializing...&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$VERBOSE</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">sid</span>.<span class="ruby-identifier">nil?</span>
+49:           <span class="ruby-identifier">session</span> = {}
+50:           <span class="ruby-identifier">sid</span> = <span class="ruby-identifier">generate_sid</span>
+51:           <span class="ruby-ivar">@pool</span>.<span class="ruby-identifier">store</span> <span class="ruby-identifier">sid</span>, <span class="ruby-identifier">session</span>
+52:         <span class="ruby-keyword kw">end</span>
+53:         <span class="ruby-identifier">session</span>.<span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-value str">'@old'</span>, {}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">session</span>))
+54:         <span class="ruby-keyword kw">return</span> [<span class="ruby-identifier">sid</span>, <span class="ruby-identifier">session</span>]
+55:       <span class="ruby-keyword kw">ensure</span>
+56:         <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">unlock</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.multithread'</span>]
+57:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000840" class="method">
+  <div id="M000840_title" class="title">
+    <b>set_session</b>(env, session_id, new_session, options)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000840_source')" id="l_M000840_source">show source</a> ]</p>
+  <div id="M000840_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/session/pool.rb, line 59</span>
+59:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_session</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">new_session</span>, <span class="ruby-identifier">options</span>)
+60:         <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">lock</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.multithread'</span>]
+61:         <span class="ruby-identifier">session</span> = <span class="ruby-ivar">@pool</span>[<span class="ruby-identifier">session_id</span>]
+62:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:renew</span>] <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:drop</span>]
+63:           <span class="ruby-ivar">@pool</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">session_id</span>
+64:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:drop</span>]
+65:           <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">generate_sid</span>
+66:           <span class="ruby-ivar">@pool</span>.<span class="ruby-identifier">store</span> <span class="ruby-identifier">session_id</span>, <span class="ruby-value">0</span>
+67:         <span class="ruby-keyword kw">end</span>
+68:         <span class="ruby-identifier">old_session</span> = <span class="ruby-identifier">new_session</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value str">'@old'</span>) <span class="ruby-operator">||</span> {}
+69:         <span class="ruby-identifier">session</span> = <span class="ruby-identifier">merge_sessions</span> <span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">old_session</span>, <span class="ruby-identifier">new_session</span>, <span class="ruby-identifier">session</span>
+70:         <span class="ruby-ivar">@pool</span>.<span class="ruby-identifier">store</span> <span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">session</span>
+71:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">session_id</span>
+72:       <span class="ruby-keyword kw">rescue</span>
+73:         <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;#{new_session.inspect} has been lost.&quot;</span>
+74:         <span class="ruby-identifier">warn</span> <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">inspect</span>
+75:       <span class="ruby-keyword kw">ensure</span>
+76:         <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">unlock</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">env</span>[<span class="ruby-value str">'rack.multithread'</span>]
+77:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

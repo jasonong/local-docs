@@ -1,0 +1,74 @@
+body { margin-left: 10%; margin-right: 10%; }
+h1 { margin-left: 16%;}
+/* h2,h3,h4,h5,h6 { margin-left: 4%; } */
+
+/* Ordered Lists -- for the table of contents. */
+
+/* Pissible values: decimal, lower-roman, upper-roman, lower-alpha and
+ * upper-alpha */
+ol.parts       { list-style-type: upper-roman }
+ol.chapters    { list-style-type: upper-alpha }
+ol.sections    { list-style-type: lower-roman }
+ol.subsections { list-style-type: decimal     }
+
+/* Tables */
+
+table { border: medium solid #606090; padding: 2px }
+table.small { 
+            width: 60%; 
+            margin-left: 20%;
+            }
+th.padding { 
+            text-align: left;
+            padding-left:  1cm;  
+            padding-right: 0cm;
+            padding-bottom:0cm;
+            padding-top:   0cm;
+           }
+td.padding { 
+            padding-left:  1cm;  
+            padding-right: 0cm;
+            padding-bottom:0cm;
+            padding-top:   0cm;
+           }
+th { font-size: 150% }
+
+img { margin-left: 6% }
+img.large { margin-left: 0% }
+
+dt { font-weight: bold }
+
+tr.header { background: rgb(200,200,250) }
+tr.tip    { background: rgb(204,204,255) }
+tr.note   { background: rgb(204,255,204) }
+tr.warning{ background: rgb(255,214,214) }
+
+tr.red    { background: rgb(255,204,204) }
+tr.green  { background: rgb(204,255,204) }
+tr.blue   { background: rgb(214,214,255) }
+
+td { vertical-align: top; }
+td.header { background: rgb(200,200,250) }
+td.green  { background: rgb(204,255,204) }
+td.red    { background: rgb(255,214,214) }
+td.title  { padding-top: 10px; font-weight: bold }
+
+th.green  { color: rgb(0,235,0) }
+th.red    { color: rgb(235,0,0) }
+
+a:link    { color: blue }
+/* a:visited { color: rgb(240,70,70)  } */
+a:hover   { background: rgb(200,200,200) }
+
+/* Warnings, notes, and tips */
+p.warning { background: rgb(255,170,170);
+            margin-left: 10%;
+            margin-right:10%;
+          }
+
+
+/* Computer code. */
+b    { font-family: monospace }
+pre.code  { font-family: monospace; background: rgb(200,200,250) }
+pre.shell { background: rgb(255,224,224) }
+

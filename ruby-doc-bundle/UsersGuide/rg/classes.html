@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Classes</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="methods.html">
+ <img border=0 src="a2l.gif" alt="Methods"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="inheritance.html">
+ <img border=0 src="a2r.gif" alt="Inheritance"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Classes</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>The real world is filled by objects, and we can classify
+them.  For example, a very small child is likely to say "bow-wow"
+when seeing a dog, regardless of the breed; we naturally see the world
+in terms of these categories.</p>
+<p>In OO programming terminology, a category of objects like "dog" is
+called a <em>class</em>, and some specific object belonging to a class
+is called an <em>instance</em> of that class.</p>
+<p>Generally, to make an object in ruby or any other OO language,
+first one defines the characteristics of a class, then creates an
+instance.  To illustrate the process, let's first define a simple
+<code>Dog</code> class.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Dog</b></font>
+    |<font color="#ffff00"><b>   def speak</b></font>
+    |<font color="#ffff00"><b>     print "Bow Wow\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>In ruby, a class definition is a region of code between the keywords
+<code>class</code> and <code>end</code>.  A <code>def</code> inside this region begins the
+definition of a <em>method</em> of the class, which as we discussed in
+the previous chapter, corresponds to some specific behavior for
+objects of that class.</p>
+<p>Now that we have defined a <code>Dog</code> class, we can use it to
+make a dog:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> pochi = Dog.new</b></font>
+<font color="#50ffff"><b>   #&lt;Dog:0xbcb90&gt;</b></font></font></pre></td></tr></table>
+<p>We have made a new instance of the class <code>Dog</code>, and have
+given it the name <code>pochi</code>.  The <code>new</code>
+method of any class makes a new instance.  Because
+<code>pochi</code> is a <code>Dog</code> according to our class
+definition, it has whatever properties we decided a <code>Dog</code>
+should have.  Since our idea of <code>Dog</code>-ness was very
+simple, there is just one trick we can ask <code>pochi</code> to
+do.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> pochi.speak</b></font>
+Bow Wow
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>Making a new instance of a class is sometimes called
+<em>instantiating</em> that class.  We need to have a dog before we
+can experience the pleasure of its conversation; we can't merely ask
+the Dog <em>class</em> to bark for us.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> Dog.speak</b></font>
+<font color="#50ffff"><b>ERR: (eval):1: undefined method `speak' for Dog:class</b></font></font></pre></td></tr></table>
+<p>It makes no more sense than trying to <em>eat the concept of a
+sandwich</em>.</p>
+<p>On the other hand, if we want to hear the sound of a dog without
+getting emotionally attached, we can create (instantiate) an ephemeral,
+temporary dog, and coax a little noise out of it before it
+disappears.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> (Dog.new).speak   # or more commonly, Dog.new.speak</b></font>
+Bow Wow
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>"Wait," you say, "what's all this about the poor fellow
+disappearing afterwards?" It's true: if we don't bother to give
+it a name (as we did for <code>pochi</code>), ruby's automatic garbage
+collection decides it is an unwanted stray dog, and mercilessly
+disposes of it.  Really it's okay, you know, because we can make
+all the dogs we want.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="methods.html">
+ <img border=0 src="a2l.gif" alt="Methods"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="inheritance.html">
+ <img border=0 src="a2r.gif" alt="Inheritance"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

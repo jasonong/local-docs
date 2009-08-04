@@ -1,0 +1,169 @@
+  <div id="fileHeader">
+    <h1>response_assertions.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/assertions/response_assertions.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController
+  module Assertions
+    # A small suite of assertions that test responses from Rails applications.
+    module ResponseAssertions
+      # Asserts that the response is one of the following types:
+      #
+      # * &lt;tt&gt;:success&lt;/tt&gt;   - Status code was 200
+      # * &lt;tt&gt;:redirect&lt;/tt&gt;  - Status code was in the 300-399 range
+      # * &lt;tt&gt;:missing&lt;/tt&gt;   - Status code was 404
+      # * &lt;tt&gt;:error&lt;/tt&gt;     - Status code was in the 500-599 range
+      #
+      # You can also pass an explicit status number like assert_response(501)
+      # or its symbolic equivalent assert_response(:not_implemented).
+      # See ActionController::StatusCodes for a full list.
+      #
+      # ==== Examples
+      #
+      #   # assert that the response was a redirection
+      #   assert_response :redirect
+      #
+      #   # assert that the response code was status code 401 (unauthorized)
+      #   assert_response 401
+      #
+      def assert_response(type, message = nil)
+        clean_backtrace do
+          if [ :success, :missing, :redirect, :error ].include?(type) &amp;&amp; @response.send(&quot;#{type}?&quot;)
+            assert_block(&quot;&quot;) { true } # to count the assertion
+          elsif type.is_a?(Fixnum) &amp;&amp; @response.response_code == type
+            assert_block(&quot;&quot;) { true } # to count the assertion
+          elsif type.is_a?(Symbol) &amp;&amp; @response.response_code == ActionController::StatusCodes::SYMBOL_TO_STATUS_CODE[type]
+            assert_block(&quot;&quot;) { true } # to count the assertion
+          else
+            if @response.error?
+              exception = @response.template.instance_variable_get(:@exception)
+              exception_message = exception &amp;&amp; exception.message
+              assert_block(build_message(message, &quot;Expected response to be a &lt;?&gt;, but was &lt;?&gt;\n&lt;?&gt;&quot;, type, @response.response_code, exception_message.to_s)) { false }
+            else
+              assert_block(build_message(message, &quot;Expected response to be a &lt;?&gt;, but was &lt;?&gt;&quot;, type, @response.response_code)) { false }
+            end
+          end
+        end
+      end
+
+      # Assert that the redirection options passed in match those of the redirect called in the latest action.
+      # This match can be partial, such that assert_redirected_to(:controller =&gt; &quot;weblog&quot;) will also
+      # match the redirection of redirect_to(:controller =&gt; &quot;weblog&quot;, :action =&gt; &quot;show&quot;) and so on.
+      #
+      # ==== Examples
+      #
+      #   # assert that the redirection was to the &quot;index&quot; action on the WeblogController
+      #   assert_redirected_to :controller =&gt; &quot;weblog&quot;, :action =&gt; &quot;index&quot;
+      #
+      #   # assert that the redirection was to the named route login_url
+      #   assert_redirected_to login_url
+      #
+      #   # assert that the redirection was to the url for @customer
+      #   assert_redirected_to @customer
+      #
+      def assert_redirected_to(options = {}, message=nil)
+        clean_backtrace do
+          assert_response(:redirect, message)
+          return true if options == @response.redirected_to
+
+          # Support partial arguments for hash redirections
+          if options.is_a?(Hash) &amp;&amp; @response.redirected_to.is_a?(Hash)
+            return true if options.all? {|(key, value)| @response.redirected_to[key] == value}
+          end
+
+          redirected_to_after_normalisation = normalize_argument_to_redirection(@response.redirected_to)
+          options_after_normalisation       = normalize_argument_to_redirection(options)
+
+          if redirected_to_after_normalisation != options_after_normalisation
+            flunk &quot;Expected response to be a redirect to &lt;#{options_after_normalisation}&gt; but was a redirect to &lt;#{redirected_to_after_normalisation}&gt;&quot;
+          end
+        end
+      end
+
+      # Asserts that the request was rendered with the appropriate template file or partials
+      #
+      # ==== Examples
+      #
+      #   # assert that the &quot;new&quot; view template was rendered
+      #   assert_template &quot;new&quot;
+      #
+      #   # assert that the &quot;_customer&quot; partial was rendered twice
+      #   assert_template :partial =&gt; '_customer', :count =&gt; 2
+      #
+      #   # assert that no partials were rendered
+      #   assert_template :partial =&gt; false
+      #
+      def assert_template(options = {}, message = nil)
+        clean_backtrace do
+          case options
+           when NilClass, String
+            rendered = @response.rendered[:template].to_s
+            msg = build_message(message,
+                    &quot;expecting &lt;?&gt; but rendering with &lt;?&gt;&quot;,
+                    options, rendered)
+            assert_block(msg) do
+              if options.nil?
+                @response.rendered[:template].blank?
+              else
+                rendered.to_s.match(options)
+              end
+            end
+          when Hash
+            if expected_partial = options[:partial]
+              partials = @response.rendered[:partials]
+              if expected_count = options[:count]
+                found = partials.detect { |p, _| p.to_s.match(expected_partial) }
+                actual_count = found.nil? ? 0 : found.second
+                msg = build_message(message,
+                        &quot;expecting ? to be rendered ? time(s) but rendered ? time(s)&quot;,
+                         expected_partial, expected_count, actual_count)
+                assert(actual_count == expected_count.to_i, msg)
+              else
+                msg = build_message(message,
+                        &quot;expecting partial &lt;?&gt; but action rendered &lt;?&gt;&quot;,
+                        options[:partial], partials.keys)
+                assert(partials.keys.any? { |p| p.to_s.match(expected_partial) }, msg)
+              end
+            else
+              assert @response.rendered[:partials].empty?,
+                &quot;Expected no partials to be rendered&quot;
+            end
+          end
+        end
+      end
+
+      private
+        # Proxy to to_param if the object will respond to it.
+        def parameterize(value)
+          value.respond_to?(:to_param) ? value.to_param : value
+        end
+
+        def normalize_argument_to_redirection(fragment)
+          after_routing = @controller.url_for(fragment)
+          if after_routing =~ %r{^\w+://.*}
+            after_routing
+          else
+            # FIXME - this should probably get removed.
+            if after_routing.first != '/'
+              after_routing = '/' + after_routing
+            end
+            @request.protocol + @request.host_with_port + after_routing
+          end
+        end
+    end
+  end
+end
+</pre>
+    </div>

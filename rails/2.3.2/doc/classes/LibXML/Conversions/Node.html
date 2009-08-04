@@ -1,0 +1,281 @@
+  <div id="C00000871">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />Node<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/xml_mini/libxml_rb.html');">rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002646&name=array?" >array?</a></li>
+  <li><a href="index.html?a=M002643&name=attributes_to_hash" >attributes_to_hash</a></li>
+  <li><a href="index.html?a=M002644&name=children_array_to_hash" >children_array_to_hash</a></li>
+  <li><a href="index.html?a=M002642&name=children_to_hash" >children_to_hash</a></li>
+  <li><a href="index.html?a=M002645&name=children_yaml_to_hash" >children_yaml_to_hash</a></li>
+  <li><a href="index.html?a=M002641&name=insert_name_into_hash" >insert_name_into_hash</a></li>
+  <li><a href="index.html?a=M002640&name=to_hash" >to_hash</a></li>
+  <li><a href="index.html?a=M002647&name=yaml?" >yaml?</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">CONTENT_ROOT</td>
+    <td>=</td>
+    <td class="attr-value">'__content__'</td>
+  </tr>
+  <tr valign='top'>
+    <td class="attr-name">LIB_XML_LIMIT</td>
+    <td>=</td>
+    <td class="attr-value">30000000</td>
+  </tr>
+  </table>
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002640" class="method">
+  <div id="M002640_title" class="title">
+    <b>to_hash</b>(hash={})
+  </div>
+  <div class="description">
+  <p>
+Convert XML document to hash
+</p>
+<table>
+<tr><td valign="top">hash:</td><td>Hash to merge the converted element into.
+
+</td></tr>
+</table>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002640_source')" id="l_M002640_source">show source</a> ]</p>
+  <div id="M002640_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 40</span>
+40:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_hash</span>(<span class="ruby-identifier">hash</span>={})
+41:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">text?</span>
+42:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">LibXML</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">LIB_XML_LIMIT</span>
+43:           <span class="ruby-identifier">hash</span>[<span class="ruby-constant">CONTENT_ROOT</span>] = <span class="ruby-identifier">content</span>
+44:         <span class="ruby-keyword kw">else</span>
+45:           <span class="ruby-identifier">sub_hash</span> = <span class="ruby-identifier">insert_name_into_hash</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">name</span>)
+46:           <span class="ruby-identifier">attributes_to_hash</span>(<span class="ruby-identifier">sub_hash</span>)
+47:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">array?</span>
+48:             <span class="ruby-identifier">children_array_to_hash</span>(<span class="ruby-identifier">sub_hash</span>)
+49:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">yaml?</span>
+50:             <span class="ruby-identifier">children_yaml_to_hash</span>(<span class="ruby-identifier">sub_hash</span>)
+51:           <span class="ruby-keyword kw">else</span>
+52:             <span class="ruby-identifier">children_to_hash</span>(<span class="ruby-identifier">sub_hash</span>)
+53:           <span class="ruby-keyword kw">end</span>
+54:         <span class="ruby-keyword kw">end</span>
+55:         <span class="ruby-identifier">hash</span>
+56:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Protected Instance methods</div>
+<div id="M002646" class="method">
+  <div id="M002646_title" class="title">
+    <b>array?</b>()
+  </div>
+  <div class="description">
+  <p>
+Check if child is of type array
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002646_source')" id="l_M002646_source">show source</a> ]</p>
+  <div id="M002646_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 119</span>
+119:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">array?</span>
+120:           <span class="ruby-identifier">child?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">next?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">next</span>.<span class="ruby-identifier">name</span>
+121:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002643" class="method">
+  <div id="M002643_title" class="title">
+    <b>attributes_to_hash</b>(hash={})
+  </div>
+  <div class="description">
+  <p>
+Convert xml attributes to hash
+</p>
+<table>
+<tr><td valign="top">hash:</td><td>Hash to merge the attributes into
+
+</td></tr>
+</table>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002643_source')" id="l_M002643_source">show source</a> ]</p>
+  <div id="M002643_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 93</span>
+93:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attributes_to_hash</span>(<span class="ruby-identifier">hash</span>={})
+94:           <span class="ruby-identifier">each_attr</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">attr</span><span class="ruby-operator">|</span> <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">attr</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">attr</span>.<span class="ruby-identifier">value</span> }
+95:           <span class="ruby-identifier">hash</span>
+96:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002644" class="method">
+  <div id="M002644_title" class="title">
+    <b>children_array_to_hash</b>(hash={})
+  </div>
+  <div class="description">
+  <p>
+Convert array into hash
+</p>
+<table>
+<tr><td valign="top">hash:</td><td>Hash to merge the array into
+
+</td></tr>
+</table>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002644_source')" id="l_M002644_source">show source</a> ]</p>
+  <div id="M002644_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 102</span>
+102:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children_array_to_hash</span>(<span class="ruby-identifier">hash</span>={})
+103:           <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">child</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
+104:             <span class="ruby-identifier">returning</span>({}) { <span class="ruby-operator">|</span><span class="ruby-identifier">sub_hash</span><span class="ruby-operator">|</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">children_to_hash</span>(<span class="ruby-identifier">sub_hash</span>) }
+105:           <span class="ruby-keyword kw">end</span>
+106:           <span class="ruby-identifier">hash</span>
+107:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002642" class="method">
+  <div id="M002642_title" class="title">
+    <b>children_to_hash</b>(hash={})
+  </div>
+  <div class="description">
+  <p>
+Insert children into hash
+</p>
+<table>
+<tr><td valign="top">hash:</td><td>Hash to merge the children into.
+
+</td></tr>
+</table>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002642_source')" id="l_M002642_source">show source</a> ]</p>
+  <div id="M002642_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 83</span>
+83:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children_to_hash</span>(<span class="ruby-identifier">hash</span>={})
+84:           <span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">to_hash</span>(<span class="ruby-identifier">hash</span>) }
+85:           <span class="ruby-identifier">attributes_to_hash</span>(<span class="ruby-identifier">hash</span>)
+86:           <span class="ruby-identifier">hash</span>
+87:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002645" class="method">
+  <div id="M002645_title" class="title">
+    <b>children_yaml_to_hash</b>(hash = {})
+  </div>
+  <div class="description">
+  <p>
+Convert yaml into hash
+</p>
+<table>
+<tr><td valign="top">hash:</td><td>Hash to merge the yaml into
+
+</td></tr>
+</table>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002645_source')" id="l_M002645_source">show source</a> ]</p>
+  <div id="M002645_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 113</span>
+113:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children_yaml_to_hash</span>(<span class="ruby-identifier">hash</span> = {})
+114:           <span class="ruby-identifier">hash</span>[<span class="ruby-constant">CONTENT_ROOT</span>] = <span class="ruby-identifier">content</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">blank?</span>
+115:           <span class="ruby-identifier">hash</span>
+116:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002641" class="method">
+  <div id="M002641_title" class="title">
+    <b>insert_name_into_hash</b>(hash, name)
+  </div>
+  <div class="description">
+  <p>
+Insert name into hash
+</p>
+<table>
+<tr><td valign="top">hash:</td><td>Hash to merge the converted element into.
+
+</td></tr>
+<tr><td valign="top">name:</td><td>name to to merge into hash
+
+</td></tr>
+</table>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002641_source')" id="l_M002641_source">show source</a> ]</p>
+  <div id="M002641_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 66</span>
+66:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert_name_into_hash</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">name</span>)
+67:           <span class="ruby-identifier">sub_hash</span> = {}
+68:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">name</span>]
+69:             <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">hash</span>[<span class="ruby-identifier">name</span>].<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+70:               <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">name</span>] = [<span class="ruby-identifier">hash</span>[<span class="ruby-identifier">name</span>]]
+71:             <span class="ruby-keyword kw">end</span>
+72:             <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">name</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sub_hash</span>
+73:           <span class="ruby-keyword kw">else</span>
+74:             <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">sub_hash</span>
+75:           <span class="ruby-keyword kw">end</span>
+76:           <span class="ruby-identifier">sub_hash</span>
+77:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002647" class="method">
+  <div id="M002647_title" class="title">
+    <b>yaml?</b>()
+  </div>
+  <div class="description">
+  <p>
+Check if child is of type yaml
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002647_source')" id="l_M002647_source">show source</a> ]</p>
+  <div id="M002647_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/xml_mini/libxml.rb, line 124</span>
+124:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">yaml?</span>
+125:           <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">value</span>}.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">'yaml'</span>)
+126:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

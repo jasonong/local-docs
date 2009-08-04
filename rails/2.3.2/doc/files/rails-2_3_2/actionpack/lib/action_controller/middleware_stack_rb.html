@@ -1,0 +1,138 @@
+  <div id="fileHeader">
+    <h1>middleware_stack.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/middleware_stack.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController
+  class MiddlewareStack &lt; Array
+    class Middleware
+      def self.new(klass, *args, &amp;block)
+        if klass.is_a?(self)
+          klass
+        else
+          super
+        end
+      end
+
+      attr_reader :args, :block
+
+      def initialize(klass, *args, &amp;block)
+        @klass = klass
+
+        options = args.extract_options!
+        if options.has_key?(:if)
+          @conditional = options.delete(:if)
+        else
+          @conditional = true
+        end
+        args &lt;&lt; options unless options.empty?
+
+        @args = args
+        @block = block
+      end
+
+      def klass
+        if @klass.respond_to?(:call)
+          @klass.call
+        elsif @klass.is_a?(Class)
+          @klass
+        else
+          @klass.to_s.constantize
+        end
+      rescue NameError
+        @klass
+      end
+
+      def active?
+        return false unless klass
+
+        if @conditional.respond_to?(:call)
+          @conditional.call
+        else
+          @conditional
+        end
+      end
+
+      def ==(middleware)
+        case middleware
+        when Middleware
+          klass == middleware.klass
+        when Class
+          klass == middleware
+        else
+          klass == middleware.to_s.constantize
+        end
+      end
+
+      def inspect
+        str = klass.to_s
+        args.each { |arg| str += &quot;, #{arg.inspect}&quot; }
+        str
+      end
+
+      def build(app)
+        if block
+          klass.new(app, *build_args, &amp;block)
+        else
+          klass.new(app, *build_args)
+        end
+      end
+
+      private
+
+        def build_args
+          Array(args).map { |arg| arg.respond_to?(:call) ? arg.call : arg }
+        end
+    end
+
+    def initialize(*args, &amp;block)
+      super(*args)
+      block.call(self) if block_given?
+    end
+
+    def insert(index, *args, &amp;block)
+      index = self.index(index) unless index.is_a?(Integer)
+      middleware = Middleware.new(*args, &amp;block)
+      super(index, middleware)
+    end
+
+    alias_method :insert_before, :insert
+
+    def insert_after(index, *args, &amp;block)
+      index = self.index(index) unless index.is_a?(Integer)
+      insert(index + 1, *args, &amp;block)
+    end
+
+    def swap(target, *args, &amp;block)
+      insert_before(target, *args, &amp;block)
+      delete(target)
+    end
+
+    def use(*args, &amp;block)
+      middleware = Middleware.new(*args, &amp;block)
+      push(middleware)
+    end
+
+    def active
+      find_all { |middleware| middleware.active? }
+    end
+
+    def build(app)
+      active.reverse.inject(app) { |a, e| e.build(a) }
+    end
+  end
+end
+</pre>
+    </div>

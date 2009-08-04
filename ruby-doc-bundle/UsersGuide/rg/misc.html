@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Nuts and bolts</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="objinitialization.html">
+ <img border=0 src="a2l.gif" alt="Object initialization"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2r.gif" alt="Contents"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Nuts and bolts</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>This chapter addresses a few practical issues.</p>
+<h3><a name="label:0" id="label:0">Statement delimiters</a></h3><!-- RDLabel: "Statement delimiters" -->
+<p>Some languages require some kind of punctuation, often a semicolon
+(<code>;</code>), to end each statement in a program.  Ruby
+instead follows the convention used in shells like <code>sh</code> and
+<code>csh</code>.  Multiple statements on one line must be
+separated by semicolons, but they are not required at the end of a
+line; a linefeed is treated like a semicolon.  If a line ends
+with a backslash (<code>\</code>), the linefeed following it is
+ignored; this allows you to have a single logical line that spans
+several lines.</p>
+<h3><a name="label:1" id="label:1">Comments</a></h3><!-- RDLabel: "Comments" -->
+<p>Why write comments?  Although well written code tends to be
+self-documenting, it is often helpful to scribble in the margins, and
+it can be a mistake to believe that others will be able to look at
+your code and immediately see it the way you do. Besides, for
+practical purposes, you yourself are a different person within a few
+days anyway; which of us hasn't gone back to fix or enhance a program
+after the passage of time and said, I know I wrote this, but what in
+blazes does it mean?</p>
+<p>Some experienced programmers will point out, quite correctly, that
+contradictory or outdated comments can be worse than none at all.
+Certainly, comments shouldn't be a substitute for readable code; if
+your code is unclear, it's probably also buggy.  You may find that you
+need to comment more while you are learning ruby, and then less as you
+become better at expressing your ideas in simple, elegant, readable
+code.</p>
+<p>Ruby follows a common scripting convention, which is to use a pound
+symbol (<code>#</code>) to denote the start of a comment.  Anything
+following an unquoted <code>#</code>, to the end of the line on which it
+appears, is ignored by the interpreter.</p>
+<p>Also, to facilitate large comment blocks, the ruby interpreter also
+ignores anything between a line starting with "<code>=begin</code>" and
+another line starting with "<code>=end</code>".</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">#!/usr/bin/env ruby
+
+=begin
+**********************************************************************
+  This is a comment block, something you write for the benefit of
+  human readers (including yourself).  The interpreter ignores it.
+  There is no need for a '#' at the start of every line.
+**********************************************************************
+=end</font></pre></td></tr></table>
+<h3><a name="label:2" id="label:2">Organizing your code</a></h3><!-- RDLabel: "Organizing your code" -->
+<p>The ruby interpreter processes code as it reads it.  There is
+nothing like a compilation phase; if something hasn't been read yet,
+it is simply undefined.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black"># this results in an "undefined method" error:
+
+print successor(3),"\n"
+
+def successor(x)
+  x + 1
+end</font></pre></td></tr></table>
+<p>This does not, as it might seem at first glance, force you to
+organize your code in a strictly bottom-up fashion.  When the
+interpreter encounters a method definition, it can safely include
+undefined references, as long as you can be sure they will be defined
+by the time the method is actually invoked:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black"># Conversion of fahrenheit to celsius, broken
+# down into two steps.
+
+def f_to_c(f)
+  scale(f - 32.0)  # This is a forward reference, but it's okay.
+end
+
+def scale(x)
+  x * 5.0 / 9.0
+end
+
+printf "%.1f is a comfortable temperature.\n", f_to_c(72.3)</font></pre></td></tr></table>
+<p>So while this may seem less convenient than what you may be used to
+in Perl or Java, it is less restrictive than trying to write C without
+prototypes (which would require you to always maintain a partial
+ordering of what references what).  Putting top-level code at the
+bottom of a source file always works.  And even this is less of an
+annoyance than it might at first seem.  A sensible and painless way to
+enforce the behavior you want is to define a <code>main</code> function at
+the top of the file, and call it from the bottom.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black">#!/usr/bin/env ruby
+
+def main
+  # Express the top level logic here...
+end
+
+# ... put support code here, organized as you see fit ...
+
+main # ... and start execution here.</font></pre></td></tr></table>
+<p>It also helps that ruby provides tools for breaking complicated
+programs into readable, reusable, logically related chunks.  We have
+already seen the use of <code>include</code> for accessing modules.  You
+will also find the <code>load</code> and <code>require</code> facilities useful.
+<code>load</code> works as if the file it refers to were copied and pasted
+in (something like the <code>#include</code> preprocessor directive in
+C). <code>require</code> is somewhat more sophisticated, causing code
+to be loaded at most once and only when needed.  There are other
+differences between <code>load</code> and <code>require</code>; refer to the
+language manual or the FAQ for more information.</p>
+<h3><a name="label:3" id="label:3">That's it...</a></h3><!-- RDLabel: "That's it..." -->
+<p>This tutorial should be enough to get you started writing programs in
+Ruby.  As further questions arise, you can dig into the <a href="http://www.ruby-lang.org/en/man-1.4/">reference
+manual</a> to
+learn about ruby in more depth.  The
+<a href="http://dev.rubycentral.com/faq/rubyfaq.html">FAQ</a> and
+<a href="http://dev.rubycentral.com/ref/">library reference</a> are also
+important resources.</p>
+<p>Good luck, and happy coding!</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="objinitialization.html">
+ <img border=0 src="a2l.gif" alt="Object initialization"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2r.gif" alt="Contents"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

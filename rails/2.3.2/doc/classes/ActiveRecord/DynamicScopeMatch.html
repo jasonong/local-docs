@@ -1,0 +1,109 @@
+  <div id="C00000795">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />DynamicScopeMatch<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activerecord/lib/active_record/dynamic_scope_match_rb.html');">rails-2.3.2/activerecord/lib/active_record/dynamic_scope_match.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Object.html');">
+Object
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M002414&name=match" >match</a></li>
+  <li><a href="index.html?a=M002415&name=new" >new</a></li>
+  <li><a href="index.html?a=M002416&name=scope?" >scope?</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>attribute_names</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>scope</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M002414" class="method">
+  <div id="M002414_title" class="title">
+    <b>match</b>(method)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002414_source')" id="l_M002414_source">show source</a> ]</p>
+  <div id="M002414_source" class="dyn-source">
+<pre>
+   <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/dynamic_scope_match.rb, line 3</span>
+3:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">method</span>)
+4:       <span class="ruby-identifier">ds_match</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">method</span>)
+5:       <span class="ruby-identifier">ds_match</span>.<span class="ruby-identifier">scope</span> <span class="ruby-value">? </span><span class="ruby-identifier">ds_match</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+6:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M002415" class="method">
+  <div id="M002415_title" class="title">
+    <b>new</b>(method)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002415_source')" id="l_M002415_source">show source</a> ]</p>
+  <div id="M002415_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/dynamic_scope_match.rb, line 8</span>
+ 8:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">method</span>)
+ 9:       <span class="ruby-ivar">@scope</span> = <span class="ruby-keyword kw">true</span>
+10:       <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span>
+11:       <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^scoped_by_([_a-zA-Z]\w*)$/</span>
+12:         <span class="ruby-identifier">names</span> = <span class="ruby-identifier">$1</span>
+13:       <span class="ruby-keyword kw">else</span>
+14:         <span class="ruby-ivar">@scope</span> = <span class="ruby-keyword kw">nil</span>
+15:       <span class="ruby-keyword kw">end</span>
+16:       <span class="ruby-ivar">@attribute_names</span> = <span class="ruby-identifier">names</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">names</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'_and_'</span>)
+17:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M002416" class="method">
+  <div id="M002416_title" class="title">
+    <b>scope?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M002416_source')" id="l_M002416_source">show source</a> ]</p>
+  <div id="M002416_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activerecord/lib/active_record/dynamic_scope_match.rb, line 21</span>
+21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scope?</span>
+22:       <span class="ruby-operator">!</span><span class="ruby-ivar">@scope</span>.<span class="ruby-identifier">nil?</span>
+23:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

@@ -1,0 +1,55 @@
+  <div id="fileHeader">
+    <h1>cascade.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/cascade.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module Rack
+  # Rack::Cascade tries an request on several apps, and returns the
+  # first response that is not 404 (or in a list of configurable
+  # status codes).
+
+  class Cascade
+    attr_reader :apps
+
+    def initialize(apps, catch=404)
+      @apps = apps
+      @catch = [*catch]
+    end
+
+    def call(env)
+      status = headers = body = nil
+      raise ArgumentError, &quot;empty cascade&quot;  if @apps.empty?
+      @apps.each { |app|
+        begin
+          status, headers, body = app.call(env)
+          break  unless @catch.include?(status.to_i)
+        end
+      }
+      [status, headers, body]
+    end
+
+    def add app
+      @apps &lt;&lt; app
+    end
+
+    def include? app
+      @apps.include? app
+    end
+
+    alias_method :&lt;&lt;, :add
+  end
+end
+</pre>
+    </div>

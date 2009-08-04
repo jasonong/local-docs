@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Options</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="preface.html">prev</A>
+-
+<A HREF="syntax.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<H1>Command line options</H1>
+
+<P>
+Ruby interpreter accepts following command-line options
+(switches).  Basically they are quite similar to those of
+Perl.
+
+</P>
+<DL COMPACT>
+
+<DT><SAMP>-0<u>digit</u></SAMP>
+<DD>
+specifies the input record separator (<code>$/</code>) as an 
+octal number. If no digits given, the null character is the
+separator.  Other switches may follow the digits.
+
+<samp>-00</samp> turns Ruby into paragraph mode.
+<samp>-0777</samp> makes Ruby read whole file at once as a
+single string, since there is no legal character with that
+value.
+
+<DT><SAMP>-a</SAMP>
+<DD>
+turns on auto-split mode when used with <samp>-n</samp> or
+<samp>-p</samp>.  In auto-split mode, Ruby executes
+
+<PRE>
+	$F = $_.split
+</PRE>
+
+at beginning of each loop.
+
+<DT><SAMP>-c</SAMP>
+<DD>
+causes Ruby to check the syntax of the script and exit
+without executing.  If there is no syntax error, Ruby will
+print <samp>"Syntax OK"</samp> to the standard output.
+
+<DT><SAMP>-K<u>c</u></SAMP>
+<DD>
+specifies KANJI (Japanese character) code-set.
+
+<DT><a name="debug"><SAMP>-d</SAMP></a>
+<DD>
+<DT><SAMP>--debug</SAMP>
+<DD>
+turns on debug mode.  <code>$DEBUG</code> will set true.
+
+<DT><SAMP>-e <u>script</u></SAMP>
+<DD>
+specifies script from command-line.  if <samp>-e</samp>
+switch specified, Ruby will not look for a script filename
+in the arguments.
+
+<DT><SAMP>-F <u>regexp</u></SAMP>
+<DD>
+specifies input field separator (<code>$;</code>). 
+
+<DT>
+<a name="help"><SAMP>-h</SAMP></a>
+<DD>
+<DT><SAMP>--help</SAMP>
+<DD>
+prints a summary of the options.
+
+<DT><SAMP>-i <u>extension</u></SAMP>
+<DD>
+specifies in-place-edit mode.  The extension, if specified,
+is added to old filename to make a backup copy.
+<p>
+example:
+</p>
+<PRE>
+	% echo matz &#62; /tmp/junk
+	% cat /tmp/junk
+	matz
+	% ruby -p -i.bak -e '$_.upcase!' /tmp/junk
+	% cat /tmp/junk
+	MATZ
+	% cat /tmp/junk.bak
+	matz
+</PRE>
+
+<DT>
+<a name="include">
+<SAMP>-I <u>directory</u></SAMP></a>
+<DD>
+used to tell Ruby where to load the library scripts.
+Directory path will be added to the load-path variable
+(`<CODE>$:</CODE>'). 
+
+<DT><SAMP>-l</SAMP>
+<DD>
+enables automatic line-ending processing, which means
+firstly set <CODE>$\</CODE> to the value of <CODE>$/</CODE>, 
+and secondly chops every line read using <CODE>chop!</CODE>,
+when used with <code>-n</code> or <code>-p</code>.
+
+<DT><SAMP>-n</SAMP>
+<DD>
+causes Ruby to assume the following loop around your script,
+which makes it iterate over filename arguments somewhat like 
+<samp>sed -n</samp> or <samp>awk</samp>.
+
+<PRE>
+	while gets
+	  ...
+	end
+</PRE>
+
+<DT><SAMP>-p</SAMP>
+<DD>
+acts mostly same as 
+<CODE>-n</CODE> switch, but print the value of variable
+<code>$_</code> at the each end of the loop.
+<P>
+example:
+</P>
+<PRE>
+	% echo matz | ruby -p -e '$_.tr! "a-z", "A-Z"'
+	MATZ
+</PRE>
+
+<DT><SAMP>-r <u>filename</u></SAMP>
+<DD>
+causes Ruby to load the file using <CODE>
+<A HREF="function.html#require">require</A></CODE>.  It is
+useful with switches <samp>-n</samp> or <samp>-p</samp>.
+
+<DT><SAMP>-s</SAMP>
+<DD>
+enables some switch parsing for switches after script name
+but before any filename arguments (or before a
+<samp>--</samp>).  Any switches found there is removed from
+ARGV and set the corresponding variable in the script.
+<p>
+example:
+</p>
+<PRE>
+	#! /usr/local/bin/ruby -s
+	# prints "true" if invoked with `-xyz' switch.
+	print "true\n" if $xyz
+</PRE>
+
+<DT><SAMP>-S</SAMP>
+<DD>
+makes Ruby uses the PATH environment variable to search for
+script, unless if its name begins with a slash.  
+This is used to emulate <SAMP>#!</SAMP> on machines that
+don't support it, in the following manner:
+
+<PRE>
+	#!/bin/sh
+	exec ruby -S -x $0 "$@"
+        #! ruby
+</PRE>
+<p>
+On some systems $0 does not always contain the full
+pathname, so you need <samp>-S</samp> switch to tell Ruby to
+search for the script if necessary.
+</p>
+
+<DT><SAMP>-T [<u>level</u>]</SAMP> 
+<DD>
+Forces "taint" checks to be turned on so you can test them.  If level
+is specified, <code>$SAFE</code> to be set to that level.  It's a good
+idea to turn them on explicitly for programs run on another's behalf,
+such as CGI programs.
+
+<DT><A NAME="verbose"><SAMP>-v</SAMP></A>
+<DD>
+<DT><SAMP>--verbose</SAMP>
+<DD>
+enables verbose mode. Ruby will prints its version at the beginning,
+and set the variable `<code>$VERBOSE</code>' to true.  Some methods
+prints extra messages if this variable is true.  If this switch is
+given, and no other switches present, Ruby quits after printing its
+version.
+
+<DT><SAMP>--version</SAMP>
+<DD>
+prints the version of Ruby executable.
+
+<DT><A NAME="warn"><SAMP>-w</SAMP></A>
+<DD>
+enables verbose mode without printing version message at the
+beginning.  It set the variable `<code>$VERBOSE</code>' to true.
+
+<DT><SAMP>-x<u>[directory]</u></SAMP>
+<DD>
+tells Ruby that the script is embedded in a message.  Leading garbage
+will be discarded until the first that starts with "#!" and contains
+string "ruby".  Any meaningful switches on that line will applied. The
+end of script must be specified with either EOF, <code>^D</code>
+(control-D), <code>^Z</code> (control-Z), or reserved word
+<code>__END__</code>.If the directory name is specified, Ruby will
+switch to that directory before executing script.
+
+<DT><SAMP>-X <u>directory</u></SAMP>
+<DD>
+causes Ruby to switch to the directory.
+
+<DT><SAMP>-y</SAMP>
+<DD>
+<DT><SAMP>--yydebug</SAMP>
+<DD>
+turns on compiler debug mode.  Ruby will print bunch of internal state
+messages during compiling scripts.  You don't have to specify this
+switch, unless you are going to debug the Ruby interpreter itself.
+</DL>
+
+<HR>
+<A HREF="preface.html">prev</A>
+-
+<A HREF="syntax.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

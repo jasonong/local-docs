@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Access control</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="redefinemethods.html">
+ <img border=0 src="a2l.gif" alt="Redefinition of methods"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="singletonmethods.html">
+ <img border=0 src="a2r.gif" alt="Singleton methods"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Access control</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Earlier, we said that ruby has no functions, only methods.
+However there is more than one kind of method.  In this chapter
+we introduce <em>access controls</em>.</p>
+<p>Consider what happens when we define a method in the "top level",
+not inside a class definition.  We can think of such a method as
+analogous to a <em>function</em> in a more traditional language like C.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> def square(n)</b></font>
+    |<font color="#ffff00"><b>   n * n</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> square(5)</b></font>
+<font color="#50ffff"><b>   25</b></font></font></pre></td></tr></table>
+<p>Our new method would appear not to belong to any class, but in fact
+ruby gives it to the <code>Object</code> class, which is a superclass
+of every other class.  As a result, any object should now be able
+to use that method.  That turns out to be true, but there's a
+small catch: it is a <em>private</em> method of every class.
+We'll discuss some of what this means below, but one consequence is
+that it may be invoked only in function style, as here:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Foo</b></font>
+    |<font color="#ffff00"><b>   def fourth_power_of(x)</b></font>
+    |<font color="#ffff00"><b>     square(x) * square(x)</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+  nil
+ruby&gt;<font color="#ffff00"><b> Foo.new.fourth_power_of 10</b></font>
+  10000</font></pre></td></tr></table>
+<p>We are not allowed to explicitly apply the method to an object:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "fish".square(5)</b></font>
+<font color="#50ffff"><b>ERR: (eval):1: private method `square' called for "fish":String</b></font></font></pre></td></tr></table>
+<p>This rather cleverly preserves ruby's pure-OO nature (functions are
+still object methods, but the receiver is <code>self</code>
+implicitly) while providing functions that can be written just as in a
+more traditional language.</p>
+<p>A common mental discipline in OO programming, which we have hinted
+at in an earlier chapter, concerns the separation of
+<em>specification</em> and <em>implementation</em>, or <em>what</em> tasks an
+object is supposed to accomplish and <em>how</em> it actually
+accomplishes them.  The internal workings of an object should be
+kept generally hidden from its users; they should only care about what
+goes in and what comes out, and trust the object to know what it is
+doing internally.  As such it is often helpful for classes to
+have methods that the outside world does not see, but which are used
+internally (and can be improved by the programmer whenever desired,
+without changing the way users see objects of that class).  In
+the trivial example below, think of <code>engine</code> as the invisible
+inner workings of the class.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class Test</b></font>
+    |<font color="#ffff00"><b>   def times_two(a)</b></font>
+    |<font color="#ffff00"><b>     print a," times two is ",engine(a),"\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b>   def engine(b)</b></font>
+    |<font color="#ffff00"><b>     b*2</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b>   private:engine  # this hides engine from users</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   Test</b></font>
+ruby&gt;<font color="#ffff00"><b> test = Test.new</b></font>
+<font color="#50ffff"><b>   #&lt;Test:0x4017181c&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> test.engine(6)</b></font>
+<font color="#50ffff"><b>ERR: (eval):1: private method `engine' called for #&lt;Test:0x4017181c&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> test.times_two(6)</b></font>
+6 times two is 12.
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>We might have expected <code>test.engine(6)</code> to return 12, but
+instead we learn that <code>engine</code> is inaccessible when we
+are acting as a user of a <code>Test</code> object.  Only other
+<code>Test</code> methods, such as <code>times_two</code>, are allowed to
+use <code>engine</code>.  We are required to go through the
+public interface, which consists of the <code>times_two</code>
+method.  The programmer who is in charge of this class can change
+<code>engine</code> freely (here, perhaps by changing <code>b*2</code>
+to <code>b+b</code>, assuming for the sake of argument that it improved
+performance) without affecting how the user interacts with
+<code>Test</code> objects.  This example is of course much too simple
+to be useful; the benefits of access controls become more clear only
+when we begin to create more complicated and interesting classes.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="redefinemethods.html">
+ <img border=0 src="a2l.gif" alt="Redefinition of methods"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="singletonmethods.html">
+ <img border=0 src="a2r.gif" alt="Singleton methods"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

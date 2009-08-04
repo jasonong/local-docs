@@ -1,0 +1,108 @@
+  <div id="fileHeader">
+    <h1>fastcgi.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/handler/fastcgi.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'fcgi'
+require 'socket'
+require 'rack/content_length'
+
+module Rack
+  module Handler
+    class FastCGI
+      def self.run(app, options={})
+        file = options[:File] and STDIN.reopen(UNIXServer.new(file))
+        port = options[:Port] and STDIN.reopen(TCPServer.new(port))
+        FCGI.each { |request|
+          serve request, app
+        }
+      end
+
+      module ProperStream       # :nodoc:
+        def each                # This is missing by default.
+          while line = gets
+            yield line
+          end
+        end
+
+        def read(*args)
+          if args.empty?
+            super || &quot;&quot;           # Empty string on EOF.
+          else
+            super
+          end
+        end
+      end
+
+      def self.serve(request, app)
+        app = Rack::ContentLength.new(app)
+
+        env = request.env
+        env.delete &quot;HTTP_CONTENT_LENGTH&quot;
+
+        request.in.extend ProperStream
+
+        env[&quot;SCRIPT_NAME&quot;] = &quot;&quot;  if env[&quot;SCRIPT_NAME&quot;] == &quot;/&quot;
+
+        env.update({&quot;rack.version&quot; =&gt; [0,1],
+                     &quot;rack.input&quot; =&gt; request.in,
+                     &quot;rack.errors&quot; =&gt; request.err,
+
+                     &quot;rack.multithread&quot; =&gt; false,
+                     &quot;rack.multiprocess&quot; =&gt; true,
+                     &quot;rack.run_once&quot; =&gt; false,
+
+                     &quot;rack.url_scheme&quot; =&gt; [&quot;yes&quot;, &quot;on&quot;, &quot;1&quot;].include?(env[&quot;HTTPS&quot;]) ? &quot;https&quot; : &quot;http&quot;
+                   })
+
+        env[&quot;QUERY_STRING&quot;] ||= &quot;&quot;
+        env[&quot;HTTP_VERSION&quot;] ||= env[&quot;SERVER_PROTOCOL&quot;]
+        env[&quot;REQUEST_PATH&quot;] ||= &quot;/&quot;
+        env.delete &quot;PATH_INFO&quot;  if env[&quot;PATH_INFO&quot;] == &quot;&quot;
+        env.delete &quot;CONTENT_TYPE&quot;  if env[&quot;CONTENT_TYPE&quot;] == &quot;&quot;
+        env.delete &quot;CONTENT_LENGTH&quot;  if env[&quot;CONTENT_LENGTH&quot;] == &quot;&quot;
+
+        status, headers, body = app.call(env)
+        begin
+          send_headers request.out, status, headers
+          send_body request.out, body
+        ensure
+          body.close  if body.respond_to? :close
+          request.finish
+        end
+      end
+
+      def self.send_headers(out, status, headers)
+        out.print &quot;Status: #{status}\r\n&quot;
+        headers.each { |k, vs|
+          vs.split(&quot;\n&quot;).each { |v|
+            out.print &quot;#{k}: #{v}\r\n&quot;
+          }
+        }
+        out.print &quot;\r\n&quot;
+        out.flush
+      end
+
+      def self.send_body(out, body)
+        body.each { |part|
+          out.print part
+          out.flush
+        }
+      end
+    end
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Instance variables</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="globalvars.html">
+ <img border=0 src="a2l.gif" alt="Global variables"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="localvars.html">
+ <img border=0 src="a2r.gif" alt="Local variables"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Instance variables</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>An instance variable has a name beginning with <code>@</code>, and its
+scope is confined to whatever object <code>self</code> refers to.
+Two different objects, even if they belong to the same class, are
+allowed to have different values for their instance variables.
+From outside the object, instance variables cannot be altered or even
+observed (i.e., ruby's instance variables are never <em>public</em>)
+except by whatever methods are explicitly provided by the
+programmer.  As with globals, instance variables have the
+<code>nil</code> value until they are initialized.</p>
+<p>Instance variables of ruby do not need declaration.  This
+implies a flexible structure of objects.  In fact, each instance
+variable is dynamically appended to an object when it is first
+referenced.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class InstTest</b></font>
+    |<font color="#ffff00"><b>   def set_foo(n)</b></font>
+    |<font color="#ffff00"><b>     @foo = n</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b>   def set_bar(n)</b></font>
+    |<font color="#ffff00"><b>     @bar = n</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> i = InstTest.new</b></font>
+<font color="#50ffff"><b>   #&lt;InstTest:0x83678&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> i.set_foo(2)</b></font>
+<font color="#50ffff"><b>   2</b></font>
+ruby&gt;<font color="#ffff00"><b> i</b></font>
+<font color="#50ffff"><b>   #&lt;InstTest:0x83678 @foo=2&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> i.set_bar(4)</b></font>
+<font color="#50ffff"><b>   4</b></font>
+ruby&gt;<font color="#ffff00"><b> i</b></font>
+<font color="#50ffff"><b>   #&lt;InstTest:0x83678 @foo=2, @bar=4&gt;</b></font></font></pre></td></tr></table>
+<p>Notice above that <code>i</code> does not report a value for
+<code>@bar</code> until after the <code>set_bar</code> method is
+invoked.</p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="globalvars.html">
+ <img border=0 src="a2l.gif" alt="Global variables"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="localvars.html">
+ <img border=0 src="a2r.gif" alt="Local variables"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

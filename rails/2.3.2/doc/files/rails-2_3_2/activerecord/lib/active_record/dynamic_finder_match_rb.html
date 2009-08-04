@@ -1,0 +1,60 @@
+  <div id="fileHeader">
+    <h1>dynamic_finder_match.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activerecord/lib/active_record/dynamic_finder_match.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveRecord
+  class DynamicFinderMatch
+    def self.match(method)
+      df_match = self.new(method)
+      df_match.finder ? df_match : nil
+    end
+
+    def initialize(method)
+      @finder = :first
+      case method.to_s
+      when /^find_(all_by|last_by|by)_([_a-zA-Z]\w*)$/
+        @finder = :last if $1 == 'last_by'
+        @finder = :all if $1 == 'all_by'
+        names = $2
+      when /^find_by_([_a-zA-Z]\w*)\!$/
+        @bang = true
+        names = $1
+      when /^find_or_(initialize|create)_by_([_a-zA-Z]\w*)$/
+        @instantiator = $1 == 'initialize' ? :new : :create
+        names = $2
+      else
+        @finder = nil
+      end
+      @attribute_names = names &amp;&amp; names.split('_and_')
+    end
+
+    attr_reader :finder, :attribute_names, :instantiator
+
+    def finder?
+      !@finder.nil? &amp;&amp; @instantiator.nil?
+    end
+
+    def instantiator?
+      @finder == :first &amp;&amp; !@instantiator.nil?
+    end
+
+    def bang?
+      @bang
+    end
+  end
+end
+</pre>
+    </div>

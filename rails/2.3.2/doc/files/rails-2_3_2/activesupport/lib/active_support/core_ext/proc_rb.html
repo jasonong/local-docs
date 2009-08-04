@@ -1,0 +1,31 @@
+  <div id="fileHeader">
+    <h1>proc.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/proc.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>class Proc #:nodoc:
+  def bind(object)
+    block, time = self, Time.now
+    (class &lt;&lt; object; self end).class_eval do
+      method_name = &quot;__bind_#{time.to_i}_#{time.usec}&quot;
+      define_method(method_name, &amp;block)
+      method = instance_method(method_name)
+      remove_method(method_name)
+      method
+    end.bind(object)
+  end
+end
+</pre>
+    </div>

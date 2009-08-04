@@ -1,0 +1,779 @@
+<HTML>
+<HEAD>
+<TITLE>String</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Regexp.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Struct.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>String</H1>
+<dd> 
+<P>
+The <code>String</code> class represents the arbitrary length of byte
+string.  
+</p>
+<p>
+Some methods for the <code>String</code> class which have the
+name ends with `<samp>!</samp>', modify the contents of the strings.
+The methods without `<samp>!</samp>' make copy of the string and
+modify them.  So, they are more slower but safer.  For example:
+</P>
+<blockquote>
+<PRE>
+f = "string"
+print f, f.sub("str", "ski"), f
+       =&gt; string, skiing, string
+print f, f.sub!("str", "ski"), f
+       =&gt; skiing, skiing, skiing
+</PRE>
+</blockquote>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Compar.html"><code>Comparable</code></A>
+<dt> <A HREF="Enum.html"><code>Enumerable</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="String.new">
+<CODE>new(<VAR>string</VAR>)</CODE></A>
+<DD>
+<p>
+Returns a newly created string object which has same contents to the
+<var>string</var>.
+</p>
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="plus">
+<CODE>self + <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Returns newly created concatenated string.
+</p>
+
+<DT>
+<A NAME="mul">
+<CODE>self * <VAR>times</VAR></CODE></A>
+<DD>
+<p>
+Reputation of the string.  For example, <CODE>"x" * 4</CODE> returns
+<code>"xxxx"</code>.
+</p>
+
+<DT>
+<A NAME="mod"><CODE>self % <VAR>args</VAR></CODE></A>
+<DD>
+<p>
+Formats from the string.  Works just like:
+<code>sprintf(self, *args)</code>.
+</p>
+
+<DT>
+<A NAME="eq"><CODE>self == <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="gt"><CODE>self &#62; <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="ge"><CODE>self &#62;= <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="lt"><CODE>self &#60; <VAR>other</VAR></CODE></A>
+<DD>
+<DT><A NAME="le"><CODE>self &#60;= <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+String comparison.  If the value of the variable <code>$=</code> is
+not false, comparison done by case-insensitive.
+</p>
+
+<DT>
+<A NAME="eqq">
+<CODE>self === <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Same as operator `<code>==</code>'.  Used for <code>case</code>
+comparison.
+</p>
+
+<DT><A NAME="lshift"><CODE>self &#60;&#60; <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Appends <var>other</var>'s value to the string contents.
+</p>
+
+<DT>
+<A NAME="match">
+<CODE>self =~ <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+String match.  Returns an index of the match if any, or <code>nil</code>.
+If the argument <var>other</var> is a string, it will be compiled into 
+a regular expression.
+</p>
+
+<DT>
+<A NAME="inv">
+<CODE>~ self</CODE></A>
+<DD>
+<p>
+Same as <CODE>$_ =~ self</CODE>.
+</p>
+
+<DT><A NAME="aref">
+<CODE>self[<VAR>nth</VAR>]</CODE></A>
+<DD>
+<p>
+Retrieves the <var>nth</var> character from a string. 
+</p>
+<DT><CODE>self[<VAR>start</VAR>..<VAR>last</VAR>]</CODE>
+<DD>
+<p>
+Returns a substring from <var>start</var> to <var>last</var>, including
+both ends.
+</p>
+<DT><CODE>self[<VAR>start</VAR>, <VAR>length</VAR>]</CODE>
+<DD>
+<p>
+Returns a substring of <var>length</var> characters from <var>start</var>.
+</p>
+
+<DT><A NAME="aset">
+<CODE>self[<VAR>nth</VAR>] = <VAR>val</VAR></CODE></A>
+<DD>
+<p>
+Changes the <var>nth</var> character of the string into
+<var>val</var>.  If the strings is freezed, exception will occur.
+</p>
+<DT><CODE>self[<VAR>start</VAR>..<VAR>last</VAR>] = <VAR>val</VAR></CODE>
+<DD>
+<p>
+Replace the substring from <var>start</var> to <var>last</var> with
+<var>val</var>. 
+</p>
+<DT><CODE>self[<VAR>start</VAR>, <VAR>len</VAR>] = <VAR>val</VAR></CODE>
+<DD>
+<p>
+Replace the substring <var>length</var> characters from
+<var>start</var> with <var>val</var>.
+</p>
+
+<DT>
+<A NAME="cmp"><CODE>self &lt;=&gt; other</CODE></A>
+<DD>
+<p>
+Returns -1, 0, or 1 depending on whether the left argument is less
+than, equal to, or greater than the right argument in the dictionary
+order.
+</p>
+
+<DT>
+<A NAME="lshift"><CODE>&lt;&lt;(<VAR>other</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="concat"><CODE>concat(<VAR>other</VAR>)</CODE></A>
+<DD>
+<p>
+Appends the contents of the <var>other</var>.
+</p>
+
+<DT>
+<A NAME="capitalize"><CODE>capitalize</CODE></A>
+<DD>
+<DT><A NAME="capitalize_bang"><CODE>capitalize!</CODE></A>
+<DD>
+<p>
+Changes the first character in the string to uppercase character, if
+it is an alphabet.
+</p>
+<p>
+<code>capitalize!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT>
+<A NAME="chop"><CODE>chop</CODE></A>
+<DD>
+<DT><A NAME="chop_bang"><CODE>chop!</CODE></A>
+<DD>
+<p>
+Chops off the last character of the string (2 characters if the last
+characters are "\r\n").  <code>chop!</code> modifies the receiver.
+</p>
+<p>
+<code>chop!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT>
+<A NAME="chomp"><CODE>chomp([<var>rs</var>])</CODE></A>
+<DD>
+<DT><A NAME="chomp_bang"><CODE>chomp!([<var>rs</var>])</CODE></A>
+<DD>
+<p>
+Chops off the line ending of the string, which is specified by the
+<var>rs</var>.  The default value of the <code>rs</code> is the value
+of the variable <code>$/</code>.  
+</p>
+<p>
+<code>chomp!</code> modifies the receiver, and returns nil, if it does
+not modify the receiver.
+</p>
+
+<DT>
+<A NAME="clone"><CODE>clone</CODE></A>
+<DD>
+<DT>
+<A NAME="dup">
+<CODE>dup</CODE></A>
+<DD>
+<p>
+Returns a newly created string object which has the save value to the
+string.  <code>clone</code> returns the complete copy of the original
+string including freeze status and instance variables.  On the other
+hand, <code>dup</code> copies the string contents only.
+</p>
+
+<DT>
+<A NAME="crypt">
+<CODE>crypt(<VAR>salt</VAR>)</CODE></A>
+<DD>
+<p>
+Returns an encoded string using <samp>crypt(3)</samp>.
+<var>salt</var> is the arbitrary string longer than 2 bytes.
+</p>
+
+<DT>
+<A NAME="delete"><CODE>delete(<VAR>str</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="delete_bang"><CODE>delete!(<VAR>str</VAR>)</CODE></A>
+<DD>
+<p>
+Deletes every characters included in <code>str</code> from the
+string.  Deleting characters in <var>str</var> is in the form of
+<samp>tr(1)</samp>.  For example, `<code>a-c</code>' is the range from
+`<samp>a</samp>' to `<samp>c</samp>', `<samp>^</samp>' at the
+beginning means complement of the character set.
+</p>
+<p>
+<code>delete!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT>
+<A NAME="downcase"><CODE>downcase</CODE></A>
+<DD>
+<DT><A NAME="downcase_bang"><CODE>downcase!</CODE></A>
+<DD>
+<p>
+Replaces all uppercase characters to lowercase characters.  Little bit 
+faster than <code>tr("A-Z", "a-z")</code>.
+</p>
+<p>
+<code>downcase!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT><A NAME="dump"><CODE>dump</CODE></A>
+<DD>
+<p>
+Replaces all non-printable characters into backslash notations.  The
+condition <code>str == eval(str.dump)</code> is guaranteed.
+</p>
+
+<DT>
+<A NAME="each_byte">
+<CODE>each_byte {|<VAR>byte</VAR>|...}</CODE></A>
+<DD>
+<p>
+Iterates over each byte of the string. 
+</p>
+
+<DT>
+<A NAME="each"><CODE>each([<var>rs</var>]) {|<VAR>line</VAR>|...}</CODE></A>
+<DD>
+<DT>
+<A NAME="each_line"><CODE>each_line([<var>rs</var>]) {|<VAR>line</VAR>|...}</CODE></A>
+<DD>
+<p>
+Iterates over each line in the string.  The value of the
+<var>rs</var>is the line separator, which default is the value
+of the variable <code>$/</code>.
+</p>
+
+<DT><A NAME="empty_p"><CODE>empty?</CODE></A>
+<DD>
+<p>
+Returns true, if the string is empty (i.e. 0 length string).
+</p>
+
+<DT><A NAME="freeze">
+<CODE>freeze</CODE></A>
+<DD>
+<p>
+Prohibits modification of the string.  Modification to the freezed
+string raises an exception.
+</p>
+
+<DT><A NAME="frozen_p"><CODE>frozen?</CODE></A>
+<DD>
+<p>
+Returns true if the string is frozen.
+</p>
+
+<DT>
+<A NAME="gsub"><CODE>gsub(<VAR>pattern</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="gsub_bang"><CODE>gsub!(<VAR>pattern</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<p>
+Replaces all matching substrings with the <var>pattern</var> to the
+<var>replace</var>.  In <var>replace</var>, `<samp>&amp;</samp>' and
+`<code>\0</code>' replaced to the matching substring, `\digit'
+replaced to the contents of the corresponding parenthesis.
+<samp>\`</samp>, <samp>\'</samp>, and <samp>\+</samp> replaced to
+pre-match, post-match substring, and contents of the last parenthesis
+respectively.
+</p>
+<p>
+<strong>Notice</strong>: <code>$&lt;digits&gt;</code> are not
+available for the <var>replace</var> string, since it is evaluated
+<strong>before</strong>, match happens.
+</p>
+<p>
+The method <code>gsub!</code> modifies the original string.  If no
+match found <code>gsub!</code> returns <code>nil</code>.  On the other
+hand, <code>gsub</code> modifies the copy of the string.  If no match 
+found, <code>gsub</code> returns the unmodified original string.
+</p>
+<DT><CODE>gsub(<VAR>pattern</VAR>) {...}</CODE>
+<DD>
+<DT><CODE>gsub!(<VAR>pattern</VAR>) {...}</CODE>
+<DD>
+<p>
+If <code>gsub</code> and <code>gsub!</code> are called with the block,
+replace all matching substring to the value of the block.  The
+matching substring will be given to the block.
+</p>
+
+<DT>
+<A NAME="hex">
+<CODE>hex</CODE></A>
+<DD>
+<p>
+Interprets the string as a hexadecimal string and returns the
+corresponding integer value.
+</p>
+
+<DT>
+<A NAME="index">
+<CODE>index(<VAR>substr</VAR>[, <VAR>pos</VAR>])</CODE></A>
+<DD>
+<p>
+Returns the index of the <var>substr</var> in the string, or
+<code>nil</code> if not found.  Optional second argument
+<var>pos</var> is given, start lookup from there.
+</p>
+
+<DT>
+<A NAME="intern">
+<CODE>intern</CODE></A>
+<DD>
+<p>
+Returns unique integer corresponding the string.  The string must not
+contain the null character ('\0').
+</p>
+
+<DT>
+<A NAME="length"><CODE>length</CODE></A>
+<DD>
+<DT><A NAME="size"><CODE>size</CODE></A>
+<DD>
+<p>
+Returns the length of the string in bytes.
+</p>
+
+<DT>
+<A NAME="ljust"><CODE>ljust(<VAR>width</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="rjust"><CODE>rjust(<VAR>width</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="center"><CODE>center(<VAR>width</VAR>)</CODE></A>
+<DD>
+<p>
+Returns left filled, right filled, centered string, respectively.  If
+the string is longer than <var>width</var>, returns the string itself
+without modification.
+</p>
+
+<DT>
+<A NAME="oct">
+<CODE>oct</CODE></A>
+<DD>
+<p>
+Interprets the string as a octal string and returns the
+corresponding integer value.  Returns 0 if the string is not in
+octal.  The octal string is the pattern of
+<code>/^[0-7]+/</code>. 
+</p>
+
+<DT>
+<A NAME="reverse"><CODE>reverse</CODE></A>
+<DD>
+<DT><A NAME="reverse_bang"><CODE>reverse!</CODE></A>
+<DD>
+<p>
+Returns the reversed string of the original string.
+</p>
+
+<DT>
+<A NAME="replace"><CODE>replace(<var>other</var>)</CODE></A>
+<DD>
+<p>
+Copis the content of <var>other</var> into the string.
+</p>
+
+<DT>
+<A NAME="rindex">
+<CODE>rindex(<VAR>substr</VAR>[, <VAR>pos</VAR>])</CODE></A>
+<DD>
+<p>
+Returns the index of the last occurrence of the <var>substr</var>, or
+<code>nil</code> if not found.  If optional second argument
+<var>pos</var> given, <code>rindex</code> returns the last
+occurrence at or before that position.
+</p>
+
+<DT>
+<A NAME="scan">
+<CODE>scan(<VAR>pattern</VAR>)</CODE></A>
+<DD>
+<DT>
+<CODE>scan(<VAR>pattern</VAR>) {...}</CODE>
+<DD>
+<p>
+Returns the array of arrays which contain subpatterns corresponding
+parentheses in the <var>pattern</var>.  Match will be done repeatedly
+to the end of the string.  When called with the block, subpatterns are
+passed to the block as parameters.
+</p>
+
+<DT>
+<A NAME="split">
+<CODE>split([<VAR>sep</VAR>[, <VAR>limit</VAR>]])</CODE></A>
+<DD>
+<p>
+Return an array containing the fields of the string, using the string or
+regexp <var>sep</var> as a separator.  If <var>sep</var> is omitted, the
+value of the variable <code>$;</code> will be used as default.  If the
+value of <code>$;</code> is <code>nil</code>, splits the string on
+whitespace (after skipping any leading whitespace).  Anything matching
+<var>sep</var> is taken to be a delimiter separating the fields.  (Note
+that the delimiter may be longer than one character.)
+</p>
+<p>
+If <var>limit</var> is unspecified, trailing null fields are stripped
+(which potential users of pop() would do well to remember).  If
+<var>limit</var> is specified and is not negative, splits into no more than
+that many fields (though it may split into fewer).  If <var>limit</var> is
+negative, it is treated as if an arbitrarily large <var>limit</var> had
+been specified.
+</p>
+<p>
+A pattern matching the null string (not to be confused with a null
+pattern <code>//</code>, which is just one member of the set of
+patterns matching a null string) will split the string into separate
+characters at each point it matches that way.  For example:
+<blockquote>
+<pre>
+print 'hi there'.split(/ */).join(':');
+</pre>
+</blockquote>
+produces the output 'h:i:t:h:e:r:e'.
+</p>
+
+<DT>
+<A NAME="squeeze"><CODE>squeeze([<VAR>str</VAR>])</CODE></A>
+<DD>
+<DT><A NAME="squeeze_bang"><CODE>squeeze!([<VAR>str</VAR>])</CODE></A>
+<DD>
+<p>
+Squeezes sequences of the same characters which is included in the
+<var>str</var>.
+</p>
+<p>
+<code>squeezes!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT>
+<A NAME="strip"><CODE>strip</CODE></A>
+<DD>
+<DT><A NAME="strip_bang"><CODE>strip!</CODE></A>
+<DD>
+<p>
+Removes leading and trailing whitespace from the string.
+</p>
+<p>
+<code>strip!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT>
+<A NAME="sub"><CODE>sub(<VAR>pattern</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="sub_bang"><CODE>sub!(<VAR>pattern</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<p>
+Replaces the first matching substrings with the <var>pattern</var> to
+the <var>replace</var>.  In <var>replace</var>, `<samp>&amp;</samp>'
+and `<code>\0</code>' replaced to the matching substring, `\digit'
+replaced to the contents of the corresponding parenthesis.
+</p>
+<p>
+<strong>Notice</strong>: <code>$&lt;digits&gt;</code> are not
+available for the <var>replace</var> string, since it is evaluated
+<strong>before</strong>, match happens.
+</p>
+<p>
+The method <code>sub!</code> modifies the original string.  If no
+match found, <code>sub!</code> returns <code>nil</code>.  On the other
+hand, <code>sub</code> modifies the copy of the string.  If no match 
+found, <code>sub</code> returns the unmodified original string.
+</p>
+<DT><CODE>sub(<VAR>pattern</VAR>) {...}</CODE>
+<DD>
+<DT><CODE>sub!(<VAR>pattern</VAR>) {...}</CODE>
+<DD>
+<p>
+If <code>gsub</code> and <code>gsub!</code> are called with the block,
+replace the first matching substring to the value of the block.  You
+can use <code>$&lt;digits&gt;</code> in the iterator block, for the
+block is evaluated <strong>after</strong> the match.  The matching
+substring will be given to the block.
+</p>
+
+<DT>
+<A NAME="succ"><CODE>succ</CODE></A>
+<DD>
+<DT>
+<A NAME="succ_bang"><CODE>succ!</CODE></A>
+<DD>
+<p>
+Returns the <strong>succeeding</strong> string from <code>self</code>, 
+which is like:
+</p>
+<blockquote>
+<PRE>
+"aa".succ =&gt;	"ab"
+"99".succ =&gt;	"100"
+"a9".succ =&gt;	"b0"
+"Az".succ =&gt;	"Ba"
+"zz".succ =&gt;	"aaa"
+</PRE>
+</blockquote>
+
+<DT>
+<A NAME="sum">
+<CODE>sum([<VAR>bits</VAR>])</CODE></A>
+<DD>
+<p>
+Calculates <var>bits</var>-bit checksum of the string.  Default is
+16-bit checksum.  For example, the following computes the same number
+as the System V sum program:
+<blockquote>
+<pre>
+sum = 0
+while gets
+  sum += $_.sum
+end
+sum %= 65536
+
+</pre>
+</blockquote>
+</p>
+
+<DT>
+<A NAME="swapcase"><CODE>swapcase</CODE></A>
+<DD>
+<DT><A NAME="swapcase_bang"><CODE>swapcase!</CODE></A>
+<DD>
+<p>
+Replaces all lowercase characters to uppercase characters, and all
+uppercase characters to lowercase characters.
+</p>
+<p>
+<code>swapcase!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT><A NAME="to_f"><CODE>to_f</CODE></A>
+<DD>
+<p>
+Converts the string into <A HREF="Float.html"><code>Float</code></A>.
+</p>
+
+<DT><A NAME="to_i"><CODE>to_i</CODE></A>
+<DD>
+<p>
+Interprets the string as a decimal string and returns the
+corresponding integer value.
+</p>
+
+<DT>
+<A NAME="tr"><CODE>tr(<VAR>search</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<DT><A NAME="tr_bang"><CODE>tr!(<VAR>search</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<p>
+Translates all occurrences of the characters found in <var>search</var>,
+with the corresponding character in <var>replace</var>.  The first
+character in the <var>search</var> is `<code>^</code>', characters not 
+in the <var>search</var> are translated.
+</p>
+<p>
+<code>tr!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT>
+<A NAME="tr_s"><CODE>tr_s(<VAR>search</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="tr_s_bang"><CODE>tr_s!(<VAR>search</VAR>, <VAR>replace</VAR>)</CODE></A>
+<DD>
+<p>
+Translates all occurrences of the characters found in <var>search</var>,
+with the corresponding character in <var>replace</var>, then squeezes
+sequences of the same characters within the replaced characters.  The first
+character in the <var>search</var> is `<code>^</code>', characters not in
+the <var>search</var> are translated.
+</p>
+<p>
+<code>tr_s!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT>
+<A NAME="unpack">
+<CODE>unpack(<VAR>template</VAR>)</CODE></A>
+<DD>
+<p>
+Unpacks packed string data (probably made by 
+<code><a href="Array.html#pack">Array#pack</a></code>), and expanded
+array value.  The <var>template</var> has the same format as in the
+<code>Array#pack</code>, as follows this:
+</p>
+
+<blockquote>
+<dl compact>
+  <dt> <code>a</code>
+  <dd> ASCII string(null padded)
+  <dt> <code>A</code>
+  <dd> ASCII string(space padded)
+  <dt> <code>b</code>
+  <dd> bit string(ascending bit order)
+  <dt> <code>B</code>
+  <dd> bit string(descending bit order)
+  <dt> <code>h</code>
+  <dd> hex string(low nibble first)
+  <dt> <code>H</code>
+  <dd> hex string(high nibble first)
+  <dt> <code>c</code>
+  <dd> char
+  <dt> <code>C</code>
+  <dd> unsigned char
+  <dt> <code>s</code>
+  <dd> short
+  <dt> <code>S</code>
+  <dd> unsigned short
+  <dt> <code>i</code>
+  <dd> int
+  <dt> <code>I</code>
+  <dd> unsigned int
+  <dt> <code>l</code>
+  <dd> long
+  <dt> <code>L</code>
+  <dd> unsigned long
+  <dt> <code>m</code>
+  <dd> string encoded in base64
+  <dt> <code>n</code>
+  <dd> short in "network" byte-order
+  <dt> <code>N</code>
+  <dd> long in "network" byte-order
+  <dt> <code>v</code>
+  <dd> short in "VAX" (little-endian) byte-order
+  <dt> <code>V</code>
+  <dd> long in "VAX" (little-endian) byte-order
+  <dt> <code>f</code>
+  <dd> single-precision float in the native format
+  <dt> <code>d</code>
+  <dd> A double-precision float in the native format
+  <dt> <code>p</code>
+  <dd> A pointer to a null-terminated string.
+  <dt> <code>P</code>
+  <dd> A pointer to a structure (fixed-length string).
+  <dt> <code>u</code>
+  <dd> uuencoded string
+  <dt> <code>x</code>
+  <dd> skip a byte
+  <dt> <code>X</code>
+  <dd> back up a byte
+  <dt> <code>@</code>
+  <dd> moves to absolute position
+</dl>
+</blockquote>
+
+<DT>
+<A NAME="upcase"><CODE>upcase</CODE></A>
+<DD>
+<DT><A NAME="upcase_bang"><CODE>upcase!</CODE></A>
+<DD>
+
+<p>
+Replaces all lowercase characters to downcase characters.  Little bit 
+faster than <code>tr("a-z", "A-Z")</code>.
+</p>
+<p>
+<code>upcase!</code> returns nil, if it does not modify the receiver.
+</p>
+
+<DT><A NAME="upto">
+<CODE>upto(<VAR>max</VAR>) {...}</CODE></A>
+<DD>
+<p>
+Iterates from <code>self</code> to <var>max</var>, giving the
+<strong>next</strong> string each time.
+(See <a href="#succ"><code>succ</code></a>)
+This method used internally in
+<a href="Range.html#each"><code>Range#each</code></a>,
+that makes
+<blockquote>
+<PRE>
+     for i in "a" .. "ba"
+       print i, "\n"
+     end
+</PRE>
+</blockquote>
+print `<SAMP>a, b, c,...z,aa,...az, ba</SAMP>'.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Regexp.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="Struct.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

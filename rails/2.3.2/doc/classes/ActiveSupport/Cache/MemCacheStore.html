@@ -1,0 +1,193 @@
+  <div id="C00000493">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />MemCacheStore<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/cache/mem_cache_store_rb.html');">rails-2.3.2/activesupport/lib/active_support/cache/mem_cache_store.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/ActiveSupport/Cache/Store.html');">
+Store
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+A cache store implementation which stores data in Memcached: <a
+href="http://www.danga.com/memcached"
+target="_blank">http://www.danga.com/memcached</a>/
+</p>
+<p>
+This is currently the most popular cache store for production websites.
+</p>
+<p>
+Special features:
+</p>
+<ul>
+<li>Clustering and load balancing. One can specify multiple memcached servers,
+and <a href="index.html?a=C00000493&name=MemCacheStore">MemCacheStore</a>
+will load balance between all available servers. If a server goes down,
+then <a href="index.html?a=C00000493&name=MemCacheStore">MemCacheStore</a>
+will ignore it until it goes back online.
+
+</li>
+<li>Time-based expiry support. See <a
+href="index.html?a=M001243&name=write">write</a> and the +:expires_in+
+option.
+
+</li>
+<li>Per-request in memory cache for all communication with the <a
+href="index.html?a=C00000022&name=MemCache">MemCache</a> server(s).
+
+</li>
+</ul>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001244&name=clear" >clear</a></li>
+  <li><a href="index.html?a=M001242&name=new" >new</a></li>
+  <li><a href="index.html?a=M001245&name=stats" >stats</a></li>
+  <li><a href="index.html?a=M001243&name=write" >write</a></li>
+  </ul>
+
+
+
+
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>addresses</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001242" class="method">
+  <div id="M001242_title" class="title">
+    <b>new</b>(*addresses)
+  </div>
+  <div class="description">
+  <p>
+Creates a new <a
+href="index.html?a=C00000493&name=MemCacheStore">MemCacheStore</a> object,
+with the given memcached server addresses. Each address is either a host
+name, or a host-with-port string in the form of &quot;host_name:port&quot;.
+For example:
+</p>
+<pre>
+  ActiveSupport::Cache::MemCacheStore.new(&quot;localhost&quot;, &quot;server-downstairs.localnetwork:8229&quot;)
+</pre>
+<p>
+If no addresses are specified, then <a
+href="index.html?a=C00000493&name=MemCacheStore">MemCacheStore</a> will
+connect to localhost port 11211 (the default memcached port).
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001242_source')" id="l_M001242_source">show source</a> ]</p>
+  <div id="M001242_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/mem_cache_store.rb, line 36</span>
+36:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">addresses</span>)
+37:         <span class="ruby-identifier">addresses</span> = <span class="ruby-identifier">addresses</span>.<span class="ruby-identifier">flatten</span>
+38:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">addresses</span>.<span class="ruby-identifier">extract_options!</span>
+39:         <span class="ruby-identifier">addresses</span> = [<span class="ruby-value str">&quot;localhost&quot;</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">addresses</span>.<span class="ruby-identifier">empty?</span>
+40:         <span class="ruby-ivar">@addresses</span> = <span class="ruby-identifier">addresses</span>
+41:         <span class="ruby-ivar">@data</span> = <span class="ruby-constant">MemCache</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">addresses</span>, <span class="ruby-identifier">options</span>)
+42: 
+43:         <span class="ruby-identifier">extend</span> <span class="ruby-constant">Strategy</span><span class="ruby-operator">::</span><span class="ruby-constant">LocalCache</span>
+44:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001244" class="method">
+  <div id="M001244_title" class="title">
+    <b>clear</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001244_source')" id="l_M001244_source">show source</a> ]</p>
+  <div id="M001244_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/mem_cache_store.rb, line 114</span>
+114:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear</span>
+115:         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">flush_all</span>
+116:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001245" class="method">
+  <div id="M001245_title" class="title">
+    <b>stats</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001245_source')" id="l_M001245_source">show source</a> ]</p>
+  <div id="M001245_source" class="dyn-source">
+<pre>
+     <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/mem_cache_store.rb, line 118</span>
+118:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">stats</span>
+119:         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">stats</span>
+120:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M001243" class="method">
+  <div id="M001243_title" class="title">
+    <b>write</b>(key, value, options = nil)
+  </div>
+  <div class="description">
+  <p>
+Writes a value to the cache.
+</p>
+<p>
+Possible options:
+</p>
+<ul>
+<li>+:unless_exist+ - set to true if you don&#8217;t want to update the cache
+if the key is already set.
+
+</li>
+<li>+:expires_in+ - the number of seconds that this value may stay in the
+cache. See <a
+href="index.html?a=M001234&name=ActiveSupport::Cache::Store#write">ActiveSupport::Cache::Store#write</a>
+for an example.
+
+</li>
+</ul>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001243_source')" id="l_M001243_source">show source</a> ]</p>
+  <div id="M001243_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/cache/mem_cache_store.rb, line 61</span>
+61:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span> = <span class="ruby-keyword kw">nil</span>)
+62:         <span class="ruby-keyword kw">super</span>
+63:         <span class="ruby-identifier">method</span> = <span class="ruby-identifier">options</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:unless_exist</span>] <span class="ruby-operator">?</span> <span class="ruby-identifier">:add</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:set</span>
+64:         <span class="ruby-comment cmt"># memcache-client will break the connection if you send it an integer</span>
+65:         <span class="ruby-comment cmt"># in raw mode, so we convert it to a string to be sure it continues working.</span>
+66:         <span class="ruby-identifier">value</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">raw?</span>(<span class="ruby-identifier">options</span>)
+67:         <span class="ruby-identifier">response</span> = <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">expires_in</span>(<span class="ruby-identifier">options</span>), <span class="ruby-identifier">raw?</span>(<span class="ruby-identifier">options</span>))
+68:         <span class="ruby-identifier">response</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Response</span><span class="ruby-operator">::</span><span class="ruby-constant">STORED</span>
+69:       <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">MemCache</span><span class="ruby-operator">::</span><span class="ruby-constant">MemCacheError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+70:         <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;MemCacheError (#{e}): #{e.message}&quot;</span>)
+71:         <span class="ruby-keyword kw">false</span>
+72:       <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

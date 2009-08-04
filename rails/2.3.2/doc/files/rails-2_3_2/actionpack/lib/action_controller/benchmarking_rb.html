@@ -1,0 +1,126 @@
+  <div id="fileHeader">
+    <h1>benchmarking.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/benchmarking.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>require 'benchmark'
+
+module ActionController #:nodoc:
+  # The benchmarking module times the performance of actions and reports to the logger. If the Active Record
+  # package has been included, a separate timing section for database calls will be added as well.
+  module Benchmarking #:nodoc:
+    def self.included(base)
+      base.extend(ClassMethods)
+
+      base.class_eval do
+        alias_method_chain :perform_action, :benchmark
+        alias_method_chain :render, :benchmark
+      end
+    end
+
+    module ClassMethods
+      # Log and benchmark the workings of a single block and silence whatever logging that may have happened inside it 
+      # (unless &lt;tt&gt;use_silence&lt;/tt&gt; is set to false).
+      #
+      # The benchmark is only recorded if the current level of the logger matches the &lt;tt&gt;log_level&lt;/tt&gt;, which makes it
+      # easy to include benchmarking statements in production software that will remain inexpensive because the benchmark
+      # will only be conducted if the log level is low enough.
+      def benchmark(title, log_level = Logger::DEBUG, use_silence = true)
+        if logger &amp;&amp; logger.level == log_level
+          result = nil
+          ms = Benchmark.ms { result = use_silence ? silence { yield } : yield }
+          logger.add(log_level, &quot;#{title} (#{('%.1f' % ms)}ms)&quot;)
+          result
+        else
+          yield
+        end
+      end
+
+      # Silences the logger for the duration of the block.
+      def silence
+        old_logger_level, logger.level = logger.level, Logger::ERROR if logger
+        yield
+      ensure
+        logger.level = old_logger_level if logger
+      end
+    end
+
+    protected
+      def render_with_benchmark(options = nil, extra_options = {}, &amp;block)
+        if logger
+          if Object.const_defined?(&quot;ActiveRecord&quot;) &amp;&amp; ActiveRecord::Base.connected?
+            db_runtime = ActiveRecord::Base.connection.reset_runtime
+          end
+
+          render_output = nil
+          @view_runtime = Benchmark.ms { render_output = render_without_benchmark(options, extra_options, &amp;block) }
+
+          if Object.const_defined?(&quot;ActiveRecord&quot;) &amp;&amp; ActiveRecord::Base.connected?
+            @db_rt_before_render = db_runtime
+            @db_rt_after_render = ActiveRecord::Base.connection.reset_runtime
+            @view_runtime -= @db_rt_after_render
+          end
+
+          render_output
+        else
+          render_without_benchmark(options, extra_options, &amp;block)
+        end
+      end    
+
+    private
+      def perform_action_with_benchmark
+        if logger
+          ms = [Benchmark.ms { perform_action_without_benchmark }, 0.01].max
+          logging_view          = defined?(@view_runtime)
+          logging_active_record = Object.const_defined?(&quot;ActiveRecord&quot;) &amp;&amp; ActiveRecord::Base.connected?
+
+          log_message  = 'Completed in %.0fms' % ms
+
+          if logging_view || logging_active_record
+            log_message &lt;&lt; &quot; (&quot;
+            log_message &lt;&lt; view_runtime if logging_view
+
+            if logging_active_record
+              log_message &lt;&lt; &quot;, &quot; if logging_view
+              log_message &lt;&lt; active_record_runtime + &quot;)&quot;
+            else
+              &quot;)&quot;
+            end
+          end
+
+          log_message &lt;&lt; &quot; | #{response.status}&quot;
+          log_message &lt;&lt; &quot; [#{complete_request_uri rescue &quot;unknown&quot;}]&quot;
+
+          logger.info(log_message)
+          response.headers[&quot;X-Runtime&quot;] = &quot;%.0f&quot; % ms
+        else
+          perform_action_without_benchmark
+        end
+      end
+
+      def view_runtime
+        &quot;View: %.0f&quot; % @view_runtime
+      end
+
+      def active_record_runtime
+        db_runtime = ActiveRecord::Base.connection.reset_runtime
+        db_runtime += @db_rt_before_render if @db_rt_before_render
+        db_runtime += @db_rt_after_render if @db_rt_after_render
+        &quot;DB: %.0f&quot; % db_runtime
+      end
+  end
+end
+</pre>
+    </div>

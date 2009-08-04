@@ -1,0 +1,64 @@
+  <div id="fileHeader">
+    <h1>time.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/integer/time.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module Integer #:nodoc:
+      # Enables the use of time calculations and declarations, like 45.minutes + 2.hours + 4.years.
+      #
+      # These methods use Time#advance for precise date calculations when using from_now, ago, etc. 
+      # as well as adding or subtracting their results from a Time object. For example:
+      #
+      #   # equivalent to Time.now.advance(:months =&gt; 1)
+      #   1.month.from_now
+      #
+      #   # equivalent to Time.now.advance(:years =&gt; 2)
+      #   2.years.from_now
+      #
+      #   # equivalent to Time.now.advance(:months =&gt; 4, :years =&gt; 5)
+      #   (4.months + 5.years).from_now
+      # 
+      # While these methods provide precise calculation when used as in the examples above, care
+      # should be taken to note that this is not true if the result of `months', `years', etc is
+      # converted before use:
+      #
+      #   # equivalent to 30.days.to_i.from_now
+      #   1.month.to_i.from_now
+      #
+      #   # equivalent to 365.25.days.to_f.from_now
+      #   1.year.to_f.from_now
+      #
+      # In such cases, Ruby's core
+      # Date[http://stdlib.rubyonrails.org/libdoc/date/rdoc/index.html] and
+      # Time[http://stdlib.rubyonrails.org/libdoc/time/rdoc/index.html] should be used for precision
+      # date and time arithmetic
+      module Time        
+        def months
+          ActiveSupport::Duration.new(self * 30.days, [[:months, self]])
+        end
+        alias :month :months
+
+        def years
+          ActiveSupport::Duration.new(self * 365.25.days, [[:years, self]])
+        end
+        alias :year :years
+      end
+    end
+  end
+end
+</pre>
+    </div>

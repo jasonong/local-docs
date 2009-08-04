@@ -1,0 +1,139 @@
+  <div id="fileHeader">
+    <h1>fragments.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_controller/caching/fragments.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:32 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionController #:nodoc:
+  module Caching
+    # Fragment caching is used for caching various blocks within templates without caching the entire action as a whole. This is useful when
+    # certain elements of an action change frequently or depend on complicated state while other parts rarely change or can be shared amongst multiple
+    # parties. The caching is done using the cache helper available in the Action View. A template with caching might look something like:
+    #
+    #   &lt;b&gt;Hello &lt;%= @name %&gt;&lt;/b&gt;
+    #   &lt;% cache do %&gt;
+    #     All the topics in the system:
+    #     &lt;%= render :partial =&gt; &quot;topic&quot;, :collection =&gt; Topic.find(:all) %&gt;
+    #   &lt;% end %&gt;
+    #
+    # This cache will bind to the name of the action that called it, so if this code was part of the view for the topics/list action, you would
+    # be able to invalidate it using &lt;tt&gt;expire_fragment(:controller =&gt; &quot;topics&quot;, :action =&gt; &quot;list&quot;)&lt;/tt&gt;.
+    #
+    # This default behavior is of limited use if you need to cache multiple fragments per action or if the action itself is cached using
+    # &lt;tt&gt;caches_action&lt;/tt&gt;, so we also have the option to qualify the name of the cached fragment with something like:
+    #
+    #   &lt;% cache(:action =&gt; &quot;list&quot;, :action_suffix =&gt; &quot;all_topics&quot;) do %&gt;
+    #
+    # That would result in a name such as &quot;/topics/list/all_topics&quot;, avoiding conflicts with the action cache and with any fragments that use a
+    # different suffix. Note that the URL doesn't have to really exist or be callable - the url_for system is just used to generate unique
+    # cache names that we can refer to when we need to expire the cache.
+    #
+    # The expiration call for this example is:
+    #
+    #   expire_fragment(:controller =&gt; &quot;topics&quot;, :action =&gt; &quot;list&quot;, :action_suffix =&gt; &quot;all_topics&quot;)
+    module Fragments
+      # Given a key (as described in &lt;tt&gt;expire_fragment&lt;/tt&gt;), returns a key suitable for use in reading,
+      # writing, or expiring a cached fragment. If the key is a hash, the generated key is the return
+      # value of url_for on that hash (without the protocol). All keys are prefixed with &quot;views/&quot; and uses
+      # ActiveSupport::Cache.expand_cache_key for the expansion.
+      def fragment_cache_key(key)
+        ActiveSupport::Cache.expand_cache_key(key.is_a?(Hash) ? url_for(key).split(&quot;://&quot;).last : key, :views)
+      end
+
+      def fragment_for(buffer, name = {}, options = nil, &amp;block) #:nodoc:
+        if perform_caching
+          if cache = read_fragment(name, options)
+            buffer.concat(cache)
+          else
+            pos = buffer.length
+            block.call
+            write_fragment(name, buffer[pos..-1], options)
+          end
+        else
+          block.call
+        end
+      end
+
+      # Writes &lt;tt&gt;content&lt;/tt&gt; to the location signified by &lt;tt&gt;key&lt;/tt&gt; (see &lt;tt&gt;expire_fragment&lt;/tt&gt; for acceptable formats)
+      def write_fragment(key, content, options = nil)
+        return content unless cache_configured?
+
+        key = fragment_cache_key(key)
+
+        self.class.benchmark &quot;Cached fragment miss: #{key}&quot; do
+          cache_store.write(key, content, options)
+        end
+
+        content
+      end
+
+      # Reads a cached fragment from the location signified by &lt;tt&gt;key&lt;/tt&gt; (see &lt;tt&gt;expire_fragment&lt;/tt&gt; for acceptable formats)
+      def read_fragment(key, options = nil)
+        return unless cache_configured?
+
+        key = fragment_cache_key(key)
+
+        self.class.benchmark &quot;Cached fragment hit: #{key}&quot; do
+          cache_store.read(key, options)
+        end
+      end
+
+      # Check if a cached fragment from the location signified by &lt;tt&gt;key&lt;/tt&gt; exists (see &lt;tt&gt;expire_fragment&lt;/tt&gt; for acceptable formats)
+      def fragment_exist?(key, options = nil)
+        return unless cache_configured?
+
+        key = fragment_cache_key(key)
+
+        self.class.benchmark &quot;Cached fragment exists?: #{key}&quot; do
+          cache_store.exist?(key, options)
+        end
+      end
+
+      # Removes fragments from the cache.
+      #
+      # +key+ can take one of three forms:
+      # * String - This would normally take the form of a path, like
+      #   &lt;tt&gt;&quot;pages/45/notes&quot;&lt;/tt&gt;.
+      # * Hash - Treated as an implicit call to +url_for+, like
+      #   &lt;tt&gt;{:controller =&gt; &quot;pages&quot;, :action =&gt; &quot;notes&quot;, :id =&gt; 45}&lt;/tt&gt;
+      # * Regexp - Will remove any fragment that matches, so
+      #   &lt;tt&gt;%r{pages/\d*/notes}&lt;/tt&gt; might remove all notes. Make sure you
+      #   don't use anchors in the regex (&lt;tt&gt;^&lt;/tt&gt; or &lt;tt&gt;$&lt;/tt&gt;) because
+      #   the actual filename matched looks like
+      #   &lt;tt&gt;./cache/filename/path.cache&lt;/tt&gt;. Note: Regexp expiration is
+      #   only supported on caches that can iterate over all keys (unlike
+      #   memcached).
+      #
+      # +options+ is passed through to the cache store's &lt;tt&gt;delete&lt;/tt&gt;
+      # method (or &lt;tt&gt;delete_matched&lt;/tt&gt;, for Regexp keys.)
+      def expire_fragment(key, options = nil)
+        return unless cache_configured?
+
+        key = key.is_a?(Regexp) ? key : fragment_cache_key(key)
+
+        if key.is_a?(Regexp)
+          self.class.benchmark &quot;Expired fragments matching: #{key.source}&quot; do
+            cache_store.delete_matched(key, options)
+          end
+        else
+          self.class.benchmark &quot;Expired fragment: #{key}&quot; do
+            cache_store.delete(key, options)
+          end
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

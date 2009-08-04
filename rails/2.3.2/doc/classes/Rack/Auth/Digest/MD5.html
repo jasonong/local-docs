@@ -1,0 +1,146 @@
+  <div id="C00000251">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />MD5<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/auth/digest/md5_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/md5.rb</a>
+
+Parent:&nbsp;
+        <a href="#" onclick="jsHref('classes/Rack/Auth/AbstractHandler.html');">
+AbstractHandler
+         </a>
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+  <div class="description"><p>
+<a
+href="index.html?a=C00000251&name=Rack::Auth::Digest::MD5">Rack::Auth::Digest::MD5</a>
+implements the <a href="index.html?a=C00000251&name=MD5">MD5</a> algorithm
+version of HTTP <a href="index.html?a=C00000248&name=Digest">Digest</a>
+Authentication, as per RFC 2617.
+</p>
+<p>
+Initialize with the [<a href="index.html?a=C00000238&name=Rack">Rack</a>]
+application that you want protecting, and a block that looks up a plaintext
+password for a given username.
+</p>
+<p>
+<tt>opaque</tt> needs to be set to a constant base64/hexadecimal string.
+</p>
+</div>
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000858&name=call" >call</a></li>
+  <li><a href="index.html?a=M000856&name=new" >new</a></li>
+  <li><a href="index.html?a=M000857&name=passwords_hashed?" >passwords_hashed?</a></li>
+  </ul>
+
+
+
+
+  <div class="sectiontitle">Constants</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class="attr-name">QOP</td>
+    <td>=</td>
+    <td class="attr-value">'auth'.freeze</td>
+  </tr>
+  </table>
+
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[RW]
+    </td>
+    <td class='attr-name'>opaque</td>
+    <td class='attr-desc'></td>
+  </tr>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[W]
+    </td>
+    <td class='attr-name'>passwords_hashed</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M000856" class="method">
+  <div id="M000856_title" class="title">
+    <b>new</b>(*args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000856_source')" id="l_M000856_source">show source</a> ]</p>
+  <div id="M000856_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/md5.rb, line 24</span>
+24:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+25:           <span class="ruby-keyword kw">super</span>
+26:           <span class="ruby-ivar">@passwords_hashed</span> = <span class="ruby-keyword kw">nil</span>
+27:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000858" class="method">
+  <div id="M000858_title" class="title">
+    <b>call</b>(env)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000858_source')" id="l_M000858_source">show source</a> ]</p>
+  <div id="M000858_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/md5.rb, line 33</span>
+33:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+34:           <span class="ruby-identifier">auth</span> = <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
+35: 
+36:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">auth</span>.<span class="ruby-identifier">provided?</span>
+37:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">unauthorized</span>
+38:           <span class="ruby-keyword kw">end</span>
+39: 
+40:           <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">auth</span>.<span class="ruby-identifier">digest?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">auth</span>.<span class="ruby-identifier">correct_uri?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">valid_qop?</span>(<span class="ruby-identifier">auth</span>)
+41:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">bad_request</span>
+42:           <span class="ruby-keyword kw">end</span>
+43: 
+44:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">auth</span>)
+45:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">auth</span>.<span class="ruby-identifier">nonce</span>.<span class="ruby-identifier">stale?</span>
+46:               <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">unauthorized</span>(<span class="ruby-identifier">challenge</span>(<span class="ruby-identifier">:stale</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>))
+47:             <span class="ruby-keyword kw">else</span>
+48:               <span class="ruby-identifier">env</span>[<span class="ruby-value str">'REMOTE_USER'</span>] = <span class="ruby-identifier">auth</span>.<span class="ruby-identifier">username</span>
+49: 
+50:               <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+51:             <span class="ruby-keyword kw">end</span>
+52:           <span class="ruby-keyword kw">end</span>
+53: 
+54:           <span class="ruby-identifier">unauthorized</span>
+55:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000857" class="method">
+  <div id="M000857_title" class="title">
+    <b>passwords_hashed?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000857_source')" id="l_M000857_source">show source</a> ]</p>
+  <div id="M000857_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/md5.rb, line 29</span>
+29:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">passwords_hashed?</span>
+30:           <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@passwords_hashed</span>
+31:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

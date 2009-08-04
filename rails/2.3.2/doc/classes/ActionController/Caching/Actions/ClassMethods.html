@@ -1,0 +1,57 @@
+  <div id="C00000099">
+<div class='banner'>
+  <span class="file-title-prefix">Module</span><br />ClassMethods<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/caching/actions_rb.html');">rails-2.3.2/actionpack/lib/action_controller/caching/actions.rb</a>
+
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000234&name=caches_action" >caches_action</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000234" class="method">
+  <div id="M000234_title" class="title">
+    <b>caches_action</b>(*actions)
+  </div>
+  <div class="description">
+  <p>
+Declares that <tt>actions</tt> should be cached. See <a
+href="index.html?a=C00000098&name=ActionController::Caching::Actions">ActionController::Caching::Actions</a>
+for details.
+</p>
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000234_source')" id="l_M000234_source">show source</a> ]</p>
+  <div id="M000234_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/caching/actions.rb, line 58</span>
+58:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">caches_action</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">actions</span>)
+59:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">cache_configured?</span>
+60:           <span class="ruby-identifier">options</span> = <span class="ruby-identifier">actions</span>.<span class="ruby-identifier">extract_options!</span>
+61:           <span class="ruby-identifier">filter_options</span> = { <span class="ruby-identifier">:only</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">actions</span>, <span class="ruby-identifier">:if</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:if</span>), <span class="ruby-identifier">:unless</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:unless</span>) }
+62: 
+63:           <span class="ruby-identifier">cache_filter</span> = <span class="ruby-constant">ActionCacheFilter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:layout</span>), <span class="ruby-identifier">:cache_path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:cache_path</span>), <span class="ruby-identifier">:store_options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>)
+64:           <span class="ruby-identifier">around_filter</span>(<span class="ruby-identifier">cache_filter</span>, <span class="ruby-identifier">filter_options</span>)
+65:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

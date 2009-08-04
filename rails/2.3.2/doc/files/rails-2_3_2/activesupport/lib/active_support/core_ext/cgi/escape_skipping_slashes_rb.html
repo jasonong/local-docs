@@ -1,0 +1,42 @@
+  <div id="fileHeader">
+    <h1>escape_skipping_slashes.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/cgi/escape_skipping_slashes.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module CGI #:nodoc:
+      module EscapeSkippingSlashes #:nodoc:
+        if RUBY_VERSION &gt;= '1.9'
+          def escape_skipping_slashes(str)
+            str = str.join('/') if str.respond_to? :join
+            str.gsub(/([^ \/a-zA-Z0-9_.-])/n) do
+              &quot;%#{$1.unpack('H2' * $1.bytesize).join('%').upcase}&quot;
+            end.tr(' ', '+')
+          end
+        else
+          def escape_skipping_slashes(str)
+            str = str.join('/') if str.respond_to? :join
+            str.gsub(/([^ \/a-zA-Z0-9_.-])/n) do
+              &quot;%#{$1.unpack('H2').first.upcase}&quot;
+            end.tr(' ', '+')
+          end
+        end
+      end
+    end
+  end
+end
+</pre>
+    </div>

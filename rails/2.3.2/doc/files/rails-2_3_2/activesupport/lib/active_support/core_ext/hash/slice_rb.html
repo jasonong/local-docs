@@ -1,0 +1,59 @@
+  <div id="fileHeader">
+    <h1>slice.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activesupport/lib/active_support/core_ext/hash/slice.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:36 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveSupport #:nodoc:
+  module CoreExtensions #:nodoc:
+    module Hash #:nodoc:
+      # Slice a hash to include only the given keys. This is useful for
+      # limiting an options hash to valid keys before passing to a method:
+      #
+      #   def search(criteria = {})
+      #     assert_valid_keys(:mass, :velocity, :time)
+      #   end
+      #
+      #   search(options.slice(:mass, :velocity, :time))
+      #
+      # If you have an array of keys you want to limit to, you should splat them:
+      #
+      #   valid_keys = [:mass, :velocity, :time]
+      #   search(options.slice(*valid_keys))
+      module Slice
+        # Returns a new hash with only the given keys.
+        def slice(*keys)
+          keys = keys.map! { |key| convert_key(key) } if respond_to?(:convert_key)
+          hash = self.class.new
+          keys.each { |k| hash[k] = self[k] if has_key?(k) }
+          hash
+        end
+
+        # Replaces the hash with only the given keys.
+        # Returns a hash contained the removed key/value pairs
+        #   {:a =&gt; 1, :b =&gt; 2, :c =&gt; 3, :d =&gt; 4}.slice!(:a, :b) # =&gt; {:c =&gt; 3, :d =&gt;4}
+        def slice!(*keys)
+          keys = keys.map! { |key| convert_key(key) } if respond_to?(:convert_key)
+          omit = slice(*self.keys - keys)
+          hash = slice(*keys)
+          replace(hash)
+          omit
+        end
+      end
+    end
+  end
+end
+
+</pre>
+    </div>

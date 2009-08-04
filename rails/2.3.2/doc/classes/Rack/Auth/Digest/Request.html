@@ -1,0 +1,135 @@
+  <div id="C00000250">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Request<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/actionpack/lib/action_controller/vendor/rack-1_0/rack/auth/digest/request_rb.html');">rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb</a>
+
+Parent:&nbsp;
+Auth::AbstractRequest
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M000852&name=correct_uri?" >correct_uri?</a></li>
+  <li><a href="index.html?a=M000851&name=digest?" >digest?</a></li>
+  <li><a href="index.html?a=M000850&name=method" >method</a></li>
+  <li><a href="index.html?a=M000855&name=method_missing" >method_missing</a></li>
+  <li><a href="index.html?a=M000853&name=nonce" >nonce</a></li>
+  <li><a href="index.html?a=M000854&name=params" >params</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M000852" class="method">
+  <div id="M000852_title" class="title">
+    <b>correct_uri?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000852_source')" id="l_M000852_source">show source</a> ]</p>
+  <div id="M000852_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb, line 18</span>
+18:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">correct_uri?</span>
+19:           (<span class="ruby-ivar">@env</span>[<span class="ruby-value str">'SCRIPT_NAME'</span>].<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@env</span>[<span class="ruby-value str">'PATH_INFO'</span>].<span class="ruby-identifier">to_s</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">uri</span>
+20:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000851" class="method">
+  <div id="M000851_title" class="title">
+    <b>digest?</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000851_source')" id="l_M000851_source">show source</a> ]</p>
+  <div id="M000851_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb, line 14</span>
+14:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">digest?</span>
+15:           <span class="ruby-identifier">:digest</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">scheme</span>
+16:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000850" class="method">
+  <div id="M000850_title" class="title">
+    <b>method</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000850_source')" id="l_M000850_source">show source</a> ]</p>
+  <div id="M000850_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb, line 10</span>
+10:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method</span>
+11:           <span class="ruby-ivar">@env</span>[<span class="ruby-value str">'rack.methodoverride.original_method'</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@env</span>[<span class="ruby-value str">'REQUEST_METHOD'</span>]
+12:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000855" class="method">
+  <div id="M000855_title" class="title">
+    <b>method_missing</b>(sym)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000855_source')" id="l_M000855_source">show source</a> ]</p>
+  <div id="M000855_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb, line 30</span>
+30:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">sym</span>)
+31:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span> <span class="ruby-identifier">key</span> = <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">to_s</span>
+32:             <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">key</span>]
+33:           <span class="ruby-keyword kw">end</span>
+34:           <span class="ruby-keyword kw">super</span>
+35:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000853" class="method">
+  <div id="M000853_title" class="title">
+    <b>nonce</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000853_source')" id="l_M000853_source">show source</a> ]</p>
+  <div id="M000853_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb, line 22</span>
+22:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nonce</span>
+23:           <span class="ruby-ivar">@nonce</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Nonce</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value str">'nonce'</span>])
+24:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div id="M000854" class="method">
+  <div id="M000854_title" class="title">
+    <b>params</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000854_source')" id="l_M000854_source">show source</a> ]</p>
+  <div id="M000854_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/actionpack/lib/action_controller/vendor/rack-1.0/rack/auth/digest/request.rb, line 26</span>
+26:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">params</span>
+27:           <span class="ruby-ivar">@params</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Params</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">parts</span>.<span class="ruby-identifier">last</span>)
+28:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

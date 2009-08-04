@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Local variables</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="instancevars.html">
+ <img border=0 src="a2l.gif" alt="Instance variables"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="constants.html">
+ <img border=0 src="a2r.gif" alt="Class constants"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Local variables</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>A local variable has a name starting with a lower case letter or an
+underscore character (<code>_</code>).  Local variables do
+not, like globals and instance variables, have the value
+<code>nil</code> before initialization:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> $foo</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> @foo</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> foo</b></font>
+<font color="#50ffff"><b>ERR: (eval):1: undefined local variable or method `foo' for main(Object)</b></font></font></pre></td></tr></table>
+<p>The first assignment you make to a local variable acts something
+like a declaration.  If you refer to an uninitialized local
+variable, the ruby interpreter thinks of it as an attempt to invoke a
+method of that name; hence the error message you see above.</p>
+<p>Generally, the scope of a local variable is one of</p>
+<ul>
+<li><code>proc{</code> ... <code>}</code></li>
+<li><code>loop{</code> ... <code>}</code></li>
+<li><code>def</code> ... <code>end</code></li>
+<li><code>class</code> ... <code>end</code></li>
+<li><code>module</code> ... <code>end</code></li>
+<li>the entire program (unless one of the above applies)</li>
+</ul>
+<p>In the next example,<code> defined? </code>is an operator which checks
+whether an identifier is defined.  It returns a description of the
+identifier if it is defined, or <code>nil</code> otherwise.  As you see,
+<code>bar</code>'s scope is local to the loop; when the loop exits, <code>bar</code>
+is undefined.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> foo = 44; print foo, "\n"; defined? foo</b></font>
+44
+<font color="#50ffff"><b>   "local-variable"</b></font>
+ruby&gt;<font color="#ffff00"><b> loop{bar=45; print bar, "\n"; break}; defined? bar</b></font>
+45
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>Procedure objects that live in the same scope share whatever local
+variables also belong to that scope.  Here, the local variable
+<code>bar</code> is shared by <code>main</code> and the procedure objects
+<code>p1</code> and <code>p2</code>:</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> bar=0</b></font>
+<font color="#50ffff"><b>   0</b></font>
+ruby&gt;<font color="#ffff00"><b> p1 = proc{|n| bar=n}</b></font>
+<font color="#50ffff"><b>   #&lt;Proc:0x8deb0&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> p2 = proc{bar}</b></font>
+<font color="#50ffff"><b>   #&lt;Proc:0x8dce8&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> p1.call(5)</b></font>
+<font color="#50ffff"><b>   5</b></font>
+ruby&gt;<font color="#ffff00"><b> bar</b></font>
+<font color="#50ffff"><b>   5</b></font>
+ruby&gt;<font color="#ffff00"><b> p2.call</b></font>
+<font color="#50ffff"><b>   5</b></font></font></pre></td></tr></table>
+<p>Note that the "<code>bar=0</code>" at the beginning cannot be omitted;
+that assignment ensures that the scope of <code>bar</code> will encompass
+<code>p1</code> and <code>p2</code>.  Otherwise <code>p1</code> and
+<code>p2</code> would each end up with its own local variable
+<code>bar</code>, and calling <code>p2</code> would have resulted in that
+"undefined local variable or method" error.</p>
+<p>A powerful feature of procedure objects follows from their ability
+to be passed as arguments: shared local variables remain valid even
+when they are passed out of the original scope.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> def box</b></font>
+    |<font color="#ffff00"><b>   contents = 15</b></font>
+    |<font color="#ffff00"><b>   get = proc{contents}</b></font>
+    |<font color="#ffff00"><b>   set = proc{|n| contents = n}</b></font>
+    |<font color="#ffff00"><b>   return get, set</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> reader, writer = box</b></font>
+<font color="#50ffff"><b>   [#&lt;Proc:0x40170fc0&gt;, #&lt;Proc:0x40170fac&gt;] </b></font>
+ruby&gt;<font color="#ffff00"><b> reader.call</b></font>
+<font color="#50ffff"><b>   15</b></font>
+ruby&gt;<font color="#ffff00"><b> writer.call(2)</b></font>
+<font color="#50ffff"><b>   2</b></font>
+ruby&gt;<font color="#ffff00"><b> reader.call</b></font>
+<font color="#50ffff"><b>   2</b></font></font></pre></td></tr></table>
+<p>Ruby is particularly smart about scope.  It is evident in our
+example that the <code>contents</code> variable is being shared between the
+<code>reader</code> and <code>writer</code>.  But we can also manufacture
+multiple reader-writer pairs using <code>box</code> as defined above; each
+pair shares a <code>contents</code> variable, and the pairs do not interfere
+with each other.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> reader_1, writer_1 = box</b></font>
+<font color="#50ffff"><b>   [#&lt;Proc:0x40172820&gt;, #&lt;Proc:0x4017280c&gt;]</b></font>
+ruby&gt;<font color="#ffff00"><b> reader_2, writer_2 = box</b></font>
+<font color="#50ffff"><b>   [#&lt;Proc:0x40172668&gt;, #&lt;Proc:0x40172654&gt;]</b></font>
+ruby&gt;<font color="#ffff00"><b> writer_1.call(99)</b></font>
+<font color="#50ffff"><b>   99</b></font>
+ruby&gt;<font color="#ffff00"><b> reader_1.call</b></font>
+<font color="#50ffff"><b>   99</b></font>
+ruby&gt;<font color="#ffff00"><b> reader_2.call</b></font>
+<font color="#50ffff"><b>   15</b></font></font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="instancevars.html">
+ <img border=0 src="a2l.gif" alt="Instance variables"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="constants.html">
+ <img border=0 src="a2r.gif" alt="Class constants"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

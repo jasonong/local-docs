@@ -1,0 +1,330 @@
+<HTML>
+<HEAD>
+<TITLE>Time</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Struct.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="NilClass.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Time</H1>
+<dd> 
+<P>
+The <code>Time</code> class represents the time value and its
+operations.  <code>Time.now</code> returns the current time object.
+The timestamps of the files returned by
+<code><a href="File.html#stat">File#stat</a></code> are instances of
+this class.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html"><code>Object</code></A>
+</dl>
+<dt> <h2>Included Modules:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Compar.html"><code>Comparable</code></A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="Time.now"><CODE>now</CODE></A>
+<DD>
+<DT>
+<A NAME="Time.new"><CODE>now</CODE></A>
+<DD>
+<p>
+Returns the current time object.
+</p>
+
+<DT>
+<A NAME="Time.at">
+<CODE>at(<VAR>time</VAR>)</CODE></A>
+<DD>
+<p>
+Creates the time object at <var>time</var>. The argument
+<var>time</var> must be either the instance of the <code>Time</code>
+class or the number, which is considered as seconds since
+<samp>00:00:00 GMT, January 1, 1970</samp>.
+</p>
+
+<dt> 
+<A NAME="Time.gm">
+<CODE>gm(<var>year</var>, <var>month</var>, <var>day</var>, <var>hour</var>, <var>min</var>, <var>sec</var>)</CODE></A>
+<dd> 
+<p>
+Returns the <code>Time</code> object specified by the arguments in GMT.
+The arguments after the second one can be omitted.  The default value
+for the omitted argument is the lowest value for that argument.
+</p>
+<p>
+If the <code>month</code> argument is a fixnum, it must be from
+1(January) to 12(December).  If it is string, it must be the English
+month name or the number starting from 1(January) to 12(December).
+</p>
+<p>
+If the number of arguments are equals to that of elements of 
+<a href="#to_a">Time#to_a</a>, <code>Time.gm</code> understands them
+properly, even if they are in the little endian (seconds comes first)
+format.
+</p>
+<dt> 
+<A NAME="Time.local">
+<CODE>local(<var>year</var>, <var>month</var>, <var>day</var>, <var>hour</var>, <var>min</var>, <var>sec</var>)</CODE></A>
+<dd> 
+<dt> 
+<A NAME="Time.mktime">
+<CODE>mktime(<var>year</var>, <var>month</var>, <var>day</var>, <var>hour</var>, <var>min</var>, <var>sec</var>)</CODE></A>
+<dd> 
+<p>
+Returns the <code>Time</code> object specified by the arguments in localtime.
+The arguments after the second one can be omitted.  The default value
+for the omitted argument is the lowest value for that argument.
+</p>
+<DT>
+<A NAME="Time.times">
+<CODE>times</CODE></A>
+<DD>
+<p>
+Returns the user and system CPU times <a
+href="Struct.html">structure</a>, which attributes are:
+
+<blockquote>
+<PRE>
+utime		# user time
+stime		# system time
+cutime		# user time of children
+cstime		# system time of children
+</PRE>
+</blockquote>
+</p>
+
+Times are floating-point numbers and are measured in seconds.
+(See <samp>times(3)</samp>)
+</DL>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<dt> <a name="plus"></a>
+<code>self + <var>other</var></code>
+<dd> 
+<p>
+Returns the time object which is later than <code>self</code> by
+<var>other</var>.
+</p>
+<dt> <a name="minus"></a>
+<code>self - <var>other</var></code>
+<dd> 
+<p>
+Returns the diff of the time in float, if the <var>other</var> if the
+time object.  If the <var>other</var> is the numeric value, it returns
+the time object earlier than <code>self</code> than <var>other</var>.
+</p>
+<DT>
+<A NAME="cmp">
+<CODE>self &#60;=&#62; <VAR>other</VAR></CODE></A>
+<DD>
+<p>
+Comparison of the times.  <var>other</var> must be a time object or an 
+integer or a floating-point number.  Numbers are considered as seconds 
+since <samp>00:00:00 GMT, January 1, 1970</samp>.
+</p>
+
+<DT>
+<A NAME="asctime"><CODE>asctime</CODE></A>
+<DD>
+<DT><A NAME="ctime"><CODE>ctime</CODE></A>
+<DD>
+<DT><A NAME="to_s"><CODE>to_s</CODE></A>
+<DD>
+<p>
+Converts the time into the string form like <samp>ctime(3)</samp>.
+</p>
+
+<DT>
+<A NAME="gmtime">
+<CODE>gmtime</CODE></A>
+<DD>
+<p>
+Sets timezone of the time object to GMT.  The time object
+operates time in GMT thereafter.  To print time in GMT:
+<blockquote>
+<pre>
+print Time.now.gmtime, "\n"
+</pre>
+</blockquote>
+</p>
+<p>
+<code>gmtime</code> returns <code>self</code>.
+</p>
+
+<DT>
+<A NAME="localtime">
+<CODE>localtime</CODE></A>
+<DD>
+<p>
+Sets timezone of the time object to localtime, which is default.
+Returns time object itself.
+</p>
+
+<DT>
+<A NAME="to_i"><CODE>to_i</CODE></A>
+<DD>
+<DT><A NAME="tv_sec"><CODE>tv_sec</CODE></A>
+<DD>
+<p>
+Returns the time since the epoch,
+<samp>00:00:00 GMT, January 1, 1970</samp>,
+measured in seconds.
+</p>
+
+<DT>
+<A NAME="sec"><CODE>sec</CODE></A>
+<DD>
+<DT><A NAME="min"><CODE>min</CODE></A>
+<DD>
+<DT><A NAME="hour"><CODE>hour</CODE></A>
+<DD>
+<DT><A NAME="mday"><CODE>mday</CODE></A>
+<DD>
+<DT><A NAME="day"><CODE>day</CODE></A>
+<DD>
+<DT><A NAME="mon"><CODE>mon</CODE></A>
+<DD>
+<DT><A NAME="month"><CODE>month</CODE></A>
+<DD>
+<DT><A NAME="year"><CODE>year</CODE></A>
+<DD>
+<DT><A NAME="wday"><CODE>wday</CODE></A>
+<DD>
+<DT><A NAME="yday"><CODE>yday</CODE></A>
+<DD>
+<DT><A NAME="zone"><CODE>zone</CODE></A>
+<DD>
+<DT><A NAME="isdst"><CODE>isdst</CODE></A>
+<DD>
+<p>
+Returns the internal values of the time object.  All methods return an 
+integer value, except <code>zone</code>, which returns the timezone name
+string.  (c.f. <SAMP>localtime(3)</SAMP>)
+</p>
+<p>
+Notice: Unlike tm struct, month returns 1 for January, year
+returns 1998 for year 1998, and yday start with 1 (not 0).
+</p>
+
+<DT>
+<A NAME="strftime">
+<CODE>strftime(<VAR>format</VAR>)</CODE></A>
+<DD>
+<p>
+Returns formatted string from the time object.  Format specifiers are
+as follows:
+</p>
+
+<dl compact>
+<dt> <code>%A</code>
+<dd> full weekday name(Sunday, Monday...)
+<dt> <code>%a</code>
+<dd> abbreviated weekday name(Sun, Mon...)
+<dt> <code>%B</code>
+<dd> full month name(January, February...)
+<dt> <code>%b</code>
+<dd> abbreviated month name(Jan, Feb...)
+<dt> <code>%c</code>
+<dd> date and time representation
+<dt> <code>%d</code>
+<dd> day of the month in decimal(01-31)
+<dt> <code>%H</code>
+<dd> hour using a 24-hour clock(00-23)
+<dt> <code>%I</code>
+<dd> hour using a 12-hour clock(01-12)
+<dt> <code>%j</code>
+<dd> day of the year(001-366)
+<dt> <code>%M</code>
+<dd> minutes(00-59)
+<dt> <code>%m</code>
+<dd> month in decimal(01-12)
+<dt> <code>%p</code>
+<dd> Either AM or PM
+<dt> <code>%S</code>
+<dd> second in decimal(00-61)
+<dt> <code>%U</code>
+<dd> week number, first Sunday as the first day of the first week(00-53)
+<dt> <code>%W</code>
+<dd> week number, first Monday as the first day of the first week(00-53)
+<dt> <code>%w</code>
+<dd> day of the week in number. Sunday being 0(0-6)
+<dt> <code>%X</code>
+<dd> time representation without date
+<dt> <code>%x</code>
+<dd> date representation without time
+<dt> <code>%Y</code>
+<dd> year
+<dt> <code>%y</code>
+<dd> year without century(00-99)
+<dt> <code>%Z</code>
+<dd> timezone
+<dt> <code>%%</code>
+<dd> %itself
+</dl>
+
+<DT>
+<A NAME="to_a"><CODE>to_a</CODE></A>
+<DD>
+<p>
+Converts tm struct into an array, whose elements are in
+order of:
+</p>
+<ul>
+<li> sec
+<li> min
+<li> hour
+<li> mday
+<li> mon
+<li> year
+<li> wday
+<li> yday
+<li> isdst
+<li> zone
+</ul>
+
+<DT>
+<A NAME="to_f"><CODE>to_f</CODE></A>
+<DD>
+<p>
+Converts the time (in seconds from the epoch) into a floating-point
+number.
+</p>
+
+<DT>
+<A NAME="usec"><CODE>usec</CODE></A>
+<DD>
+<DT><A NAME="tv_usec"><CODE>tv_usec</CODE></A>
+<DD>
+<p>
+Returns micro second part of the time object.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Struct.html">prev</A>
+-
+<A HREF="classes.html#classes">up</A>
+-
+<A HREF="NilClass.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Regular expressions</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="strings.html">
+ <img border=0 src="a2l.gif" alt="Strings"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="arrays.html">
+ <img border=0 src="a2r.gif" alt="Arrays"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Regular expressions</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>Let's put together a more interesting program.  This time we
+test whether a string fits a description, encoded into a concise
+<em>pattern</em>. </p>
+<p>There are some characters and character combinations that have
+special meaning in these patterns, including:</p>
+<p><table border="1"><tr><td><code>[]</code> </td><td> range specificication (e.g., <code>[a-z]</code> means a letter in
+the range <code>a</code> to <code>z</code>) </td></tr>
+<tr><td>
+<code>\w</code> </td><td> letter or digit; same as <code>[0-9A-Za-z]</code></td></tr>
+<tr><td>
+<code>\W</code> </td><td> neither letter or digit</td></tr>
+<tr><td>
+<code>\s</code> </td><td> space character; same as <code>[ \t\n\r\f]</code></td></tr>
+<tr><td>
+<code>\S</code> </td><td> non-space character</td></tr>
+<tr><td>
+<code>\d</code> </td><td> digit character; same as <code>[0-9]</code></td></tr>
+<tr><td>
+<code>\D</code> </td><td> non-digit character</td></tr>
+<tr><td>
+<code>\b</code> </td><td> backspace (0x08) (only if in a range specification)</td></tr>
+<tr><td>
+<code>\b</code> </td><td> word boundary (if not in a range specification)</td></tr>
+<tr><td>
+<code>\B</code> </td><td> non-word boundary</td></tr>
+<tr><td>
+<code>*</code> </td><td> zero or more repetitions of the preceding</td></tr>
+<tr><td>
+<code>+</code> </td><td> one or more repetitions of the preceding</td></tr>
+<tr><td>
+<code>{m,n}</code> </td><td> at least m and at most n repetitions of the preceding</td></tr>
+<tr><td>
+<code>?</code> </td><td> at most one repetition of the preceding; same as <code>{0,1}</code></td></tr>
+<tr><td>
+<code>|</code> </td><td> either preceding or next expression may match</td></tr>
+<tr><td>
+<code>()</code> </td><td> grouping</td></tr></table>
+<p>The common term for patterns that use this strange vocabulary is
+<em>regular expressions</em>.  In ruby, as in Perl, they are generally
+surrounded by forward slashes rather than double quotes.  If you have
+never worked with regular expressions before, they probably look
+anything but <em>regular</em>, but you would be wise to spend some time
+getting familiar with them.  They have an efficient expressive power
+that will save you headaches (and many lines of code) whenever you
+need to do pattern matching, searching, or other manipulations on text
+strings.</p>
+<p>For example, suppose we want to test whether a string fits this
+description: "Starts with lower case f, which is immediately followed
+by exactly one upper case letter, and optionally more junk after that,
+as long as there are no more lower case characters."  If you're an
+experienced C programmer, you've probably already written about a
+dozen lines of code in your head, right?  Admit it; you can hardly
+help yourself.  But in ruby you need only request that your string be
+tested against the regular expression <code>/^f[A-Z](^[a-z])*$/</code>.</p>
+<p>How about "Contains a hexadecimal number enclosed in angle
+brackets"?  No problem.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> def chab(s)   # "contains hex in angle brackets"</b></font>
+    |<font color="#ffff00"><b>    (s =~ /&lt;0(x|X)(\d|[a-f]|[A-F])+&gt;/) != nil</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+  nil
+ruby&gt;<font color="#ffff00"><b> chab "Not this one."</b></font>
+  false
+ruby&gt;<font color="#ffff00"><b> chab "Maybe this? {0x35}"    # wrong kind of brackets</b></font>
+  false
+ruby&gt;<font color="#ffff00"><b> chab "Or this? &lt;0x38z7e&gt;"    # bogus hex digit</b></font>
+  false
+ruby&gt;<font color="#ffff00"><b> chab "Okay, this: &lt;0xfc0004&gt;."</b></font>
+  true</font></pre></td></tr></table>
+<p>Though regular expressions can be puzzling at first glance, you
+will quickly gain satisfaction in being able to express yourself so
+economically.</p>
+<p>Here is a little program to help you experiment with regular
+expressions.  Store it as <code>regx.rb</code> and run it by
+typing <code>"ruby regx.rb"</code> at the command line.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="#e8e8d8"><tr><td><pre><font color="black"># Requires an ANSI terminal!
+
+st = "\033[7m"
+en = "\033[m"
+
+while TRUE
+  print "str&gt; "
+  STDOUT.flush
+  str = gets
+  break if not str
+  str.chop!
+  print "pat&gt; "
+  STDOUT.flush
+  re = gets
+  break if not re
+  re.chop!
+  str.gsub! re, "#{st}\\&amp;#{en}"
+  print str, "\n"
+end
+print "\n"</font></pre></td></tr></table>
+<p>The program requires input twice, once for a string and once for a
+regular expression.  The string is tested against the regular
+expression, then displayed with all the matching parts highlighted in
+reverse video.  Don't mind details now; an analysis of this code
+will come soon.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">str&gt; foobar
+pat&gt; ^fo+
+<font color="red"><b>foo</b></font>bar
+~~~</font></pre></td></tr></table>
+<p><em>What you see above as red text will appear as reverse video in the
+program output.  The "~~~" lines are for the benefit of those using
+text-based browsers.</em></p>
+<p>Let's try several more inputs. </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">str&gt; abc012dbcd555
+pat&gt; \d
+abc<font color="red"><b>012</b></font>dbcd<font color="red"><b>555</b></font>
+<font color="#50ffff"><b>   ~~~    ~~~</b></font></font></pre></td></tr></table>
+<p>If that surprised you, refer to the table at the top of this page:
+<code>\d</code> has no relationship to the character <code>d</code>, but
+rather matches a single digit. </p>
+<p>What if there is more than one way to correctly match the pattern?</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">str&gt; foozboozer
+pat&gt; f.*z
+<font color="red"><b>foozbooz</b></font>er
+~~~~~~~~</font></pre></td></tr></table>
+<p><code>foozbooz</code> is matched instead of just <code>fooz</code>, since a
+regular expression maches the longest possible substring.</p>
+<p>Here is a pattern to isolate a colon-delimited time field.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">str&gt; Wed Feb  7 08:58:04 JST 1996
+pat&gt; [0-9]+:[0-9]+(:[0-9]+)?
+Wed Feb  7 <font color="red"><b>08:58:04</b></font> JST 1996
+<font color="#50ffff"><b>           ~~~~~~~~</b></font></font></pre></td></tr></table>
+<p>"<code>=~</code>" is a matching operator with respect to regular
+expressions; it returns the position in a string where a match was
+found, or <code>nil</code> if the pattern did not match. </p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> "abcdef" =~ /d/</b></font>
+<font color="#50ffff"><b>   3</b></font>
+ruby&gt;<font color="#ffff00"><b> "aaaaaa" =~ /d/</b></font>
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="strings.html">
+ <img border=0 src="a2l.gif" alt="Strings"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="arrays.html">
+ <img border=0 src="a2r.gif" alt="Arrays"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

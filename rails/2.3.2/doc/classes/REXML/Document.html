@@ -1,0 +1,69 @@
+  <div id="C00000640">
+<div class='banner'>
+  <span class="file-title-prefix">Class</span><br />Document<br/>
+  In:
+<a href="#" onclick="jsHref('files/rails-2_3_2/activesupport/lib/active_support/core_ext/rexml_rb.html');">rails-2.3.2/activesupport/lib/active_support/core_ext/rexml.rb</a>
+
+Parent:&nbsp;
+Element
+</div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+      <div id="content">
+
+
+
+
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="index.html?a=M001827&name=entity_expansion_limit=" >entity_expansion_limit=</a></li>
+  <li><a href="index.html?a=M001828&name=record_entity_expansion!" >record_entity_expansion!</a></li>
+  </ul>
+
+
+
+
+
+
+<div class="sectiontitle">Public Class methods</div>
+<div id="M001827" class="method">
+  <div id="M001827_title" class="title">
+    <b>entity_expansion_limit=</b>(val)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001827_source')" id="l_M001827_source">show source</a> ]</p>
+  <div id="M001827_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/rexml.rb, line 27</span>
+27:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">entity_expansion_limit=</span> <span class="ruby-identifier">val</span>
+28:           <span class="ruby-ivar">@@entity_expansion_limit</span> = <span class="ruby-identifier">val</span>
+29:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div id="M001828" class="method">
+  <div id="M001828_title" class="title">
+    <b>record_entity_expansion!</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M001828_source')" id="l_M001828_source">show source</a> ]</p>
+  <div id="M001828_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File rails-2.3.2/activesupport/lib/active_support/core_ext/rexml.rb, line 31</span>
+31:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">record_entity_expansion!</span>
+32:           <span class="ruby-ivar">@number_of_expansions</span> <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>
+33:           <span class="ruby-ivar">@number_of_expansions</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+34:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@number_of_expansions</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@@entity_expansion_limit</span>
+35:             <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Number of entity expansions exceeded, processing aborted.&quot;</span>
+36:           <span class="ruby-keyword kw">end</span>
+37:         <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>

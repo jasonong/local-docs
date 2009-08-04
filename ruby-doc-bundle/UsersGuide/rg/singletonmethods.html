@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+"http://www.w3.org/TR/REC-html40/strict.dtd">
+<HTML><HEAD>
+  <LINK rev="made" href="mailto:slagell@ruby-lang.org">
+  <TITLE>Singleton methods</TITLE>
+</HEAD>
+<BODY bgcolor="#e0e0e0" text="black" vlink="#4444ff"alink="yellow" alink="4444a0">
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accesscontrol.html">
+ <img border=0 src="a2l.gif" alt="Access control"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="modules.html">
+ <img border=0 src="a2r.gif" alt="Modules"><br>Next</a></td>
+ </tr></table>
+
+<hr>
+<table bgcolor="#b00000" width="100%" cellpadding="15"  cellspacing="0" align="center" border="0"><tr><td width="10%">&nbsp;</td><td align="left" width="30%"><font face="georgia, charter" size="+2"  color="#b0d0d0">Ruby user's guide</font></td><td align="right" width="50%"><font face="georgia, charter" size="+2"  color="white">Singleton methods</font></td><td width="10%">&nbsp;</td></tr></table>
+
+<p>The behavior of an instance is determined by its class, but there
+may be times we know that a particular instance should have special
+behavior.  In most languages, we must go to the trouble of
+defining another class, which would then only be instantiated
+once.  In ruby we can give any object its own methods.</p>
+<p><table align="center" width="90%" border="1" cellpadding="6" bgcolor="black"><tr><td><pre><font color="white">ruby&gt;<font color="#ffff00"><b> class SingletonTest</b></font>
+    |<font color="#ffff00"><b>   def size</b></font>
+    |<font color="#ffff00"><b>     print "25\n"</b></font>
+    |<font color="#ffff00"><b>   end</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> test1 = SingletonTest.new</b></font>
+<font color="#50ffff"><b>   #&lt;SingletonTest:0xbc468&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> test2 = SingletonTest.new</b></font>
+<font color="#50ffff"><b>   #&lt;SingletonTest:0xbae20&gt;</b></font>
+ruby&gt;<font color="#ffff00"><b> def test2.size</b></font>
+    |<font color="#ffff00"><b>   print "10\n"</b></font>
+    |<font color="#ffff00"><b> end</b></font>
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> test1.size</b></font>
+25
+<font color="#50ffff"><b>   nil</b></font>
+ruby&gt;<font color="#ffff00"><b> test2.size</b></font>
+10
+<font color="#50ffff"><b>   nil</b></font></font></pre></td></tr></table>
+<p>In this example, <code>test1</code> and <code>test2</code> belong to
+same class, but <code>test2</code> has been given a redefined
+<code>size</code> method and so they behave differently.  A method
+given only to a single object is called a <em>singleton method</em>.</p>
+<p>Singleton methods are often used for elements of a graphic user
+interface (GUI), where different actions need to be taken when
+different buttons are pressed.</p>
+<p>Singleton methods are not unique to ruby, as they appear in CLOS,
+Dylan, etc.  Also, some languages, for example, Self and
+NewtonScript, have singleton methods only.  These are sometimes
+called <em>prototype-based</em> languages. </p>
+
+<hr>
+
+<table align="center" border="0" cellpadding="15"><tr>
+ <td align="center" valign="bottom" width="33%">
+ <a href="accesscontrol.html">
+ <img border=0 src="a2l.gif" alt="Access control"><br>Prev</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="index.html">
+ <img border=0 src="a2u.gif" alt="Contents"><br>Contents</a></td>
+ <td align="center" valign="bottom" width="33%">
+ <a href="modules.html">
+ <img border=0 src="a2r.gif" alt="Modules"><br>Next</a></td>
+ </tr></table>
+
+</BODY></HTML>

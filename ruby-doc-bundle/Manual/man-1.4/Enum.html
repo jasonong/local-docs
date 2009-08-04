@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Enumerable</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<A HREF="Compar.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="FileTest.html">next</A>
+-
+<A HREF="index.html">index</A>
+<HR>
+<dl>
+<dt> <H1>Enumerable</H1>
+<dd> 
+<P>
+<var>Enumerable</var> is the Mix-in module for the enumeration.  The
+including class must provide the method <code>each</code>.  All
+methods provided by <code>Enumerable</code> are defined using
+<code>each</code>.
+</P>
+<dt> <h2>Methods:</h2>
+<dd> 
+<DL COMPACT>
+
+<DT>
+<A NAME="collect">
+<CODE>collect {|<VAR>item</VAR>|...}</CODE></A>
+<DD>
+<p>
+Returns an array of the result of the block evaluation over each item.
+</p>
+
+<DT>
+<A NAME="each_with_index"><CODE>each_with_index {|<VAR>item</VAR>,<VAR>index</VAR>|...}</CODE></A>
+<DD>
+<p>
+Iterates over each element with its index.
+</p>
+
+<DT>
+<A NAME="find">
+<CODE>find {|<VAR>item</VAR>|...}</CODE></A>
+<DD>
+<DT>
+<A NAME="detect"><CODE>detect {|<VAR>item</VAR>|...}</CODE></A>
+<DD>
+<p>
+Returns the first item which satisfies the block condition (i.e. the
+block's return value is true).
+</p>
+
+<DT>
+<A NAME="find_all">
+<CODE>find_all {|<VAR>item</VAR>|...}</CODE></A>
+<DD>
+<DT>
+<A NAME="select"><CODE>select {|<VAR>item</VAR>|...}</CODE></A>
+<DD>
+<p>
+Returns an array of all items which satisfy the block condition.
+</p>
+
+<DT>
+<A NAME="grep">
+<CODE>grep(pattern)</CODE></A>
+<DD>
+<DT><CODE>grep(pattern) {|<VAR>item</VAR>|...}</CODE>
+<DD>
+<p>
+Returns an array of all items which satisfy 
+`<code><var>pattern</var>=== item</code>'.  If is called with the block,
+<code>grep</code> evaluates the block over every item matched.
+</p>
+
+<DT>
+<A NAME="member_p">
+<CODE>member?(<VAR>val</VAR>)</CODE></A>
+<DD>
+<DT>
+<A NAME="include_p">
+<CODE>include?(<VAR>val</VAR>)</CODE></A>
+<DD>
+<p>
+Returns true if there is an item which equals to <var>val</var>.
+Comparison is done by the operator `<code>==</code>'.
+</p>
+
+<DT>
+<A NAME="index">
+<CODE>index(<VAR>val</VAR>)</CODE></A>
+<DD>
+<p>
+Returns the index of the item which equals to <var>val</var> using
+operator `<code>==</code>'.  The index of the first item is 0.
+Returns <code>nil</code> if there is no matching item.  It is
+meaningless for non-ordered enumerables.
+</p>
+
+<DT>
+<A NAME="length">
+<CODE>length</CODE></A>
+<DD>
+<DT>
+<A NAME="size">
+<CODE>size</CODE></A>
+<DD>
+<p>
+Returns the number of items.
+</p>
+
+<DT>
+<A NAME="min">
+<CODE>min</CODE></A>
+<DD>
+<p>
+Returns the smallest item assuming all items are
+<a href="Compar.html"><code>Comparable</code></a>.
+</p>
+
+<DT>
+<CODE>min{|<VAR>a</VAR>, <VAR>b</VAR>|...}</CODE>
+<DD>
+<p>
+Returns the smallest item using the evaluated value of the block.
+</p>
+<DT>
+<A NAME="max">
+<CODE>max</CODE></A>
+<DD>
+<p>
+Returns the greatest item assuming all items are
+<a href="Compar.html"><code>Comparable</code></a>.
+</p>
+
+<DT>
+<CODE>max{|<VAR>a</VAR>, <VAR>b</VAR>|...}</CODE>
+<DD>
+<p>
+Returns the greatest item using the evaluated value of the block.
+</p>
+
+<DT>
+<A NAME="reject"><CODE>reject {|<VAR>item</VAR>|...}</CODE></A>
+<DD>
+<p>
+Returns an array of all items which does not satisfy the block condition.
+</p>
+
+<DT>
+<A NAME="sort">
+<CODE>sort</CODE></A>
+<DD>
+<DT><CODE>sort {|<VAR>a</VAR>, <VAR>b</VAR>|...}</CODE>
+<DD>
+<p>
+Returns the sorted array of the items.  If the block is given, it must
+compare two items just like <code>&#60;=&#62;</code>.
+</p>
+<dt>
+<a name="to_a">
+<code>to_a</code></a>
+<dd> 
+<dt>
+<a name="entries"><code>entries</code></a>
+<dd> 
+<p>
+Converts an Enumerable to an array.
+</p>
+</DL>
+</dl>
+
+<HR>
+<A HREF="Compar.html">prev</A>
+-
+<A HREF="classes.html#modules">up</A>
+-
+<A HREF="FileTest.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>

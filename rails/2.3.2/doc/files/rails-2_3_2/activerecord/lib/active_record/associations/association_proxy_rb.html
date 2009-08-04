@@ -1,0 +1,298 @@
+  <div id="fileHeader">
+    <h1>association_proxy.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/activerecord/lib/active_record/associations/association_proxy.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActiveRecord
+  module Associations
+    # This is the root class of all association proxies:
+    #
+    #   AssociationProxy
+    #     BelongsToAssociation
+    #       HasOneAssociation
+    #     BelongsToPolymorphicAssociation
+    #     AssociationCollection
+    #       HasAndBelongsToManyAssociation
+    #       HasManyAssociation
+    #         HasManyThroughAssociation
+    #            HasOneThroughAssociation
+    #
+    # Association proxies in Active Record are middlemen between the object that
+    # holds the association, known as the &lt;tt&gt;@owner&lt;/tt&gt;, and the actual associated
+    # object, known as the &lt;tt&gt;@target&lt;/tt&gt;. The kind of association any proxy is
+    # about is available in &lt;tt&gt;@reflection&lt;/tt&gt;. That's an instance of the class
+    # ActiveRecord::Reflection::AssociationReflection.
+    #
+    # For example, given
+    #
+    #   class Blog &lt; ActiveRecord::Base
+    #     has_many :posts
+    #   end
+    #
+    #   blog = Blog.find(:first)
+    #
+    # the association proxy in &lt;tt&gt;blog.posts&lt;/tt&gt; has the object in +blog+ as
+    # &lt;tt&gt;@owner&lt;/tt&gt;, the collection of its posts as &lt;tt&gt;@target&lt;/tt&gt;, and
+    # the &lt;tt&gt;@reflection&lt;/tt&gt; object represents a &lt;tt&gt;:has_many&lt;/tt&gt; macro.
+    #
+    # This class has most of the basic instance methods removed, and delegates
+    # unknown methods to &lt;tt&gt;@target&lt;/tt&gt; via &lt;tt&gt;method_missing&lt;/tt&gt;. As a
+    # corner case, it even removes the +class+ method and that's why you get
+    #
+    #   blog.posts.class # =&gt; Array
+    #
+    # though the object behind &lt;tt&gt;blog.posts&lt;/tt&gt; is not an Array, but an
+    # ActiveRecord::Associations::HasManyAssociation.
+    #
+    # The &lt;tt&gt;@target&lt;/tt&gt; object is not \loaded until needed. For example,
+    #
+    #   blog.posts.count
+    #
+    # is computed directly through SQL and does not trigger by itself the
+    # instantiation of the actual post records.
+    class AssociationProxy #:nodoc:
+      alias_method :proxy_respond_to?, :respond_to?
+      alias_method :proxy_extend, :extend
+      delegate :to_param, :to =&gt; :proxy_target
+      instance_methods.each { |m| undef_method m unless m =~ /(^__|^nil\?$|^send$|proxy_|^object_id$)/ }
+
+      def initialize(owner, reflection)
+        @owner, @reflection = owner, reflection
+        Array(reflection.options[:extend]).each { |ext| proxy_extend(ext) }
+        reset
+      end
+
+      # Returns the owner of the proxy.
+      def proxy_owner
+        @owner
+      end
+
+      # Returns the reflection object that represents the association handled
+      # by the proxy.
+      def proxy_reflection
+        @reflection
+      end
+
+      # Returns the \target of the proxy, same as +target+.
+      def proxy_target
+        @target
+      end
+
+      # Does the proxy or its \target respond to +symbol+?
+      def respond_to?(*args)
+        proxy_respond_to?(*args) || (load_target &amp;&amp; @target.respond_to?(*args))
+      end
+
+      # Forwards &lt;tt&gt;===&lt;/tt&gt; explicitly to the \target because the instance method
+      # removal above doesn't catch it. Loads the \target if needed.
+      def ===(other)
+        load_target
+        other === @target
+      end
+
+      # Returns the name of the table of the related class:
+      #
+      #   post.comments.aliased_table_name # =&gt; &quot;comments&quot;
+      #
+      def aliased_table_name
+        @reflection.klass.table_name
+      end
+
+      # Returns the SQL string that corresponds to the &lt;tt&gt;:conditions&lt;/tt&gt;
+      # option of the macro, if given, or +nil+ otherwise.
+      def conditions
+        @conditions ||= interpolate_sql(@reflection.sanitized_conditions) if @reflection.sanitized_conditions
+      end
+      alias :sql_conditions :conditions
+
+      # Resets the \loaded flag to +false+ and sets the \target to +nil+.
+      def reset
+        @loaded = false
+        @target = nil
+      end
+
+      # Reloads the \target and returns +self+ on success.
+      def reload
+        reset
+        load_target
+        self unless @target.nil?
+      end
+
+      # Has the \target been already \loaded?
+      def loaded?
+        @loaded
+      end
+
+      # Asserts the \target has been loaded setting the \loaded flag to +true+.
+      def loaded
+        @loaded = true
+      end
+
+      # Returns the target of this proxy, same as +proxy_target+.
+      def target
+        @target
+      end
+
+      # Sets the target of this proxy to &lt;tt&gt;\target&lt;/tt&gt;, and the \loaded flag to +true+.
+      def target=(target)
+        @target = target
+        loaded
+      end
+
+      # Forwards the call to the target. Loads the \target if needed.
+      def inspect
+        load_target
+        @target.inspect
+      end
+
+      def send(method, *args)
+        if proxy_respond_to?(method)
+          super
+        else
+          load_target
+          @target.send(method, *args)
+        end
+      end
+
+      protected
+        # Does the association have a &lt;tt&gt;:dependent&lt;/tt&gt; option?
+        def dependent?
+          @reflection.options[:dependent]
+        end
+
+        # Returns a string with the IDs of +records+ joined with a comma, quoted
+        # if needed. The result is ready to be inserted into a SQL IN clause.
+        #
+        #   quoted_record_ids(records) # =&gt; &quot;23,56,58,67&quot;
+        #
+        def quoted_record_ids(records)
+          records.map { |record| record.quoted_id }.join(',')
+        end
+
+        def interpolate_sql(sql, record = nil)
+          @owner.send(:interpolate_sql, sql, record)
+        end
+
+        # Forwards the call to the reflection class.
+        def sanitize_sql(sql)
+          @reflection.klass.send(:sanitize_sql, sql)
+        end
+
+        # Assigns the ID of the owner to the corresponding foreign key in +record+.
+        # If the association is polymorphic the type of the owner is also set.
+        def set_belongs_to_association_for(record)
+          if @reflection.options[:as]
+            record[&quot;#{@reflection.options[:as]}_id&quot;]   = @owner.id unless @owner.new_record?
+            record[&quot;#{@reflection.options[:as]}_type&quot;] = @owner.class.base_class.name.to_s
+          else
+            unless @owner.new_record?
+              primary_key = @reflection.options[:primary_key] || :id
+              record[@reflection.primary_key_name] = @owner.send(primary_key)
+            end
+          end
+        end
+
+        # Merges into +options+ the ones coming from the reflection.
+        def merge_options_from_reflection!(options)
+          options.reverse_merge!(
+            :group   =&gt; @reflection.options[:group],
+            :having  =&gt; @reflection.options[:having],
+            :limit   =&gt; @reflection.options[:limit],
+            :offset  =&gt; @reflection.options[:offset],
+            :joins   =&gt; @reflection.options[:joins],
+            :include =&gt; @reflection.options[:include],
+            :select  =&gt; @reflection.options[:select],
+            :readonly  =&gt; @reflection.options[:readonly]
+          )
+        end
+
+        # Forwards +with_scope+ to the reflection.
+        def with_scope(*args, &amp;block)
+          @reflection.klass.send :with_scope, *args, &amp;block
+        end
+
+      private
+        # Forwards any missing method call to the \target.
+        def method_missing(method, *args)
+          if load_target
+            unless @target.respond_to?(method)
+              message = &quot;undefined method `#{method.to_s}' for \&quot;#{@target}\&quot;:#{@target.class.to_s}&quot;
+              raise NoMethodError, message
+            end
+
+            if block_given?
+              @target.send(method, *args)  { |*block_args| yield(*block_args) }
+            else
+              @target.send(method, *args)
+            end
+          end
+        end
+
+        # Loads the \target if needed and returns it.
+        #
+        # This method is abstract in the sense that it relies on +find_target+,
+        # which is expected to be provided by descendants.
+        #
+        # If the \target is already \loaded it is just returned. Thus, you can call
+        # +load_target+ unconditionally to get the \target.
+        #
+        # ActiveRecord::RecordNotFound is rescued within the method, and it is
+        # not reraised. The proxy is \reset and +nil+ is the return value.
+        def load_target
+          return nil unless defined?(@loaded)
+
+          if !loaded? and (!@owner.new_record? || foreign_key_present)
+            @target = find_target
+          end
+
+          @loaded = true
+          @target
+        rescue ActiveRecord::RecordNotFound
+          reset
+        end
+
+        # Can be overwritten by associations that might have the foreign key
+        # available for an association without having the object itself (and
+        # still being a new record). Currently, only +belongs_to+ presents
+        # this scenario (both vanilla and polymorphic).
+        def foreign_key_present
+          false
+        end
+
+        # Raises ActiveRecord::AssociationTypeMismatch unless +record+ is of
+        # the kind of the class of the associated objects. Meant to be used as
+        # a sanity check when you are about to assign an associated record.
+        def raise_on_type_mismatch(record)
+          unless record.is_a?(@reflection.klass) || record.is_a?(@reflection.class_name.constantize)
+            message = &quot;#{@reflection.class_name}(##{@reflection.klass.object_id}) expected, got #{record.class}(##{record.class.object_id})&quot;
+            raise ActiveRecord::AssociationTypeMismatch, message
+          end
+        end
+
+        # Array#flatten has problems with recursive arrays. Going one level
+        # deeper solves the majority of the problems.
+        def flatten_deeper(array)
+          array.collect { |element| (element.respond_to?(:flatten) &amp;&amp; !element.is_a?(Hash)) ? element.flatten : element }.flatten
+        end
+
+        # Returns the ID of the owner, quoted if needed.
+        def owner_quoted_id
+          @owner.quoted_id
+        end
+    end
+  end
+end
+</pre>
+    </div>

@@ -1,0 +1,41 @@
+  <div id="fileHeader">
+    <h1>erb.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>rails-2.3.2/actionpack/lib/action_view/template_handlers/erb.rb</td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Mar 15 23:31:34 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+ <!-- banner header -->
+
+  <div id="bodyContent" >
+    <h2>Source Code</h2>
+    <pre>module ActionView
+  module TemplateHandlers
+    class ERB &lt; TemplateHandler
+      include Compilable
+
+      ##
+      # :singleton-method:
+      # Specify trim mode for the ERB compiler. Defaults to '-'.
+      # See ERb documentation for suitable values.
+      cattr_accessor :erb_trim_mode
+      self.erb_trim_mode = '-'
+
+      def compile(template)
+        src = ::ERB.new(&quot;&lt;% __in_erb_template=true %&gt;#{template.source}&quot;, nil, erb_trim_mode, '@output_buffer').src
+
+        # Ruby 1.9 prepends an encoding to the source. However this is
+        # useless because you can only set an encoding on the first line
+        RUBY_VERSION &gt;= '1.9' ? src.sub(/\A#coding:.*\n/, '') : src
+      end
+    end
+  end
+end
+</pre>
+    </div>

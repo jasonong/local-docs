@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>The Thread Library</TITLE>
+</HEAD>
+<BODY text="#000000" bgcolor="#FFFFFF">
+<H1>The Thread Library</H1>
+<p>
+The <code>Thread</code> library allows concurrent programming in Ruby.
+It provides multiple threads of control that execute concurrently
+sharing same memory space.  The Ruby interpreter executes threads by
+time-sharing, therefore using threads never makes program run faster
+(even much slower for the cost of context switching).
+</p>
+<p>
+The thread which created first when the Ruby process started, is
+called the main thread.  When the main thread is terminated for some
+reason, all other threads will be terminated, and the whole process
+will be terminated.  The exception raised by the user interrupt is
+delivered to the main thread.
+</p>
+<P>
+The <code>Thread</code> library is optional, and may not be available
+on some Ruby interpreter, which thread feature is disabled by the
+compile time configuration.
+</P>
+<hr>
+<dl>
+<dt>
+<A NAME="Thread"><h1>Thread</h1></A>
+<dd> 
+<P>
+The <code>Thread</code> class represents user-level threads.
+</P>
+<p>
+Threads terminates when the execution of the given iterater block
+returns, normally or by raisung an exception.
+</p>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html">Object</A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<dl compact>
+<dt> 
+<A NAME="Thread.abort_on_exception"><code>abort_on_exception</code></A>
+<dd>
+<p>
+Returns the value of the abort flag.
+</p>
+<dt> 
+<A NAME="Thread.abort_on_exception_eq"><code>abort_on_exception=(<var>yes_no</var>)</code></A>
+<dd>
+<p>
+Sets the value of the flag to abort the interpreter if any unhandled exception
+terminates any thread.
+</p>
+<dt> 
+<A NAME="Thread.current"><code>current</code></A>
+<dd>
+<p>
+Returns the current thread object which calls the method.
+</p>
+<dt> 
+<A NAME="Thread.exit"><code>exit</code></A>
+<dd>
+<p>
+Terminates the current thread.
+</p>
+<dt> 
+<A NAME="Thread.kill"><code>kill(<var>thread</var>)</code></A>
+<dd>
+<p>
+Terminates the specified <var>thread</var>.
+</p>
+<dt> 
+<A NAME="Thread.new"><CODE>new {...}</CODE></A>
+<dd> 
+<dt> 
+<A NAME="Thread.start"><CODE>start {...}</CODE></A>
+<dd> 
+<dt> <A NAME="Thread.fork"><code>fork {...}</code></A>
+<dd> 
+<p>
+Creates a new thread of contorl, then starts evaluating the block
+concurrently.  Returns a newly created thread object.
+</p>
+<dt> 
+<A NAME="Thread.pass"><code>pass</code></A>
+<dd>
+<p>
+Gives other runnable threads chance to run.
+</p>
+<dt> 
+<A NAME="Thread.stop"><code>stop</code></A>
+<dd>
+<p>
+Suspends the current thread until another thread resumes it using
+<code>run</code> method.
+</p>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<dl compact>
+<dt> 
+<A NAME="aref"><code>self[<var>name</var>]</code></A>
+<dd> 
+<p>
+Retrieves thread local data associated with <var>name</var>.  The
+<var>name</var> is either string or symbol.
+</p>
+<dt> 
+<A NAME="aset"><code>self[<var>name</var>]=<var>val</var></code></A>
+<dd> 
+<p>
+Stores <var>val</var> into the thread local dictionary, associating
+with <var>name</var>.  The <var>name</var> is either string or symbol.
+</p>
+<dt> 
+<A NAME="thread_abort_on_exception"><code>abort_on_exception</code></A>
+<dd>
+<p>
+Returns the value of the abort flag of the thread.
+</p>
+<dt> 
+<A NAME="thread_abort_on_exception_eq"><code>abort_on_exception=(<var>yes_no</var>)</code></A>
+<dd>
+<p>
+Sets the value of the flag to abort the interpreter if any unhandled exception
+terminates the thread.
+</p>
+<dt> <a name="thread_alive_p"><code>alive?</code></a>
+<dd> 
+<dt>
+<A NAME="thread_status"><code>status</code></A>
+<dd>
+<p>
+Returns <code>true</code> if the thread is alive.  Returns <code>false</code> for
+normal termination, <code>nil</code> for termination by exception.
+</p>
+<dt>
+<A NAME="thread_exit"><code>exit</code></A>
+<dd>
+<p>
+Terminates the thread.
+</p>
+<dt> 
+<A NAME="thread_join"><code>join</code></A>
+<dd>
+<p>
+Suspends the current thread until the thread has terminated.
+</p>
+<dt>
+<A NAME="thread_raise"><code>raise([<var>error_type</var>,][<var>message</var>][,<var>traceback</var>])</code></A>
+<dd>
+<p>
+Raises an exception on the thread.
+</p>
+<dt>
+<A NAME="thread_run"><code>run</code></A>
+<dd>
+<p>
+Resumes the thread.  It does nothing if the thread was not suspended.
+</p>
+<dt>
+<A NAME="thread_stop_p"><code>stop?</code></A>
+<dd>
+<p>
+Returns true if the thread is stopped.
+</p>
+<dt>
+<A NAME="thread_value"><code>value</code></A>
+<dd>
+<p>
+Waits for the thread to terminate and returns the evaluated value of
+the block, which is given to the 
+<a href="#Thread.create"><code>Thread.create</code></a>.
+</p>
+<dt>
+<A NAME="thread_wakeup"><code>wakeup</code></A>
+<dd>
+<p>
+Resumes the thread.
+</p>
+</dl>
+</dl>
+<dl>
+<dt>
+<A NAME="Mutex"><H1>Mutex</H1></A>
+<dd> 
+<P>
+Mutexs (mutual-exclusion locks) are used to protect shared data
+against concurrent accesses.  The typical use is (where <code>m</code>
+is the mutex object):
+<blockquote>
+<pre>
+begin
+  m.lock
+  # critical section protected by m
+ensure
+  m.unlock
+end
+</pre>
+</blockquote>
+or, in short
+<blockquote>
+<pre>
+m.synchronize {
+  # critical section protected by m
+}
+</pre>
+</blockquote>
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html">Object</A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<dl compact> 
+<dt> 
+<A NAME="Mutex.new"><code>new</code></A>
+<dd> 
+<p>
+Creates a new <code>Mutex</code> object.
+</p>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<dl compact> 
+<dt> 
+<A NAME="mutex_lock"><code>lock</code></A>
+<dd> 
+<p>
+Locks the mutex object.  Only on thread at a time can lock the mutex.
+A thread that attempts to lock a alread locked mutex will suspend
+until the other thread unlocks the mutex.
+</p>
+<dt> 
+<A NAME="mutex_locked_p"><code>locked?</code></A>
+<dd> 
+<p>
+Returns true if the mutex is locked.
+</p>
+<dt> 
+<A NAME="synchronize"><code>synchronize</code></A>
+<dd> 
+<p>
+Locks the mutex, and evaluates the block.  Ensures the mutex be
+unlocked.
+</p>
+<dt> 
+<A NAME="mutex_try_lock"><code>try_lock</code></A>
+<dd> 
+<p>
+Locks the mutex and returns true if the mutex is not locked.  If the
+mutex is already locked, just returns false.
+</p>
+<dt> 
+<A NAME="mutex_unlock"><code>unlock</code></A>
+<dd> 
+<p>
+Unlocks the mutex.  Other thread suspended trying to lock the mutex
+will be resumed.
+</p>
+</dl>
+</dl>
+
+<dl>
+<dt> 
+<A NAME="Queue"><H1>Queue</H1></A>
+<dd> 
+<P>
+The <code>Queue</code> is the FIFO (first in first out) communication
+channel between threads.  If a thread trys to read an empty queue, it
+will be suspended until the queue is filled.
+</P>
+<dt> <h2>SuperClass:</h2>
+<dd> 
+<dl>
+<dt> <A HREF="Object.html">Object</A>
+</dl>
+<dt> <h2>Class Methods:</h2>
+<dd> 
+<dl compact>
+<dt> 
+<A NAME="Queue.new"><code>new</code></A>
+<dd> 
+<p>
+Creates a new queue object.
+</p>
+</dl>
+<dt> <h2>Methods:</h2>
+<dd> 
+<dl compact>
+<dt> 
+<A NAME="queue_empty_p"><code>empty?</code></A>
+<dd> 
+<p>
+Returns true if the queue is empty.
+</p>
+<dt> 
+<A NAME="queue_length"><code>length</code></A>
+<dd> 
+<p>
+Returns the length of the queue.
+</p>
+<dt> 
+<A NAME="queue_pop"><code>pop [<var>non_block</var>]</code></A>
+<dd> 
+<p>
+Removes and returns an value from queue.  If the queue is empty, the
+calling thread will be suspended until some value pushed in the queue.
+If optional argument <var>non_block</var> is non-nil, <code>pop</code>
+raises an exception if no value available in the queue.
+</p>
+<dt> 
+<A NAME="queue_push"><code>push(<var>value</var>)</code></A>
+<dd> 
+<p>
+Append an <var>value</var> to the queue.  Restart the waiting thread
+if any.
+</p>
+</dl>
+</dl>
+
+<hr>
+<A HREF="bundle.html">up</A>
+-
+<A HREF="tk.html">next</A>
+-
+<A HREF="index.html">index</A>
+<P ALIGN=right><A HREF="mailto:matz@netlab.co.jp">matz@netlab.co.jp</A></P>
+</BODY>
+</HTML>
