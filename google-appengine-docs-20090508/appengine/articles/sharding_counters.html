@@ -1,0 +1,765 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+
+
+<html>
+  <head>
+    <script type="text/javascript" language="JavaScript">
+    ORIGINAL_PAGE_PATH = "/appengine/articles/sharding_counters.html";
+    </script>
+    
+    
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>Sharding Counters - Google App Engine - Google Code</title>
+<script type="text/javascript"><!--
+(function(){function a(){this.t={};this.tick=function(c){this.t[c]=(new Date).getTime()};this.tick("start")}var b=new a;window.jstiming={Timer:a,load:b};if(window.external&&window.external.pageT)window.jstiming.pt=window.external.pageT;})();
+
+var _tocPath_ = '/appengine/docs/_toc.ezt';
+var codesite_token = null;
+//--></script>
+<link href="../../css/codesite.pack.04102009.css" type="text/css" rel="stylesheet"></link>
+<script src="../../js/codesite_head.pack.04102009.js" type="text/javascript"></script>
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('bhs');</script>
+<link rel="search" type="application/opensearchdescription+xml" title="Google Code" href="http://code.google.com/osd.xml" />
+
+<!--[if IE]><link rel="stylesheet" type="text/css" href="../../css/iehacks.css" /><![endif]-->
+
+    <link href="../../css/semantic_headers.css" rel="stylesheet" type="text/css" />
+    <link href="../css/local_extensions.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="gc-documentation">
+
+    
+    
+    
+</a>
+
+<div id="gb">
+ <span>
+  
+    <a id="lang-dropdown" class="dropdown" href="http://code.google.com" onclick="return false;"><img class="globeicon" src="../../images/globe2_small.png"/><span>English</span></a>
+  
+ </span>
+</div>
+
+<div class="gbh" style="left: 0pt;"></div>
+<div class="gbh" style="right: 0pt;"></div>
+
+
+<style type="text/css">
+  #gc-topnav h1 {
+    padding: 0 0 0 6px;
+  }
+</style>
+
+
+<div id="gc-container">
+<a name="top"></a>
+<div id="skipto">
+  <a href="#gc-pagecontent-anchor">Skip to page content</a>
+  <a href="#gc-toc-anchor">Skip to main navigation</a>
+</div>
+
+<div id="gc-header">
+  <div id="logo"><a href="http://code.google.com">
+  
+  
+     <img src="../../images/cleardot.gif" height="1px" width="1px" alt="Google Code Home Page" id="gc-logo-img"/>
+  
+  
+  </a></div>
+  <div id="search">
+    <div id="searchForm" class="searchForm">
+      <form id="cse" action="http://www.google.com/cse" accept-charset="utf-8" class="gsc-search-box" onsubmit="executeGSearch(document.getElementById('gsearchInput').value); return false;">
+      <noscript>
+      <input type="hidden" name="cref" value="http://code.google.com/cse/googlecode-context.xml"/>
+      </noscript>
+        <table class="gsc-search-box" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gsc-input">
+                <input id="gsearchInput" type="text" name="q" maxlength="2048" class="gsc-input" autocomplete="off" title="Google Code Search" style="width:345px"/>
+              </td>
+              <td class="gsc-search-button">
+                <div id="cs-searchresults" onclick="event.cancelBubble = true;"></div>
+                <input title="Search" id="gsearchButton" class="gsc-search-button" name="sa" value="Search" type="submit"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="greytext">e.g. "templates" or "datastore"</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div> <!-- end searchForm -->
+  </div> <!-- end search -->
+</div> <!-- end gc-header -->
+
+
+<div id="codesiteContent">
+
+<a name="gc-topnav-anchor"></a>
+<div id="gc-topnav">
+  <h1>Google App Engine</h1>
+  <ul id="articles" class="gc-topnav-tabs">
+
+    <li id="home_link">
+      <a href="../index.html" title="Google App Engine home page">Home</a>
+    </li>
+  
+    <li id="docs_link">
+      <a href="../docs/index.html" title="Official Google App Engine documentation">Docs</a>
+    </li>
+  
+    <li id="faq_link">
+      <a href="../kb/index.html" title="Answers to frequently asked questions about Google App Engine">FAQ</a>
+    </li>
+  
+    <li id="articles_link">
+      <a href="index.html" class="selected" title="Focused articles and tutorials for Google App Engine developers">Articles</a>
+    </li>
+  
+    <li>
+      <a href="http://googleappengine.blogspot.com/" title="Official Google App Engine blog">Blog</a>
+    </li>
+  
+    <li>
+      <a href="../community.html" title="Community home for Google App Engine">Community</a>
+    </li>
+  
+    <li>
+      <a href="../terms.html" title="Google App Engine terms of service">Terms</a>
+    </li>
+  
+    <li>
+      <a href="../downloads.html" title="Download Google App Engine">Download</a>
+    </li>
+  
+
+  </ul>
+</div> <!-- end gc-topnav -->
+
+    <div class="g-section g-tpl-170">
+
+      <a name="gc-toc-anchor"></a>  
+      <div class="g-unit g-first" id="gc-toc">
+        <ul>
+  <li><a href="../downloads.html">Downloads</a></li>
+  <li><a href="http://code.google.com/status/appengine">System Status</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/issues/list">Issue Tracker</a></li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Getting Started</h2>
+    <ul>
+      <li><a href="../docs/whatisgoogleappengine.html">What Is Google App Engine?</a></li>
+      <li><a href="../docs/java/gettingstarted/index.html">Java</a>
+        <ul>
+              <li><a href="../docs/java/gettingstarted/introduction.html">Introduction</a></li>
+    <li><a href="../docs/java/gettingstarted/installing.html">Installing the Java SDK</a></li>
+    <li><a href="../docs/java/gettingstarted/creating.html">Creating a Project</a></li>
+    <li><a href="../docs/java/gettingstarted/usingusers.html">Using the Users Service</a></li>
+    <li><a href="../docs/java/gettingstarted/usingjsps.html">Using JSPs</a></li>
+    <li><a href="../docs/java/gettingstarted/usingdatastore.html">Using the Datastore with JDO</a></li>
+    <li><a href="../docs/java/gettingstarted/staticfiles.html">Using Static Files</a></li>
+    <li><a href="../docs/java/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+      <li><a href="../docs/python/gettingstarted/index.html">Python</a>
+        <ul>
+            <li><a href="../docs/python/gettingstarted/introduction.html">Introduction</a></li>
+  <li><a href="../docs/python/gettingstarted/devenvironment.html">The Development Environment</a></li>
+  <li><a href="../docs/python/gettingstarted/helloworld.html">Hello, World!</a></li>
+  <li><a href="../docs/python/gettingstarted/usingwebapp.html">Using the webapp Framework</a></li>
+  <li><a href="../docs/python/gettingstarted/usingusers.html">Using the Users Service</a></li>
+  <li><a href="../docs/python/gettingstarted/handlingforms.html">Handling Forms With webapp</a></li>
+  <li><a href="../docs/python/gettingstarted/usingdatastore.html">Using the Datastore</a></li>
+  <li><a href="../docs/python/gettingstarted/templates.html">Using Templates</a></li>
+  <li><a href="../docs/python/gettingstarted/staticfiles.html">Using Static Files</a></li>
+  <li><a href="../docs/python/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Java <sup class="new">Early Look</sup></h2>
+    <ul>
+          <li><a href="../docs/java/overview.html">Overview</a></li>
+    <li><a href="../docs/java/runtime.html">Servlet Environment</a></li>
+    <li><a href="../docs/java/datastore/index.html">Storing Data</a>
+      <ul>
+            <li><a href="../docs/java/datastore/overview.html">Overview</a></li>
+    <li><a href="../docs/java/datastore/usingjdo.html">Using JDO</a></li>
+    <li><a href="../docs/java/datastore/dataclasses.html">Defining Data Classes</a></li>
+    <li><a href="../docs/java/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+    <li><a href="../docs/java/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+    <li><a href="../docs/java/datastore/transactions.html">Transactions</a></li>
+    <li><a href="../docs/java/datastore/relationships.html">Relationships</a></li>
+    <li><a href="../docs/java/datastore/usingjpa.html">Using JPA</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/datastore/package-summary.html">Low-level API</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/java/apis.html">Services</a>
+      <ul>
+        <li><a href="../docs/java/memcache/index.html">Memcache</a>
+          <ul>
+                <li><a href="../docs/java/memcache/overview.html">Overview</a></li>
+    <li><a href="../docs/java/memcache/usingjcache.html">Using JCache</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/memcache/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                <li><a href="../docs/java/urlfetch/overview.html">Overview</a></li>
+    <li><a href="../docs/java/urlfetch/usingjavanet.html">Using java.net</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/urlfetch/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/mail/index.html">Mail</a>
+          <ul>
+                <li><a href="../docs/java/mail/overview.html">Overview</a></li>
+    <li><a href="../docs/java/mail/usingjavamail.html">Using JavaMail</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/mail/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/images/index.html">Images</a>
+          <ul>
+                <li><a href="../docs/java/images/overview.html">Overview</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/images/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/users/index.html">Google Accounts</a>
+          <ul>
+                <li><a href="../docs/java/users/overview.html">Overview</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/users/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="../docs/java/javadoc/index.html">Javadoc Reference</a></li>
+    <li><a href="../docs/java/jrewhitelist.html">JRE Class White List</a></li>
+    <li><a href="../docs/java/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="../docs/java/config/webxml.html">Deployment Descriptor</a></li>
+    <li><a href="../docs/java/config/appconfig.html">App Config</a></li>
+    <li><a href="../docs/java/config/indexconfig.html">Index Config</a></li>
+    <li><a href="../docs/java/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/java/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="../docs/java/tools/devserver.html">Development Server</a></li>
+    <li><a href="../docs/java/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="../docs/java/tools/eclipse.html">Google Plugin for Eclipse</a></li>
+    <li><a href="../docs/java/tools/ant.html">Using Apache Ant</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/java/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="../docs/java/howto/unittesting.html">Unit Testing</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Python</h2>
+    <ul>
+          <li><a href="../docs/python/overview.html">Overview</a></li>
+    <li><a href="../docs/python/runtime.html">CGI Environment</a></li>
+    <li><a href="../docs/python/datastore/index.html">Storing Data</a>
+      <ul>
+             <li><a href="../docs/python/datastore/overview.html">Overview</a></li>
+     <li><a href="../docs/python/datastore/entitiesandmodels.html">Entities and Models</a></li>
+     <li><a href="../docs/python/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+     <li><a href="../docs/python/datastore/keysandentitygroups.html">Keys and Entity Groups</a></li>
+     <li><a href="../docs/python/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+     <li><a href="../docs/python/datastore/transactions.html">Transactions</a></li>
+     <li><a href="../docs/python/datastore/typesandpropertyclasses.html">Types and Property Classes</a></li>
+     <li><a href="../docs/python/datastore/gqlreference.html">GQL Reference</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/datastore/modelclass.html">Model</a></li>
+         <li><a href="../docs/python/datastore/expandoclass.html">Expando</a></li>
+         <li><a href="../docs/python/datastore/polymodelclass.html">PolyModel</a></li>
+         <li><a href="../docs/python/datastore/propertyclass.html">Property</a></li>
+         <li><a href="../docs/python/datastore/queryclass.html">Query</a></li>
+         <li><a href="../docs/python/datastore/gqlqueryclass.html">GqlQuery</a></li>
+         <li><a href="../docs/python/datastore/keyclass.html">Key</a></li>
+         <li><a href="../docs/python/datastore/functions.html">Functions</a></li>
+         <li><a href="../docs/python/datastore/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/apis.html">Services</a>
+      <ul>
+        <li><a href="../docs/python/memcache/index.html">Memcache</a>
+          <ul>
+                 <li><a href="../docs/python/memcache/overview.html">Overview</a></li>
+      <li><a href="../docs/python/memcache/usingmemcache.html">Using Memcache</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/memcache/clientclass.html">Client</a></li>
+         <li><a href="../docs/python/memcache/functions.html">Functions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                 <li><a href="../docs/python/urlfetch/overview.html">Overview</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/urlfetch/fetchfunction.html">The fetch Function</a></li>
+         <li><a href="../docs/python/urlfetch/responseobjects.html">Response Objects</a></li>
+         <li><a href="../docs/python/urlfetch/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/mail/index.html">Mail</a>
+          <ul>
+                 <li><a href="../docs/python/mail/overview.html">Overview</a></li>
+     <li><a href="../docs/python/mail/sendingmail.html">Sending Mail</a></li>
+     <li><a href="../docs/python/mail/attachments.html">Attachments</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/mail/emailmessageclass.html">EmailMessage</a></li>
+         <li><a href="../docs/python/mail/emailmessagefields.html">Message Fields</a></li>
+         <li><a href="../docs/python/mail/functions.html">Functions</a></li>
+         <li><a href="../docs/python/mail/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/images/index.html">Images</a>
+          <ul>
+                 <li><a href="../docs/python/images/overview.html">Overview</a></li>
+     <li><a href="../docs/python/images/installingPIL.html">Installing PIL</a></li>
+     <li><a href="../docs/python/images/usingimages.html">Using the Images API</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/images/imageclass.html">Image</a></li>
+         <li><a href="../docs/python/images/functions.html">Functions</a></li>
+         <li><a href="../docs/python/images/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/users/index.html">Google Accounts</a>
+          <ul>
+                 <li><a href="../docs/python/users/overview.html">Overview</a></li>
+     <li><a href="../docs/python/users/userobjects.html">User Objects</a></li>
+     <li><a href="../docs/python/users/loginurls.html">Login URLs</a></li>
+     <li><a href="../docs/python/users/adminusers.html">Admin Users</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/users/userclass.html">User</a></li>
+         <li><a href="../docs/python/users/functions.html">Functions</a></li>
+         <li><a href="../docs/python/users/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="../docs/python/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="../docs/python/config/appconfig.html">App Config</a></li>
+    <li><a href="../docs/python/config/indexconfig.html">Index Config</a></li>
+    <li><a href="../docs/python/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="../docs/python/tools/devserver.html">Development Server</a></li>
+    <li><a href="../docs/python/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="../docs/python/tools/uploadingdata.html">Uploading Data</a></li>
+    <li><a href="../docs/python/tools/webapp/index.html">webapp Framework</a>
+      <ul>
+             <li><a href="../docs/python/tools/webapp/overview.html">Overview</a></li>
+     <li><a href="../docs/python/tools/webapp/running.html">Running the Application</a></li>
+     <li><a href="../docs/python/tools/webapp/requesthandlers.html">Request Handlers</a></li>
+     <li><a href="../docs/python/tools/webapp/requestdata.html">Request Data</a></li>
+     <li><a href="../docs/python/tools/webapp/buildingtheresponse.html">Building the Response</a></li>
+     <li><a href="../docs/python/tools/webapp/redirects.html">Redirects, Headers and Status Codes</a></li>
+     
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/tools/webapp/requestclass.html">Request</a></li>
+         <li><a href="../docs/python/tools/webapp/responseclass.html">Response</a></li>
+         <li><a href="../docs/python/tools/webapp/requesthandlerclass.html">RequestHandler</a></li>
+         <li><a href="../docs/python/tools/webapp/wsgiapplicationclass.html">WSGIApplication</a></li>
+         <li><a href="../docs/python/tools/webapp/utilmodule.html">Utility Functions</a></li>
+         
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/tools/libraries.html">Third-party Libraries</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="../docs/python/howto/usinggdataservices.html">Google Data Services</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Managing Your App</h2>
+    <ul>
+      <li><a href="../docs/theadminconsole.html">The Admin Console</a></li>
+      <li><a href="../docs/quotas.html">Quotas</a></li>
+      <li><a href="../docs/billing.html">Billing</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Resources</h2>
+    <ul>
+      <li><a href="../kb/index.html">FAQ</a></li>
+      <li><a href="index.html">Articles</a></li>
+      <li><a href="http://appengine-cookbook.appspot.com/">Cookbook</a></li>
+      <li><a href="http://appgallery.appspot.com/">App Gallery</a></li>
+      <li><a href="http://code.google.com/p/googleappengine/">SDK Code</a></li>
+      <li><a href="http://code.google.com/p/google-app-engine-samples/">Sample Apps Code</a></li>
+      <li><a href="../community.html">Discussion Groups</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><a href="../docs/roadmap.html">Product Roadmap</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/wiki/SdkReleaseNotes">Release Notes</a></li>
+  <li><a href="../docs/revision_history.html">Revision History</a></li>
+</ul>
+
+        <a class="hidden" href="#gc-topnav-anchor">More Google App Engine resource links</a>
+      </div>
+      
+      <a name="gc-pagecontent-anchor"></a>   
+      <div class="g-unit" id="gc-pagecontent">
+        <script type="text/javascript">CODESITE_docEarlyProcessing();</script>
+        <h1 class="page_title">Sharding Counters</h1>
+
+
+<i>Joe Gregorio</i><br>
+<i>December 18, 2008</i>
+
+<div id="jd-content">
+<div class="jd-descr">
+
+
+<h2 id="intro">Introduction</h2>
+<p>When developing an efficient application on Google App Engine
+you need to pay attention to how often an entity is updated. While
+the datastore for App Engine scales to support a huge number of
+entities it is important to note that you can only expect to update
+any single entity, or entity-group, about five times a second. That
+is an estimate and the actual update rate for an entity is going to
+be dependent several attributes of the entity, including how many
+properties it has, how large the entity is, and how many indexes
+need updating. While a single entity or entity-group has a
+limit on how quickly it can be updated, App Engine excels at
+handling many parallel requests distributed across distinct
+entites, and so in aggregate can handle a much higher update rate,
+which is something we will exploit in this article by using
+sharding.</p>
+
+<p>The question is, what if you had an entity that you wanted to
+update faster than five times a second? For example you might count
+the number of votes in a poll, or the number of comments, etc. Take
+this simple example:</p>
+
+<pre class="prettyprint">    class Counter(db.Model):
+     count = db.IntergerProperty()
+</pre>
+
+<p>If you had a single entity that was the counter and the update rate
+was too fast then you would have contention as the serialized
+writes would stack up and start to timeout. The way to solve this
+problem is a little counter-intuitive if you are coming from a
+relational database, and the solution relies on the fact that reads
+from the App Engine datastore are extremely fast and cheap since
+entities that have been recently read or updated are cached in
+memory. The way to reduce the contention is to build a sharded
+counter; break the counter up into <code>N</code> different counters. When you
+want to increment the counter you pick one of the shards at random
+and increment it. When you want to know the value of the counter
+you read all of the counter shards and add them all together. The
+more shards you have the higher the throughput you will have for
+increments on your counter. This technique works for a lot more
+than just counters and an important skill to learn is spotting the
+entities in your application with a lot of writes and then finding
+good ways to shard them.</p>
+
+<p>Here is a very simple implemenation of a sharded counter:</p>
+
+<pre class="prettyprint">from google.appengine.ext import db
+import random
+
+class SimpleCounterShard(db.Model):
+  """Shards for the counter"""
+  count = db.IntegerProperty(required=True, default=0)   
+
+NUM_SHARDS = 20
+
+def get_count():
+  """Retrieve the value for a given sharded counter."""
+  total = 0
+  for counter in SimpleCounterShard.all():
+    total += counter.count
+  return total
+   
+def increment():
+  """Increment the value for a given sharded counter."""
+  def txn():
+    index = random.randint(0, NUM_SHARDS - 1)
+    shard_name = "shard" + str(index)
+    counter = SimpleCounterShard.get_by_key_name(shard_name)
+    if counter is None:
+      counter = SimpleCounterShard(key_name=shard_name)
+    counter.count += 1
+    counter.put()
+  db.run_in_transaction(txn)</pre>
+
+<p>In <code>get_count()</code> we
+simple loop over all the shards (<code>CounterShard.all()</code>) and add up
+the individual shard counts. In <code>increment()</code> we need to read,
+increment, and then write one of the counter shards chosen at
+random and that needs to be done inside a transaction.
+</p>
+
+<p>Note that we create the shards lazily, only creating them when they
+are first incremented. The lazy creation of the shards allows the
+number of shards to be increased (but never decreased) in the
+future if more are needed. The value of NUM_SHARDS could be doubled
+to 20 and the results from get_count() would not change since the
+query only selects the shards that have been added to the
+datastore, and increment() will lazily create shards that aren't
+there.</p>
+
+<p>That is useful as an example to learn from, but a more general
+purpose counter would allow you to create named counters on the
+fly, increase the number of shards dynamically, and use memcache to
+speed up reads to shards. The exampe code that 
+<a href="http://sites.google.com/site/io/building-scalable-web-applications-with-google-app-engine">
+Brett Slatkin gave in his Google I/O talk</a> does just that
+and I've included that code here, along with a function to increase
+the number of shards for a particular counter:
+</p>
+
+<pre class="prettyprint">from google.appengine.api import memcache
+from google.appengine.ext import db
+import random
+
+class GeneralCounterShardConfig(db.Model):
+  """Tracks the number of shards for each named counter."""
+  name = db.StringProperty(required=True)
+  num_shards = db.IntegerProperty(required=True, default=20)
+
+
+class GeneralCounterShard(db.Model):
+  """Shards for each named counter"""
+  name = db.StringProperty(required=True)
+  count = db.IntegerProperty(required=True, default=0)
+ 
+           
+def get_count(name):
+  """Retrieve the value for a given sharded counter.
+ 
+  Parameters:
+    name - The name of the counter 
+  """
+  total = memcache.get(name)
+  if total is None:
+    total = 0
+    for counter in GeneralCounterShard.all().filter('name = ', name):
+      total += counter.count
+    memcache.add(name, str(total), 60)
+  return total
+
+ 
+def increment(name):
+  """Increment the value for a given sharded counter.
+ 
+  Parameters:
+    name - The name of the counter 
+  """
+  config = GeneralCounterShardConfig.get_or_insert(name, name=name)
+  def txn():
+    index = random.randint(0, config.num_shards - 1)
+    shard_name = name + str(index)
+    counter = GeneralCounterShard.get_by_key_name(shard_name)
+    if counter is None:
+      counter = GeneralCounterShard(key_name=shard_name, name=name)
+    counter.count += 1
+    counter.put()
+  db.run_in_transaction(txn)
+  memcache.incr(name)
+
+ 
+def increase_shards(name, num): 
+  """Increase the number of shards for a given sharded counter.
+  Will never decrease the number of shards.
+ 
+  Parameters:
+    name - The name of the counter
+    num - How many shards to use
+   
+  """
+  config = GeneralCounterShardConfig.get_or_insert(name, name=name)
+  def txn():
+    if config.num_shards &lt; num:
+      config.num_shards = num
+      config.put()   
+  db.run_in_transaction(txn)</pre>
+
+<h2 id="source">Source</h2>
+<p>The source for both of these counters is available in the 
+<a href="http://code.google.com/p/google-app-engine-samples/source/checkout">
+Google App Engine Samples</a> as the
+sharded-counter example. While the web interface to the examples
+isn't much to look at, it's instructive to use the admin interface
+an inspect the data models after you have incremented both counters
+a few times.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Sharding is one of many important techniques in building a
+scalable application and hopefully these examples will give you
+ideas of where you apply the technique in your application. 
+The code in these articles is available under the Apache 2
+license so feel free to start with them as you build your
+solutions.</p>
+
+<h2 id="more-info">More Info</h2>
+<p>Watch Brett Slatkin's Google I/O talk 
+"<a href="http://sites.google.com/site/io/building-scalable-web-applications-with-google-app-engine">Building 
+Scalable Web Applications with Google AppEngine</a>".</p>
+
+</div></div>
+   
+      </div><!-- end gc-pagecontent -->
+   </div><!-- end gooey wrapper -->
+
+    </div> <!-- end codesite content -->
+
+<div id="gc-footer" dir="ltr">
+  <div class="text">
+    
+      <div class="notice"><div id="notice" style="text-align: center; border: 1em 0em 1em 0em">
+  Except as otherwise <a
+  href="http://code.google.com/policies.html#restrictions">noted</a>,
+  the content of this page is licensed under the <a rel="license"
+  href="http://creativecommons.org/licenses/by/2.5/">Creative Commons
+  Attribution 2.5 License</a>, and code samples are licensed under the
+  <a rel="license" href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+  2.0 License</a>.
+<!-- <rdf:RDF xmlns="http://web.resource.org/cc/" 
+              xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <Work rdf:about="">
+    <license rdf:resource="http://creativecommons.org/licenses/by/2.5/" />
+  </Work>
+  <License rdf:about="http://creativecommons.org/licenses/by/2.5/">
+    <permits rdf:resource="http://web.resource.org/cc/Reproduction"/>
+    <permits rdf:resource="http://web.resource.org/cc/Distribution"/>
+    <requires rdf:resource="http://web.resource.org/cc/Notice"/>
+    <requires rdf:resource="http://web.resource.org/cc/Attribution"/>
+    <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/>
+  </License>
+</rdf:RDF> -->
+</div>
+Java is a registered trademark of Sun Microsystems, Inc.</div>
+    
+    &copy;2009 Google -
+    <a href="http://code.google.com">Code Home</a> -
+    <a href="http://www.google.com/accounts/TOS">Terms of Service</a> -
+    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+    <a href="http://code.google.com/more">Site Directory</a>
+    <br /> <br />
+    Google Code offered in:
+    <a href="http://code.google.com/intl/en">English</a> -
+    <a href="http://code.google.com/intl/es">Español</a> -
+    <a href="http://code.google.com/intl/ja">日本語</a> -
+    <a href="http://code.google.com/intl/ko">한국어</a> -
+    <a href="http://code.google.com/intl/pt-BR">Português</a> -
+    <a href="http://code.google.com/intl/ru">Pусский</a> -
+    <a href="http://code.google.com/intl/zh-CN">中文(简体)</a> -
+    <a href="http://code.google.com/intl/zh-TW">中文(繁體)</a>
+  </div>
+</div><!-- end gc-footer -->
+
+</div><!-- end gc-containter -->
+
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('ats');</script>
+<script src="../../js/codesite_tail.pack.04102009.js" type="text/javascript"></script>
+
+
+
+
+
+
+  </body>
+</html>
+
+

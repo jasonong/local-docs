@@ -1,0 +1,734 @@
+  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+
+
+<html>
+  <head>
+    <script type="text/javascript" language="JavaScript">
+    ORIGINAL_PAGE_PATH = "/appengine/kb/java.html";
+    </script>
+    
+    
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>Google App Engine for Java Questions - Google App Engine - Google Code</title>
+<script type="text/javascript"><!--
+(function(){function a(){this.t={};this.tick=function(c){this.t[c]=(new Date).getTime()};this.tick("start")}var b=new a;window.jstiming={Timer:a,load:b};if(window.external&&window.external.pageT)window.jstiming.pt=window.external.pageT;})();
+
+var _tocPath_ = '/appengine/docs/_toc.ezt';
+var codesite_token = null;
+//--></script>
+<link href="../../css/codesite.pack.04102009.css" type="text/css" rel="stylesheet"></link>
+<script src="../../js/codesite_head.pack.04102009.js" type="text/javascript"></script>
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('bhs');</script>
+<link rel="search" type="application/opensearchdescription+xml" title="Google Code" href="http://code.google.com/osd.xml" />
+
+<!--[if IE]><link rel="stylesheet" type="text/css" href="../../css/iehacks.css" /><![endif]-->
+
+    <link href="../../css/semantic_headers.css" rel="stylesheet" type="text/css" />
+    <link href="../css/local_extensions.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="gc-documentation">
+
+    
+    
+    
+</a>
+
+<div id="gb">
+ <span>
+  
+    <a id="lang-dropdown" class="dropdown" href="http://code.google.com" onclick="return false;"><img class="globeicon" src="../../images/globe2_small.png"/><span>English</span></a>
+  
+ </span>
+</div>
+
+<div class="gbh" style="left: 0pt;"></div>
+<div class="gbh" style="right: 0pt;"></div>
+
+
+<style type="text/css">
+  #gc-topnav h1 {
+    padding: 0 0 0 6px;
+  }
+</style>
+
+
+<div id="gc-container">
+<a name="top"></a>
+<div id="skipto">
+  <a href="#gc-pagecontent-anchor">Skip to page content</a>
+  <a href="#gc-toc-anchor">Skip to main navigation</a>
+</div>
+
+<div id="gc-header">
+  <div id="logo"><a href="http://code.google.com">
+  
+  
+     <img src="../../images/cleardot.gif" height="1px" width="1px" alt="Google Code Home Page" id="gc-logo-img"/>
+  
+  
+  </a></div>
+  <div id="search">
+    <div id="searchForm" class="searchForm">
+      <form id="cse" action="http://www.google.com/cse" accept-charset="utf-8" class="gsc-search-box" onsubmit="executeGSearch(document.getElementById('gsearchInput').value); return false;">
+      <noscript>
+      <input type="hidden" name="cref" value="http://code.google.com/cse/googlecode-context.xml"/>
+      </noscript>
+        <table class="gsc-search-box" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gsc-input">
+                <input id="gsearchInput" type="text" name="q" maxlength="2048" class="gsc-input" autocomplete="off" title="Google Code Search" style="width:345px"/>
+              </td>
+              <td class="gsc-search-button">
+                <div id="cs-searchresults" onclick="event.cancelBubble = true;"></div>
+                <input title="Search" id="gsearchButton" class="gsc-search-button" name="sa" value="Search" type="submit"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="greytext">e.g. "templates" or "datastore"</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div> <!-- end searchForm -->
+  </div> <!-- end search -->
+</div> <!-- end gc-header -->
+
+
+<div id="codesiteContent">
+
+<a name="gc-topnav-anchor"></a>
+<div id="gc-topnav">
+  <h1>Google App Engine</h1>
+  <ul id="faq" class="gc-topnav-tabs">
+
+    <li id="home_link">
+      <a href="../index.html" title="Google App Engine home page">Home</a>
+    </li>
+  
+    <li id="docs_link">
+      <a href="../docs/index.html" title="Official Google App Engine documentation">Docs</a>
+    </li>
+  
+    <li id="faq_link">
+      <a href="index.html" class="selected" title="Answers to frequently asked questions about Google App Engine">FAQ</a>
+    </li>
+  
+    <li id="articles_link">
+      <a href="../articles/index.html" title="Focused articles and tutorials for Google App Engine developers">Articles</a>
+    </li>
+  
+    <li>
+      <a href="http://googleappengine.blogspot.com/" title="Official Google App Engine blog">Blog</a>
+    </li>
+  
+    <li>
+      <a href="../community.html" title="Community home for Google App Engine">Community</a>
+    </li>
+  
+    <li>
+      <a href="../terms.html" title="Google App Engine terms of service">Terms</a>
+    </li>
+  
+    <li>
+      <a href="../downloads.html" title="Download Google App Engine">Download</a>
+    </li>
+  
+
+  </ul>
+</div> <!-- end gc-topnav -->
+
+    <div class="g-section g-tpl-170">
+
+      <a name="gc-toc-anchor"></a>  
+      <div class="g-unit g-first" id="gc-toc">
+        <ul>
+  <li><a href="../downloads.html">Downloads</a></li>
+  <li><a href="http://code.google.com/status/appengine">System Status</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/issues/list">Issue Tracker</a></li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Getting Started</h2>
+    <ul>
+      <li><a href="../docs/whatisgoogleappengine.html">What Is Google App Engine?</a></li>
+      <li><a href="../docs/java/gettingstarted/index.html">Java</a>
+        <ul>
+              <li><a href="../docs/java/gettingstarted/introduction.html">Introduction</a></li>
+    <li><a href="../docs/java/gettingstarted/installing.html">Installing the Java SDK</a></li>
+    <li><a href="../docs/java/gettingstarted/creating.html">Creating a Project</a></li>
+    <li><a href="../docs/java/gettingstarted/usingusers.html">Using the Users Service</a></li>
+    <li><a href="../docs/java/gettingstarted/usingjsps.html">Using JSPs</a></li>
+    <li><a href="../docs/java/gettingstarted/usingdatastore.html">Using the Datastore with JDO</a></li>
+    <li><a href="../docs/java/gettingstarted/staticfiles.html">Using Static Files</a></li>
+    <li><a href="../docs/java/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+      <li><a href="../docs/python/gettingstarted/index.html">Python</a>
+        <ul>
+            <li><a href="../docs/python/gettingstarted/introduction.html">Introduction</a></li>
+  <li><a href="../docs/python/gettingstarted/devenvironment.html">The Development Environment</a></li>
+  <li><a href="../docs/python/gettingstarted/helloworld.html">Hello, World!</a></li>
+  <li><a href="../docs/python/gettingstarted/usingwebapp.html">Using the webapp Framework</a></li>
+  <li><a href="../docs/python/gettingstarted/usingusers.html">Using the Users Service</a></li>
+  <li><a href="../docs/python/gettingstarted/handlingforms.html">Handling Forms With webapp</a></li>
+  <li><a href="../docs/python/gettingstarted/usingdatastore.html">Using the Datastore</a></li>
+  <li><a href="../docs/python/gettingstarted/templates.html">Using Templates</a></li>
+  <li><a href="../docs/python/gettingstarted/staticfiles.html">Using Static Files</a></li>
+  <li><a href="../docs/python/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Java <sup class="new">Early Look</sup></h2>
+    <ul>
+          <li><a href="../docs/java/overview.html">Overview</a></li>
+    <li><a href="../docs/java/runtime.html">Servlet Environment</a></li>
+    <li><a href="../docs/java/datastore/index.html">Storing Data</a>
+      <ul>
+            <li><a href="../docs/java/datastore/overview.html">Overview</a></li>
+    <li><a href="../docs/java/datastore/usingjdo.html">Using JDO</a></li>
+    <li><a href="../docs/java/datastore/dataclasses.html">Defining Data Classes</a></li>
+    <li><a href="../docs/java/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+    <li><a href="../docs/java/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+    <li><a href="../docs/java/datastore/transactions.html">Transactions</a></li>
+    <li><a href="../docs/java/datastore/relationships.html">Relationships</a></li>
+    <li><a href="../docs/java/datastore/usingjpa.html">Using JPA</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/datastore/package-summary.html">Low-level API</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/java/apis.html">Services</a>
+      <ul>
+        <li><a href="../docs/java/memcache/index.html">Memcache</a>
+          <ul>
+                <li><a href="../docs/java/memcache/overview.html">Overview</a></li>
+    <li><a href="../docs/java/memcache/usingjcache.html">Using JCache</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/memcache/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                <li><a href="../docs/java/urlfetch/overview.html">Overview</a></li>
+    <li><a href="../docs/java/urlfetch/usingjavanet.html">Using java.net</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/urlfetch/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/mail/index.html">Mail</a>
+          <ul>
+                <li><a href="../docs/java/mail/overview.html">Overview</a></li>
+    <li><a href="../docs/java/mail/usingjavamail.html">Using JavaMail</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/mail/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/images/index.html">Images</a>
+          <ul>
+                <li><a href="../docs/java/images/overview.html">Overview</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/images/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/java/users/index.html">Google Accounts</a>
+          <ul>
+                <li><a href="../docs/java/users/overview.html">Overview</a></li>
+    <li><a href="../docs/java/javadoc/com/google/appengine/api/users/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="../docs/java/javadoc/index.html">Javadoc Reference</a></li>
+    <li><a href="../docs/java/jrewhitelist.html">JRE Class White List</a></li>
+    <li><a href="../docs/java/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="../docs/java/config/webxml.html">Deployment Descriptor</a></li>
+    <li><a href="../docs/java/config/appconfig.html">App Config</a></li>
+    <li><a href="../docs/java/config/indexconfig.html">Index Config</a></li>
+    <li><a href="../docs/java/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/java/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="../docs/java/tools/devserver.html">Development Server</a></li>
+    <li><a href="../docs/java/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="../docs/java/tools/eclipse.html">Google Plugin for Eclipse</a></li>
+    <li><a href="../docs/java/tools/ant.html">Using Apache Ant</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/java/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="../docs/java/howto/unittesting.html">Unit Testing</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Python</h2>
+    <ul>
+          <li><a href="../docs/python/overview.html">Overview</a></li>
+    <li><a href="../docs/python/runtime.html">CGI Environment</a></li>
+    <li><a href="../docs/python/datastore/index.html">Storing Data</a>
+      <ul>
+             <li><a href="../docs/python/datastore/overview.html">Overview</a></li>
+     <li><a href="../docs/python/datastore/entitiesandmodels.html">Entities and Models</a></li>
+     <li><a href="../docs/python/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+     <li><a href="../docs/python/datastore/keysandentitygroups.html">Keys and Entity Groups</a></li>
+     <li><a href="../docs/python/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+     <li><a href="../docs/python/datastore/transactions.html">Transactions</a></li>
+     <li><a href="../docs/python/datastore/typesandpropertyclasses.html">Types and Property Classes</a></li>
+     <li><a href="../docs/python/datastore/gqlreference.html">GQL Reference</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/datastore/modelclass.html">Model</a></li>
+         <li><a href="../docs/python/datastore/expandoclass.html">Expando</a></li>
+         <li><a href="../docs/python/datastore/polymodelclass.html">PolyModel</a></li>
+         <li><a href="../docs/python/datastore/propertyclass.html">Property</a></li>
+         <li><a href="../docs/python/datastore/queryclass.html">Query</a></li>
+         <li><a href="../docs/python/datastore/gqlqueryclass.html">GqlQuery</a></li>
+         <li><a href="../docs/python/datastore/keyclass.html">Key</a></li>
+         <li><a href="../docs/python/datastore/functions.html">Functions</a></li>
+         <li><a href="../docs/python/datastore/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/apis.html">Services</a>
+      <ul>
+        <li><a href="../docs/python/memcache/index.html">Memcache</a>
+          <ul>
+                 <li><a href="../docs/python/memcache/overview.html">Overview</a></li>
+      <li><a href="../docs/python/memcache/usingmemcache.html">Using Memcache</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/memcache/clientclass.html">Client</a></li>
+         <li><a href="../docs/python/memcache/functions.html">Functions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                 <li><a href="../docs/python/urlfetch/overview.html">Overview</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/urlfetch/fetchfunction.html">The fetch Function</a></li>
+         <li><a href="../docs/python/urlfetch/responseobjects.html">Response Objects</a></li>
+         <li><a href="../docs/python/urlfetch/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/mail/index.html">Mail</a>
+          <ul>
+                 <li><a href="../docs/python/mail/overview.html">Overview</a></li>
+     <li><a href="../docs/python/mail/sendingmail.html">Sending Mail</a></li>
+     <li><a href="../docs/python/mail/attachments.html">Attachments</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/mail/emailmessageclass.html">EmailMessage</a></li>
+         <li><a href="../docs/python/mail/emailmessagefields.html">Message Fields</a></li>
+         <li><a href="../docs/python/mail/functions.html">Functions</a></li>
+         <li><a href="../docs/python/mail/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/images/index.html">Images</a>
+          <ul>
+                 <li><a href="../docs/python/images/overview.html">Overview</a></li>
+     <li><a href="../docs/python/images/installingPIL.html">Installing PIL</a></li>
+     <li><a href="../docs/python/images/usingimages.html">Using the Images API</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/images/imageclass.html">Image</a></li>
+         <li><a href="../docs/python/images/functions.html">Functions</a></li>
+         <li><a href="../docs/python/images/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../docs/python/users/index.html">Google Accounts</a>
+          <ul>
+                 <li><a href="../docs/python/users/overview.html">Overview</a></li>
+     <li><a href="../docs/python/users/userobjects.html">User Objects</a></li>
+     <li><a href="../docs/python/users/loginurls.html">Login URLs</a></li>
+     <li><a href="../docs/python/users/adminusers.html">Admin Users</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/users/userclass.html">User</a></li>
+         <li><a href="../docs/python/users/functions.html">Functions</a></li>
+         <li><a href="../docs/python/users/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="../docs/python/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="../docs/python/config/appconfig.html">App Config</a></li>
+    <li><a href="../docs/python/config/indexconfig.html">Index Config</a></li>
+    <li><a href="../docs/python/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="../docs/python/tools/devserver.html">Development Server</a></li>
+    <li><a href="../docs/python/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="../docs/python/tools/uploadingdata.html">Uploading Data</a></li>
+    <li><a href="../docs/python/tools/webapp/index.html">webapp Framework</a>
+      <ul>
+             <li><a href="../docs/python/tools/webapp/overview.html">Overview</a></li>
+     <li><a href="../docs/python/tools/webapp/running.html">Running the Application</a></li>
+     <li><a href="../docs/python/tools/webapp/requesthandlers.html">Request Handlers</a></li>
+     <li><a href="../docs/python/tools/webapp/requestdata.html">Request Data</a></li>
+     <li><a href="../docs/python/tools/webapp/buildingtheresponse.html">Building the Response</a></li>
+     <li><a href="../docs/python/tools/webapp/redirects.html">Redirects, Headers and Status Codes</a></li>
+     
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../docs/python/tools/webapp/requestclass.html">Request</a></li>
+         <li><a href="../docs/python/tools/webapp/responseclass.html">Response</a></li>
+         <li><a href="../docs/python/tools/webapp/requesthandlerclass.html">RequestHandler</a></li>
+         <li><a href="../docs/python/tools/webapp/wsgiapplicationclass.html">WSGIApplication</a></li>
+         <li><a href="../docs/python/tools/webapp/utilmodule.html">Utility Functions</a></li>
+         
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/tools/libraries.html">Third-party Libraries</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../docs/python/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="../docs/python/howto/usinggdataservices.html">Google Data Services</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Managing Your App</h2>
+    <ul>
+      <li><a href="../docs/theadminconsole.html">The Admin Console</a></li>
+      <li><a href="../docs/quotas.html">Quotas</a></li>
+      <li><a href="../docs/billing.html">Billing</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Resources</h2>
+    <ul>
+      <li><a href="index.html">FAQ</a></li>
+      <li><a href="../articles/index.html">Articles</a></li>
+      <li><a href="http://appengine-cookbook.appspot.com/">Cookbook</a></li>
+      <li><a href="http://appgallery.appspot.com/">App Gallery</a></li>
+      <li><a href="http://code.google.com/p/googleappengine/">SDK Code</a></li>
+      <li><a href="http://code.google.com/p/google-app-engine-samples/">Sample Apps Code</a></li>
+      <li><a href="../community.html">Discussion Groups</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><a href="../docs/roadmap.html">Product Roadmap</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/wiki/SdkReleaseNotes">Release Notes</a></li>
+  <li><a href="../docs/revision_history.html">Revision History</a></li>
+</ul>
+
+        <a class="hidden" href="#gc-topnav-anchor">More Google App Engine resource links</a>
+      </div>
+      
+      <a name="gc-pagecontent-anchor"></a>   
+      <div class="g-unit" id="gc-pagecontent">
+        <script type="text/javascript">CODESITE_docEarlyProcessing();</script>
+        <h1 class="page_title">Google App Engine for Java Questions</h1>
+
+
+
+<div id="jd-content">
+<div class="jd-descr">
+
+<ul>
+<li><a href="#frameworks">Can I use my favorite framework on App Engine?</a></li>
+<li><a href="#jvmlanguages">Which JVM languages can I use in my App Engine app?</a></li>
+<li><a href="#readfile">Why can't I read from this file?</a></li>
+<li><a href="#writefile">Why can't I write to this file?</a></li>
+<li><a href="#threads">Can I create new threads in my app?</a></li>
+<li><a href="#pythondatastore">I have an exising Python app, is it possible to access the existing Python data store?</a></li>
+<li><a href="#pythonandjava">Can I run Java and Python code in the same app?</a></li>
+<li><a href="#userservice">Why do I get a UserServiceFailureException when I try to log in to my app?</a></li>
+<li><a href="#initfailed">I'm seeing an Initialization failed exception for all of my request handlers.</a></li>
+<li><a href="#jee">Does App Engine support Java Enterprise Edition?</a></li>
+<li><a href="#fileforms">How do I handle multipart form data? or How do I handle file uploads to my app?</a></li>
+<li><a href="#sdkport">I'm already using port 8080, how do I change the dev appserver's port?</a></li>
+<li><a href="#googledata">Can I use the Google Data API library on App Engine?</a></li>
+<li><a href="#eclipseerrors">The Eclipse plugin is not working.</a></li>
+<li><a href="#runtime">I'm getting &quot;Invalid runtime specified.&quot; when I try to upload.</a></li>
+<li><a href="#appcfgemail">The email argument in appcfg doesn't seem to work.</a></li>
+</ul>
+
+<h2 id="frameworks">Can I use my favorite framework on App Engine?</h2>
+<p>The App Engine runtime environment imposes some constraints to ensure that your app can be scaled to multiple instances on App Engine's distributed infrastructure. Many frameworks will work seamlessly within the App Engine server runtime environment but some of them will not. Others may require some modification.</p>
+<p>There are quite a few frameworks available, so we're using a community oriented approach with a collaborative page here: <a href="http://groups.google.com/group/google-appengine-java/web/will-it-play-in-app-engine">Will it Play in App Engine</a> Please search this page to check on the status of your favorite framework, and write a comment if your framework is not listed or if you have updates or fixes.</p>
+
+<h2 id="jvmlanguages">Which JVM languages can I use in my App Engine app?</h2>
+<p>Many of the languages designed to run in the JVM (like JRuby, Jython, Scala, and Groovy just to name a few) can be used on App Engine. At this point not all of these languages have been fully tested, so we're using a community oriented approach with a collaborative page here: <a href="http://groups.google.com/group/google-appengine-java/web/will-it-play-in-app-engine">Will it Play in App Engine</a>. Please add information as you try out the runtime language of your choice.</p>
+
+<h2 id="readfile">Why can't I read from this file?</h2>
+<p>It is possible to read from a file which is uploaded as part of your application provided that it is in the following locations:<ul>
+<li>war/WEB-INF</li>
+<li>in a location matching the &lt;resource-files&gt; pattern in appengine-web.xml (which by default includes everything)</li></ul></p>
+<p>If the file location is not the issue, the problem may be that the method you are using to read from the file is not whitelisted. Your application can use any IO classes that are useful for reading from the file system, such as <code>File</code>, <code>FileInputStream</code>, <code>FileReader</code>, or <code>RandomAccessFile</code>. For a full list of whitelisted classes, please see the <a href="../docs/java/jrewhitelist.html">JRE Class White List</a>.</p>
+<p>If you need to get file access to your own resources (such as properties files), you could put these files inside of jars and use <code>Class</code> or <code>ClassLoader</code> to load them.</p>
+
+<h2 id="writefile">Why can't I write to this file?</h2>
+<p>Writing to local files is not supported in App Engine due to the distributed nature of your application. Instead, data which must be persisted should be stored in the <a href="../docs/java/datastore/overview.html">distributed datastore</a>. For more information see the documentation on the <a href="../docs/java/runtime.html#The_Sandbox">runtime sandbox</a>.</p>
+
+<h2 id="threads">Can I create new threads in my app?</h2>
+<p>No, an App Engine app may not spawn new threads. For more information see the documentation on the <a href="../docs/java/runtime.html#The_Sandbox">runtime sandbox</a>.</p>
+
+<h2 id="pythondatastore">I have an exising Python app, is it possible to access the existing Python data store?</h2>
+<p>Yes, you can upload Java code to your app (I recommend specifying a new version number) and your Java code will have access to the data in the datastore. The kind names and property names are consistent across languages.</p>
+<p>Be careful to ensure that the data types used in your model entities in Python can be loaded into your Java code.</p>
+
+<h2 id="pythonandjava">Can I run Java and Python code in the same app?</h2>
+<p>Yes, each version of the app must specify a runtime language and it is possible to have version x of your app running Java, while version y is running Python. It would also be possible to use Jython.</p>
+
+<h2 id="userservice">Why do I get a UserServiceFailureException when I try to log in to my app?</h2>
+<p>If you associated your application with a Google Apps domain, you must access the application on a subdomain of your Google Apps account. For example, if example.com is your Google Apps domain, you must create a subdomain (we'll use www for this example) and point it at your app running on App Engine. You would then sign in to your app at www.example.com. If you try to access app through the app-id.appspot.com URL, you will not be able to sign in using your Google Apps account. This restriction applies only to apps which are restricted to a Google Apps domain.</p>
+
+<h2 id="initfailed">I'm seeing an Initialization failed exception for all of my request handlers.</h2>
+<p>One of your filters, servlets, or JSPs likely has an error which prevents all of the handlers in the app from being properly initialized.</p>
+<p>One possible cause for an initialization problem could arise if you are precompiling JSPs. The appcfg command precompiles the JSPs for you as part of the update process, so you probably do not need to precompile.</p>
+<p>If you need to precompile them yourself for some reason, the fix is to bundle any JSP libraries along with the application. This includes:<ul>
+<li>Jasper runtime and the compiler, assuming that's what you used to do the precompilation.</li>
+<li>Any tag libraries (including JSTL) that you need.</li>
+<li>An EL implementation, if you're using it.</li></ul></p>
+<p>These libraries are added to each application as part of our offline JSP compilation which is done by appcfg, so if you are doing your own JSP compilation, you need to do the same thing.</p>
+<p>If you have precompiled JSPs using Jasper, you will need to include the following jars in WEB-INF/lib:<ul>
+<li>commons-logging-api-1.1.1.jar (or later)</li>
+<li>commons-el.jar</li>
+<li>jasper-runtime.jar</li></ul></p>
+<p>Note that EL and logging are actually required even if you're not using them.</p>
+
+<h2 id="jee">Does App Engine support Java Enterprise Edition?</h2>
+<p>While we do not support the entirety of the Java EE specification, we support many of its individual components. For a specific list of which components are and are not supported, see our collaboratively edit page for tracking framework, language, and library compatibility: <a href="http://groups.google.com/group/google-appengine-java/web/will-it-play-in-app-engine">Will it Play in App Engine</a>.</p>
+
+<h2 id="fileforms">How do I handle multipart form data? or How do I handle file uploads to my app?</h2>
+<p>You can obtain the uploaded file data from a multipart form post using classes from the Apache Commons file upload package. Specifically you may want to use <code>FileItemStream</code>, <code>FileItermIterator</code> and <code>ServletFileUpload</code> as illustrated below.</p>
+<pre class="prettyprint">import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import java.io.InputStream;
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class FileUpload extends HttpServlet {
+  private static final Logger log =
+      Logger.getLogger(FileUpload.class.getName());
+
+  public void doPost(HttpServletRequest req, HttpServletResponse res)
+      throws ServletException, IOException {
+    try {
+      ServletFileUpload upload = new ServletFileUpload();
+      res.setContentType("text/plain");
+
+      FileItemIterator iterator = upload.getItemIterator(req);
+      while (iterator.hasNext()) {
+        FileItemStream item = iterator.next();
+        InputStream stream = item.openStream();
+
+        if (item.isFormField()) {
+          log.warning("Got a form field: " + item.getFieldName());
+        } else {
+          log.warning("Got an uploaded file: " + item.getFieldName() +
+                      ", name = " + item.getName());
+
+          // You now have the filename (item.getName() and the
+          // contents (which you can read from stream).  Here we just
+          // print them back out to the servlet output stream, but you
+          // will probably want to do something more interesting (for
+          // example, wrap them in a Blob and commit them to the
+          // datastore).
+          int len;
+          byte[] buffer = new byte[8192];
+          while ((len = stream.read(buffer, 0, buffer.length)) != -1) {
+            res.getOutputStream().write(buffer, 0, len);
+          }
+        }
+      }
+    } catch (Exception ex) {
+      throw new ServletException(ex);
+    }
+  }
+}</pre>
+
+<h2 id="sdkport">I'm already using port 8080, how do I change the dev appserver's port?</h2>
+<p>If you are seeing the following error message:</p>
+<pre>Could not open the requested socket: Address already in use</pre>
+<p>You may want to change the port on which the dev server will listen for incoming connections. You can set the port with the following argument:</p>
+<pre>--port=<i>desired-port-number</i></pre>
+<p>If you are using an ant target with a <code>dev_appserver</code> element, you can specify the port argument by adding the <code>port</code> attribute as follows.</p>
+<pre>&lt;dev_appserver war=&quot;war&quot; port=&quot;<i>desired-port-number</i>&quot;/&gt;</pre>
+
+<h2 id="googledata">Can I use the Google Data API library on App Engine?</h2>
+<p>Yes, the <a href="http://code.google.com/p/gdata-java-client/">Google Data Java client library</a> can be used in App Engine, but you need to set a configuration option to avoid a runtime permissions error. Add the following to your <code>appengine-web.xml</code> file:</p>
+<pre>&lt;system-properties&gt;
+  &lt;property name=&quot;com.google.gdata.DisableCookieHandler&quot; value=&quot;true&quot;/&gt;
+&lt;/system-properties&gt;</pre>
+<p>If the following is not included, you may see the following exception:</p>
+<pre>java.security.AccessControlException: access denied (java.net.NetPermission getCookieHandler)</pre>
+
+<h2 id="eclipseerrors">The Eclipse plugin is not working.</h2>
+<p>If you are running into unexpected issues with the Google Eclipse Plugin or even with Eclipse itself, a good place to start looking is the 'Error Log' view. From the Eclipse menu select 'Window -&gt; Show View -&gt; Other...' and then select 'General -&gt; Error Log'. You can double-click on individual entries to get more information. Alternatively, you can find a text version of these issues in a file called <code><i>your-eclipse-workspace-directory</i>/.metadata/.log</code>.</p>
+
+<h2 id="runtime">I'm getting &quot;Invalid runtime specified.&quot; when I try to upload.</h2>
+<p>When you attempt to update your application using appcfg, the server will check your account to see if you have permission to upload an app using the Java runtime. If your account does not have permissions, you will see the following error message:</p>
+<pre>java.io.IOException: Error posting to URL: http://appengine.google.com/api/appversion/...
+400 Bad Request
+Invalid runtime specified.
+
+Unable to upload app: Error posting to URL: http://appengine.google.com/api/appversion/...
+400 Bad Request
+Invalid runtime specified.</pre>
+<p>To request permission to upload an app which uses the Java runtime, sign up at the following URL: <a href="http://appengine.google.com/promo/java_runtime">http://appengine.google.com/promo/java_runtime</a> . For now, access will be limited to the first 10,000 to sign up.</p>
+
+
+<h2 id="appcfgemail">The email argument in appcfg doesn't seem to work.</h2>
+<p>The email command line argument must be specified before the appcfg operation. For example, the following is correct:</p>
+<pre>appcfg.sh -e <i>youremail@example.com</i> update <i>app_directory/war</i></pre>
+
+</div>
+</div>
+
+
+   
+      </div><!-- end gc-pagecontent -->
+   </div><!-- end gooey wrapper -->
+
+    </div> <!-- end codesite content -->
+
+<div id="gc-footer" dir="ltr">
+  <div class="text">
+    
+      <div class="notice"><div id="notice" style="text-align: center; border: 1em 0em 1em 0em">
+  Except as otherwise <a
+  href="http://code.google.com/policies.html#restrictions">noted</a>,
+  the content of this page is licensed under the <a rel="license"
+  href="http://creativecommons.org/licenses/by/2.5/">Creative Commons
+  Attribution 2.5 License</a>, and code samples are licensed under the
+  <a rel="license" href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+  2.0 License</a>.
+<!-- <rdf:RDF xmlns="http://web.resource.org/cc/" 
+              xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <Work rdf:about="">
+    <license rdf:resource="http://creativecommons.org/licenses/by/2.5/" />
+  </Work>
+  <License rdf:about="http://creativecommons.org/licenses/by/2.5/">
+    <permits rdf:resource="http://web.resource.org/cc/Reproduction"/>
+    <permits rdf:resource="http://web.resource.org/cc/Distribution"/>
+    <requires rdf:resource="http://web.resource.org/cc/Notice"/>
+    <requires rdf:resource="http://web.resource.org/cc/Attribution"/>
+    <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/>
+  </License>
+</rdf:RDF> -->
+</div>
+Java is a registered trademark of Sun Microsystems, Inc.</div>
+    
+    &copy;2009 Google -
+    <a href="http://code.google.com">Code Home</a> -
+    <a href="http://www.google.com/accounts/TOS">Terms of Service</a> -
+    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+    <a href="http://code.google.com/more">Site Directory</a>
+    <br /> <br />
+    Google Code offered in:
+    <a href="http://code.google.com/intl/en">English</a> -
+    <a href="http://code.google.com/intl/es">Español</a> -
+    <a href="http://code.google.com/intl/ja">日本語</a> -
+    <a href="http://code.google.com/intl/ko">한국어</a> -
+    <a href="http://code.google.com/intl/pt-BR">Português</a> -
+    <a href="http://code.google.com/intl/ru">Pусский</a> -
+    <a href="http://code.google.com/intl/zh-CN">中文(简体)</a> -
+    <a href="http://code.google.com/intl/zh-TW">中文(繁體)</a>
+  </div>
+</div><!-- end gc-footer -->
+
+</div><!-- end gc-containter -->
+
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('ats');</script>
+<script src="../../js/codesite_tail.pack.04102009.js" type="text/javascript"></script>
+
+
+
+
+
+
+  </body>
+</html>
+
+

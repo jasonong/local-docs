@@ -1,0 +1,1093 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+
+
+<html>
+  <head>
+    <script type="text/javascript" language="JavaScript">
+    ORIGINAL_PAGE_PATH = "/appengine/docs/quotas.html";
+    </script>
+    
+    
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>Quotas - Google App Engine - Google Code</title>
+<script type="text/javascript"><!--
+(function(){function a(){this.t={};this.tick=function(c){this.t[c]=(new Date).getTime()};this.tick("start")}var b=new a;window.jstiming={Timer:a,load:b};if(window.external&&window.external.pageT)window.jstiming.pt=window.external.pageT;})();
+
+var _tocPath_ = '/appengine/docs/_toc.ezt';
+var codesite_token = null;
+//--></script>
+<link href="../../css/codesite.pack.04102009.css" type="text/css" rel="stylesheet"></link>
+<script src="../../js/codesite_head.pack.04102009.js" type="text/javascript"></script>
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('bhs');</script>
+<link rel="search" type="application/opensearchdescription+xml" title="Google Code" href="http://code.google.com/osd.xml" />
+
+<!--[if IE]><link rel="stylesheet" type="text/css" href="../../css/iehacks.css" /><![endif]-->
+
+    <link href="../../css/semantic_headers.css" rel="stylesheet" type="text/css" />
+    <link href="../css/local_extensions.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="gc-documentation">
+
+    
+    
+    
+</a>
+
+<div id="gb">
+ <span>
+  
+    <a id="lang-dropdown" class="dropdown" href="http://code.google.com" onclick="return false;"><img class="globeicon" src="../../images/globe2_small.png"/><span>English</span></a>
+  
+ </span>
+</div>
+
+<div class="gbh" style="left: 0pt;"></div>
+<div class="gbh" style="right: 0pt;"></div>
+
+
+<style type="text/css">
+  #gc-topnav h1 {
+    padding: 0 0 0 6px;
+  }
+</style>
+
+
+<div id="gc-container">
+<a name="top"></a>
+<div id="skipto">
+  <a href="#gc-pagecontent">Skip to page content</a>
+  <a href="#gc-toc">Skip to main navigation</a>
+</div>
+
+<div id="gc-header">
+  <div id="logo"><a href="http://code.google.com">
+  
+  
+     <img src="../../images/cleardot.gif" height="1px" width="1px" alt="Google Code Home Page" id="gc-logo-img"/>
+  
+  
+  </a></div>
+  <div id="search">
+    <div id="searchForm" class="searchForm">
+      <form id="cse" action="http://www.google.com/cse" accept-charset="utf-8" class="gsc-search-box" onsubmit="executeGSearch(document.getElementById('gsearchInput').value); return false;">
+      <noscript>
+      <input type="hidden" name="cref" value="http://code.google.com/cse/googlecode-context.xml"/>
+      </noscript>
+        <table class="gsc-search-box" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gsc-input">
+                <input id="gsearchInput" type="text" name="q" maxlength="2048" class="gsc-input" autocomplete="off" title="Google Code Search" style="width:345px"/>
+              </td>
+              <td class="gsc-search-button">
+                <div id="cs-searchresults" onclick="event.cancelBubble = true;"></div>
+                <input title="Search" id="gsearchButton" class="gsc-search-button" name="sa" value="Search" type="submit"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="greytext">e.g. "templates" or "datastore"</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div> <!-- end searchForm -->
+  </div> <!-- end search -->
+</div> <!-- end gc-header -->
+
+
+<div id="codesiteContent">
+
+<a name="gc-topnav-anchor"></a>
+<div id="gc-topnav">
+  <h1>Google App Engine</h1>
+  <ul id="docs" class="gc-topnav-tabs">
+
+    <li id="home_link">
+      <a href="../index.html" title="Google App Engine home page">Home</a>
+    </li>
+  
+    <li id="docs_link">
+      <a href="index.html" class="selected" title="Official Google App Engine documentation">Docs</a>
+    </li>
+  
+    <li id="faq_link">
+      <a href="../kb/index.html" title="Answers to frequently asked questions about Google App Engine">FAQ</a>
+    </li>
+  
+    <li id="articles_link">
+      <a href="../articles/index.html" title="Focused articles and tutorials for Google App Engine developers">Articles</a>
+    </li>
+  
+    <li>
+      <a href="http://googleappengine.blogspot.com/" title="Official Google App Engine blog">Blog</a>
+    </li>
+  
+    <li>
+      <a href="../community.html" title="Community home for Google App Engine">Community</a>
+    </li>
+  
+    <li>
+      <a href="../terms.html" title="Google App Engine terms of service">Terms</a>
+    </li>
+  
+    <li>
+      <a href="../downloads.html" title="Download Google App Engine">Download</a>
+    </li>
+  
+
+  </ul>
+</div> <!-- end gc-topnav -->
+
+    <div class="g-section g-tpl-170">
+
+      <div class="g-unit g-first" id="gc-toc">
+        <ul>
+  <li><a href="../downloads.html">Downloads</a></li>
+  <li><a href="http://code.google.com/status/appengine">System Status</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/issues/list">Issue Tracker</a></li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Getting Started</h2>
+    <ul>
+      <li><a href="whatisgoogleappengine.html">What Is Google App Engine?</a></li>
+      <li><a href="java/gettingstarted/index.html">Java</a>
+        <ul>
+              <li><a href="java/gettingstarted/introduction.html">Introduction</a></li>
+    <li><a href="java/gettingstarted/installing.html">Installing the Java SDK</a></li>
+    <li><a href="java/gettingstarted/creating.html">Creating a Project</a></li>
+    <li><a href="java/gettingstarted/usingusers.html">Using the Users Service</a></li>
+    <li><a href="java/gettingstarted/usingjsps.html">Using JSPs</a></li>
+    <li><a href="java/gettingstarted/usingdatastore.html">Using the Datastore with JDO</a></li>
+    <li><a href="java/gettingstarted/staticfiles.html">Using Static Files</a></li>
+    <li><a href="java/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+      <li><a href="python/gettingstarted/index.html">Python</a>
+        <ul>
+            <li><a href="python/gettingstarted/introduction.html">Introduction</a></li>
+  <li><a href="python/gettingstarted/devenvironment.html">The Development Environment</a></li>
+  <li><a href="python/gettingstarted/helloworld.html">Hello, World!</a></li>
+  <li><a href="python/gettingstarted/usingwebapp.html">Using the webapp Framework</a></li>
+  <li><a href="python/gettingstarted/usingusers.html">Using the Users Service</a></li>
+  <li><a href="python/gettingstarted/handlingforms.html">Handling Forms With webapp</a></li>
+  <li><a href="python/gettingstarted/usingdatastore.html">Using the Datastore</a></li>
+  <li><a href="python/gettingstarted/templates.html">Using Templates</a></li>
+  <li><a href="python/gettingstarted/staticfiles.html">Using Static Files</a></li>
+  <li><a href="python/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Java <sup class="new">Early Look</sup></h2>
+    <ul>
+          <li><a href="java/overview.html">Overview</a></li>
+    <li><a href="java/runtime.html">Servlet Environment</a></li>
+    <li><a href="java/datastore/index.html">Storing Data</a>
+      <ul>
+            <li><a href="java/datastore/overview.html">Overview</a></li>
+    <li><a href="java/datastore/usingjdo.html">Using JDO</a></li>
+    <li><a href="java/datastore/dataclasses.html">Defining Data Classes</a></li>
+    <li><a href="java/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+    <li><a href="java/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+    <li><a href="java/datastore/transactions.html">Transactions</a></li>
+    <li><a href="java/datastore/relationships.html">Relationships</a></li>
+    <li><a href="java/datastore/usingjpa.html">Using JPA</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/datastore/package-summary.html">Low-level API</a></li>
+
+      </ul>
+    </li>
+    <li><a href="java/apis.html">Services</a>
+      <ul>
+        <li><a href="java/memcache/index.html">Memcache</a>
+          <ul>
+                <li><a href="java/memcache/overview.html">Overview</a></li>
+    <li><a href="java/memcache/usingjcache.html">Using JCache</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/memcache/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                <li><a href="java/urlfetch/overview.html">Overview</a></li>
+    <li><a href="java/urlfetch/usingjavanet.html">Using java.net</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/urlfetch/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/mail/index.html">Mail</a>
+          <ul>
+                <li><a href="java/mail/overview.html">Overview</a></li>
+    <li><a href="java/mail/usingjavamail.html">Using JavaMail</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/mail/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/images/index.html">Images</a>
+          <ul>
+                <li><a href="java/images/overview.html">Overview</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/images/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/users/index.html">Google Accounts</a>
+          <ul>
+                <li><a href="java/users/overview.html">Overview</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/users/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="java/javadoc/index.html">Javadoc Reference</a></li>
+    <li><a href="java/jrewhitelist.html">JRE Class White List</a></li>
+    <li><a href="java/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="java/config/webxml.html">Deployment Descriptor</a></li>
+    <li><a href="java/config/appconfig.html">App Config</a></li>
+    <li><a href="java/config/indexconfig.html">Index Config</a></li>
+    <li><a href="java/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="java/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="java/tools/devserver.html">Development Server</a></li>
+    <li><a href="java/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="java/tools/eclipse.html">Google Plugin for Eclipse</a></li>
+    <li><a href="java/tools/ant.html">Using Apache Ant</a></li>
+
+      </ul>
+    </li>
+    <li><a href="java/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="java/howto/unittesting.html">Unit Testing</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Python</h2>
+    <ul>
+          <li><a href="python/overview.html">Overview</a></li>
+    <li><a href="python/runtime.html">CGI Environment</a></li>
+    <li><a href="python/datastore/index.html">Storing Data</a>
+      <ul>
+             <li><a href="python/datastore/overview.html">Overview</a></li>
+     <li><a href="python/datastore/entitiesandmodels.html">Entities and Models</a></li>
+     <li><a href="python/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+     <li><a href="python/datastore/keysandentitygroups.html">Keys and Entity Groups</a></li>
+     <li><a href="python/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+     <li><a href="python/datastore/transactions.html">Transactions</a></li>
+     <li><a href="python/datastore/typesandpropertyclasses.html">Types and Property Classes</a></li>
+     <li><a href="python/datastore/gqlreference.html">GQL Reference</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/datastore/modelclass.html">Model</a></li>
+         <li><a href="python/datastore/expandoclass.html">Expando</a></li>
+         <li><a href="python/datastore/polymodelclass.html">PolyModel</a></li>
+         <li><a href="python/datastore/propertyclass.html">Property</a></li>
+         <li><a href="python/datastore/queryclass.html">Query</a></li>
+         <li><a href="python/datastore/gqlqueryclass.html">GqlQuery</a></li>
+         <li><a href="python/datastore/keyclass.html">Key</a></li>
+         <li><a href="python/datastore/functions.html">Functions</a></li>
+         <li><a href="python/datastore/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="python/apis.html">Services</a>
+      <ul>
+        <li><a href="python/memcache/index.html">Memcache</a>
+          <ul>
+                 <li><a href="python/memcache/overview.html">Overview</a></li>
+      <li><a href="python/memcache/usingmemcache.html">Using Memcache</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/memcache/clientclass.html">Client</a></li>
+         <li><a href="python/memcache/functions.html">Functions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                 <li><a href="python/urlfetch/overview.html">Overview</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/urlfetch/fetchfunction.html">The fetch Function</a></li>
+         <li><a href="python/urlfetch/responseobjects.html">Response Objects</a></li>
+         <li><a href="python/urlfetch/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/mail/index.html">Mail</a>
+          <ul>
+                 <li><a href="python/mail/overview.html">Overview</a></li>
+     <li><a href="python/mail/sendingmail.html">Sending Mail</a></li>
+     <li><a href="python/mail/attachments.html">Attachments</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/mail/emailmessageclass.html">EmailMessage</a></li>
+         <li><a href="python/mail/emailmessagefields.html">Message Fields</a></li>
+         <li><a href="python/mail/functions.html">Functions</a></li>
+         <li><a href="python/mail/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/images/index.html">Images</a>
+          <ul>
+                 <li><a href="python/images/overview.html">Overview</a></li>
+     <li><a href="python/images/installingPIL.html">Installing PIL</a></li>
+     <li><a href="python/images/usingimages.html">Using the Images API</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/images/imageclass.html">Image</a></li>
+         <li><a href="python/images/functions.html">Functions</a></li>
+         <li><a href="python/images/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/users/index.html">Google Accounts</a>
+          <ul>
+                 <li><a href="python/users/overview.html">Overview</a></li>
+     <li><a href="python/users/userobjects.html">User Objects</a></li>
+     <li><a href="python/users/loginurls.html">Login URLs</a></li>
+     <li><a href="python/users/adminusers.html">Admin Users</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/users/userclass.html">User</a></li>
+         <li><a href="python/users/functions.html">Functions</a></li>
+         <li><a href="python/users/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="python/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="python/config/appconfig.html">App Config</a></li>
+    <li><a href="python/config/indexconfig.html">Index Config</a></li>
+    <li><a href="python/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="python/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="python/tools/devserver.html">Development Server</a></li>
+    <li><a href="python/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="python/tools/uploadingdata.html">Uploading Data</a></li>
+    <li><a href="python/tools/webapp/index.html">webapp Framework</a>
+      <ul>
+             <li><a href="python/tools/webapp/overview.html">Overview</a></li>
+     <li><a href="python/tools/webapp/running.html">Running the Application</a></li>
+     <li><a href="python/tools/webapp/requesthandlers.html">Request Handlers</a></li>
+     <li><a href="python/tools/webapp/requestdata.html">Request Data</a></li>
+     <li><a href="python/tools/webapp/buildingtheresponse.html">Building the Response</a></li>
+     <li><a href="python/tools/webapp/redirects.html">Redirects, Headers and Status Codes</a></li>
+     
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/tools/webapp/requestclass.html">Request</a></li>
+         <li><a href="python/tools/webapp/responseclass.html">Response</a></li>
+         <li><a href="python/tools/webapp/requesthandlerclass.html">RequestHandler</a></li>
+         <li><a href="python/tools/webapp/wsgiapplicationclass.html">WSGIApplication</a></li>
+         <li><a href="python/tools/webapp/utilmodule.html">Utility Functions</a></li>
+         
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="python/tools/libraries.html">Third-party Libraries</a></li>
+
+      </ul>
+    </li>
+    <li><a href="python/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="python/howto/usinggdataservices.html">Google Data Services</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Managing Your App</h2>
+    <ul>
+      <li><a href="theadminconsole.html">The Admin Console</a></li>
+      <li><a href="quotas.html">Quotas</a></li>
+      <li><a href="billing.html">Billing</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Resources</h2>
+    <ul>
+      <li><a href="../kb/index.html">FAQ</a></li>
+      <li><a href="../articles/index.html">Articles</a></li>
+      <li><a href="http://appengine-cookbook.appspot.com/">Cookbook</a></li>
+      <li><a href="http://appgallery.appspot.com/">App Gallery</a></li>
+      <li><a href="http://code.google.com/p/googleappengine/">SDK Code</a></li>
+      <li><a href="http://code.google.com/p/google-app-engine-samples/">Sample Apps Code</a></li>
+      <li><a href="../community.html">Discussion Groups</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><a href="roadmap.html">Product Roadmap</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/wiki/SdkReleaseNotes">Release Notes</a></li>
+  <li><a href="revision_history.html">Revision History</a></li>
+</ul>
+
+        <a class="hidden" href="#gc-topnav-anchor">More Google App Engine resource links</a>
+      </div>
+
+      <div class="g-unit" id="gc-pagecontent">
+        <h1 class="page_title">Quotas</h1>
+
+
+
+<p>An App Engine application can consume resources up to certain maximums, or <i>quotas</i>.  With quotas, App Engine ensures that your application won't exceed your budget, and that other applications running on App Engine won't impact the performance of your app.</p>
+
+<p class="warning"><strong>Note:</strong> The free quota levels described below will change on <strong>May 25th, 2009</strong> (90 days after February 24th, 2009).  See <a href="#Free_Changes">Upcoming Changes to the Free Quotas</a> below for more details.  If your application requires higher quotas than the "billing-enabled" per-minute values listed below allow, you can <a href="../kb/billing.html#cpu">request an increase</a>.</p>
+
+
+
+<ul>
+  <li><a href="#Billable_Quotas_and_Fixed_Quotas">Billable Quotas and Fixed Quotas</a></li>
+  <li><a href="#How_Resources_are_Replenished">How Resources are Replenished</a></li>
+  <li><a href="#Per-minute_Quotas">Per-minute Quotas</a></li>
+  <li><a href="#When_a_Resource_is_Depleted">When a Resource is Depleted</a></li>
+  <li><a href="#Monitoring_CPU_Usage_in_a_Request">Monitoring CPU Usage in a Request</a></li>
+  <li><a href="#Resources">Resources</a>
+    <ul>
+      <li><a href="#Requests">Requests</a></li>
+      <li><a href="#Datastore">Datastore</a></li>
+      <li><a href="#Mail">Mail</a></li>
+      <li><a href="#UrlFetch">URL Fetch</a></li>
+      <li><a href="#Image_Manipulation">Image Manipulation</a></li>
+      <li><a href="#Memcache">Memcache</a></li>
+      <li><a href="#Deployments">Deployments</a></li>
+    </ul></li>
+  <li><a href="#Free_Changes">Upcoming Changes to the Free Quotas</a></li>
+</ul>
+
+
+<h2 id="Billable_Quotas_and_Fixed_Quotas">Billable Quotas and Fixed Quotas</h2>
+
+<p>Each App Engine resource is measured against one of two kinds of quota: a <i>billable quota</i> or a <i>fixed quota</i>.</p>
+
+<p>Billable quotas are resource maximums set by you, the application's administrator, to prevent the cost of the application from exceeding your budget.  Every application gets an amount of each billable quota for free.  You can increase billable quotas for your application by enabling billing, setting a daily budget, then allocating the budget to the quotas.  You will be charged only for the resources your app actually uses, and only for the amount of resources used above the free quota thresholds.</p>
+
+<p>After you <a href="billing.html#Enabling_Billing">enable billing</a> for your application, you can set your daily budget and adjust quota allocations for your app using the <a href="http://appengine.google.com">Admin Console</a>. For more information about setting your budget and allocating quotas, see <a href="billing.html">Billing</a>.
+
+<p>Fixed quotas are resource maximums set by App Engine to ensure the integrity of the system. These resources describe the boundaries of the architecture, and all applications are expected to run within the same limits. They ensure that another app that is consuming too many resources will not affect the performance of your app.</p>
+
+<p>When you enable billing for your app, the app's fixed quotas increase.  See the <a href="#Resources">Resources</a> section for details.</p>
+
+
+<h2 id="How_Resources_are_Replenished">How Resources are Replenished</h2>
+
+<p>App Engine records how much of each resource an application uses in a calendar day, and considers the resource depleted when this amount reaches the app's quota for the resource.  A calendar day is a period of 24 hours beginning at midnight, Pacific Time. App Engine resets all resource measurements at the beginning of each day, except for Stored Data which always represents the amount of datastore storage in use.</p>
+
+<p><i>Historical note:</i> The 24-hour replenishment cycle was introduced in December 2008.  It replaced a more complicated system of "continuous" replenishment, to make it easier to report and control resource usage.</p>
+
+
+<h2 id="Per-minute_Quotas">Per-minute Quotas</h2>
+
+<p>In addition to the daily quotas described above, App Engine moderates how quickly an app can consume a resource, using <em>per-minute quotas</em>. This protects the app from consuming all of its quota in very short periods of time, and keeps other apps from affecting your app by monopolizing a given resource.</p>
+
+<p>If your application consumes a resource too quickly and depletes one of the per-minute limits, the word "Limited" will appear by the appropriate quota on the <strong>Quota Details</strong> screen in the Admin Console. Requests for resources that have hit their per-minute maximum will be denied. See <a href="#When_a_Resource_is_Depleted">When a Resource is Depleted</a> for details.</p>
+
+<p>As with the daily fixed quotas, there are two levels of per-minute quotas, depending on whether billing has been enabled or not. See the quota tables in the <a href="#Resources">Resources</a> section for details.</p>
+
+
+<h2 id="When_a_Resource_is_Depleted">When a Resource is Depleted</h2>
+
+<p>When an app consumes all of an allocated resource, the resource becomes unavailable until the quota is replenished.  This may mean that your app will not work until the quota is replenshed.</p>
+
+<p>For resources that are required to initiate a request, when the resource is depleted, App Engine returns an HTTP 403 Forbidden status code for the request instead of calling a request handler.  The following resources have this behavior:</p>
+<ul>
+  <li>Requests</li>
+  <li>CPU Time</li>
+  <li>Bandwidth, incoming and outgoing</li>
+</ul>
+
+<p>For all other resources, when the resource is depleted, an attempt in the app to consume the resource results in an exception.  This exception can be caught by the app and handled, such as by displaying a friendly error message to the user.  In the Python API, this exception is <code>apiproxy_errors.OverQuotaError</code>.</p>
+
+<p>The following example illustrates how to catch the <code>OverQuotaError</code>, which may be raised by the <code>SendMessage()</code> method if an email-related quota has been exceeded:</p>
+<pre class="prettyprint">try:
+  mail.SendMessage(to='test@example.com',
+                   from='admin@example.com',
+                   subject='Test Email',
+                   body='Testing')
+except apiproxy_errors.OverQuotaError, message:
+  # Log the error.
+  logging.error(message)
+  # Display an informative message to the user.
+  self.response.out.write('The email could not be sent. '
+                          'Please try again later.')
+</pre>
+
+<p>If you're going over your system resource quota unexpectedly, consider <a href="../kb/commontasks.html#profiling">profiling your app's performance</a>.</p>
+
+
+<h2 id="Monitoring_CPU_Usage_in_a_Request">Monitoring CPU Usage in a Request</h2>
+
+<p>A Python application can determine how much CPU time the current request has taken so far by calling the Quota API.  This is useful for profiling CPU-intensive code, and finding places where CPU efficiency can be improved for greater cost savings.  You can measure the CPU used for the entire request, or call the API before and after a section of code then subtract to determine the CPU used between those two points.</p>
+
+<p>The <code>google.appengine.api.quota</code> package provides the <code>get_request_cpu_usage()</code> function.  This function returns the amount of CPU resources that the current request has spent so far, as a number of megacycles.  This number is proportional to the "CPU Time" quota measurement, but does not include the CPU speed multiplier.  This number does not include CPU used by API calls.</p>
+
+<p>In the development server, this function returns 0.</p>
+
+<pre class="prettyprint">
+import logging
+from google.appengine.api import quota
+
+start = quota.get_request_cpu_usage()
+do_something_expensive()
+end = quota.get_request_cpu_usage()
+
+logging.info("do_something_expensive() cost %d megacycles." % (start - end))
+</pre>
+
+<p>This function is not yet available for Java applications.  It may be added in a future release.</p>
+
+
+<h2 id="Resources">Resources</h2>
+
+<p>An application may use the following resources, subject to quotas. Resources measured against billable quotas are indicated with "(billable)." Resource amounts represent an allocation over a 24 hour period.</p>
+
+<p>The cost of additional billable resources is listed on the <a href="billing.html">Billing</a> page.</p>
+
+<h3 id="Requests">Requests</h3>
+
+<dl>
+  <dt>Requests</dt>
+  <dd>The total number of requests to the app.  The per-minute quotas for application with billing enabled allow for up to 500 requests per second--more than one billion requests per month.  If your application requires even higher quotas than the "billing-enabled" values listed below, you can request an increase in these limits <a href="../kb/billing.html#cpu">here</a>.</dd>
+
+  <dt>Outgoing Bandwidth (billable)</dt>
+  <dd>
+    <p>The amount of data sent by the app in response to requests.</p>
+    <p>This includes data sent in response to both secure requests and non-secure requests, data sent in email messages, and data in outgoing HTTP requests sent by the URL fetch service.</p>
+  </dd>
+
+  <dt>Incoming Bandwidth (billable)</dt>
+  <dd>
+    <p>The amount of data received by the app from requests.</p>
+    <p>This includes data received by the app in secure requests and non-secure requests, and data received in response to HTTP requests by the URL fetch service.</p>
+  </dd>
+
+  <dt>CPU Time (billable)</dt>
+  <dd>
+    <p>The total processing time for handling requests, including time spent running the app and performing datastore operations.  This does <i>not</i> include time spent waiting for other services, such as waiting for a URL fetch to return or the image service to transform an image.</p>
+    <p>CPU time is reported in "seconds," which is equivalent to the number of CPU cycles that can be performed by a 1.2 GHz Intel x86 processor in that amount of time.  The actual number of CPU cycles spent varies greatly depending on conditions internal to App Engine, so this number is adjusted for reporting purposes using this processor as a reference measurement.</p>
+    <p>One tool to assist you in identifying areas in the application which use high amounts of runtime CPU quota is the <code>cProfile</code> module. For instructions on setting up profiling while debugging your application, see <a href="../kb/commontasks.html#profiling">&quot;How do I profile my app's performance?&quot;</a>.</p>
+    <p>You can examine the CPU time used to serve each request by looking at the Logs section of the Admin Console.  While profiling will assist in identifying inefficient portions of your Python code, it's also helpful to understand which datastore operations contribute to your CPU usage.</p>
+    <ul> 
+      <li>Writes to the datastore use roughly 5 times as much CPU as reads.</li>
+      <li>Writes that update indexes require more CPU than writes that do not.</li>
+      <li>As the number of properties associated with a given entity increases, so does the CPU time required to read and write that entity.</li>
+      <li>For the most part, queries are equally efficient, since all queries use indexes.  However, fetching results requires additional CPU Time.</li>
+    </ul>
+  </dd>
+
+  <dt>Secure Requests</dt>
+  <dd>The number of requests that used a secure connection (HTTPS).  Secure requests also count towards the Requests quota.</dd>
+
+  <dt>Secure Outgoing Bandwidth</dt>
+  <dd>The amount of data send by the app over a secure connection in response to requests.  Secure outgoing bandwidth also counts toward the Outgoing Bandwidth quota.</dd>
+
+  <dt>Secure Incoming Bandwidth</dt>
+  <dd>The amount of data received by the app over a secure connection from requests.  Secure incoming bandwidth also counts toward the Incoming Bandwidth quota.</dd>
+</dl>
+
+<table width="75%">
+  <tr>
+    <th width="30%" rowspan="2">Resource</th>
+    <th width="35%" colspan="2">Free Default Quota</th>
+    <th width="35%" colspan="2">Billing Enabled Quota</th>
+  </tr>
+  <tr>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+  </tr>
+  <tr>
+    <td width="30%">Requests</td>
+    <td width="17.5%">1,300,000 requests</td>
+    <td width="17.5%">7,400 requests/minute</td>
+    <td width="17.5%">43,000,000 requests</td>
+    <td width="17.5%">30,000 requests/minute</td>
+  </tr>
+  <tr>
+    <td>Outgoing Bandwidth (<a href="#Billable_Quotas_and_Fixed_Quotas">billable</a>, includes HTTPS)</td>
+    <td>10 gigabytes</td>
+    <td>56 megabytes/minute</td>
+    <td>10 gigabytes free; 1,046 gigabytes maximum</td>
+    <td>740 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>Incoming Bandwidth (<a href="#Billable_Quotas_and_Fixed_Quotas">billable</a>, includes HTTPS)</td>
+    <td>10 gigabytes</td>
+    <td>56 megabytes/minute</td>
+    <td>10 gigabytes free; 1,046 gigabytes maximum</td>
+    <td>740 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>CPU Time (<a href="#Billable_Quotas_and_Fixed_Quotas">billable</a>)</td>
+    <td>46 CPU-hours</td>
+    <td>15 CPU-minute/minute</td>
+    <td>46 CPU-hours free; 1,729 CPU-hours maximum</i></td>
+    <td>72 CPU-minute/minute</td>
+  </tr>
+</table>
+
+<h3 id="Datastore">Datastore</h3>
+
+<dl>
+  <dt>Datastore API Calls</dt>
+  <dd>The total number of times the app retrieved, created, updated or deleted an entity, or performed a query.</dd>
+
+  <dt>Stored Data (billable)</dt>
+  <dd>
+  <p>The amount of data stored in entities and corresponding indexes.</p> 
+  
+  <p>It's important to note that data stored in the datastore may incur significant overhead.  This overhead depends on the number and types of associated properties, and includes space used by built-in and custom indexes.  Each entity stored in the datastore requires the the following metadata:</p>
+  <ul>
+    <li>The entity key, including the kind, the ID or key name, and the key of the entity's parent entity.</li>
+    <li>The name and value of each property.  Since the datastore is schemaless, the name of each property must be stored with the property value for any given entity.</li>
+    <li>Any built-in and custom index rows that refer to this entity.  Each row contains the entity kind, any number of property values depending on the index definition, and the entity key.  See <a href="../articles/index_building.html">How Index Building Works</a> for more details.</li>
+  </ul>
+  </dd>
+
+  <dt>Data Sent to API</dt>
+  <dd>The amount of data sent to the datastore when creating or updating an entity, or performing a query.</dd>
+
+  <dt>Data Received from API</dt>
+  <dd>The amount of data returned by the datastore when retrieving an entity or performing a query.</dd>
+
+  <dt>Datastore CPU Time</dt>
+  <dd>The time spent performing datastore operations.  Datastore CPU cycles also count toward the CPU Time quota.  See CPU Time, above, for details on how CPU time is calculated.</dd>
+</dl>
+
+<table width="75%">
+  <tr>
+    <th width="30%" rowspan="2">Resource</th>
+    <th width="35%" colspan="2">Free Default Quota</th>
+    <th width="35%" colspan="2">Billing Enabled Quota</th>
+  </tr>
+  <tr>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+  </tr>
+  <tr>
+    <td width="30%">Datastore API Calls</td>
+    <td width="17.5%">10,000,000 calls</td>
+    <td width="17.5%">57,000 calls/minute</td>
+    <td width="17.5%">140,000,000 calls</td>
+    <td width="17.5%">129,000 calls/minute</td>
+  </tr>
+  <tr>
+    <td>Stored Data (<a href="#Billable_Quotas_and_Fixed_Quotas">billable</a>)</td>
+    <td>1 gigabyte</td>
+    <td><i>None</i></td>
+    <td>1 gigabytes free; no maximum</td>
+    <td><i>None</i></td>
+  </tr>
+  <tr>
+    <td>Data Sent to API</td>
+    <td>12 gigabytes</td>
+    <td>68 megabytes/minute</td>
+    <td>72 gigabytes</td>
+    <td>153 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>Data Received from API</td>
+    <td>115 gigabytes</td>
+    <td>659 megabytes/minute</td>
+    <td>695 gigabytes</td>
+    <td>1,484 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>Datastore CPU Time</td>
+    <td>60 CPU-hours</td>
+    <td>20 CPU-minutes/minute</td>
+    <td>1,200 CPU-hours</td>
+    <td>50 CPU-minutes/minute</td>
+  </tr>
+</table>
+
+<h3 id="Mail">Mail</h3>
+
+<dl>
+  <dt>Mail API Calls</dt>
+  <dd>The total number of times the app accessed the mail service to send an email message.</dd>
+
+  <dt>Recipients Emailed (billable)</dt>
+  <dd>The total number of recipients to whom the app has sent email messages.</dd>
+
+  <dt>Admins Emailed</dt>
+  <dd>The total number of application admins to whom the app has sent email messages.</dd>
+
+  <dt>Message Body Data Sent</dt>
+  <dd>The amount of data sent in the body of email messages.  This also counts toward the Outgoing Bandwidth quota.</dd>
+
+  <dt>Attachments Sent</dt>
+  <dd>The total number of attachments sent with email messages.</dd>
+
+  <dt>Attachment Data Sent</dt>
+  <dd>The amount of data sent as attachments to email messages.  This also counts toward the Outgoing Bandwidth quota.</dd>
+</dl>
+
+<table width="75%">
+  <tr>
+    <th width="30%" rowspan="2">Resource</th>
+    <th width="35%" colspan="2">Free Default Quota</th>
+    <th width="35%" colspan="2">Billing Enabled Quota</th>
+  </tr>
+  <tr>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+  </tr>
+  <tr>
+    <td width="30%">Mail API Calls</td>
+    <td width="17.5%">7,000 calls</td>
+    <td width="17.5%">32 calls/minute</td>
+    <td width="17.5%">1,700,000 calls</td>
+    <td width="17.5%">4,900 calls/minute</td>
+  </tr>
+  <tr>
+    <td>Recipients Emailed (<a href="#Billable_Quotas_and_Fixed_Quotas">billable</a>)</td>
+    <td>2,000 recipients</td>
+    <td>8 recipients/minute</td>
+    <td>2,000 recipients free; 7,400,000 recipients maximum</i></td>
+    <td>5,100 recipients/minute</td>
+  </tr>
+  <tr>
+    <td>Admins Emailed</td>
+    <td>5,000 mails</td>
+    <td>24 mails/minute</td>
+    <td>3,000,000 mails</td>
+    <td>9,700 mails/minute</td>
+  </tr>
+  <tr>
+    <td>Message Body Data Sent</td>
+    <td>60 megabytes</td>
+    <td>340 kilobytes/minute</td>
+    <td>29 gigabytes</td>
+    <td>84 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>Attachments Sent</td>
+    <td>2,000 attachments</td>
+    <td>8 attachments/minute</td>
+    <td>2,900,000 attachments</td>
+    <td>8,100 attachments/minute</td>
+  </tr>
+  <tr>
+    <td>Attachment Data Sent</td>
+    <td>100 megabytes</td>
+    <td>560 kilobytes/minute</td>
+    <td>100 gigabytes</td>
+    <td>300 megabytes/minute</td>
+  </tr>
+</table>
+
+<h3 id="UrlFetch">URL Fetch</h3>
+
+<dl>
+  <dt>URL Fetch API Calls</dt>
+  <dd>The total number of times the app accessed the URL fetch service to perform an HTTP or HTTPS request.</dd>
+
+  <dt>URL Fetch Data Sent</dt>
+  <dd>The amount of data sent to the URL fetch service in requests.  This also counts toward the Outgoing Bandwidth quota.</dd>
+
+  <dt>URL Fetch Data Received</dt>
+  <dd>The amount of data received from the URL fetch service in responses.  This also counts toward the Incoming Bandwidth quota.</dd>
+</dl>
+
+<table width="75%">
+  <tr>
+    <th width="30%" rowspan="2">Resource</th>
+    <th width="35%" colspan="2">Free Default Quota</th>
+    <th width="35%" colspan="2">Billing Enabled Quota</th>
+  </tr>
+  <tr>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+  </tr>
+  <tr>
+    <td width="30%">UrlFetch API Calls</td>
+    <td width="17.5%">657,000 calls</td>
+    <td width="17.5%">3,000 calls/minute</td>
+    <td width="17.5%">46,000,000 calls</td>
+    <td width="17.5%">32,000 calls/minute</td>
+  </tr>
+  <tr>
+    <td>UrlFetch Data Sent</td>
+    <td>4 gigabytes</td>
+    <td>22 megabytes/minute</td>
+    <td>1,046 gigabytes</td>
+    <td>740 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>UrlFetch Data Received</td>
+    <td>4 gigabytes</td>
+    <td>22 megabytes/minute</td>
+    <td>1,046 gigabytes</td>
+    <td>740 megabytes/minute</td> 
+  </tr>
+</table>
+
+<h3 id="Image_Manipulation">Image Manipulation</h3>
+
+<dl>
+  <dt>Image Manipulation API Calls</dt>
+  <dd>The total number of times the app access the image service.</dd>
+
+  <dt>Data Sent to API</dt>
+  <dd>The amount of data sent to the image service.</dd>
+
+  <dt>Data Received from API</dt>
+  <dd>The amount of data received from the image service.</dd>
+
+  <dt>Transformations executed</dt>
+  <dd>The number of times the service performed an image transformation for the app.</dd>
+</dl>
+
+<table width="75%">
+  <tr>
+    <th width="30%" rowspan="2">Resource</th>
+    <th width="35%" colspan="2">Free Default Quota</th>
+    <th width="35%" colspan="2">Billing Enabled Quota</th>
+  </tr>
+  <tr>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+  </tr>  <tr>
+    <td width="30%">Image Manipulation API Calls</td>
+    <td width="17.5%">864,000 calls</td>
+    <td width="17.5%">4,800 calls/minute</td>
+    <td width="17.5%">45,000,000 calls</td>
+    <td width="17.5%">31,000 calls/minute</td>
+  </tr>
+  <tr>
+    <td>Data Sent to API</td>
+    <td>1 gigabytes</td>
+    <td>5 megabytes/minute</td>
+    <td>560 gigabytes</td>
+    <td>400 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>Data Received from API</td>
+    <td>5 gigabytes</td>
+    <td>28 megabytes/minute</td>
+    <td>427 gigabytes</td>
+    <td>300 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>Transformations executed</td>
+    <td>2,500,000 transforms</td>
+    <td>14,000 transforms/minute</td>
+    <td>47,000,000 transforms</td>
+    <td>32,000 transforms/minute</td>
+  </tr>
+</table>
+
+<h3 id="Memcache">Memcache</h3>
+
+<dl>
+  <dt>Memcache API Calls</dt>
+  <dd>The total number of times the app accessed the memcache service to get, set or expire values.</dd>
+
+  <dt>Data Sent to API</dt>
+  <dd>The amount of data sent to the memcache.</dd>
+
+  <dt>Data Received from API</dt>
+  <dd>The amount of data received from the memcache.</dd>
+</dl>
+
+<table width="75%">
+  <tr>
+    <th width="30%" rowspan="2">Resource</th>
+    <th width="35%" colspan="2">Free Default Quota</th>
+    <th width="35%" colspan="2">Billing Enabled Quota</th>
+  </tr>
+  <tr>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+    <th width="17.5%">Daily Limit</th>
+    <th width="17.5%">Maximum Rate</th>
+  </tr>  <tr>
+    <td width="30%">Memcache API Calls</td>
+    <td width="17.5%">8,600,000</td>
+    <td width="17.5%">48,000 calls/minute</td>
+    <td width="17.5%">96,000,000</td>
+    <td width="17.5%">108,000 calls/minute</td>
+  </tr>
+  <tr>
+    <td>Data Sent to API</td>
+    <td>10 gigabytes</td>
+    <td>56 megabytes/minute</td>
+    <td>60 gigabytes</td>
+    <td>128 megabytes/minute</td>
+  </tr>
+  <tr>
+    <td>Data Received from API</td>
+    <td>50 gigabytes</td>
+    <td>284 megabytes/minute</td>
+    <td>315 gigabytes</td>
+    <td>640 megabytes/minute</td>
+  </tr>
+</table>
+
+<h3 id="Deployments">Deployments</h3>
+
+<dl>
+  <dt>Deployments</dt>
+  <dd>The number of times the app has been uploaded by a developer.</dd>
+</dl>
+
+
+<h2 id="Free_Changes">Upcoming Changes to the Free Quotas</h2>
+
+<p>On May 25th, 2009, along with many performance improvements, we will be reducing the free quota levels for the billable quotas.  App Engine will always remain free to get started.  We believe these new levels will continue to serve a reasonably efficient application around 5 million page views per month, completely free.</p>
+
+<p>The new free quota levels to take effect on May 25th will be as follows:</p>
+<ul>
+  <li>CPU Time: 6.5 hours of CPU time per day</li>
+  <li>Bandwidth: 1 gigabyte of data transferred in and out of the application per day</li>
+  <li>Stored Data &amp; Email Recipients: unchanged</li>
+</ul>
+
+<p>Several fixed quotas may also change on May 25th for applications without billing enabled.  Fixed quotas for applications with billing enabled will not be affected.</p>
+
+
+
+      </div><!-- end gc-pagecontent -->
+   </div><!-- end gooey wrapper -->
+
+    </div> <!-- end codesite content -->
+
+<div id="gc-footer" dir="ltr">
+  <div class="text">
+    
+      <div class="notice"><div id="notice" style="text-align: center; border: 1em 0em 1em 0em">
+  Except as otherwise <a
+  href="http://code.google.com/policies.html#restrictions">noted</a>,
+  the content of this page is licensed under the <a rel="license"
+  href="http://creativecommons.org/licenses/by/2.5/">Creative Commons
+  Attribution 2.5 License</a>, and code samples are licensed under the
+  <a rel="license" href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+  2.0 License</a>.
+<!-- <rdf:RDF xmlns="http://web.resource.org/cc/" 
+              xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <Work rdf:about="">
+    <license rdf:resource="http://creativecommons.org/licenses/by/2.5/" />
+  </Work>
+  <License rdf:about="http://creativecommons.org/licenses/by/2.5/">
+    <permits rdf:resource="http://web.resource.org/cc/Reproduction"/>
+    <permits rdf:resource="http://web.resource.org/cc/Distribution"/>
+    <requires rdf:resource="http://web.resource.org/cc/Notice"/>
+    <requires rdf:resource="http://web.resource.org/cc/Attribution"/>
+    <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/>
+  </License>
+</rdf:RDF> -->
+</div>
+Java is a registered trademark of Sun Microsystems, Inc.</div>
+    
+    &copy;2009 Google -
+    <a href="http://code.google.com">Code Home</a> -
+    <a href="http://www.google.com/accounts/TOS">Terms of Service</a> -
+    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+    <a href="http://code.google.com/more">Site Directory</a>
+    <br /> <br />
+    Google Code offered in:
+    <a href="http://code.google.com/intl/en">English</a> -
+    <a href="http://code.google.com/intl/es">Español</a> -
+    <a href="http://code.google.com/intl/ja">日本語</a> -
+    <a href="http://code.google.com/intl/ko">한국어</a> -
+    <a href="http://code.google.com/intl/pt-BR">Português</a> -
+    <a href="http://code.google.com/intl/ru">Pусский</a> -
+    <a href="http://code.google.com/intl/zh-CN">中文(简体)</a> -
+    <a href="http://code.google.com/intl/zh-TW">中文(繁體)</a>
+  </div>
+</div><!-- end gc-footer -->
+
+</div><!-- end gc-containter -->
+
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('ats');</script>
+<script src="../../js/codesite_tail.pack.04102009.js" type="text/javascript"></script>
+
+
+
+
+
+
+  </body>
+</html>
+
+

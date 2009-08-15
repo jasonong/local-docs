@@ -1,0 +1,26 @@
+dl.apireference {
+  padding-bottom: .5em;
+}
+
+dl.apireference dt {
+  font-weight: normal;
+  font-style: none;
+}
+
+dl.apireference .type {
+  font-weight: bold;
+}
+
+dl.apireference .itemname {
+  font-weight: bold;
+  font-family: monospace;
+  font-size: larger;
+}
+
+dl.apireference .argname {
+  font-style: italic;
+}
+
+dl.apireference .argdefault {
+  font-family: monospace;
+}

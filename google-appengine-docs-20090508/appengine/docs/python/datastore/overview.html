@@ -1,0 +1,727 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+
+
+<html>
+  <head>
+    <script type="text/javascript" language="JavaScript">
+    ORIGINAL_PAGE_PATH = "/appengine/docs/python/datastore/overview.html";
+    </script>
+    
+    
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>Datastore Python API Overview - Google App Engine - Google Code</title>
+<script type="text/javascript"><!--
+(function(){function a(){this.t={};this.tick=function(c){this.t[c]=(new Date).getTime()};this.tick("start")}var b=new a;window.jstiming={Timer:a,load:b};if(window.external&&window.external.pageT)window.jstiming.pt=window.external.pageT;})();
+
+var _tocPath_ = '/appengine/docs/_toc.ezt';
+var codesite_token = null;
+//--></script>
+<link href="../../../../css/codesite.pack.04102009.css" type="text/css" rel="stylesheet"></link>
+<script src="../../../../js/codesite_head.pack.04102009.js" type="text/javascript"></script>
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('bhs');</script>
+<link rel="search" type="application/opensearchdescription+xml" title="Google Code" href="http://code.google.com/osd.xml" />
+
+<!--[if IE]><link rel="stylesheet" type="text/css" href="../../../../css/iehacks.css" /><![endif]-->
+
+    <link href="../../../../css/semantic_headers.css" rel="stylesheet" type="text/css" />
+    <link href="../../../css/local_extensions.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="gc-documentation">
+
+    
+    
+    
+</a>
+
+<div id="gb">
+ <span>
+  
+    <a id="lang-dropdown" class="dropdown" href="http://code.google.com" onclick="return false;"><img class="globeicon" src="../../../../images/globe2_small.png"/><span>English</span></a>
+  
+ </span>
+</div>
+
+<div class="gbh" style="left: 0pt;"></div>
+<div class="gbh" style="right: 0pt;"></div>
+
+
+<style type="text/css">
+  #gc-topnav h1 {
+    padding: 0 0 0 6px;
+  }
+</style>
+
+
+<div id="gc-container">
+<a name="top"></a>
+<div id="skipto">
+  <a href="#gc-pagecontent">Skip to page content</a>
+  <a href="#gc-toc">Skip to main navigation</a>
+</div>
+
+<div id="gc-header">
+  <div id="logo"><a href="http://code.google.com">
+  
+  
+     <img src="../../../../images/cleardot.gif" height="1px" width="1px" alt="Google Code Home Page" id="gc-logo-img"/>
+  
+  
+  </a></div>
+  <div id="search">
+    <div id="searchForm" class="searchForm">
+      <form id="cse" action="http://www.google.com/cse" accept-charset="utf-8" class="gsc-search-box" onsubmit="executeGSearch(document.getElementById('gsearchInput').value); return false;">
+      <noscript>
+      <input type="hidden" name="cref" value="http://code.google.com/cse/googlecode-context.xml"/>
+      </noscript>
+        <table class="gsc-search-box" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gsc-input">
+                <input id="gsearchInput" type="text" name="q" maxlength="2048" class="gsc-input" autocomplete="off" title="Google Code Search" style="width:345px"/>
+              </td>
+              <td class="gsc-search-button">
+                <div id="cs-searchresults" onclick="event.cancelBubble = true;"></div>
+                <input title="Search" id="gsearchButton" class="gsc-search-button" name="sa" value="Search" type="submit"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="greytext">e.g. "templates" or "datastore"</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div> <!-- end searchForm -->
+  </div> <!-- end search -->
+</div> <!-- end gc-header -->
+
+
+<div id="codesiteContent">
+
+<a name="gc-topnav-anchor"></a>
+<div id="gc-topnav">
+  <h1>Google App Engine</h1>
+  <ul id="docs" class="gc-topnav-tabs">
+
+    <li id="home_link">
+      <a href="../../../index.html" title="Google App Engine home page">Home</a>
+    </li>
+  
+    <li id="docs_link">
+      <a href="../../index.html" class="selected" title="Official Google App Engine documentation">Docs</a>
+    </li>
+  
+    <li id="faq_link">
+      <a href="../../../kb/index.html" title="Answers to frequently asked questions about Google App Engine">FAQ</a>
+    </li>
+  
+    <li id="articles_link">
+      <a href="../../../articles/index.html" title="Focused articles and tutorials for Google App Engine developers">Articles</a>
+    </li>
+  
+    <li>
+      <a href="http://googleappengine.blogspot.com/" title="Official Google App Engine blog">Blog</a>
+    </li>
+  
+    <li>
+      <a href="../../../community.html" title="Community home for Google App Engine">Community</a>
+    </li>
+  
+    <li>
+      <a href="../../../terms.html" title="Google App Engine terms of service">Terms</a>
+    </li>
+  
+    <li>
+      <a href="../../../downloads.html" title="Download Google App Engine">Download</a>
+    </li>
+  
+
+  </ul>
+</div> <!-- end gc-topnav -->
+
+    <div class="g-section g-tpl-170">
+
+      <div class="g-unit g-first" id="gc-toc">
+        <ul>
+  <li><a href="../../../downloads.html">Downloads</a></li>
+  <li><a href="http://code.google.com/status/appengine">System Status</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/issues/list">Issue Tracker</a></li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Getting Started</h2>
+    <ul>
+      <li><a href="../../whatisgoogleappengine.html">What Is Google App Engine?</a></li>
+      <li><a href="../../java/gettingstarted/index.html">Java</a>
+        <ul>
+              <li><a href="../../java/gettingstarted/introduction.html">Introduction</a></li>
+    <li><a href="../../java/gettingstarted/installing.html">Installing the Java SDK</a></li>
+    <li><a href="../../java/gettingstarted/creating.html">Creating a Project</a></li>
+    <li><a href="../../java/gettingstarted/usingusers.html">Using the Users Service</a></li>
+    <li><a href="../../java/gettingstarted/usingjsps.html">Using JSPs</a></li>
+    <li><a href="../../java/gettingstarted/usingdatastore.html">Using the Datastore with JDO</a></li>
+    <li><a href="../../java/gettingstarted/staticfiles.html">Using Static Files</a></li>
+    <li><a href="../../java/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+      <li><a href="../gettingstarted/index.html">Python</a>
+        <ul>
+            <li><a href="../gettingstarted/introduction.html">Introduction</a></li>
+  <li><a href="../gettingstarted/devenvironment.html">The Development Environment</a></li>
+  <li><a href="../gettingstarted/helloworld.html">Hello, World!</a></li>
+  <li><a href="../gettingstarted/usingwebapp.html">Using the webapp Framework</a></li>
+  <li><a href="../gettingstarted/usingusers.html">Using the Users Service</a></li>
+  <li><a href="../gettingstarted/handlingforms.html">Handling Forms With webapp</a></li>
+  <li><a href="../gettingstarted/usingdatastore.html">Using the Datastore</a></li>
+  <li><a href="../gettingstarted/templates.html">Using Templates</a></li>
+  <li><a href="../gettingstarted/staticfiles.html">Using Static Files</a></li>
+  <li><a href="../gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Java <sup class="new">Early Look</sup></h2>
+    <ul>
+          <li><a href="../../java/overview.html">Overview</a></li>
+    <li><a href="../../java/runtime.html">Servlet Environment</a></li>
+    <li><a href="../../java/datastore/index.html">Storing Data</a>
+      <ul>
+            <li><a href="../../java/datastore/overview.html">Overview</a></li>
+    <li><a href="../../java/datastore/usingjdo.html">Using JDO</a></li>
+    <li><a href="../../java/datastore/dataclasses.html">Defining Data Classes</a></li>
+    <li><a href="../../java/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+    <li><a href="../../java/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+    <li><a href="../../java/datastore/transactions.html">Transactions</a></li>
+    <li><a href="../../java/datastore/relationships.html">Relationships</a></li>
+    <li><a href="../../java/datastore/usingjpa.html">Using JPA</a></li>
+    <li><a href="../../java/javadoc/com/google/appengine/api/datastore/package-summary.html">Low-level API</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../../java/apis.html">Services</a>
+      <ul>
+        <li><a href="../../java/memcache/index.html">Memcache</a>
+          <ul>
+                <li><a href="../../java/memcache/overview.html">Overview</a></li>
+    <li><a href="../../java/memcache/usingjcache.html">Using JCache</a></li>
+    <li><a href="../../java/javadoc/com/google/appengine/api/memcache/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../../java/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                <li><a href="../../java/urlfetch/overview.html">Overview</a></li>
+    <li><a href="../../java/urlfetch/usingjavanet.html">Using java.net</a></li>
+    <li><a href="../../java/javadoc/com/google/appengine/api/urlfetch/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../../java/mail/index.html">Mail</a>
+          <ul>
+                <li><a href="../../java/mail/overview.html">Overview</a></li>
+    <li><a href="../../java/mail/usingjavamail.html">Using JavaMail</a></li>
+    <li><a href="../../java/javadoc/com/google/appengine/api/mail/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../../java/images/index.html">Images</a>
+          <ul>
+                <li><a href="../../java/images/overview.html">Overview</a></li>
+    <li><a href="../../java/javadoc/com/google/appengine/api/images/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+        <li><a href="../../java/users/index.html">Google Accounts</a>
+          <ul>
+                <li><a href="../../java/users/overview.html">Overview</a></li>
+    <li><a href="../../java/javadoc/com/google/appengine/api/users/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="../../java/javadoc/index.html">Javadoc Reference</a></li>
+    <li><a href="../../java/jrewhitelist.html">JRE Class White List</a></li>
+    <li><a href="../../java/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="../../java/config/webxml.html">Deployment Descriptor</a></li>
+    <li><a href="../../java/config/appconfig.html">App Config</a></li>
+    <li><a href="../../java/config/indexconfig.html">Index Config</a></li>
+    <li><a href="../../java/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../../java/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="../../java/tools/devserver.html">Development Server</a></li>
+    <li><a href="../../java/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="../../java/tools/eclipse.html">Google Plugin for Eclipse</a></li>
+    <li><a href="../../java/tools/ant.html">Using Apache Ant</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../../java/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="../../java/howto/unittesting.html">Unit Testing</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Python</h2>
+    <ul>
+          <li><a href="../overview.html">Overview</a></li>
+    <li><a href="../runtime.html">CGI Environment</a></li>
+    <li><a href="index.html">Storing Data</a>
+      <ul>
+             <li><a href="overview.html">Overview</a></li>
+     <li><a href="entitiesandmodels.html">Entities and Models</a></li>
+     <li><a href="creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+     <li><a href="keysandentitygroups.html">Keys and Entity Groups</a></li>
+     <li><a href="queriesandindexes.html">Queries and Indexes</a></li>
+     <li><a href="transactions.html">Transactions</a></li>
+     <li><a href="typesandpropertyclasses.html">Types and Property Classes</a></li>
+     <li><a href="gqlreference.html">GQL Reference</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="modelclass.html">Model</a></li>
+         <li><a href="expandoclass.html">Expando</a></li>
+         <li><a href="polymodelclass.html">PolyModel</a></li>
+         <li><a href="propertyclass.html">Property</a></li>
+         <li><a href="queryclass.html">Query</a></li>
+         <li><a href="gqlqueryclass.html">GqlQuery</a></li>
+         <li><a href="keyclass.html">Key</a></li>
+         <li><a href="functions.html">Functions</a></li>
+         <li><a href="exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="../apis.html">Services</a>
+      <ul>
+        <li><a href="../memcache/index.html">Memcache</a>
+          <ul>
+                 <li><a href="../memcache/overview.html">Overview</a></li>
+      <li><a href="../memcache/usingmemcache.html">Using Memcache</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../memcache/clientclass.html">Client</a></li>
+         <li><a href="../memcache/functions.html">Functions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../urlfetch/index.html">URL Fetch</a>
+          <ul>
+                 <li><a href="../urlfetch/overview.html">Overview</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../urlfetch/fetchfunction.html">The fetch Function</a></li>
+         <li><a href="../urlfetch/responseobjects.html">Response Objects</a></li>
+         <li><a href="../urlfetch/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../mail/index.html">Mail</a>
+          <ul>
+                 <li><a href="../mail/overview.html">Overview</a></li>
+     <li><a href="../mail/sendingmail.html">Sending Mail</a></li>
+     <li><a href="../mail/attachments.html">Attachments</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../mail/emailmessageclass.html">EmailMessage</a></li>
+         <li><a href="../mail/emailmessagefields.html">Message Fields</a></li>
+         <li><a href="../mail/functions.html">Functions</a></li>
+         <li><a href="../mail/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../images/index.html">Images</a>
+          <ul>
+                 <li><a href="../images/overview.html">Overview</a></li>
+     <li><a href="../images/installingPIL.html">Installing PIL</a></li>
+     <li><a href="../images/usingimages.html">Using the Images API</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../images/imageclass.html">Image</a></li>
+         <li><a href="../images/functions.html">Functions</a></li>
+         <li><a href="../images/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="../users/index.html">Google Accounts</a>
+          <ul>
+                 <li><a href="../users/overview.html">Overview</a></li>
+     <li><a href="../users/userobjects.html">User Objects</a></li>
+     <li><a href="../users/loginurls.html">Login URLs</a></li>
+     <li><a href="../users/adminusers.html">Admin Users</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../users/userclass.html">User</a></li>
+         <li><a href="../users/functions.html">Functions</a></li>
+         <li><a href="../users/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="../config/index.html">Configuration</a>
+      <ul>
+            <li><a href="../config/appconfig.html">App Config</a></li>
+    <li><a href="../config/indexconfig.html">Index Config</a></li>
+    <li><a href="../config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../tools/index.html">Tools</a>
+      <ul>
+            <li><a href="../tools/devserver.html">Development Server</a></li>
+    <li><a href="../tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="../tools/uploadingdata.html">Uploading Data</a></li>
+    <li><a href="../tools/webapp/index.html">webapp Framework</a>
+      <ul>
+             <li><a href="../tools/webapp/overview.html">Overview</a></li>
+     <li><a href="../tools/webapp/running.html">Running the Application</a></li>
+     <li><a href="../tools/webapp/requesthandlers.html">Request Handlers</a></li>
+     <li><a href="../tools/webapp/requestdata.html">Request Data</a></li>
+     <li><a href="../tools/webapp/buildingtheresponse.html">Building the Response</a></li>
+     <li><a href="../tools/webapp/redirects.html">Redirects, Headers and Status Codes</a></li>
+     
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="../tools/webapp/requestclass.html">Request</a></li>
+         <li><a href="../tools/webapp/responseclass.html">Response</a></li>
+         <li><a href="../tools/webapp/requesthandlerclass.html">RequestHandler</a></li>
+         <li><a href="../tools/webapp/wsgiapplicationclass.html">WSGIApplication</a></li>
+         <li><a href="../tools/webapp/utilmodule.html">Utility Functions</a></li>
+         
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="../tools/libraries.html">Third-party Libraries</a></li>
+
+      </ul>
+    </li>
+    <li><a href="../howto/index.html">How-To</a>
+      <ul>
+              <li><a href="../howto/usinggdataservices.html">Google Data Services</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Managing Your App</h2>
+    <ul>
+      <li><a href="../../theadminconsole.html">The Admin Console</a></li>
+      <li><a href="../../quotas.html">Quotas</a></li>
+      <li><a href="../../billing.html">Billing</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Resources</h2>
+    <ul>
+      <li><a href="../../../kb/index.html">FAQ</a></li>
+      <li><a href="../../../articles/index.html">Articles</a></li>
+      <li><a href="http://appengine-cookbook.appspot.com/">Cookbook</a></li>
+      <li><a href="http://appgallery.appspot.com/">App Gallery</a></li>
+      <li><a href="http://code.google.com/p/googleappengine/">SDK Code</a></li>
+      <li><a href="http://code.google.com/p/google-app-engine-samples/">Sample Apps Code</a></li>
+      <li><a href="../../../community.html">Discussion Groups</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><a href="../../roadmap.html">Product Roadmap</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/wiki/SdkReleaseNotes">Release Notes</a></li>
+  <li><a href="../../revision_history.html">Revision History</a></li>
+</ul>
+
+        <a class="hidden" href="#gc-topnav-anchor">More Google App Engine resource links</a>
+      </div>
+
+      <div class="g-unit" id="gc-pagecontent">
+        <h1 class="page_title">Datastore Python API Overview</h1>
+
+
+
+
+
+
+
+
+
+<p>The Google App Engine datastore provides robust scalable data storage for your web application.  The datastore is designed with web applications in mind, with an emphasis on read and query performance.  It stores data entities with properties, organized by application-defined kinds.  It can perform queries over entities of the same kind, with filters and sort orders on property values and keys.  All queries are pre-indexed for fast results over very large data sets.  The datastore supports transactional updates, using entity groupings defined by the application as the unit of transactionality in the distributed data network.</p>
+
+<ul>
+  <li><a href="#Introducing_the_Datastore">Introducing the Datastore</a></li>
+  <li><a href="#Data_Modeling_With_Python">Data Modeling With Python</a></li>
+  <li><a href="#Entities_and_Properties">Entities and Properties</a></li>
+  <li><a href="#Queries_and_Indexes">Queries and Indexes</a></li>
+  <li><a href="#Transactions_and_Entity_Groups">Transactions and Entity Groups</a></li>
+  <li><a href="#Quotas_and_Limits">Quotas and Limits</a></li>
+</ul>
+
+
+<h2 id="Introducing_the_Datastore">Introducing the Datastore</h2>
+
+<p>The App Engine datastore stores and performs queries over data objects, known as <i>entities</i>.  An entity has one or more <i>properties</i>, named values of one of several supported data types.  A property can be a reference to another entity.</p>
+
+<p>The datastore can execute multiple operations in a single transaction, and roll back the entire transaction if any of the operations fail.  This is especially useful for distributed web applications, where multiple users may be accessing or manipulating the same data object at the same time.</p>
+
+<p>Unlike traditional databases, the datastore uses a distributed architecture to manage scaling to very large data sets.  An App Engine application can optimize how data is distributed by describing relationships between data objects, and by defining indexes for queries.</p>
+
+<p>The App Engine datastore is strongly <a href="http://en.wikipedia.org/wiki/Consistency_model">consistent</a>, but it's not a relational database.  While the datastore interface has many of the same features of traditional databases, the datastore's unique characteristics imply a different way of designing and managing data to take advantage of the ability to scale automatically.</p>
+
+
+
+<h2 id="Data_Modeling_With_Python">Data Modeling With Python</h2>
+
+<p>Datastore entities are <i>schemaless</i>: Two entities of the same kind are not obligated to have the same properties, or use the same value types for the same properties.  The application is responsible for ensuring that entities conform to a schema when needed.  For this purpose, the Python SDK includes a rich library of data modeling features that make enforcing a schema easy.</p>
+
+<p>In the Python API, a model describes a kind of entity, including the types and configuration for its properties.  An application defines a model using Python classes, with class attributes describing the properties.  Entities of a kind are represented by instances of the corresponding model class, with instance attributes representing the property values.  An entity can be created by calling the constructor of the class, then stored by calling the <code>put()</code> method.</p>
+
+<pre class="prettyprint">
+import datetime
+from google.appengine.ext import db
+from google.appengine.api import users
+
+class Employee(db.Model):
+  name = db.StringProperty(required=True)
+  role = db.StringProperty(required=True, choices=set(["executive", "manager", "producer"]))
+  hire_date = db.DateProperty()
+  new_hire_training_completed = db.BooleanProperty()
+  account = db.UserProperty()
+
+e = Employee(name="",
+             role="manager",
+             account=users.get_current_user())
+e.hire_date = datetime.datetime.now()
+e.put()
+</pre>
+
+<p>The datastore API provides two interfaces for queries: a query object interface, and a SQL-like query language called GQL.  A query returns entities in the form of instances of the model classes that can be modified and put back into the datastore.</p>
+
+<pre class="prettyprint">
+training_registration_list = [users.User("Alfred.Smith@example.com"),
+                              users.User("jharrison@example.com"),
+                              users.User("budnelson@example.com")]
+employees_trained = db.GqlQuery("SELECT * FROM Employee WHERE account IN :1",
+                                training_registration_list)
+for e in employees_trained:
+    e.new_hire_training_completed = True
+    db.put(e)
+</pre>
+
+
+
+
+<h2 id="Entities_and_Properties">Entities and Properties</h2>
+
+<p>A data object in the App Engine datastore is known as an <i>entity</i>.  An entity has one or more <i>properties</i>, named values of one of several data types, including integers, floating point values, strings, dates, binary data, and more.</p>
+
+<p>Each entity also has a <i>key</i> that uniquely identifies the entity.  The simplest key has a <i>kind</i> and a unique numeric ID provided by the datastore.  The ID can also be a string provided by the application.</p>
+
+<p>An application can fetch an entity from the datastore by using its key, or by performing a query that matches the entity's properties.  A query can return zero or more entities, and can return the results sorted by property values.  A query can also limit the number of results returned by the datastore to conserve memory and run time.</p>
+
+<p>Unlike relational databases, the App Engine datastore does not require that all entities of a given kind have the same properties.  The application can specify and enforce its data model using libraries included with the SDK, or its own code.</p>
+
+<p>A property can have one or more values.  A property with multiple values can have values of mixed types.  A query on a property with multiple values tests whether any of the values meets the query criteria.  This makes such properties useful for testing for membership.</p>
+
+
+<h2 id="Queries_and_Indexes">Queries and Indexes</h2>
+
+<p>An App Engine datastore query operates on every entity of a given kind (a data class).  It specifies zero or more filters on entity property values and keys, and zero or more sort orders.  An entity is returned as a result for a query if the entity has at least one value (possibly null) for every property mentioned in the query's filters and sort orders, and all of the filter criteria are met by the property values.</p>
+
+<p>Every datastore query uses an index, a table that contains the results for the query in the desired order.  An App Engine application defines its indexes in a configuration file.  The development web server automatically adds suggestions to this file as it encounters queries that do not yet have indexes configured.  You can tune indexes manually by editing the file before uploading the application.  As the application makes changes to datastore entities, the datastore updates the indexes with the correct results.  When the application executes a query, the datastore fetches the results directly from the corresponding index.</p>
+
+<p>This mechanism supports a wide range of queries and is suitable for most applications.  However, it does not support some kinds of queries you may be used to from other database technologies.</p>
+
+
+<h2 id="Transactions_and_Entity_Groups">Transactions and Entity Groups</h2>
+
+<p>With the App Engine datastore, every attempt to create, update or delete an entity happens in a <i>transaction</i>.  A transaction ensures that every change made to the entity is saved to the datastore, or, in the case of failure, none of the changes are made.  This ensures consistency of data within an entity.</p>
+
+<p>You can perform multiple actions on an entity within a single transaction using the transaction API.  For example, say you want to increment a counter field in an object.  To do so, you need to read the value of the counter, calculate the new value, then store it.  Without a transaction, it is possible for another process to increment the counter between the time you read the value and the time you update the value, causing your app to overwrite the updated value.  Doing the read, calculation and write in a single transaction ensures that no other process interferes with the increment.</p>
+
+<p>You can make changes to multiple entities within a single transaction.  To support this, App Engine needs to know in advance which entities will be updated together, so it knows to store them in a way that supports transactions.  You must declare that an entity belongs to the same <i>entity group</i> as another entity when you create the entity.  All entities fetched, created, updated or deleted in a transaction must be in the same entity group.</p>
+
+<p>Entity groups are defined by a hierarchy of relationships between entities.  To create an entity in a group, you declare that the entity is a <i>child</i> of another entity already in the group.  The other entity is the <i>parent</i>.  An entity created without a parent is a <i>root entity</i>.  A root entity without any children exists in an entity group by itself.  Each entity has a path of parent-child relationships from a root entity to itself (the shortest path being no parent).  This path is an essential part of the entity's complete key.  A complete key can be represented by the kind and ID or key name of each entity in the path.</p>
+
+<p>The datastore uses <i>optimistic concurrency</i> to manage transactions.  While one app instance is applying changes to entities in an entity group, all other attempts to update any entity in the group fail instantly.  The app can try the transaction again to apply it to the updated data.</p>
+
+
+<h2 id="Quotas_and_Limits">Quotas and Limits</h2>
+
+<p>Each call to the datastore API counts toward the <b>Datastore API Calls</b> quota.  Note that some library calls result in multiple calls to the underlying datastore API.</p>
+
+<p>Data sent to the datastore by the app counts toward the <b>Data Sent to (Datastore) API</b> quota.  Data received by the app from the datastore counts toward the <b>Data Received from (Datastore) API</b> quota.</p>
+
+<p>The total amount of data currently stored in the datastore for the app cannot exceed the <b>Stored Data (adjustable)</b> quota.  This includes entity properties and keys, but does <i>not</i> include indexes.</p>
+
+<p>The amount of CPU time consumed by datastore operations applies to the following quotas:</p>
+
+<ul>
+  <li><b>CPU Time (adjustable)</b></li>
+  <li><b>Datastore CPU Time</b></li>
+</ul>
+
+<p>For more information on quotas, see <a href="../../quotas.html">Quotas</a>, and the "Quota Details" section of <a href="../../theadminconsole.html">the Admin Console</a>.</p>
+
+<p>In addition to quotas, the following limits apply to the use of the datastore:</p>
+
+<table>
+  <tr>
+    <th>Limit</th>
+    <th>Amount</th>
+  </tr>
+  <tr>
+    <td>maximum entity size</td>
+    <td>1 megabyte</td>
+  </tr>
+  <tr>
+    <td>maximum number of values in an index for an entity <super>(1)</super></td>
+    <td>1,000 values</td>
+  </tr>
+  <tr>
+    <td>maximum number of entities in a batch put or batch delete</td>
+    <td>500 entities</td>
+  </tr>
+  <tr>
+    <td>maximum number of entities in a batch get</td>
+    <td>1,000 entities</td>
+  </tr>
+  <tr>
+    <td>maximum results offset for a query</td>
+    <td>1,000</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <ol>
+        <li>An entity uses one value in an index for every column &times; every row that refers to the entity, in all indexes.  The number of indexes values for an entity can grow large if an indexed property has multiple values, requiring multiple rows with repeated values in the table.</li>
+      </ol>
+    </td>
+  </tr>
+</table>
+
+
+
+      </div><!-- end gc-pagecontent -->
+   </div><!-- end gooey wrapper -->
+
+    </div> <!-- end codesite content -->
+
+<div id="gc-footer" dir="ltr">
+  <div class="text">
+    
+      <div class="notice"><div id="notice" style="text-align: center; border: 1em 0em 1em 0em">
+  Except as otherwise <a
+  href="http://code.google.com/policies.html#restrictions">noted</a>,
+  the content of this page is licensed under the <a rel="license"
+  href="http://creativecommons.org/licenses/by/2.5/">Creative Commons
+  Attribution 2.5 License</a>, and code samples are licensed under the
+  <a rel="license" href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+  2.0 License</a>.
+<!-- <rdf:RDF xmlns="http://web.resource.org/cc/" 
+              xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <Work rdf:about="">
+    <license rdf:resource="http://creativecommons.org/licenses/by/2.5/" />
+  </Work>
+  <License rdf:about="http://creativecommons.org/licenses/by/2.5/">
+    <permits rdf:resource="http://web.resource.org/cc/Reproduction"/>
+    <permits rdf:resource="http://web.resource.org/cc/Distribution"/>
+    <requires rdf:resource="http://web.resource.org/cc/Notice"/>
+    <requires rdf:resource="http://web.resource.org/cc/Attribution"/>
+    <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/>
+  </License>
+</rdf:RDF> -->
+</div>
+Java is a registered trademark of Sun Microsystems, Inc.</div>
+    
+    &copy;2009 Google -
+    <a href="http://code.google.com">Code Home</a> -
+    <a href="http://www.google.com/accounts/TOS">Terms of Service</a> -
+    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+    <a href="http://code.google.com/more">Site Directory</a>
+    <br /> <br />
+    Google Code offered in:
+    <a href="http://code.google.com/intl/en">English</a> -
+    <a href="http://code.google.com/intl/es">Español</a> -
+    <a href="http://code.google.com/intl/ja">日本語</a> -
+    <a href="http://code.google.com/intl/ko">한국어</a> -
+    <a href="http://code.google.com/intl/pt-BR">Português</a> -
+    <a href="http://code.google.com/intl/ru">Pусский</a> -
+    <a href="http://code.google.com/intl/zh-CN">中文(简体)</a> -
+    <a href="http://code.google.com/intl/zh-TW">中文(繁體)</a>
+  </div>
+</div><!-- end gc-footer -->
+
+</div><!-- end gc-containter -->
+
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('ats');</script>
+<script src="../../../../js/codesite_tail.pack.04102009.js" type="text/javascript"></script>
+
+
+
+
+
+
+  </body>
+</html>
+
+

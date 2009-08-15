@@ -1,0 +1,925 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+
+
+<html>
+  <head>
+    <script type="text/javascript" language="JavaScript">
+    ORIGINAL_PAGE_PATH = "/appengine/docs/revision_history.html";
+    </script>
+    
+    
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<title>Revision History - Google App Engine - Google Code</title>
+<script type="text/javascript"><!--
+(function(){function a(){this.t={};this.tick=function(c){this.t[c]=(new Date).getTime()};this.tick("start")}var b=new a;window.jstiming={Timer:a,load:b};if(window.external&&window.external.pageT)window.jstiming.pt=window.external.pageT;})();
+
+var _tocPath_ = '/appengine/docs/_toc.ezt';
+var codesite_token = null;
+//--></script>
+<link href="../../css/codesite.pack.04102009.css" type="text/css" rel="stylesheet"></link>
+<script src="../../js/codesite_head.pack.04102009.js" type="text/javascript"></script>
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('bhs');</script>
+<link rel="search" type="application/opensearchdescription+xml" title="Google Code" href="http://code.google.com/osd.xml" />
+
+<!--[if IE]><link rel="stylesheet" type="text/css" href="../../css/iehacks.css" /><![endif]-->
+
+    <link href="../../css/semantic_headers.css" rel="stylesheet" type="text/css" />
+    <link href="../css/local_extensions.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body class="gc-documentation">
+
+    
+    
+    
+</a>
+
+<div id="gb">
+ <span>
+  
+    <a id="lang-dropdown" class="dropdown" href="http://code.google.com" onclick="return false;"><img class="globeicon" src="../../images/globe2_small.png"/><span>English</span></a>
+  
+ </span>
+</div>
+
+<div class="gbh" style="left: 0pt;"></div>
+<div class="gbh" style="right: 0pt;"></div>
+
+
+<style type="text/css">
+  #gc-topnav h1 {
+    padding: 0 0 0 6px;
+  }
+</style>
+
+
+<div id="gc-container">
+<a name="top"></a>
+<div id="skipto">
+  <a href="#gc-pagecontent">Skip to page content</a>
+  <a href="#gc-toc">Skip to main navigation</a>
+</div>
+
+<div id="gc-header">
+  <div id="logo"><a href="http://code.google.com">
+  
+  
+     <img src="../../images/cleardot.gif" height="1px" width="1px" alt="Google Code Home Page" id="gc-logo-img"/>
+  
+  
+  </a></div>
+  <div id="search">
+    <div id="searchForm" class="searchForm">
+      <form id="cse" action="http://www.google.com/cse" accept-charset="utf-8" class="gsc-search-box" onsubmit="executeGSearch(document.getElementById('gsearchInput').value); return false;">
+      <noscript>
+      <input type="hidden" name="cref" value="http://code.google.com/cse/googlecode-context.xml"/>
+      </noscript>
+        <table class="gsc-search-box" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gsc-input">
+                <input id="gsearchInput" type="text" name="q" maxlength="2048" class="gsc-input" autocomplete="off" title="Google Code Search" style="width:345px"/>
+              </td>
+              <td class="gsc-search-button">
+                <div id="cs-searchresults" onclick="event.cancelBubble = true;"></div>
+                <input title="Search" id="gsearchButton" class="gsc-search-button" name="sa" value="Search" type="submit"/>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" class="greytext">e.g. "templates" or "datastore"</td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div> <!-- end searchForm -->
+  </div> <!-- end search -->
+</div> <!-- end gc-header -->
+
+
+<div id="codesiteContent">
+
+<a name="gc-topnav-anchor"></a>
+<div id="gc-topnav">
+  <h1>Google App Engine</h1>
+  <ul id="docs" class="gc-topnav-tabs">
+
+    <li id="home_link">
+      <a href="../index.html" title="Google App Engine home page">Home</a>
+    </li>
+  
+    <li id="docs_link">
+      <a href="index.html" class="selected" title="Official Google App Engine documentation">Docs</a>
+    </li>
+  
+    <li id="faq_link">
+      <a href="../kb/index.html" title="Answers to frequently asked questions about Google App Engine">FAQ</a>
+    </li>
+  
+    <li id="articles_link">
+      <a href="../articles/index.html" title="Focused articles and tutorials for Google App Engine developers">Articles</a>
+    </li>
+  
+    <li>
+      <a href="http://googleappengine.blogspot.com/" title="Official Google App Engine blog">Blog</a>
+    </li>
+  
+    <li>
+      <a href="../community.html" title="Community home for Google App Engine">Community</a>
+    </li>
+  
+    <li>
+      <a href="../terms.html" title="Google App Engine terms of service">Terms</a>
+    </li>
+  
+    <li>
+      <a href="../downloads.html" title="Download Google App Engine">Download</a>
+    </li>
+  
+
+  </ul>
+</div> <!-- end gc-topnav -->
+
+    <div class="g-section g-tpl-170">
+
+      <div class="g-unit g-first" id="gc-toc">
+        <ul>
+  <li><a href="../downloads.html">Downloads</a></li>
+  <li><a href="http://code.google.com/status/appengine">System Status</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/issues/list">Issue Tracker</a></li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Getting Started</h2>
+    <ul>
+      <li><a href="whatisgoogleappengine.html">What Is Google App Engine?</a></li>
+      <li><a href="java/gettingstarted/index.html">Java</a>
+        <ul>
+              <li><a href="java/gettingstarted/introduction.html">Introduction</a></li>
+    <li><a href="java/gettingstarted/installing.html">Installing the Java SDK</a></li>
+    <li><a href="java/gettingstarted/creating.html">Creating a Project</a></li>
+    <li><a href="java/gettingstarted/usingusers.html">Using the Users Service</a></li>
+    <li><a href="java/gettingstarted/usingjsps.html">Using JSPs</a></li>
+    <li><a href="java/gettingstarted/usingdatastore.html">Using the Datastore with JDO</a></li>
+    <li><a href="java/gettingstarted/staticfiles.html">Using Static Files</a></li>
+    <li><a href="java/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+      <li><a href="python/gettingstarted/index.html">Python</a>
+        <ul>
+            <li><a href="python/gettingstarted/introduction.html">Introduction</a></li>
+  <li><a href="python/gettingstarted/devenvironment.html">The Development Environment</a></li>
+  <li><a href="python/gettingstarted/helloworld.html">Hello, World!</a></li>
+  <li><a href="python/gettingstarted/usingwebapp.html">Using the webapp Framework</a></li>
+  <li><a href="python/gettingstarted/usingusers.html">Using the Users Service</a></li>
+  <li><a href="python/gettingstarted/handlingforms.html">Handling Forms With webapp</a></li>
+  <li><a href="python/gettingstarted/usingdatastore.html">Using the Datastore</a></li>
+  <li><a href="python/gettingstarted/templates.html">Using Templates</a></li>
+  <li><a href="python/gettingstarted/staticfiles.html">Using Static Files</a></li>
+  <li><a href="python/gettingstarted/uploading.html">Uploading Your Application</a></li>
+
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Java <sup class="new">Early Look</sup></h2>
+    <ul>
+          <li><a href="java/overview.html">Overview</a></li>
+    <li><a href="java/runtime.html">Servlet Environment</a></li>
+    <li><a href="java/datastore/index.html">Storing Data</a>
+      <ul>
+            <li><a href="java/datastore/overview.html">Overview</a></li>
+    <li><a href="java/datastore/usingjdo.html">Using JDO</a></li>
+    <li><a href="java/datastore/dataclasses.html">Defining Data Classes</a></li>
+    <li><a href="java/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+    <li><a href="java/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+    <li><a href="java/datastore/transactions.html">Transactions</a></li>
+    <li><a href="java/datastore/relationships.html">Relationships</a></li>
+    <li><a href="java/datastore/usingjpa.html">Using JPA</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/datastore/package-summary.html">Low-level API</a></li>
+
+      </ul>
+    </li>
+    <li><a href="java/apis.html">Services</a>
+      <ul>
+        <li><a href="java/memcache/index.html">Memcache</a>
+          <ul>
+                <li><a href="java/memcache/overview.html">Overview</a></li>
+    <li><a href="java/memcache/usingjcache.html">Using JCache</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/memcache/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                <li><a href="java/urlfetch/overview.html">Overview</a></li>
+    <li><a href="java/urlfetch/usingjavanet.html">Using java.net</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/urlfetch/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/mail/index.html">Mail</a>
+          <ul>
+                <li><a href="java/mail/overview.html">Overview</a></li>
+    <li><a href="java/mail/usingjavamail.html">Using JavaMail</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/mail/package-summary.html">Low-level API</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/images/index.html">Images</a>
+          <ul>
+                <li><a href="java/images/overview.html">Overview</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/images/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+        <li><a href="java/users/index.html">Google Accounts</a>
+          <ul>
+                <li><a href="java/users/overview.html">Overview</a></li>
+    <li><a href="java/javadoc/com/google/appengine/api/users/package-summary.html">API Reference</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="java/javadoc/index.html">Javadoc Reference</a></li>
+    <li><a href="java/jrewhitelist.html">JRE Class White List</a></li>
+    <li><a href="java/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="java/config/webxml.html">Deployment Descriptor</a></li>
+    <li><a href="java/config/appconfig.html">App Config</a></li>
+    <li><a href="java/config/indexconfig.html">Index Config</a></li>
+    <li><a href="java/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="java/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="java/tools/devserver.html">Development Server</a></li>
+    <li><a href="java/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="java/tools/eclipse.html">Google Plugin for Eclipse</a></li>
+    <li><a href="java/tools/ant.html">Using Apache Ant</a></li>
+
+      </ul>
+    </li>
+    <li><a href="java/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="java/howto/unittesting.html">Unit Testing</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Python</h2>
+    <ul>
+          <li><a href="python/overview.html">Overview</a></li>
+    <li><a href="python/runtime.html">CGI Environment</a></li>
+    <li><a href="python/datastore/index.html">Storing Data</a>
+      <ul>
+             <li><a href="python/datastore/overview.html">Overview</a></li>
+     <li><a href="python/datastore/entitiesandmodels.html">Entities and Models</a></li>
+     <li><a href="python/datastore/creatinggettinganddeletingdata.html">Creating, Getting and Deleting Data</a></li>
+     <li><a href="python/datastore/keysandentitygroups.html">Keys and Entity Groups</a></li>
+     <li><a href="python/datastore/queriesandindexes.html">Queries and Indexes</a></li>
+     <li><a href="python/datastore/transactions.html">Transactions</a></li>
+     <li><a href="python/datastore/typesandpropertyclasses.html">Types and Property Classes</a></li>
+     <li><a href="python/datastore/gqlreference.html">GQL Reference</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/datastore/modelclass.html">Model</a></li>
+         <li><a href="python/datastore/expandoclass.html">Expando</a></li>
+         <li><a href="python/datastore/polymodelclass.html">PolyModel</a></li>
+         <li><a href="python/datastore/propertyclass.html">Property</a></li>
+         <li><a href="python/datastore/queryclass.html">Query</a></li>
+         <li><a href="python/datastore/gqlqueryclass.html">GqlQuery</a></li>
+         <li><a href="python/datastore/keyclass.html">Key</a></li>
+         <li><a href="python/datastore/functions.html">Functions</a></li>
+         <li><a href="python/datastore/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="python/apis.html">Services</a>
+      <ul>
+        <li><a href="python/memcache/index.html">Memcache</a>
+          <ul>
+                 <li><a href="python/memcache/overview.html">Overview</a></li>
+      <li><a href="python/memcache/usingmemcache.html">Using Memcache</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/memcache/clientclass.html">Client</a></li>
+         <li><a href="python/memcache/functions.html">Functions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/urlfetch/index.html">URL Fetch</a>
+          <ul>
+                 <li><a href="python/urlfetch/overview.html">Overview</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/urlfetch/fetchfunction.html">The fetch Function</a></li>
+         <li><a href="python/urlfetch/responseobjects.html">Response Objects</a></li>
+         <li><a href="python/urlfetch/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/mail/index.html">Mail</a>
+          <ul>
+                 <li><a href="python/mail/overview.html">Overview</a></li>
+     <li><a href="python/mail/sendingmail.html">Sending Mail</a></li>
+     <li><a href="python/mail/attachments.html">Attachments</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/mail/emailmessageclass.html">EmailMessage</a></li>
+         <li><a href="python/mail/emailmessagefields.html">Message Fields</a></li>
+         <li><a href="python/mail/functions.html">Functions</a></li>
+         <li><a href="python/mail/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/images/index.html">Images</a>
+          <ul>
+                 <li><a href="python/images/overview.html">Overview</a></li>
+     <li><a href="python/images/installingPIL.html">Installing PIL</a></li>
+     <li><a href="python/images/usingimages.html">Using the Images API</a></li>
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/images/imageclass.html">Image</a></li>
+         <li><a href="python/images/functions.html">Functions</a></li>
+         <li><a href="python/images/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+        <li><a href="python/users/index.html">Google Accounts</a>
+          <ul>
+                 <li><a href="python/users/overview.html">Overview</a></li>
+     <li><a href="python/users/userobjects.html">User Objects</a></li>
+     <li><a href="python/users/loginurls.html">Login URLs</a></li>
+     <li><a href="python/users/adminusers.html">Admin Users</a></li>
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/users/userclass.html">User</a></li>
+         <li><a href="python/users/functions.html">Functions</a></li>
+         <li><a href="python/users/exceptions.html">Exceptions</a></li>
+       </ul>
+     </li>
+
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="python/config/index.html">Configuration</a>
+      <ul>
+            <li><a href="python/config/appconfig.html">App Config</a></li>
+    <li><a href="python/config/indexconfig.html">Index Config</a></li>
+    <li><a href="python/config/cron.html">Scheduled Tasks</a></li>
+
+      </ul>
+    </li>
+    <li><a href="python/tools/index.html">Tools</a>
+      <ul>
+            <li><a href="python/tools/devserver.html">Development Server</a></li>
+    <li><a href="python/tools/uploadinganapp.html">Uploading and Managing</a></li>
+    <li><a href="python/tools/uploadingdata.html">Uploading Data</a></li>
+    <li><a href="python/tools/webapp/index.html">webapp Framework</a>
+      <ul>
+             <li><a href="python/tools/webapp/overview.html">Overview</a></li>
+     <li><a href="python/tools/webapp/running.html">Running the Application</a></li>
+     <li><a href="python/tools/webapp/requesthandlers.html">Request Handlers</a></li>
+     <li><a href="python/tools/webapp/requestdata.html">Request Data</a></li>
+     <li><a href="python/tools/webapp/buildingtheresponse.html">Building the Response</a></li>
+     <li><a href="python/tools/webapp/redirects.html">Redirects, Headers and Status Codes</a></li>
+     
+
+     <li><span class="tlw-title tlw-expanded">Reference</span>
+       <ul>
+         <li><a href="python/tools/webapp/requestclass.html">Request</a></li>
+         <li><a href="python/tools/webapp/responseclass.html">Response</a></li>
+         <li><a href="python/tools/webapp/requesthandlerclass.html">RequestHandler</a></li>
+         <li><a href="python/tools/webapp/wsgiapplicationclass.html">WSGIApplication</a></li>
+         <li><a href="python/tools/webapp/utilmodule.html">Utility Functions</a></li>
+         
+       </ul>
+     </li>
+
+      </ul>
+    </li>
+    <li><a href="python/tools/libraries.html">Third-party Libraries</a></li>
+
+      </ul>
+    </li>
+    <li><a href="python/howto/index.html">How-To</a>
+      <ul>
+              <li><a href="python/howto/usinggdataservices.html">Google Data Services</a></li>
+
+      </ul>
+    </li>
+
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Managing Your App</h2>
+    <ul>
+      <li><a href="theadminconsole.html">The Admin Console</a></li>
+      <li><a href="quotas.html">Quotas</a></li>
+      <li><a href="billing.html">Billing</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><h2>Resources</h2>
+    <ul>
+      <li><a href="../kb/index.html">FAQ</a></li>
+      <li><a href="../articles/index.html">Articles</a></li>
+      <li><a href="http://appengine-cookbook.appspot.com/">Cookbook</a></li>
+      <li><a href="http://appgallery.appspot.com/">App Gallery</a></li>
+      <li><a href="http://code.google.com/p/googleappengine/">SDK Code</a></li>
+      <li><a href="http://code.google.com/p/google-app-engine-samples/">Sample Apps Code</a></li>
+      <li><a href="../community.html">Discussion Groups</a></li>
+    </ul>
+  </li>
+</ul>
+<div class="line"></div>
+<ul>
+  <li><a href="roadmap.html">Product Roadmap</a></li>
+  <li><a href="http://code.google.com/p/googleappengine/wiki/SdkReleaseNotes">Release Notes</a></li>
+  <li><a href="revision_history.html">Revision History</a></li>
+</ul>
+
+        <a class="hidden" href="#gc-topnav-anchor">More Google App Engine resource links</a>
+      </div>
+
+      <div class="g-unit" id="gc-pagecontent">
+        <h1 class="page_title">Revision History</h1>
+
+
+
+<p>The documentation for Google App Engine available on this website is revised regularly.  This page describes notable changes made to the documentation.</p>
+
+<p>For information about changes to the App Engine API, the runtime environment, or the SDK, see <a href="http://code.google.com/p/googleappengine/wiki/SdkReleaseNotes">the release notes</a>.</p>
+
+<p><b>2009-05-08</b></p>
+<ul>
+  <li>SDK version 1.2.2 for Python <a href="../downloads.html">now available</a>.</li>
+  <li>Python apps and GQL queries in the Admin Console can now retrieve just the keys for entities in query results, instead of full entities.</li>
+  <li>A Python datastore model can now specify that a property should not be indexed, regardless of its value.  This saves space and write time by turning off the automatic single-property indexes for those properties.</li>
+  <li>The Python API for the URL Fetch service can now set a deadline, a maximum amount of time to wait for the remote host to respond.</li>
+  <li>Python apps can call a new API to determine how much CPU time has been spent so far during the current request.  See <a href="quotas.html">Quotas</a> for more information.</li>
+  <li>A bulk data downloader has been added to <code>appcfg.py</code>, similar to the bulk data uploader.</li>
+  <li><code>appcfg.py request_logs</code> now supports querying logs by the app hostname with the <code>--vhost</code> option, so you can download logs separately for a Google Apps domain, and <code>appspot.com</code> test domains.</li>
+  <li>The cron schedule syntax has been updated to support "every day 09:00" (equivalent to "every mon,tue,wed,thu,fri,sat,sun 09:00") and "every monday 09:00" (instead of "every monday of month 09:00").</li>
+</ul>
+
+<p><b>2009-04-22</b></p>
+<ul>
+  <li>SDK version 1.2.1 for Python <a href="../downloads.html">now available</a>.</li>
+  <li>The Users service now provides a unique ID for each user that stays the same even if a user changes her email address.  Note that the User object itself still does not yet possess this stability property, so if you need a datastore value to refer to a stable user ID, you must store the unique ID separately.</li>
+  <li>The Images service can now produce a composite image from multiple images, and can calculate a color histogram for an image.</li>
+  <li>The Memcache service now supports namespaces for keys.</li>
+  <li>The bulk data uploader is now an official feature of the <code>appcfg.py</code> command in the Python SDK.  It now includes the ability to skip a header row in CSV files, and the ability to sign in using a Google Apps domain account.  <b>Note:</b> The Loader class API has changed; please update your Loader class files.</li>
+  <li>URL Fetch requests can now have custom <code>User-Agent</code> and <code>User-Specified</code> headers.</li>
+  <li>Email messages can now have attachments that are <code>.ics</code> calendar invitations or <code>.vcf</code> V-Card contact information cards.</li>
+  <li>An App Engine-specific version of the Python PyCrypto cryptography library is now available to Python applications.  The documentation has a <a href="python/tools/libraries.html">new page</a> describing the third-party libraries included in the Python runtime environment, with notes about App Engine-specific differences and usage.</li>
+</ul>
+
+<p><b>2009-04-07</b></p>
+<ul>
+  <li>An "early look" of Google App Engine for Java is now available.  You can download the Java SDK, and sign up to try uploading Java apps to App Engine.  The documentation includes all new sections on the Java runtime environment and APIs, and the existing documentation has been restructured and extended.</li>
+  <li>This release also includes scheduled tasks, aka "cron jobs," for both Java and Python.</li>
+  <li>SDK version 1.2.0 for Python and SDK version 1.2.0 for Java are <a href="../downloads.html">now available</a>.</li>
+  <li>Java developers, don't forget to check out the new <a href="http://code.google.com/eclipse">Google Plugin for Eclipse</a>, with features for both App Engine and <a href="http://code.google.com/webtoolkit">Google Web Toolkit</a>.</li>
+  <li>Also check out the new <a href="http://code.google.com/securedataconnector">Secure Data Connector</a>, which allows you to develop App Engine applications and gadgets for your company's intranet.  See <a href="http://code.google.com/googleapps">the Google Apps developer tools documentation</a> for an overview.</li>
+</ul>
+
+<p><b>2009-03-17</b></p>
+<ul>
+  <li>Corrected <a href="../kb/billing.html#indexes">billing FAQ item</a> to indicate that datastore indexes <strong>do</strong> count against an application's billable storage quota.</li>
+</ul>
+
+<p><b>2009-03-05</b></p>
+<ul>
+  <li>Minor revision of billing-related text for clarification.  What the docs originally called "adjustable" quotas are now known as "billable" quotas.</li>
+</ul>
+
+<p><b>2009-02-24</b></p>
+<ul>
+  <li>You can now establish a billing account and a daily budget for your application, and allocate additional quotas for CPU, bandwidth, data storage and email messages.</li>
+  <li>Updated the <a href="quotas.html">Quotas</a> page to include information about billable quotas, the free quota levels, and the per-minute quotas. Also added a notice about an upcoming reduction in the free quota levels.</li>
+  <li>Added a page discussing how to <a href="billing.html">purchase additional quota</a>, which includes a walkthrough of how to enable billing for an application, set a daily budget, and check billing status and history.</li>
+  <li>Added a new FAQ page for common <a href="../kb/billing.html">billing questions</a>.</li>
+  <li>Updated the <a href="../terms.html">Terms of Service</a>, revising sections 4 and 10 of the terms to include language around payments, fees, and disallowing the use of multiple applications to avoid incurring fees.</li>
+</ul>
+
+<p><b>2009-02-18</b></p>
+<ul>
+  <li>The <a href="python/datastore/gqlreference.html">GQL
+    <code>KEY</code> literal</a> accepts string-encoded keys as well as paths.</li>
+</ul>
+
+<p><b>2009-02-04</b></p>
+<ul>
+  <li>SDK version 1.1.9 <a href="../downloads.html">now available</a>.</li>
+  <li>The file size limit has increased from 1 MB to 10 MB.  The article on zipimport has been updated with this information.  You can now create a simpler zipimport bundle of all of Django 1.0 without having to leave out parts to reduce the archive file size.  The app request and response size limit has also increased from 1 MB to 10 MB.</li>
+  <li>The datastore now creates single property indexes in both ascending and descending order automatically.  Previously, the datastore only made single property indexes in ascending order automatically.  Queries that use an index of a single property in descending order no longer require a custom index.  If you have such an index, you can remove it from your <code>index.yaml</code> and run <code>appcfg.py vacuum_indexes</code> to delete the extraneous custom indexes.  The documentation on indexes has been updated accordingly.</li>
+  <li>The Query class now supports the <code>!=</code> and <code>IN</code> operators, similar to the GqlQuery class.  The reference has been updated, and an introduction to query filter operators has been added.</li>
+  <li>You can now specify the number of times a transaction will be retried in the event of contention using <a href="python/datastore/functions.html#run_in_transaction_custom_retries">db.run_in_transaction_custom_retries()</a>.</li>
+  <li>You can now use the Python standard libraries <a href="http://www.python.org/doc/2.5.2/lib/module-urllib.html">urllib</a>, <a href="http://www.python.org/doc/2.5.2/lib/module-urllib2.html">urllib2</a> and <a href="http://www.python.org/doc/2.5.2/lib/module-httplib.html">httplib</a> to access the URL fetch service.</li>
+  <li>You can now upload data into the datastore from CSV files on your computer using <code>appcfg.py</code>.  An experimental and undocumented version of this feature was originally included with the SDK as the "bulk data uploader."  A newer, faster implementation of this feature is now provided as the <code>bulkuploader.py</code> command.  <a href="python/tools/uploadingdata.html">The documentation</a> describes this feature in full.</li>
+  <li>The <code>skip_files</code> property in an <code>app.yaml</code> file now accepts either a single regular expression, or a list of regular expressions.  If a file path matches any of the regular expressions, the file is skipped.</li>
+  
+</ul>
+
+<p><b>2009-01-15</b></p>
+<ul>
+  <li>SDK version 1.1.8 <a href="../downloads.html">now available</a>.</li>
+  <li>New feature: <code>PolyModel</code> and polymorphic queries.</li>
+  <li>New feature: <code>UserProperty</code> now supports <code>auto_current_user</code> and <code>auto_current_user_add</code> attributes.</li>
+  <li>New feature: New <code>ByteString</code> datastore value type, a short indexed unencoded (non-text) string of bytes.  Also, a new <code>ByteStringProperty</code> class for modeling byte string values.</li>
+  <li>New feature: Images API now exposes the current width and height of an image.</li>
+  <li>Major re-organization of the docs, primarily to move Python-specific material to its own section in preparation for upcoming support for a second language.  External links to old pages on code.google.com will resolve using redirects.  (Our apologies to anyone with links to individual pages of the docs hosted elsewhere.)  Please <a href="http://code.google.com/p/googleappengine/issues/entry">file an issue</a> if you find any unresolved broken links or broken pages in the documentation.</li>
+</ul>
+
+<p><b>2008-11-24</b></p>
+<ul>
+  <li>New article: <a href="../articles/index_building.html">How Index Building Works</a></li>
+  <li>New FAQ: "<a href="../kb/general.html#error_indexes">Why were my indexes marked as <i>Error</i>?</a>"</li>
+  <li>New FAQ: "<a href="../kb/general.html#stuck_indexes">Why do my indexes stay <i>Building</i> or <i>Deleting</i> for long periods of time?</a>"</li>
+</ul>
+
+<p><b>2008-11-20</b></p>
+<ul>
+  <li>SDK version 1.1.6 <a href="../downloads.html">now available</a>.</li>
+  <li>New feature: You can now perform queries, including filters and sort orders, on datastore entity keys, using the special property name <code>__key__</code>.  See <a href="python/datastore/queriesandindexes.html">the documentation</a>.</li>
+</ul>
+
+<p><b>2008-10-28</b></p>
+<ul>
+  <li><code>Model</code> class constructor now accepts a <code>Key</code> instance for the <code>parent</code> argument.</li>
+  <li>Added Windows appcfg.py proxy instructions.</li>
+  <li>Documented <code>google.appengine.runtime.DeadlineExceededError</code>.</li>
+  <li>Documented the fact that entities with a property of a common name but with values of mixed types are sorted by types first, then by values as per type. In particular, all integers &lt; all floats.</li>
+  <li>Added whole-file example to top of datastore page of the Getting Started Guide.</li>
+  <li>Added a note about requiring a space between the name and operator in Query.filter().</li>
+  <li>Updated string prefix search tip to use <code>u'\ufffd'</code>.</li>
+  <li>Documented GQL value literal syntax for dates, keys, users, and GeoPt values.</li>
+  <li>Added db.Timeout to list of datastore API exceptions.</li>
+  <li>Added note to "Configure an App" about how using HTTPS with the versioned testing URL, such as <code>https://1.latest.app-id.appspot.com/</code>, causes browsers to warn about certificates.  This is harmless, and users will not see the warning.</li>
+  <li>In the article "Using Django 1.0 on App Engine with Zipimport," improved wording about updating existing Django helper projects.</li>
+  <li>In the article "Extending Model Properties," fixed several errors in the code samples.</li>
+  <li>Mentioned the specific version of Python that App Engine uses: Python 2.5.2.</li>
+</ul>
+
+<p><b>2008-10-23</b></p>
+<ul>
+  <li>Added the <a href="roadmap.html">App Engine Product Roadmap</a>.</li>
+  <li>Added documentation for the <a href="python/tools/uploadinganapp.html">update_indexes command</a> with appcfg.py.</li>
+</ul>
+
+
+<p><b>2008-10-22</b></p>
+<ul>
+  <li>Updated the "<a href="../articles/gdata.html">Retrieving Authenticated Google Data Feeds with Google App Engine</a>" article to use <a href="http://code.google.com/p/gdata-python-client/">gdata-python-client</a> version 1.2.2 and higher. Token storage code has been greatly simplified.</li>
+</ul>
+
+<p><b>2008-10-16</b></p>
+<ul>
+  <li>Support for handling secure HTTPS connections for <code>*.appspot.com</code> domains, with a new handler configuration option.</li>
+</ul>
+
+<p><b>2008-10-14</b></p>
+<ul>
+  <li>Removed a note from the <i>What Can Be Done In a Transaction</i> section
+  of the <i>Transactions</i> page about a bug that prevented creating both a
+  new root entity and descendants of the entity in a single transaction. That
+  bug was fixed in 1.0.2.</li>
+</ul>
+
+<p><b>2008-09-30</b></p>
+<ul>
+  <li>SDK version 1.1.5 <a href="../downloads.html">now available</a>.</li>
+  <li>Doc updates for releases 1.1.3 through 1.1.5:
+    <ul>
+      <li>URL Fetch can be instructed not to follow redirects, using a new parameter.</li>
+      <li>URL Fetch is now restricted from fetching the request's own URL, to help prevent infinite loops.</li>
+      <li>New Memcache methods: <code>add_multi()</code> and <code>replace_multi()</code>.</li>
+      <li><code>ListProperty(str)</code> gets special treatment as <code>ListProperty(basestring)</code> because the datastore stores <code>str</code> values as ASCII-encoded Unicode, and returns such values as <code>unicode</code>.  Previously, this would break <code>ListProperty(str)</code> models, now they succeed.</li>
+      <li><code>StringListProperty</code> is now a proper class, with additional support for Django forms.</li>
+    </ul>
+  </li>
+  <li>New article: <a href="../articles/django10_zipimport.html">Using Django 1.0 with App Engine and zipimport</a></li>
+  <li>New version of downloadable docs <a href="../downloads.html">now available</a>.  Includes a fix for an issue with the index.html file and Internet Explorer.</li>
+</ul>
+
+<p><b>2008-09-26</b></p>
+<ul>
+  <li>SDK version 1.1.4 <a href="../downloads.html">now available</a>.</li>
+</ul>
+
+<p><b>2008-08-23</b></p>
+<ul>
+  <li>Added a <a href="python/datastore/queriesandindexes.html">
+  Sort Orders and List Properties</a> section to 
+  <a href="python/datastore/queriesandindexes.html">Queries and
+  Indexes</a> with details on how list properties and sort orders interact.</li>
+</ul>
+
+<p><b>2008-08-22</b></p>
+<ul>
+  <li>SDK version 1.1.2 <a href="../downloads.html">now available</a>.</li>
+  <li>Documentation for new features in SDK version 1.1.2:
+    <ul>
+      <li><a href="python/datastore/functions.html#put"><code>db.put()</code></a>
+          and <a href="python/datastore/functions.html#delete"><code>db.delete()</code></a>
+          are no longer limited to a single entity group per call.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><b>2008-08-13</b></p>
+<ul>
+  <li>Added section about using GData services in App Engine application.</li>
+</ul>
+
+<p><b>2008-08-12</b></p>
+<ul>
+  <li>All Google App Engine documentation is now released under <a href="http://creativecommons.org/licenses/by/2.5/">a Creative Commons license</a>.  Example code in the documentation is released under <a href="http://www.apache.org/licenses/LICENSE-2.0">an Apache license</a>.</li>
+  <li>Links outside of the documentation now go directly to the destination, instead of through Google's URL redirect mechanism.</li>
+  <li>Anchors in content now use element IDs instead of anchor tags.</li>
+</ul>
+
+<p><b>2008-07-25</b></p>
+<ul>
+  <li>Documentation for new features in SDK version 1.1.1:
+    <ul>
+      <li>You can now query and download log data using appcfg.py: appcfg.py request_logs</li>
+      <li>The mail service can now use the current user's email address in the "From" field (the sender) of an email message.</li>
+      <li>New environment variable: CURRENT_VERSION_ID</li>
+      <li>The URL fetch service can now customize the Date HTTP header (was previously disallowed).</li>
+      <li>The URL fetch service now uses a default Content-Type header of x-www-form-urlencoded for POST requests (which can be overridden).</li>
+    </ul>
+  </li>
+  <li>Added section about the new limit on index entries, and how to avoid it; big entities, exploding indexes, and the "Error" index state.</li>
+  <li>Documented webapp.util.run_wsgi_app() (previously undocumented), a better way to run WSGI applications in App Engine.  Code samples have been updated to recommend run_wsgi_app() over wsgiref as a best practice.</li>
+  <li>Revised code samples to instantiate webapp.WSGIApplication outside of the main() routine, a best practice for performance.</li>
+  <li>Documented the webapp.util.login_required annotation for webapp get() handler methods (previously undocumented).</li>
+  <li>Added documentation for environment variables.</li>
+  <li>Added a new section on reserved URLs.  In particular, note that <code>/form</code> is a reserved URL.</li>
+  <li>Added descriptions of how entities without a property are never results for queries the filter or order by that property.  Also added a description of how Text and Blob values are never indexed, and so behave like unset properties in queries.</li>
+  <li>Added mentions of how str values are stored and returned by the datastore as unicode values, and how this causes ListProperty(str) to not work (because the model tries to validate the value returned by the datastore as a str).  (Use ListProperty(basestring) or StringListProperty() instead.)</li>
+  <li>Added a description of how two ReferenceProperty model properties to the same kind must have unique collection_name values set to avoid the default collection_names from colliding.</li>
+  <li>Added a mention of the Google App Engine Launcher for Mac OS X in the Getting Started Guide.</li>
+  <li>Added a description of how responses are compressed automatically (using gzip) if the request headers indicate that the client can accept compressed responses.</li>
+</ul>
+
+<p><b>2008-07-24</b></p>
+<ul>
+  <li>SDK version 1.1.1 <a href="../downloads.html">now available</a>.</li>
+</ul>
+
+<p><b>2008-06-27</b></p>
+<ul>
+  <li>Corrected the <a
+  href="python/datastore/modelclass.html#Model_get_by_id">Model.get_by_id</a>
+  reference to include method arguments in the method signature.  (The arguments were
+  listed correctly in the method description.)</li>
+</ul>
+
+<p><b>2008-06-24</b></p>
+<ul>
+  <li>Added more complete documentation for the webapp.Request and webapp.Response classes.</li>
+  <li>Added documentation of disallowed HTTP headers for URL Fetch and for responses in general.</li>
+  <li>Fixed doc revision history to reflect correct release date for Images and Memcache APIs, and GQL operators.</li>
+</ul>
+
+<p><b>2008-06-23</b></p>
+<ul>
+  <li>Corrected the <a
+  href="python/datastore/modelclass.html#Model">Model constructor</a>
+  reference to say that <code>parent</code> must be a <code>Model</code>, not a
+  <code>Key</code>.</li>
+  <li>Mentioned that <a href="python/datastore/entitiesandmodels.html#Lists">List properties are order-preserving</a>.</li>
+</ul>
+
+<p><b>2008-05-30</b></p>
+<ul>
+  <li>Corrected the <a href="http://code.google.com/articles/quotas.html">Quotas article</a> to say
+  that the 1000 static file limit only applies to files, not
+  <a href="python/datastore/typesandpropertyclasses.html#Blob">datastore Blobs</a>.
+</ul>
+
+<p><b>2008-05-28</b></p>
+<ul>
+  <li>Added <a href="python/images/index.html">Image API</a> and <a href="python/memcache/index.html">Memcache API</a> documentation.</li>
+  <li>Updated "Whats is App Engine" document to include Images and Memcache services.</li>
+  <li>Added != and IN operators to GQL Documentation.</li>
+</ul>
+
+<p><b>2008-05-22</b></p>
+<ul>
+  <li>Added a note to the appcfg.py documentation about using the tool behind an HTTP proxy.</li>
+  <li>Added clarification of restrictions on datastore entity key names.</li>
+  <li>Added clarification of how the 1000-result query limit affects both fetch() and count().</li>
+  <li>Added a note about how Python <code>int</code> values stored in the datastore are stored and returned as Python <code>long</code> values.</li>
+  <li>Updated the Getting Started example to pass a sequence of up to 10 query results to the template, instead of passing the query object directly.  Passing the query object to the template works just fine, but how this works isn't clear from the example.  This also more sensibly limits the results to 10, which is what a real app would do anyway.</li>
+  <li>Added a note that the application root directory is in the module include path.</li>
+  <li>Added an example to the URL Fetch overview illustrating how to submit encoded form data with an HTTP POST action, including correct headers.</li>
+  <li>Corrected a statement in the URL Fetch overview: URL fetching does follow HTTP redirects, up to 5 times.</li>
+  <li>Corrected a statement about webapp.Response: This class does not inherit from WebOb's Response class, as webapp.Request does.  (This may be fixed in a future version.)</li>
+  <li>"Groups" in the navigation bar now goes directly to the Google App Engine discussion group.  The original "<a href="../groups.html">Discussion Groups</a>" page is still available from the sidebar, with a link to the downtime announcement list.</li>
+  <li>This documentation revision history page is now available.</li>
+</ul>
+
+<p><b>2008-05-19</b></p>
+<ul>
+  <li>Google App Engine Launcher for Mac OS X version 1.0.2 <a href="../downloads.html">now available</a>.</li>
+  <li>Article "<a href="../articles/django.html">Running Django on Google App Engine</a>" updated.</li>
+  <li>Article on quotas now includes file count and file size limits.</li>
+</ul>
+
+<p><b>2008-05-15</b></p>
+<ul>
+  <li>Google App Engine Launcher for Mac OS X version 1.0.1 <a href="../downloads.html">now available</a>.</li>
+  <li>Article "<a href="../articles/django.html">Running Django on Google App Engine</a>" updated, including a mention of how to perform App Engine deployment actions from Django's manage.py script.</li>
+</ul>
+
+<p><b>2008-05-14</b></p>
+<ul>
+  <li>Added note that the server enforces a maximum file size of 1,045,576 bytes.</li>
+</ul>
+
+<p><b>2008-05-13</b></p>
+<ul>
+  <li>New article: "<a href="../articles/transaction_isolation.html">Transaction Isolation in App Engine</a>"</li>
+</ul>
+
+<p><b>2008-05-09</b></p>
+<ul>
+  <li>SDK version 1.0.2 now available.</li>
+</ul>
+
+<p><b>2008-05-07</b></p>
+<ul>
+  <li>New article: "<a href="../articles/appengine_helper_for_django.html">Using the Google App Engine Helper for Django</a>"</li>
+</ul>
+
+<p><b>2008-05-06</b></p>
+<ul>
+  <li>New article: "<a href="../articles/rietveld.html">An Open Source App: Rietveld Code Review Tool</a>"</li>
+</ul>
+
+<p><b>2008-05-01</b></p>
+<ul>
+  <li><a href="../program_policies.html">Program policies</a> updated to clarify policy on complying with terms of service policies of other Google services, e.g. framing the Google Accounts sign-in screen.</li>
+</ul>
+
+<p><b>2008-04-30</b></p>
+<ul>
+  <li>"Powered by Google App Engine" buttons <a href="../downloads.html">now available</a>.</li>
+</ul>
+
+<p><b>2008-04-24</b></p>
+<ul>
+  <li>New article: "<a href="../articles/gdata.html">Retrieving Authenticated Google Data Feeds with Google App Engine</a>"</li>
+  <li>New FAQ: "<a href="../kb/general.html#sdk">Should I use the SDK for serving external requests?</a>"</li>
+</ul>
+
+<p><b>2008-04-14</b></p>
+<ul>
+  <li>SDK version 1.0.1 <a href="../downloads.html">now available</a>.</li>
+  <li>Many minor additions and clarifications to the documentation:
+    <ul>
+      <li>added more information about list property values</li>
+      <li>added mention of how model instance attributes that begin with an underscore are not saved with the entity</li>
+      <li>added mention that entity key names cannot begin with a number</li>
+      <li>added mention that ReferenceProperty back-references lowercase the model name in the default attribute name</li>
+      <li>added mention of how to terminate dev_appserver in Windows (Ctrl-Break)</li>
+      <li>improved the <code>tzinfo</code> example</li>
+      <li>mentioned lack of streaming ability in the CGI web server</li>
+    </ul>
+  </li>
+  <li><code>/appengine/docs/python/runtime.html#App_Caching</code> moved to <code>/appengine/docs/python/runtime.html#App_Caching</code>.</li>
+</ul>
+
+<p><b>2008-04-10</b></p>
+<ul>
+  <li><a href="../program_policies.html">Program policies</a> updated to clarify a note about putting the Admin Console in a frame.</li>
+</ul>
+
+<p><b>2008-04-07</b><p>
+<ul>
+  <li>Google App Engine launches.  The initial draft of the documentation describes App Engine, the services, the configuration files, the tools, and the Python runtime environment and APIs.  The documentation also includes a Getting Started tutorial, a FAQ and a set of articles.</li>
+  <li>Google App Engine Campfire One videos added after the Campfire completed.</li>
+</ul>
+
+
+
+      </div><!-- end gc-pagecontent -->
+   </div><!-- end gooey wrapper -->
+
+    </div> <!-- end codesite content -->
+
+<div id="gc-footer" dir="ltr">
+  <div class="text">
+    
+      <div class="notice"><div id="notice" style="text-align: center; border: 1em 0em 1em 0em">
+  Except as otherwise <a
+  href="http://code.google.com/policies.html#restrictions">noted</a>,
+  the content of this page is licensed under the <a rel="license"
+  href="http://creativecommons.org/licenses/by/2.5/">Creative Commons
+  Attribution 2.5 License</a>, and code samples are licensed under the
+  <a rel="license" href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+  2.0 License</a>.
+<!-- <rdf:RDF xmlns="http://web.resource.org/cc/" 
+              xmlns:dc="http://purl.org/dc/elements/1.1/"
+              xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <Work rdf:about="">
+    <license rdf:resource="http://creativecommons.org/licenses/by/2.5/" />
+  </Work>
+  <License rdf:about="http://creativecommons.org/licenses/by/2.5/">
+    <permits rdf:resource="http://web.resource.org/cc/Reproduction"/>
+    <permits rdf:resource="http://web.resource.org/cc/Distribution"/>
+    <requires rdf:resource="http://web.resource.org/cc/Notice"/>
+    <requires rdf:resource="http://web.resource.org/cc/Attribution"/>
+    <permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/>
+  </License>
+</rdf:RDF> -->
+</div>
+Java is a registered trademark of Sun Microsystems, Inc.</div>
+    
+    &copy;2009 Google -
+    <a href="http://code.google.com">Code Home</a> -
+    <a href="http://www.google.com/accounts/TOS">Terms of Service</a> -
+    <a href="http://www.google.com/privacy.html">Privacy Policy</a> -
+    <a href="http://code.google.com/more">Site Directory</a>
+    <br /> <br />
+    Google Code offered in:
+    <a href="http://code.google.com/intl/en">English</a> -
+    <a href="http://code.google.com/intl/es">Español</a> -
+    <a href="http://code.google.com/intl/ja">日本語</a> -
+    <a href="http://code.google.com/intl/ko">한국어</a> -
+    <a href="http://code.google.com/intl/pt-BR">Português</a> -
+    <a href="http://code.google.com/intl/ru">Pусский</a> -
+    <a href="http://code.google.com/intl/zh-CN">中文(简体)</a> -
+    <a href="http://code.google.com/intl/zh-TW">中文(繁體)</a>
+  </div>
+</div><!-- end gc-footer -->
+
+</div><!-- end gc-containter -->
+
+<script type="text/javascript">CODESITE_CSITimer['load'].tick('ats');</script>
+<script src="../../js/codesite_tail.pack.04102009.js" type="text/javascript"></script>
+
+
+
+
+
+
+  </body>
+</html>
+
+
