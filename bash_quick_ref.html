@@ -1,0 +1,247 @@
+<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"
+    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+
+<html  xmlns=\"http://www.w3.org/1999/xhtml\">
+
+<head>
+<title>
+.:: ice2o: Bash Shortcuts - Quick Reference::.
+</title>
+
+<meta name='keywords' content='bash, linux, shortcuts, keyboard' />
+<meta name='description' content='A quick reference to some of the shortcuts available in a bash login shell.' />
+<meta name='author' content='Mike Peters' />
+
+<style type='text/css'>
+a{font-weight: bold; color: blue; text-decoration: none} 
+.menu{margin-right: 20px; margin-left: 20px; color: black; font-size: 8pt; font-weight:500; font-family: Geneva,arial,sans-serif}
+h1{color: black; font-size: 12pt; font-weight: 600; text-align: justify; margin-left: 35px; margin-right: 25px; font-family: Geneva,arial,sans-serif}
+h2{color: black; font-size: 11pt; font-weight: 550; text-align: justify; margin-left: 35px; margin-right: 25px; font-family: Geneva,arial,sans-serif}
+h3{color: black; font-size: 10pt; font-weight: 550; text-align: justify; margin-left: 35px; margin-right: 25px; font-family: Geneva,arial,sans-serif}
+.b{color: black; font-size: 10pt; font-weight: bold; text-align: justify; margin-left: 35px; margin-right: 25px; font-family: Geneva,arial,sans-serif}
+p{font-family: Geneva,arial,sans-serif; font-weight: 450; text-align: justify; margin-left: 35px; margin-right: 25px; font-size: 10pt}
+.code{margin-right: 5px; margin-left: 5px; font-family: courier,arial,sans-serif; font-weight: 350; font-size: 10pt}
+td{ border: solid thin}
+</style>
+
+</head>
+
+<table style='background-color: white; font-family: Geneva,arial,sans-serif'>
+<tr style='background-color: #c7c7c7'>
+	<td style='text-align: center; font-weight: 600' colspan='2'>
+	Bash Shortcuts Quick Reference
+	</td>
+</tr>
+<tr>
+	<td width='90'>
+	Ctrl-a 
+	</td>
+	<td>
+	Move to the start of the line.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-e 
+	</td>
+	<td>
+	Move to the end of the line.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-b 
+	</td>
+	<td>
+	Move back one character.
+	</td>
+</tr>
+<tr>
+	<td>
+	Alt-b
+	</td>
+	<td>
+	Move back one word.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-f
+	</td>
+	<td>
+	Move forward one character.
+	</td>
+</tr>
+<tr>
+	<td>
+	Alt-f
+	</td>
+	<td>
+	Move forward one word.
+	</td>
+</tr>
+<tr>
+	<td>
+	Alt-] <i>x</i> 
+	</td>
+	<td>
+	Where x is any character, moves the cursor forward to the next occurance of x.
+	</td>
+</tr>
+<tr>
+	<td>
+	Alt-Ctrl-] <i>x</i> 
+	</td>
+	<td>
+	Where x is any character, moves the cursor backwards to the previous occurance of x.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-u
+	</td>
+	<td>
+	Delete from the cursor to the beginning of the line.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-k
+	</td>
+	<td>
+	Delete from the cursor to the end of the line.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-w
+	</td>
+	<td>
+	Delete from the cursor to the start of the word.
+	</td>
+</tr>
+<tr>
+	<td>
+	Esc-Del
+	</td>
+	<td>
+	Delete previous word (may not work, instead try Esc followed by Backspace)
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-y
+	</td>
+	<td>
+	Pastes text from the clipboard.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-l
+	</td>
+	<td>
+	Clear the screen leaving the current line at the top of the screen.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-x Ctrl-u
+	</td>
+	<td>
+	Undo the last changes. Ctrl-_ does the same
+	</td>
+</tr>
+<tr>
+	<td>
+	Alt-r
+	</td>
+	<td>
+	Undo all changes to the line.
+	</td>
+</tr>
+<tr>
+	<td>
+	Alt-Ctrl-e
+	</td>
+	<td>
+	Expand command line.
+	</td>
+</tr>
+<tr>
+	<td>
+	Ctrl-r
+	</td>
+	<td>
+	Incremental reverse search of history.
+	</td>
+</tr>
+<tr>
+	<td>
+	Alt-p
+	</td>
+	<td>
+	Non-incremental reverse search of history.
+	</td>
+</tr>
+<tr>
+	<td>
+	!!
+	</td>
+	<td>
+	Execute last command in history
+	</td>
+</tr>
+<tr>
+	<td>
+	!abc
+	</td>
+	<td>
+	Execute last command in history beginning with abc
+	</td>
+</tr>
+<tr>
+	<td>
+	!abc:p
+	</td>
+	<td>
+	Print last command in history beginning with abc
+	</td>
+</tr>
+<tr>
+	<td>
+	!<i>n</i>
+	</td>
+	<td>
+	Execute <i>n</i>th command in history
+	</td>
+</tr>
+<tr>
+	<td>
+	!$
+	</td>
+	<td>
+	Last argument of last command
+	</td>
+</tr>
+<tr>
+	<td>
+	!^
+	</td>
+	<td>
+	First argument of last command
+	</td>
+</tr>
+<tr>
+	<td>
+	^abc^xyz
+	</td>
+	<td>
+	Replace first occurance of abc with xyz in last command and execute it
+	</td>
+</tr>
+
+</table>
+</body>
+</html>
